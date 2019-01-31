@@ -2,8 +2,7 @@ import React from 'react'
 
 export default ({images}) => (
     <form className='Contact'>
-        {/* eslint-disable-next-line */}
-        <a name='contact'></a>
+        <h1>contact</h1>
         <label>name
             <input type='text' name='name' id='name'/>
         </label>

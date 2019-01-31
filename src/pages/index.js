@@ -26,6 +26,8 @@ const IndexPage = ({data}) => (
       ]}
     />
     <SocialLinks />
+    {/* eslint-disable-next-line */}
+    <a name='contact'></a>
     <ContactForm 
       images={[
         {title: 'number 1', image: data.image3.childImageSharp.fluid},

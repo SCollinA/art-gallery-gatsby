@@ -6,13 +6,7 @@ import React from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Header = ({ siteImage }) => (
-  <div
-    className='Header'
-    style={{
-      background: `rebeccapurple`,
-      // marginBottom: `1.45rem`,
-    }}
-  >
+  <div className='Header'>
     <div className='headerLink'>
       <Link
         to="/"

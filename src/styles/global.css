@@ -28,6 +28,7 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    border-bottom: solid 5px black;
 }
 
 .headerLink {
@@ -59,9 +60,9 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
-.Gallery {
+/* .Gallery {
     
-}
+} */
 
 .Gallery > * {
     padding: 2%;
