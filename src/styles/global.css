@@ -31,7 +31,11 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
 }
 
 .headerLink {
-    padding: 2%;
+    padding: 5%;
+}
+
+.headerLink:first-child {
+    flex: 1;
 }
 
 /* ============================ */

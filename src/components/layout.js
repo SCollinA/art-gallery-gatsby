@@ -9,17 +9,19 @@ import "./layout.css"
 const Layout = ({ children }) => (
   <StaticQuery
     query={graphql`
-      query SiteTitleQuery {
-        site {
-          siteMetadata {
-            title
+      query {
+        siteImage: file(relativePath: { eq: "site_image.png" }) {
+          childImageSharp {
+            fluid(maxWidth: 2000) {
+              ...GatsbyImageSharpFluid
+            }
           }
         }
       }
     `}
     render={data => (
       <div className='Layout'>
-        <Header siteTitle={data.site.siteMetadata.title} />
+        <Header siteImage={data.siteImage.childImageSharp.fluid} />
         <div className='Content'>
           {children}
           <Footer />

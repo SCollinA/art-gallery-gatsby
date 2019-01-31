@@ -1,10 +1,11 @@
 import { Link } from "gatsby"
+import Img from 'gatsby-image'
 import PropTypes from "prop-types"
 import React from "react"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const Header = ({ siteTitle }) => (
+const Header = ({ siteImage }) => (
   <div
     className='Header'
     style={{
@@ -13,17 +14,15 @@ const Header = ({ siteTitle }) => (
     }}
   >
     <div className='headerLink'>
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          {siteTitle}
-        </Link>
-      </h1>
+      <Link
+        to="/"
+        style={{
+          color: `white`,
+          textDecoration: `none`,
+        }}
+      >
+        <Img fluid={siteImage}/>
+      </Link>
     </div>
     <div className='headerLink'>
       <a href='#contact'>
