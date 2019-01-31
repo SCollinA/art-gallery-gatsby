@@ -4,7 +4,7 @@ import GalleryThumbs from './GalleryThumbs';
 
 export default ({images}) => (
     <div className='Gallery'>
-        <GalleryMain image={git images[0]} />
+        <GalleryMain image={images[0]} />
         <GalleryThumbs images={images}/>
     </div>
 )

@@ -48,9 +48,37 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     flex-direction: column;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 0px 1.0875rem 1.45rem;
-    padding-top: 0;
+    padding: 0 10% 5% 5%;
     overflow: auto;
+}
+
+.Content > * {
+    padding: 5%;
+}
+
+/* ============================ */
+/*          Gallery             */
+/* ============================ */
+.Gallery {
+    
+}
+
+.Gallery > * {
+    padding: 2%;
+}
+
+/* .GalleryMain {
+
+} */
+
+.GalleryThumbs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.galleryThumb {
+    padding: 2%;
+    width: 80px;
 }
 
 /* ============================ */

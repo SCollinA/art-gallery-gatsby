@@ -18,11 +18,11 @@ const IndexPage = ({data}) => (
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Gallery
       images={[
-        data.image3,
-        data.image1,
-        data.image2,
-        data.image3,
-        data.image4,
+        data.image3.childImageSharp.fluid,
+        data.image1.childImageSharp.fluid,
+        data.image2.childImageSharp.fluid,
+        data.image3.childImageSharp.fluid,
+        data.image4.childImageSharp.fluid,
       ]}
     />
     <SocialLinks />
@@ -32,6 +32,7 @@ const IndexPage = ({data}) => (
 )
 
 export default IndexPage
+
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
