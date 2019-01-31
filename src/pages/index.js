@@ -10,7 +10,8 @@ import About from '../components/About'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLinkedin, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
-library.add(faLinkedin, faTwitter, faGithub)
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
+library.add(faLinkedin, faTwitter, faGithub, faEnvelope)
 
 const IndexPage = ({data}) => (
   <Layout>
@@ -18,6 +19,8 @@ const IndexPage = ({data}) => (
     <Gallery />
     <SocialLinks />
     <ContactForm />
+    <About image={data.image1.childImageSharp.fluid}/>
+    <About image={data.image1.childImageSharp.fluid}/>
     <About image={data.image1.childImageSharp.fluid}/>
   </Layout>
 )
