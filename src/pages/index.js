@@ -20,8 +20,6 @@ const IndexPage = ({data}) => (
     <SocialLinks />
     <ContactForm />
     <About image={data.image1.childImageSharp.fluid}/>
-    <About image={data.image1.childImageSharp.fluid}/>
-    <About image={data.image1.childImageSharp.fluid}/>
   </Layout>
 )
 
