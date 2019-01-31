@@ -32,11 +32,12 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
 }
 
 .headerLink {
-    padding: 5%;
+    padding: 0 5%;
 }
 
 .headerLink:first-child {
     flex: 1;
+    max-width: 500px;
 }
 
 /* ============================ */
@@ -57,6 +58,10 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     padding: 5%;
 }
 
+.Content > a {
+    padding: unset;
+}
+
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
@@ -64,15 +69,16 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     
 } */
 
-.Gallery > * {
+/* .Gallery > * {
     padding: 2%;
-}
-
-/* .GalleryMain {
-
 } */
 
+.GalleryMain {
+    padding: 0 2% 2% 2%;
+}
+
 .GalleryThumbs {
+    padding: 2%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -93,15 +99,39 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 20%;
+    height: 30%;
 }
 
 /* ============================ */
 /*          Contact               */
 /* ============================ */
 
-.Contact > * {
-    display: inline-block;
+/* .Contact {
+    display: flex;
+    flex-wrap: wrap;
+} */
+
+.formInputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.formInputs > * {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+}
+
+.formInputs > input:last-child {
+    padding: unset;
+    margin: auto;
+    height: fit-content;
+    align-self: baseline;
+}
+
+
+#message {
+    height: 250px;
 }
 
 /* ============================ */
