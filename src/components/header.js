@@ -1,4 +1,3 @@
-import { Link } from "gatsby"
 import Img from 'gatsby-image'
 import PropTypes from "prop-types"
 import React from "react"
@@ -8,15 +7,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Header = ({ siteImage }) => (
   <div className='Header'>
     <div className='headerLink'>
-      <Link
-        to="/"
+      <a
+        href="#home"
         style={{
           color: `white`,
           textDecoration: `none`,
         }}
       >
         <Img fluid={siteImage}/>
-      </Link>
+      </a>
+    </div>
+    <div className='headerLink'>
+      <a href='#about'>
+        <FontAwesomeIcon icon={['far', 'question-circle']} size='3x'/>
+      </a>
     </div>
     <div className='headerLink'>
       <a href='#contact'>

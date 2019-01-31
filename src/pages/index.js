@@ -10,12 +10,14 @@ import About from '../components/About'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faLinkedin, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
-library.add(faLinkedin, faTwitter, faGithub, faEnvelope)
+import { faEnvelope, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+library.add(faLinkedin, faTwitter, faGithub, faEnvelope, faQuestionCircle)
 
 const IndexPage = ({data}) => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+    {/* eslint-disable-next-line */}
+    <a name='home'></a>
     <Gallery
       images={[
         {title: 'number 1', image: data.image3.childImageSharp.fluid},
@@ -37,6 +39,8 @@ const IndexPage = ({data}) => (
         {title: 'number 5', image: data.image4.childImageSharp.fluid},
       ]} 
     />
+    {/* eslint-disable-next-line */}
+    <a name='about'></a>
     <About image={data.image1.childImageSharp.fluid}/>
   </Layout>
 )

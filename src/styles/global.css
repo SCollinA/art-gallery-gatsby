@@ -8,6 +8,10 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     height: unset;
     width: unset;
 } */
+a {
+    color: black;
+    text-decoration: none;
+}
 /*  Begin app styles below */
 
 /* ============================ */
@@ -50,7 +54,7 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     flex-direction: column;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 0 10% 5% 5%;
+    padding: 0 15% 5% 5%;
     overflow: auto;
 }
 
@@ -94,12 +98,17 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
 
 .SocialLinks {
     position: fixed;
+    padding: 2% 5%;
     top: 44%;
     right: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     height: 30%;
+    background-color: rgba(255, 125, 125, 0.25);
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: 1;
 }
 
 /* ============================ */
@@ -111,18 +120,18 @@ html, body, #___gatsby, #___gatsby > div, .Layout {
     flex-wrap: wrap;
 } */
 
-.formInputs {
+.contactForm {
     display: flex;
     flex-direction: column;
 }
 
-.formInputs > * {
+.contactForm > * {
     display: flex;
     flex-direction: column;
     padding: 2%;
 }
 
-.formInputs > input:last-child {
+.contactForm > input:last-child {
     padding: unset;
     margin: auto;
     height: fit-content;
