@@ -1,4 +1,21 @@
+/* Set everything to be screen sized until you reach the app */
 * {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+}
+.Layout > * {
+    height: unset;
+    width: unset;
+}
+/*  Begin app styles below */
+
+/* ============================ */
+/*          Layout             */
+/* ============================ */
+
+.Layout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

@@ -18,9 +18,10 @@ const Layout = ({ children }) => (
       }
     `}
     render={data => (
-      <div className='Content'>
+      <div className='Layout'>
         <Header siteTitle={data.site.siteMetadata.title} />
         <div
+          className='Content'
           style={{
             margin: `0 auto`,
             maxWidth: 960,
