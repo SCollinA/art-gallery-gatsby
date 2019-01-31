@@ -3,7 +3,7 @@ import React from 'react'
 export default ({images}) => (
     <div className='Contact'>
         <label><a href='#contact'><h1>contact</h1></a>
-            <form className='contactForm'>
+            <form className='contactForm' onSubmit={event => event.preventDefault()}>
                 <label>name
                     <input type='text' name='name' id='name'/>
                 </label>

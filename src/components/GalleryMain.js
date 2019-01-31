@@ -1,6 +1,5 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import { fixedImage } from '../pages';
 
 export default ({images, selectedImage}) => (
     <div className='GalleryMain'>
