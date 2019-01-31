@@ -47,16 +47,6 @@ const IndexPage = ({data}) => (
 
 export default IndexPage
 
-export const fluidImage = graphql`
-  fragment fluidImage on File {
-    childImageSharp {
-      fluid(maxWidth: 1000) {
-        ...GatsbyImageSharpFluid
-      }
-    }
-  }
-`
-
 export const query = () => {
   return graphql`
       query {
@@ -78,3 +68,23 @@ export const query = () => {
       }
   `
 }
+
+export const fluidImage = graphql`
+  fragment fluidImage on File {
+    childImageSharp {
+      fluid(maxWidth: 1000, quality: 100) {
+        ...GatsbyImageSharpFluid
+      }
+    }
+  }
+`
+
+export const fixedImage = graphql`
+  fragment fixedImage on File {
+    childImageSharp {
+      fixed(width: 1000, quality: 100) {
+        ...GatsbyImageSharpFixed
+      }
+    }
+  }
+`

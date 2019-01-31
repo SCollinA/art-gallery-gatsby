@@ -89,7 +89,8 @@ a {
 
 .galleryThumb {
     padding: 2%;
-    width: 80px;
+    width: 20%;
+    min-width: 80px;
 }
 
 /* ============================ */
