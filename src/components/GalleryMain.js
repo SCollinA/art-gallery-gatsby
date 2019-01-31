@@ -3,6 +3,7 @@ import Img from 'gatsby-image'
 
 export default ({image}) => (
     <div className='GalleryMain'>
-        <Img fluid={image} />
+        <h1>{image.title}</h1>
+        <Img fluid={image.image} />
     </div>
 )

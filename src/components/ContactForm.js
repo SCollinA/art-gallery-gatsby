@@ -1,14 +1,24 @@
 import React from 'react'
 
 export default ({images}) => (
-    <form onSubmit={() => null}>
-        <a name='contact'/>
-        <input type='text' />
-        <input type='text' />
-        <input type='text' />
-        <select name='artwork'>
-            {/* {images.map(image => <option />)} */}
-        </select>
+    <form className='Contact'>
+        {/* eslint-disable-next-line */}
+        <a name='contact'></a>
+        <label>name
+            <input type='text' name='name' id='name'/>
+        </label>
+        <label>e-mail
+            <input type='text' name='email' id='email'/>
+        </label>
+        <label>message
+            <input type='text' name='message' id='message'/>
+        </label>
+        <label>artwork
+            <select name='artwork' id='artwork'>
+                <option value='-'> - </option>
+                {images.map((image, index)=> <option key={index} value={image.title}>{image.title}</option>)}
+            </select>
+        </label>
         <input type='submit' value='submit'/>
     </form>
 )

@@ -5,7 +5,7 @@ export default ({images}) => (
     <div className='GalleryThumbs'>
         {images.map((image, index) => (
             <div key={index} className='galleryThumb'>
-                <Img fluid={image}/>
+                <Img fluid={image.image}/>
             </div>
         ))}
     </div>

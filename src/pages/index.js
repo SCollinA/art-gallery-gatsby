@@ -18,15 +18,23 @@ const IndexPage = ({data}) => (
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     <Gallery
       images={[
-        data.image3.childImageSharp.fluid,
-        data.image1.childImageSharp.fluid,
-        data.image2.childImageSharp.fluid,
-        data.image3.childImageSharp.fluid,
-        data.image4.childImageSharp.fluid,
+        {title: 'number 1', image: data.image3.childImageSharp.fluid},
+        {title: 'number 2', image: data.image1.childImageSharp.fluid},
+        {title: 'number 3', image: data.image2.childImageSharp.fluid},
+        {title: 'number 4', image: data.image3.childImageSharp.fluid},
+        {title: 'number 5', image: data.image4.childImageSharp.fluid},
       ]}
     />
     <SocialLinks />
-    <ContactForm />
+    <ContactForm 
+      images={[
+        {title: 'number 1', image: data.image3.childImageSharp.fluid},
+        {title: 'number 2', image: data.image1.childImageSharp.fluid},
+        {title: 'number 3', image: data.image2.childImageSharp.fluid},
+        {title: 'number 4', image: data.image3.childImageSharp.fluid},
+        {title: 'number 5', image: data.image4.childImageSharp.fluid},
+      ]} 
+    />
     <About image={data.image1.childImageSharp.fluid}/>
   </Layout>
 )
