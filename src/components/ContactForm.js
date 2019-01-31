@@ -2,6 +2,7 @@ import React from 'react'
 
 export default ({images}) => (
     <form onSubmit={() => null}>
+        <a name='contact'/>
         <input type='text' />
         <input type='text' />
         <input type='text' />
