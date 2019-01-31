@@ -1,7 +1,10 @@
 import React from 'react'
+import GalleryMain from './GalleryMain';
+import GalleryThumbs from './GalleryThumbs';
 
-export default () => (
-    <div>
-        
+export default ({images}) => (
+    <div className='Gallery'>
+        <GalleryMain image={git images[0]} />
+        <GalleryThumbs images={images}/>
     </div>
 )

@@ -16,7 +16,15 @@ library.add(faLinkedin, faTwitter, faGithub, faEnvelope)
 const IndexPage = ({data}) => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <Gallery />
+    <Gallery
+      images={[
+        data.image3,
+        data.image1,
+        data.image2,
+        data.image3,
+        data.image4,
+      ]}
+    />
     <SocialLinks />
     <ContactForm />
     <About image={data.image1.childImageSharp.fluid}/>
@@ -27,7 +35,7 @@ export default IndexPage
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
-      fluid(maxWidth: 2000) {
+      fluid(maxWidth: 1000) {
         ...GatsbyImageSharpFluid
       }
     }
