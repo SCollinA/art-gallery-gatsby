@@ -91,6 +91,7 @@ a {
     padding: 2%;
     width: 20%;
     min-width: 80px;
+    cursor: pointer;
 }
 
 /* ============================ */
@@ -126,6 +127,12 @@ a {
     flex-direction: column;
 }
 
+#contactFormHeader > *, #aboutHeader > * {
+    display: inline-block;
+    margin: 2%;
+    vertical-align: middle;
+}
+
 .contactForm > * {
     display: flex;
     flex-direction: column;
@@ -148,6 +155,23 @@ a {
 /*          About               */
 /* ============================ */
 
-.About > *:nth-child(2){
-    width: 200px;
+.aboutContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.aboutContent > p {
+    flex-basis: 50%;
+}
+
+.aboutContent > *:nth-child(2){
+    width: 250px;
+}
+
+@media (max-width: 960px) {
+    .aboutContent > p {
+        flex-basis: unset;
+    }
 }

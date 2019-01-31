@@ -1,8 +1,9 @@
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default ({images}) => (
     <div className='Contact'>
-        <label><a href='#contact'><h1>contact</h1></a>
+        <label><a href='#contact' id='contactFormHeader'><FontAwesomeIcon icon={['far', 'envelope']} size='2x'/><h1>contact</h1></a>
             <form className='contactForm' onSubmit={event => event.preventDefault()}>
                 <label>name
                     <input type='text' name='name' id='name'/>
