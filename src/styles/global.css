@@ -1,13 +1,13 @@
 /* Set everything to be screen sized until you reach the app */
-* {
+html, body, #___gatsby, #___gatsby > div, .Layout {
     height: 100%;
     width: 100%;
     overflow: hidden;
 }
-.Layout > * {
+/* .Layout > * {
     height: unset;
     width: unset;
-}
+} */
 /*  Begin app styles below */
 
 /* ============================ */
@@ -18,4 +18,40 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+/* ============================ */
+/*          Header              */
+/* ============================ */
+.Header {
+    width: 100%;
+}
+
+/* ============================ */
+/*          Content             */
+/* ============================ */
+.Content {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 0px 1.0875rem 1.45rem;
+    padding-top: 0;
+}
+
+/* ============================ */
+/*          SocialLinks         */
+/* ============================ */
+
+.SocialLinks {
+    position: fixed;
+    top: 44%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 20%;
 }

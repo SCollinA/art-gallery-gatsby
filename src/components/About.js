@@ -1,7 +1,11 @@
 import React from 'react'
 
-export default () => (
-    <div>
-        
+import Img from 'gatsby-image'
+
+export default ({image}) => (
+    <div className='About'>
+        <h1>About Kelly</h1>
+        <Img fluid={image}/>
+        <p>Kelly has been painting forever.</p>
     </div>
 )
