@@ -55,6 +55,7 @@ export default ({image}) => (
                         Of course, custom framing can alter those finished frame sizes. 
                     </p>
                 </div>
+                <h1>Thank You!</h1>
             </div>
         </div>
     </div>
