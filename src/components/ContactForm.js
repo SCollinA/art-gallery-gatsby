@@ -4,7 +4,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default ({images}) => (
     <div className='Contact'>
         <label><a href='#contact' id='contactFormHeader'><FontAwesomeIcon icon={['far', 'envelope']} size='2x'/><h1>contact</h1></a>
-            <form className='contactForm' onSubmit={event => event.preventDefault()}>
+            <form className='contactForm' 
+                onSubmit={event => {
+                    event.preventDefault()
+                    const name = event.target.name.value
+                    const contactEmail = event.target.email.value
+                    const message = event.target.message.value
+                    const artwork = event.target.artwork.value
+                    fetch('http://localhost:1961/contactKelly', {
+                        method: 'post',
+                        body: JSON.stringify({ name, contactEmail, message, artwork }),
+                        headers: {'Content-Type': 'application/json'}
+                    })
+                    .then(res => res.json())
+                    .then(console.log)
+                    .catch(console.log)
+                }}
+            >
                 <label>name
                     <input type='text' name='name' id='name'/>
                 </label>
