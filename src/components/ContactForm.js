@@ -12,7 +12,9 @@ export default ({images}) => (
                     const contactEmail = event.target.email.value
                     const message = event.target.message.value
                     const artwork = event.target.artwork.value
-                    fetch('http://localhost:1961/contactKelly', {
+                    fetch('contactKelly', {
+                        // below is for development
+                    // fetch('http://localhost:1961/contactKelly', {
                         method: 'post',
                         body: JSON.stringify({ name, contactEmail, message, artwork }),
                         headers: {'Content-Type': 'application/json'}
