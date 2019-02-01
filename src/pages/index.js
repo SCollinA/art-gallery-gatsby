@@ -21,11 +21,10 @@ const IndexPage = ({data}) => (
     <a name='home'></a>
     <Gallery
       images={[
-        {title: 'number 1', image: data.image3.childImageSharp.fluid},
-        {title: 'number 2', image: data.image1.childImageSharp.fluid},
-        {title: 'number 3', image: data.image2.childImageSharp.fluid},
-        {title: 'number 4', image: data.image3.childImageSharp.fluid},
-        {title: 'number 5', image: data.image4.childImageSharp.fluid},
+        {title: 'brown horse', image: data.image1.childImageSharp.fluid},
+        {title: 'black dog', image: data.image2.childImageSharp.fluid},
+        {title: 'dalmation', image: data.image3.childImageSharp.fluid},
+        {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
       ]}
     />
     {/* <SocialLinks /> */}
@@ -33,16 +32,15 @@ const IndexPage = ({data}) => (
     <a name='contact'></a>
     <ContactForm 
       images={[
-        {title: 'number 1', image: data.image3.childImageSharp.fluid},
-        {title: 'number 2', image: data.image1.childImageSharp.fluid},
-        {title: 'number 3', image: data.image2.childImageSharp.fluid},
-        {title: 'number 4', image: data.image3.childImageSharp.fluid},
-        {title: 'number 5', image: data.image4.childImageSharp.fluid},
+        {title: 'brown horse', image: data.image1.childImageSharp.fluid},
+        {title: 'black dog', image: data.image2.childImageSharp.fluid},
+        {title: 'dalmation', image: data.image3.childImageSharp.fluid},
+        {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
       ]} 
     />
     {/* eslint-disable-next-line */}
     <a name='about'></a>
-    <About image={data.image1.childImageSharp.fluid}/>
+    <About image={data.image.childImageSharp.fluid}/>
   </Layout>
 )
 
@@ -51,19 +49,23 @@ export default IndexPage
 export const query = () => {
   return graphql`
       query {
-          image1: file(relativePath: { eq: "task_magic_icon.png" }) {
+          image: file(relativePath: { eq: "kelly.jpg" }) {
             ...fluidImage
           }
 
-          image2: file(relativePath: { eq: "tee_hole.png" }) {
+          image1: file(relativePath: { eq: "brown_horse.jpg" }) {
+            ...fluidImage
+          }
+
+          image2: file(relativePath: { eq: "black_dog.jpg" }) {
             ...fluidImage
           }
           
-          image3: file(relativePath: { eq: "Sample824.png" }) {
+          image3: file(relativePath: { eq: "dalmation.jpg" }) {
             ...fluidImage
           }
           
-          image4: file(relativePath: { eq: "CaveNebula.jpg" }) {
+          image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
             ...fluidImage
           }
       }
