@@ -6,6 +6,7 @@ export default ({images, selectedImage}) => (
         <h1>{selectedImage.title}</h1>
         {images.map((image, index) => <Img key={index} style={{
             position: `${selectedImage.title === image.title ? 'relative' : 'fixed'}`,
+            visibility: `${selectedImage.title === image.title ? 'visible' : 'hidden'}`
         }} fluid={image.image} />)}
     </div>
 )
