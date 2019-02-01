@@ -1,7 +1,7 @@
 import React from 'react'
 import Img from 'gatsby-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { StaticQuery } from 'gatsby';
+import { StaticQuery, graphql } from 'gatsby';
 
 export default ({image}) => (
     <div className='About'>
