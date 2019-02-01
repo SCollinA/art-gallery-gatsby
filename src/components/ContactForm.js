@@ -7,6 +7,7 @@ export default ({images}) => (
             <form className='contactForm' 
                 onSubmit={event => {
                     event.preventDefault()
+                    event.persist()
                     const name = event.target.name.value
                     const contactEmail = event.target.email.value
                     const message = event.target.message.value
@@ -17,7 +18,14 @@ export default ({images}) => (
                         headers: {'Content-Type': 'application/json'}
                     })
                     .then(res => res.json())
-                    .then(console.log)
+                    .then(res => {
+                        if (res.success) {
+                            alert('message received')
+                            event.target.reset()
+                        } else {
+                            alert('try again')
+                        }
+                    })
                     .catch(console.log)
                 }}
             >
