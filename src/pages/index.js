@@ -1,17 +1,18 @@
 import React from "react"
+import { graphql } from 'gatsby'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 import Gallery from '../components/Gallery'
-import SocialLinks from '../components/SocialLinks'
+// import SocialLinks from '../components/SocialLinks'
 import ContactForm from '../components/ContactForm'
 import About from '../components/About'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faLinkedin, faTwitter, faGithub } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
-library.add(faLinkedin, faTwitter, faGithub, faEnvelope, faQuestionCircle)
+library.add(faInstagram, faEnvelope, faQuestionCircle)
 
 const IndexPage = ({data}) => (
   <Layout>
@@ -27,7 +28,7 @@ const IndexPage = ({data}) => (
         {title: 'number 5', image: data.image4.childImageSharp.fluid},
       ]}
     />
-    <SocialLinks />
+    {/* <SocialLinks /> */}
     {/* eslint-disable-next-line */}
     <a name='contact'></a>
     <ContactForm 

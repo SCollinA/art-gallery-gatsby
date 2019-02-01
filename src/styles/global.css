@@ -54,11 +54,14 @@ a {
     flex-direction: column;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 0 15% 5% 5%;
+    padding: 0 10% 5% 5%;
     overflow: auto;
 }
 
-.Content > * {
+.Content > *, .GalleryMain {
+    width: 75%;
+    max-width: 960px;
+    margin: auto;
     padding: 5%;
 }
 
@@ -69,13 +72,10 @@ a {
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
-/* .Gallery {
-    
-} */
-
-/* .Gallery > * {
-    padding: 2%;
-} */
+.Gallery {
+    margin: auto;
+    width: 100%;
+}
 
 .GalleryMain {
     padding: 0 2% 2% 2%;
@@ -84,7 +84,8 @@ a {
 .GalleryThumbs {
     padding: 2%;
     display: flex;
-    flex-wrap: wrap;
+    overflow: auto;
+    margin: auto;
 }
 
 .galleryThumb {

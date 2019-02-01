@@ -18,6 +18,11 @@ const Header = ({ siteImage }) => (
       </a>
     </div>
     <div className='headerLink'>
+      <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
+        <FontAwesomeIcon icon={['fab', 'instagram']} size='3x'/>
+      </a>
+    </div>
+    <div className='headerLink'>
       <a href='#about'>
         <FontAwesomeIcon icon={['far', 'question-circle']} size='3x'/>
       </a>
