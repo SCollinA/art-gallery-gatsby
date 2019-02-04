@@ -50,6 +50,7 @@ a {
 /*          Content             */
 /* ============================ */
 .Content {
+    /* 15 px is width of ugly scroll bar */
     width: calc(100% + 15px);
     flex: 1;
     display: flex;
