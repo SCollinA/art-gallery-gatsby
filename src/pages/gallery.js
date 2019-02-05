@@ -13,7 +13,7 @@ export default ({data}) => (
         {title: 'brown horse', image: data.image1.childImageSharp.fluid},
         {title: 'black dog', image: data.image2.childImageSharp.fluid},
         {title: 'dalmation', image: data.image3.childImageSharp.fluid},
-        {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
+        // {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid}
       ]}
     />
   </Layout>
