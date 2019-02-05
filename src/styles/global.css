@@ -94,6 +94,17 @@ a {
     padding: unset;
 }
 
+.pageHeader {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5%;
+}
+
+.pageHeader > * {
+    margin: auto;
+}
+
+
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
@@ -143,14 +154,6 @@ a {
 /* ============================ */
 /*          Commissions             */
 /* ============================ */
-.commissionHeader {
-    display: flex;
-    align-items: center;
-}
-
-.commissionHeader > * {
-    margin: auto;
-}
 
 /* ============================ */
 /*          Contact             */
@@ -196,14 +199,14 @@ a {
 
 .aboutContent {
     width: 100%;
-    display: flex;
+    /* display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-between; */
 }
 
-.aboutContent > p {
+/* .aboutContent > p {
     flex-basis: 50%;
-}
+} */
 
 /* .aboutContent > *:nth-child(2){
     width: 250px;
