@@ -41,6 +41,10 @@ export const query = () => {
             image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
               ...fluidImage
             }
+
+            image5: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
+              ...fluidImage
+            }
         }
     `
   }

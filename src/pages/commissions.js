@@ -3,19 +3,12 @@ import { graphql } from 'gatsby'
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Gallery from '../components/Gallery'
+import Commissions from "../components/Commissions";
 
 export default ({data}) => (
   <Layout>
     <SEO title="Contact" keywords={[`gatsby`, `application`, `react`]} />
-    <Gallery
-      images={[
-        {title: 'brown horse', image: data.image1.childImageSharp.fluid},
-        {title: 'black dog', image: data.image2.childImageSharp.fluid},
-        {title: 'dalmation', image: data.image3.childImageSharp.fluid},
-        {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
-      ]}
-    />
+    <Commissions image={data.image.childImageSharp.fluid} />
   </Layout>
 )
 

@@ -124,7 +124,8 @@ a {
 /*          SocialLinks         */
 /* ============================ */
 
-.SocialLinks {
+/* not being used currently */
+/* .SocialLinks {
     position: fixed;
     padding: 2% 5%;
     top: 44%;
@@ -137,10 +138,22 @@ a {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     z-index: 1;
+} */
+
+/* ============================ */
+/*          Commissions             */
+/* ============================ */
+.commissionHeader {
+    display: flex;
+    align-items: center;
+}
+
+.commissionHeader > * {
+    margin: auto;
 }
 
 /* ============================ */
-/*          Contact               */
+/*          Contact             */
 /* ============================ */
 
 /* .Contact {
