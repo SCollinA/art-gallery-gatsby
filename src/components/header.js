@@ -10,31 +10,55 @@ library.add(faInstagram, faEnvelope, faQuestionCircle)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
-    <div className='headerLink'>
-      <a
-        href="/"
-        style={{
-          color: `white`,
-          textDecoration: `none`,
-        }}
-      >
-        <Img fluid={siteImage}/>
-      </a>
+  <div className='headerLinks'>
+      <div className='headerLink'>
+        <a
+          href="/"
+          style={{
+            color: `white`,
+            textDecoration: `none`,
+          }}
+          >
+          <Img fluid={siteImage}/>
+        </a>
+      </div>
+      <div className='headerLink'>
+        <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
+          <FontAwesomeIcon icon={['fab', 'instagram']} size='3x'/>
+        </a>
+      </div>
     </div>
-    <div className='headerLink'>
-      <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
-        <FontAwesomeIcon icon={['fab', 'instagram']} size='3x'/>
-      </a>
-    </div>
-    <div className='headerLink'>
-      <a href='#about'>
+    <div className='pageLinks'>
+      {/* <div className='headerLink'>
+        <a href='/about'>
         <FontAwesomeIcon icon={['far', 'question-circle']} size='3x'/>
-      </a>
-    </div>
-    <div className='headerLink'>
-      <a href='/contact'>
+        </a>
+        </div>
+        <div className='headerLink'>
+        <a href='/contact'>
         <FontAwesomeIcon icon={['far', 'envelope']} size='3x'/>
-      </a>
+        </a>
+      </div> */}
+      <div className='pageLink'>
+        <a href='/gallery'>
+          <h2>gallery</h2>
+        </a>
+      </div>
+      <div className='pageLink'>
+        <a href='/about'>
+          <h2>about</h2>
+        </a>
+      </div>
+      <div className='pageLink'>
+        <a href='/commissions'>
+          <h2>commissions</h2>
+        </a>
+      </div>
+      <div className='pageLink'>
+        <a href='/contact'>
+          <h2>contact</h2>
+        </a>
+      </div>
     </div>
   </div>
 )

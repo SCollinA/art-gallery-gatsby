@@ -27,23 +27,37 @@ a {
 /* ============================ */
 /*          Header              */
 /* ============================ */
-.Header {
+.headerLinks {
     width: 90%;
     margin: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: solid 5px black;
-}
-
-.headerLink {
-    padding: 0 5%;
 }
 
 .headerLink:first-child {
     flex: 1;
     min-width: 100px;
-    max-width: 500px;
+    max-width: 250px;
+}
+
+.pageLinks {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-top: solid 5px black;
+}
+
+.pageLink {
+    padding: 0 5%;
+}
+
+.pageLink h2 {
+    margin: auto;
+    white-space: nowrap;
 }
 
 /* ============================ */
