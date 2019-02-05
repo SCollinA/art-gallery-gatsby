@@ -49,15 +49,23 @@ a {
     justify-content: space-between;
     align-items: center;
     border-top: solid 5px black;
+    border-bottom: solid 5px black;
+    border-radius: 5px;
 }
 
 .pageLink {
-    padding: 0 5%;
+    flex: 1;
 }
 
 .pageLink h2 {
     margin: auto;
     white-space: nowrap;
+    text-align: center;
+}
+
+.activeLink {
+    display: block;
+    background-color: lightgrey;
 }
 
 /* ============================ */

@@ -1,6 +1,7 @@
 import Img from 'gatsby-image'
 import PropTypes from "prop-types"
 import React from "react"
+import { Link } from 'gatsby'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -12,15 +13,15 @@ const Header = ({ siteImage }) => (
   <div className='Header'>
   <div className='headerLinks'>
       <div className='headerLink'>
-        <a
-          href="/"
+        <Link to="/"
+          activeClassName='activeLink'
           style={{
             color: `white`,
             textDecoration: `none`,
           }}
-          >
+        >
           <Img fluid={siteImage}/>
-        </a>
+        </Link>
       </div>
       <div className='headerLink'>
         <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
@@ -29,35 +30,33 @@ const Header = ({ siteImage }) => (
       </div>
     </div>
     <div className='pageLinks'>
-      {/* <div className='headerLink'>
-        <a href='/about'>
-        <FontAwesomeIcon icon={['far', 'question-circle']} size='3x'/>
-        </a>
-        </div>
-        <div className='headerLink'>
-        <a href='/contact'>
-        <FontAwesomeIcon icon={['far', 'envelope']} size='3x'/>
-        </a>
-      </div> */}
       <div className='pageLink'>
-        <a href='/gallery'>
+        <Link to='/gallery'
+          activeClassName='activeLink'
+        >
           <h2>gallery</h2>
-        </a>
+        </Link>
       </div>
       <div className='pageLink'>
-        <a href='/about'>
+        <Link to='/about'
+          activeClassName='activeLink'
+        >
           <h2>about</h2>
-        </a>
+        </Link>
       </div>
       <div className='pageLink'>
-        <a href='/commissions'>
+        <Link to='/commissions'
+          activeClassName='activeLink'
+        >
           <h2>commissions</h2>
-        </a>
+        </Link>
       </div>
       <div className='pageLink'>
-        <a href='/contact'>
+        <Link to='/contact'
+          activeClassName='activeLink'
+        >
           <h2>contact</h2>
-        </a>
+        </Link>
       </div>
     </div>
   </div>
