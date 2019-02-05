@@ -3,12 +3,16 @@ import PropTypes from "prop-types"
 import React from "react"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope, faQuestionCircle } from '@fortawesome/free-regular-svg-icons'
+library.add(faInstagram, faEnvelope, faQuestionCircle)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
     <div className='headerLink'>
       <a
-        href="#home"
+        href="/"
         style={{
           color: `white`,
           textDecoration: `none`,
@@ -28,7 +32,7 @@ const Header = ({ siteImage }) => (
       </a>
     </div>
     <div className='headerLink'>
-      <a href='#contact'>
+      <a href='/contact'>
         <FontAwesomeIcon icon={['far', 'envelope']} size='3x'/>
       </a>
     </div>
