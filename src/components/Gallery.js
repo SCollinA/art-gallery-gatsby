@@ -13,7 +13,7 @@ export default class Gallery extends Component {
     render() {
         return (
             <div className='Gallery'>
-                <GalleryMain images={this.props.images} selectedImage={this.state.selectedImage}/>
+                <GalleryMain  images={this.props.images} selectedImage={this.state.selectedImage}/>
                 <GalleryThumbs images={this.props.images} selectImage={this._selectImage}/>
             </div>
         )
