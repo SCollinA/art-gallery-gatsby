@@ -5,9 +5,9 @@ import { Link } from 'gatsby'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
+import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope, faQuestionCircle, faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons'
-library.add(faInstagram, faEnvelope, faQuestionCircle, faMoneyBillAlt)
+library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAlt)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
@@ -22,10 +22,17 @@ const Header = ({ siteImage }) => (
           <Img fluid={siteImage}/>
         </Link>
       </div>
-      <div className='headerLink'>
-        <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
-          <FontAwesomeIcon icon={['fab', 'instagram']} size='2x'/>
-        </a>
+      <div className='socialLinks'>
+        <div className='headerLink'>
+          <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
+            <FontAwesomeIcon icon={['fab', 'instagram']} size='2x'/>
+          </a>
+        </div>
+        <div className='headerLink'>
+          <a rel='noopener noreferrer' target='_blank' href='https://www.facebook.com/mkcrfineart/'>
+            <FontAwesomeIcon icon={['fab', 'facebook']} size='2x'/>
+          </a>
+        </div>
       </div>
     </div>
     <div className='pageLinks'>
