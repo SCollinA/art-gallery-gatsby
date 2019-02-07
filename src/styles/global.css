@@ -224,6 +224,14 @@ a {
         flex-direction: column;
     }
 
+    .pageLink {
+        width: 100%;
+    }
+    
+    .pageLink h2 {
+        padding: 2%;
+    }
+
     .SocialLinks {
         width: 100%;
         display: flex;
