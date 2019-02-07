@@ -1,11 +1,11 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default ({images}) => (
     <div className='Contact'>
         <label>
             <div className='pageHeader'>
-                <FontAwesomeIcon icon={['far', 'envelope']} size='2x'/>
+                {/* <FontAwesomeIcon icon={['far', 'envelope']} size='2x'/> */}
                 <h1>contact</h1>
             </div>
             <form className='contactForm' 
