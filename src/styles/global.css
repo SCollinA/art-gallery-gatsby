@@ -41,11 +41,11 @@ a {
     max-width: 250px;
 }
 
-.socialLinks {
+/* .SocialLinks {
     display: flex;
-}
+} */
 
-.pageLinks {
+.PageLinks {
     width: 90%;
     margin: auto;
     display: flex;
