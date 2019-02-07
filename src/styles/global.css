@@ -219,7 +219,7 @@ a {
     }
 
     .Content {
-        overflow-y: visible;
+        overflow: visible;
     }
 }
 
