@@ -3,13 +3,13 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link } from 'gatsby'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faQuestionCircle, faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons'
+import { faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import PageLinks from './PageLinks'
 import SocialLinks from './SocialLinks'
-library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAlt)
+import HamburgerLinks from './HamburgerLinks';
+library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
@@ -24,6 +24,7 @@ const Header = ({ siteImage }) => (
           <Img fluid={siteImage}/>
         </Link>
       </div>
+      <HamburgerLinks />
       <SocialLinks />
     </div>
     <PageLinks />

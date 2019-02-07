@@ -1,14 +1,33 @@
 import React from 'react'
-import { Link } from 'gatsby'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import PageLinks from './PageLinks';
 import SocialLinks from './SocialLinks';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default () => {
-    return (
-        <div className='HamburgerLinks'>
-            <PageLinks />
-            <SocialLinks />
-        </div>
-    )
+export default class HamburgerLinks extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isExpanded: false,
+        }
+    }
+    
+    render(){
+        return (
+            <div className='HamburgerLinks' 
+                onClick={() => {
+                    this.setState({
+                        isExpanded: !this.state.isExpanded
+                    })
+                }}
+            >
+                <FontAwesomeIcon icon={['far', 'times-circle']} />
+                {this.state.isExpanded && (
+                    <>
+                        <PageLinks />
+                        <SocialLinks />
+                    </>
+                )}
+            </div>
+        )
+    } 
 }
