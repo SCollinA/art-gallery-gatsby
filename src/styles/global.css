@@ -82,11 +82,12 @@ a {
 
 .HamburgerLinks > svg {
     transform: rotate(45deg);
+    transition: transform .5s;
 }
 
 .expandedMenu > svg {
     transform: rotate(90deg);
-    
+    transition: transform .5s;
 }
 
 /* ============================ */
