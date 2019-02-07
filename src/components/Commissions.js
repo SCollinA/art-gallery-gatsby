@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default ({image}) => (
     <div className='Commissions'>
         <div className='pageHeader'>
-            <FontAwesomeIcon icon={['far', 'money-bill-alt']} size='2x'/>
+            {/* <FontAwesomeIcon icon={['far', 'money-bill-alt']} size='2x'/> */}
             <h1>commissions</h1>
         </div>
         <div className='commissionContent'>

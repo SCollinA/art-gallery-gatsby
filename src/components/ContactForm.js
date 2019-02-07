@@ -5,7 +5,7 @@ export default ({images}) => (
     <div className='Contact'>
         <label>
             <div className='pageHeader'>
-                <FontAwesomeIcon icon={['far', 'envelope']} size='2x'/>
+                {/* <FontAwesomeIcon icon={['far', 'envelope']} size='2x'/> */}
                 <h1>contact</h1>
             </div>
             <form className='contactForm' 

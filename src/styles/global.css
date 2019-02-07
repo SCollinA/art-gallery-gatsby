@@ -82,11 +82,12 @@ a {
 
 .HamburgerLinks > svg {
     transform: rotate(45deg);
+    transition: transform .5s;
 }
 
 .expandedMenu > svg {
     transform: rotate(90deg);
-    
+    transition: transform .5s;
 }
 
 /* ============================ */
@@ -122,7 +123,7 @@ a {
 }
 
 .pageHeader > * {
-    margin: auto;
+    margin: auto 5% auto 0;
 }
 
 
@@ -136,6 +137,8 @@ a {
 
 .GalleryMain {
     padding: 0 2% 2% 2%;
+    max-width: 750px;
+    margin: auto;
 }
 
 .GalleryThumbs {
@@ -143,6 +146,8 @@ a {
     display: flex;
     overflow: auto;
     margin: auto;
+    border: solid 5px black;
+    border-radius: 5px;
 }
 
 .galleryThumb {
