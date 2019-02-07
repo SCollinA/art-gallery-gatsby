@@ -72,6 +72,11 @@ a {
     background-color: lightgrey;
 }
 
+.HamburgerLinks {
+    visibility: hidden;
+    position: fixed;
+}
+
 /* ============================ */
 /*          Content             */
 /* ============================ */
@@ -196,9 +201,10 @@ a {
     width: 250px;
 } */
 
-@media (max-width: 400px) {
-    .headerLink {
-        padding: 0 2%;
+@media (max-width: 500px) {
+    .HamburgerLinks {
+        visibility: visible;
+        position: relative;
     }
 }
 
