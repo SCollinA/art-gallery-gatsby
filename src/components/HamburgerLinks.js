@@ -20,7 +20,7 @@ export default class HamburgerLinks extends React.Component {
                     })
                 }}
             >
-                <FontAwesomeIcon icon={['far', 'times-circle']} size='2x' />
+                <FontAwesomeIcon icon={['far', 'times-circle']} size='3x' />
                 {this.state.isExpanded && (
                     <>
                         <PageLinks />

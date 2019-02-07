@@ -202,9 +202,24 @@ a {
 } */
 
 @media (max-width: 500px) {
+    /* make hamburger menu visible */
     .HamburgerLinks {
         visibility: visible;
         position: relative;
+    }
+
+    .SocialLinks, .PageLinks {
+        visibility: hidden;
+        position: fixed;
+    }
+
+    /* below is for making header scroll */
+    .Layout {
+        overflow-y: auto;
+    }
+
+    .Content {
+        overflow-y: visible;
     }
 }
 
