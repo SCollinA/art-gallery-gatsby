@@ -75,6 +75,18 @@ a {
 .HamburgerLinks {
     visibility: hidden;
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.HamburgerLinks > svg {
+    transform: rotate(45deg);
+}
+
+.expandedMenu > svg {
+    transform: rotate(90deg);
+    
 }
 
 /* ============================ */
@@ -208,11 +220,27 @@ a {
         position: relative;
     }
 
-    .SocialLinks, .PageLinks {
+    .PageLinks {
+        flex-direction: column;
+    }
+
+    .SocialLinks {
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+    }
+    /* adjust other links */
+    .homeLink {
+        margin: auto;
+    }
+    /* make other links hidden */
+    .headerLinks > .SocialLinks, .Header > .PageLinks {
         visibility: hidden;
         position: fixed;
     }
+}
 
+@media (max-height: 750px) {
     /* below is for making header scroll */
     .Layout {
         overflow-y: auto;
@@ -223,8 +251,8 @@ a {
     }
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
     .aboutContent > p {
         flex-basis: unset;
     }
-}
+} */

@@ -13,7 +13,7 @@ export default class HamburgerLinks extends React.Component {
     
     render(){
         return (
-            <div className='HamburgerLinks' 
+            <div className={`HamburgerLinks${this.state.isExpanded ? ' expandedMenu' : ''}`} 
                 onClick={() => {
                     this.setState({
                         isExpanded: !this.state.isExpanded

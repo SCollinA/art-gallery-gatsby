@@ -24,9 +24,9 @@ const Header = ({ siteImage }) => (
           <Img fluid={siteImage}/>
         </Link>
       </div>
-      <HamburgerLinks />
       <SocialLinks />
     </div>
+    <HamburgerLinks />
     <PageLinks />
   </div>
 )
