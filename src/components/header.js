@@ -3,18 +3,19 @@ import PropTypes from "prop-types"
 import React from "react"
 import { Link } from 'gatsby'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faQuestionCircle, faMoneyBillAlt } from '@fortawesome/free-regular-svg-icons'
-library.add(faInstagram, faEnvelope, faQuestionCircle, faMoneyBillAlt)
+import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import PageLinks from './PageLinks'
+import SocialLinks from './SocialLinks'
+import HamburgerLinks from './HamburgerLinks';
+library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
-  <div className='headerLinks'>
-      <div className='headerLink'>
+    <div className='headerLinks'>
+      <div className='homeLink'>
         <Link to="/"
-          activeClassName='activeLink'
           style={{
             color: `white`,
             textDecoration: `none`,
@@ -23,42 +24,10 @@ const Header = ({ siteImage }) => (
           <Img fluid={siteImage}/>
         </Link>
       </div>
-      <div className='headerLink'>
-        <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
-          <FontAwesomeIcon icon={['fab', 'instagram']} size='2x'/>
-        </a>
-      </div>
+      <SocialLinks />
     </div>
-    <div className='pageLinks'>
-      <div className='pageLink'>
-        <Link to='/gallery'
-          activeClassName='activeLink'
-        >
-          <h2>gallery</h2>
-        </Link>
-      </div>
-      <div className='pageLink'>
-        <Link to='/about'
-          activeClassName='activeLink'
-        >
-          <h2>about</h2>
-        </Link>
-      </div>
-      <div className='pageLink'>
-        <Link to='/commissions'
-          activeClassName='activeLink'
-        >
-          <h2>commissions</h2>
-        </Link>
-      </div>
-      <div className='pageLink'>
-        <Link to='/contact'
-          activeClassName='activeLink'
-        >
-          <h2>contact</h2>
-        </Link>
-      </div>
-    </div>
+    <HamburgerLinks />
+    <PageLinks />
   </div>
 )
 
