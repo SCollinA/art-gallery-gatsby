@@ -12,7 +12,7 @@ library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAl
 const Header = ({ siteImage }) => (
   <div className='Header'>
   <div className='headerLinks'>
-      <div className='headerLink'>
+      <div className='homeLink'>
         <Link to="/"
           style={{
             color: `white`,
@@ -23,12 +23,12 @@ const Header = ({ siteImage }) => (
         </Link>
       </div>
       <div className='socialLinks'>
-        <div className='headerLink'>
+        <div className='socialLink'>
           <a rel='noopener noreferrer' target='_blank' href='https://www.instagram.com/mkcrfineart/'>
             <FontAwesomeIcon icon={['fab', 'instagram']} size='2x'/>
           </a>
         </div>
-        <div className='headerLink'>
+        <div className='socialLink'>
           <a rel='noopener noreferrer' target='_blank' href='https://www.facebook.com/mkcrfineart/'>
             <FontAwesomeIcon icon={['fab', 'facebook']} size='2x'/>
           </a>

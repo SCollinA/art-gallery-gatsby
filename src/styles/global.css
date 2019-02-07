@@ -35,7 +35,7 @@ a {
     align-items: center;
 }
 
-.headerLink:first-child {
+.homeLink {
     flex: 1;
     min-width: 100px;
     max-width: 250px;
