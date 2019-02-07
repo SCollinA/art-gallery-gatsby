@@ -137,6 +137,8 @@ a {
 
 .GalleryMain {
     padding: 0 2% 2% 2%;
+    max-width: 750px;
+    margin: auto;
 }
 
 .GalleryThumbs {
