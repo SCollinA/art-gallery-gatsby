@@ -146,6 +146,8 @@ a {
     display: flex;
     overflow: auto;
     margin: auto;
+    border: solid 5px black;
+    border-radius: 5px;
 }
 
 .galleryThumb {
