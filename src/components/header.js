@@ -14,7 +14,6 @@ const Header = ({ siteImage }) => (
   <div className='headerLinks'>
       <div className='headerLink'>
         <Link to="/"
-          activeClassName='activeLink'
           style={{
             color: `white`,
             textDecoration: `none`,
