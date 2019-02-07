@@ -9,14 +9,18 @@ const IndexPage = ({data}) => (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     {/* random artwork */}
-    <Img fluid={[
+    <div className='randomArtwork'>
+      <Img fluid={[
         {title: 'brown horse', image: data.image1.childImageSharp.fluid},
         {title: 'black dog', image: data.image2.childImageSharp.fluid},
         {title: 'dalmation', image: data.image3.childImageSharp.fluid},
         {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
-      ].find((artwork, index, array) => {
-        return index === Math.floor(Math.random() * array.length)
-      }).image}/>
+      ][Math.floor(Math.random() * 4)].image}/>
+    </div>
+    <div className='welcomeMessage'>
+      <h4>Welcome!</h4>
+      <p>Welcome to the best art gallery site evar!</p>
+    </div>
   </Layout>
 )
 
