@@ -144,6 +144,7 @@ a {
 .GalleryThumbs {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .galleryThumbs {
@@ -154,6 +155,10 @@ a {
     margin: auto;
     border: solid 5px black;
     border-radius: 5px;
+}
+
+.galleryArrow {
+    height: 100%;
 }
 
 .galleryThumb {
