@@ -160,7 +160,11 @@ a {
 .galleryArrow {
     padding: 2%;
     text-align: center;
-    
+    border-radius: 10px;
+}
+
+.galleryArrow:active {
+    background-color: lightgrey;
 }
 
 .galleryThumb {
