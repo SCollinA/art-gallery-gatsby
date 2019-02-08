@@ -4,11 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default ({images, selectImage}) => (
     <div className='GalleryThumbs'>
-        <div className='galleryArrow'>
+        <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
         {/* <h1 className='galleryArrow'>{'<'}</h1> */}
-        <div className='galleryThumbs'>
+        <div id='galleryThumbs'>
             {images.map((image, index) => (
                 <div key={index} className='galleryThumb'
                 onClick={() => selectImage(image)}
@@ -18,8 +18,13 @@ export default ({images, selectImage}) => (
             ))}
         </div>
         {/* <h1 className='galleryArrow'>{'>'}</h1> */}
-        <div className='galleryArrow'>
+        <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
         </div>
     </div>
 )
+
+function scrollThumbs(isScrollingLeft) {
+    const galleryThumbs = document.getElementById('galleryThumbs')
+    galleryThumbs.scrollTo(galleryThumbs.scrollLeft + (isScrollingLeft ? -50 : 50), 0)
+}

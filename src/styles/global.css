@@ -147,7 +147,7 @@ a {
     align-items: center;
 }
 
-.galleryThumbs {
+#galleryThumbs {
     flex: 1;
     padding: 2%;
     display: flex;
@@ -263,6 +263,12 @@ a {
     .headerLinks > .SocialLinks, .Header > .PageLinks {
         visibility: hidden;
         position: fixed;
+    }
+
+    .galleryArrow {
+        visibility: hidden;
+        position: fixed;
+        top: -100px;
     }
 }
 
