@@ -158,7 +158,9 @@ a {
 }
 
 .galleryArrow {
-    height: 100%;
+    padding: 2%;
+    text-align: center;
+    
 }
 
 .galleryThumb {

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 export default ({images, selectImage}) => (
     <div className='GalleryThumbs'>
         <div className='galleryArrow'>
-            <FontAwesomeIcon size='2x' icon={['fas', 'angle-left']}/>
+            <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
         {/* <h1 className='galleryArrow'>{'<'}</h1> */}
         <div className='galleryThumbs'>
@@ -19,7 +19,7 @@ export default ({images, selectImage}) => (
         </div>
         {/* <h1 className='galleryArrow'>{'>'}</h1> */}
         <div className='galleryArrow'>
-            <FontAwesomeIcon size='2x' icon={['fas', 'angle-right']}/>
+            <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
         </div>
     </div>
 )
