@@ -26,5 +26,5 @@ export default ({images, selectImage}) => (
 
 function scrollThumbs(isScrollingLeft) {
     const galleryThumbs = document.getElementById('galleryThumbs')
-    galleryThumbs.scrollTo(galleryThumbs.scrollLeft + (isScrollingLeft ? -50 : 50), 0)
+    galleryThumbs.scrollTo(galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
 }
