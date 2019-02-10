@@ -27,24 +27,34 @@ export const query = () => {
             }
   
             image1: file(relativePath: { eq: "brown_horse.jpg" }) {
-              ...fluidImage
+              ...galleryImage
             }
   
             image2: file(relativePath: { eq: "black_dog.jpg" }) {
-              ...fluidImage
+              ...galleryImage
             }
             
             image3: file(relativePath: { eq: "dalmation.jpg" }) {
-              ...fluidImage
+              ...galleryImage
             }
             
             image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-              ...fluidImage
+              ...galleryImage
             }
 
             image5: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-              ...fluidImage
+              ...galleryImage
             }
         }
     `
   }
+
+  export const galleryImage = graphql`
+  fragment galleryImage on File {
+    childImageSharp {
+      fluid(maxWidth: 700, maxHeight: 600) {
+        ...GatsbyImageSharpFluid
+      }
+    }
+  }
+`
