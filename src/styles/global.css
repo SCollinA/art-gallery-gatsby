@@ -139,6 +139,7 @@ a {
     padding: 0 2% 2% 2%;
     max-width: 750px;
     margin: auto;
+    
 }
 
 .GalleryThumbs {
@@ -156,6 +157,8 @@ a {
     min-width: 80px;
     cursor: pointer;
 }
+
+
 
 /* ============================ */
 /*          Commissions             */

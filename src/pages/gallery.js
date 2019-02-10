@@ -27,34 +27,34 @@ export const query = () => {
             }
   
             image1: file(relativePath: { eq: "brown_horse.jpg" }) {
-              ...galleryImage
+              ...fluidImage
             }
   
             image2: file(relativePath: { eq: "black_dog.jpg" }) {
-              ...galleryImage
+              ...fluidImage
             }
             
             image3: file(relativePath: { eq: "dalmation.jpg" }) {
-              ...galleryImage
+              ...fluidImage
             }
             
             image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-              ...galleryImage
+              ...fluidImage
             }
 
             image5: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-              ...galleryImage
+              ...fluidImage
             }
         }
     `
   }
 
-  export const galleryImage = graphql`
-  fragment galleryImage on File {
-    childImageSharp {
-      fluid(maxWidth: 700, maxHeight: 600) {
-        ...GatsbyImageSharpFluid
-      }
-    }
-  }
-`
+//   export const galleryImage = graphql`
+//   fragment galleryImage on File {
+//     childImageSharp {
+//       fluid(maxWidth: 700, maxHeight: 600) {
+//         ...GatsbyImageSharpFluid
+//       }
+//     }
+//   }
+// `
