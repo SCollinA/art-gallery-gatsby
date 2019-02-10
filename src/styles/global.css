@@ -104,25 +104,26 @@ a {
 
 .GalleryMain {
     padding: 0 2% 2% 2%;
-    outline: 5px solid pink;
-    
-}
+    /* object-fit: contain; */
+    /* outline: 5px solid pink; */
+    }
 
-Img {
-    max-height: 500px;
-}
 
-/* .MainImg {
+.MainImg {
   text-align: center; 
   max-height: 500px;
-}  */
+  width: auto;
+  border-radius: 3px;
+  object-fit: contain;
+} 
+
 
 .GalleryThumbs {
     padding: 2%;
     display: flex;
     overflow: auto;
     margin: auto;
-    outline: 5px solid blue;
+    /* outline: 5px solid blue; */
 }
 
 .galleryThumb {
