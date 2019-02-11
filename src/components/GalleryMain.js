@@ -9,6 +9,7 @@ const StyledImg = styled(Img)`
 
    img {
         object-fit: contain !important
+        max-height: 600px;
     }
 `
 

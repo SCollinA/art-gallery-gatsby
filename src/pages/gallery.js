@@ -14,6 +14,8 @@ export default ({data}) => (
         {title: 'black dog', image: data.image2.childImageSharp.fluid},
         {title: 'dalmation', image: data.image3.childImageSharp.fluid},
         {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
+        {title: 'milo', image: data.image5.childImageSharp.fluid},
+
       ]}
     />
   </Layout>
@@ -42,19 +44,21 @@ export const query = () => {
               ...fluidImage
             }
 
-            image5: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
+            image5: file(relativePath: { eq: "milo-SOLD.jpg" }) {
               ...fluidImage
             }
+            
+           
         }
     `
   }
 
-//   export const galleryImage = graphql`
-//   fragment galleryImage on File {
-//     childImageSharp {
-//       fluid(maxWidth: 700, maxHeight: 600) {
-//         ...GatsbyImageSharpFluid
-//       }
-//     }
-//   }
-// `
+  export const galleryImage = graphql`
+  fragment galleryImage on File {
+    childImageSharp {
+      fluid(maxWidth: 700, maxHeight: 600) {
+        ...GatsbyImageSharpFluid
+      }
+    }
+  }
+`

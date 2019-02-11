@@ -59,7 +59,7 @@ export const query = () => {
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
-      fluid(maxWidth: 1000, quality: 100) {
+      fluid(maxWidth: 7000, quality: 100) {
         ...GatsbyImageSharpFluid
       }
     }
