@@ -137,8 +137,9 @@ a {
 
 .GalleryMain {
     padding: 0 2% 2% 2%;
-    max-width: 750px;
+    max-height: 750px;
     margin: auto;
+    
     
 }
 
