@@ -155,7 +155,7 @@ a {
 .galleryThumb {
     padding: 2%;
     width: 20%;
-    min-width: 150px;
+    min-width: 140px;
     cursor: pointer;
 }
 
