@@ -15,6 +15,8 @@ export default ({data}) => (
         {title: 'dalmation', image: data.image3.childImageSharp.fluid},
         {title: 'irish wolf hound', image: data.image4.childImageSharp.fluid},
         {title: 'milo', image: data.image5.childImageSharp.fluid},
+        {title: 'border collie', image: data.image6.childImageSharp.fluid},
+        {title: 'home portrait', image: data.image7.childImageSharp.fluid},
 
       ]}
     />
@@ -47,7 +49,13 @@ export const query = () => {
             image5: file(relativePath: { eq: "milo-SOLD.jpg" }) {
               ...fluidImage
             }
-            
+            image6: file(relativePath: { eq: "border_collie_SOLD.jpg" }) {
+              ...fluidImage
+            }
+
+            image7: file(relativePath: { eq: "home_portrait.jpg" }) {
+              ...fluidImage
+            }
            
         }
     `
