@@ -1,7 +1,7 @@
 import React from 'react'
 import PageLinks from './PageLinks';
 import SocialLinks from './SocialLinks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class HamburgerLinks extends React.Component {
     constructor(props) {

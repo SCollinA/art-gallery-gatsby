@@ -7,6 +7,14 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
+      resolve: "gatsby-source-pg",
+      options: {
+        connectionString: "postgres:///apollo-server",
+        schema: "public",
+        refetchInterval: 60, // Refetch data every 60 seconds
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

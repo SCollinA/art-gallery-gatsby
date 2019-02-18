@@ -6,7 +6,9 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import GalleryMain from "../components/GalleryMain";
 
-const IndexPage = ({data}) => (
+const IndexPage = ({data}) => {
+  console.log(data)
+  return (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     {/* random artwork */}
@@ -26,35 +28,37 @@ const IndexPage = ({data}) => (
       <p>Welcome to the best art gallery site evar!</p>
     </div>
   </Layout>
-)
+)}
 
 export default IndexPage
 
-export const query = () => {
-  return graphql`
-      query {
-          image: file(relativePath: { eq: "kelly.jpg" }) {
-            ...fluidImage
+export const query = graphql`
+      {
+        postgres {
+          images: allArtworksList {
+            title
+            image
+            medium
           }
+        }
 
-          image1: file(relativePath: { eq: "brown_horse.jpg" }) {
-            ...fluidImage
-          }
+        image1: file(relativePath: { eq: "brown_horse.jpg" }) {
+          ...fluidImage
+        }
 
-          image2: file(relativePath: { eq: "black_dog.jpg" }) {
-            ...fluidImage
-          }
-          
-          image3: file(relativePath: { eq: "dalmation.jpg" }) {
-            ...fluidImage
-          }
-          
-          image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-            ...fluidImage
-          }
+        image2: file(relativePath: { eq: "black_dog.jpg" }) {
+          ...fluidImage
+        }
+        
+        image3: file(relativePath: { eq: "dalmation.jpg" }) {
+          ...fluidImage
+        }
+        
+        image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
+          ...fluidImage
+        }
       }
-  `
-}
+`
 
 export const fluidImage = graphql`
   fragment fluidImage on File {
@@ -75,3 +79,11 @@ export const fixedImage = graphql`
     }
   }
 `
+
+// export const query = () => {
+//   return graphql`
+//       query {
+
+//       }
+//   `
+// } 

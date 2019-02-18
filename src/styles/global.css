@@ -142,12 +142,29 @@ a {
 }
 
 .GalleryThumbs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#galleryThumbs {
+    flex: 1;
     padding: 2%;
     display: flex;
     overflow: auto;
     margin: auto;
     border: solid 5px black;
     border-radius: 5px;
+}
+
+.galleryArrow {
+    padding: 2%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.galleryArrow:active {
+    background-color: lightgrey;
 }
 
 .galleryThumb {
@@ -250,6 +267,12 @@ a {
     .headerLinks > .SocialLinks, .Header > .PageLinks {
         visibility: hidden;
         position: fixed;
+    }
+
+    .galleryArrow {
+        visibility: hidden;
+        position: fixed;
+        top: -100px;
     }
 }
 

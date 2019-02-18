@@ -5,11 +5,12 @@ import { Link } from 'gatsby'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import PageLinks from './PageLinks'
 import SocialLinks from './SocialLinks'
 import HamburgerLinks from './HamburgerLinks';
-library.add(faInstagram, faFacebook, faEnvelope, faQuestionCircle, faMoneyBillAlt, faTimesCircle)
+library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle)
 
 const Header = ({ siteImage }) => (
   <div className='Header'>
