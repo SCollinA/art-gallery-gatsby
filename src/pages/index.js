@@ -37,7 +37,8 @@ export const query = graphql`
         postgres {
           images: allArtworksList {
             title
-            
+            image
+            medium
           }
         }
 
