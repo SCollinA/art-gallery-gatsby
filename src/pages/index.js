@@ -7,7 +7,7 @@ import SEO from "../components/seo"
 import GalleryMain from "../components/GalleryMain";
 
 const IndexPage = ({data}) => {
-  console.log(data)
+  console.log(data) 
   return (
   <Layout>
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />

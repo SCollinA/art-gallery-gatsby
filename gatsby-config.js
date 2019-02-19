@@ -9,9 +9,17 @@ module.exports = {
     {
       resolve: "gatsby-source-pg",
       options: {
-        connectionString: "postgres:///apollo-server",
+        connectionString: "postgres:///art-gallery",
         schema: "public",
         refetchInterval: 60, // Refetch data every 60 seconds
+      },
+    }, 
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        typeName: 'AGAPI',
+        fieldName: 'artGallery',
+        url: 'http://localhost:4000/graphql',
       },
     },
     {
