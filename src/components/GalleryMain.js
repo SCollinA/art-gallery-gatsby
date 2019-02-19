@@ -7,7 +7,6 @@ export default ({ selectedArtworkTitle }) => (
         <galleryContext.Consumer>
             {({ artworks }) => {
                 const visibleArtworkTitle = selectedArtworkTitle || artworks[0].name
-                console.log(artworks, visibleArtworkTitle)
                 return (
                     <>
                         <h1>{artworks && visibleArtworkTitle}</h1>

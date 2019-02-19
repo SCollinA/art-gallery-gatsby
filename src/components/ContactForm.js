@@ -11,17 +11,6 @@ export default () => (
                     <div className='pageHeader'>
                         <h1>contact</h1>
                     </div>
-                    {/* <Mutation 
-                        mutation={VOTE_MUTATION} 
-                        variables={{ linkId: this.props.link.id }}
-                        update={(store, { data: { vote } }) => this.props.updateStoreAfterVote(store, vote, this.props.link.id)}
-                    >
-                    {voteMutation => (
-                        <div className="ml1 gray f11" onClick={voteMutation}>
-                        ▲
-                        </div>
-                    )}
-                    </Mutation> */}
                     <Mutation mutation={CONTACT_MUTATION}>
                         {(contactArtist, { data }) => (
                             <form className='contactForm' 
@@ -34,28 +23,6 @@ export default () => (
                                         artwork: event.target.artwork.value,
                                     }})
                                     event.target.reset()
-                                    // event.persist()
-                                    // const name = event.target.name.value
-                                    // const contactEmail = event.target.email.value
-                                    // const message = event.target.message.value
-                                    // const artwork = event.target.artwork.value
-                                    // // fetch('contactKelly', {
-                                    //     // below is for development
-                                    //     fetch('http://localhost:1961/contactKelly', {
-                                    //         method: 'post',
-                                    //         body: JSON.stringify({ name, contactEmail, message, artwork }),
-                                    //         headers: {'Content-Type': 'application/json'}
-                                    //     })
-                                    //     .then(res => res.json())
-                                    //     .then(res => {
-                                    //         if (res.success) {
-                                    //             alert('message received')
-                                    //             event.target.reset()
-                                    //         } else {
-                                    //             alert('try again')
-                                    //         }
-                                    //     })
-                                    //     .catch(console.log)
                                 }}
                             >
                                 <label>name
@@ -84,7 +51,7 @@ export default () => (
 )
 
 const CONTACT_MUTATION = gql`
-  mutation ContactArtist($artworkName: String) {
-      contactArtist(artworkName: $artworkName) 
+  mutation ContactArtist($name: String, $contactEmail: String, $message: String, $artwork: String) {
+      contactArtist(name: $name, contactEmail: $contactEmail, message: $message, artwork: $artwork) 
   }
 `
