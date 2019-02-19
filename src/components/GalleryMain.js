@@ -10,11 +10,11 @@ export default ({ selectedArtwork }) => (
                 console.log(artworks, visibleArtwork)
                 return (
                     <>
-                        <h1>{artworks && visibleArtwork.title}</h1>
+                        <h1>{artworks && visibleArtwork.name}</h1>
                         {artworks.map((artwork, index) => (
                             <Img key={index} style={{
-                                position: `${visibleArtwork.title === artwork.title ? 'relative' : 'fixed'}`,
-                                visibility: `${visibleArtwork.title === artwork.title ? 'visible' : 'hidden'}`
+                                position: `${visibleArtwork.name === artwork.name ? 'relative' : 'fixed'}`,
+                                visibility: `${visibleArtwork.name === artwork.name ? 'visible' : 'hidden'}`
                                 }} 
                                 fluid={artwork.childImageSharp.fluid} 
                                 // alt='artwork'
