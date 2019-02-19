@@ -1,24 +1,26 @@
 import React from 'react'
-// import Img from 'gatsby-image'
+import Img from 'gatsby-image'
 import { galleryContext } from './layout'
 
 export default ({ selectedArtwork }) => (
     <div className='GalleryMain'>
         <galleryContext.Consumer>
-            {(value) => {
-                console.log(value)
+            {({ artworks }) => {
+                const visibleArtwork = selectedArtwork || artworks[0]
+                console.log(artworks, visibleArtwork)
                 return (
                     <>
-                        {/* <h1>{artworks && selectedArtwork.title}</h1>
-                        {artworks ? artworks.map((artwork, index) => (
+                        <h1>{artworks && visibleArtwork.title}</h1>
+                        {artworks.map((artwork, index) => (
                             <Img key={index} style={{
-                                position: `${selectedArtwork.title === artwork.title ? 'relative' : 'fixed'}`,
-                                visibility: `${selectedArtwork.title === artwork.title ? 'visible' : 'hidden'}`
+                                position: `${visibleArtwork.title === artwork.title ? 'relative' : 'fixed'}`,
+                                visibility: `${visibleArtwork.title === artwork.title ? 'visible' : 'hidden'}`
                                 }} 
-                                fluid={artwork.image} 
+                                fluid={artwork.childImageSharp.fluid} 
+                                // alt='artwork'
                             />
-                        )) : <Img fluid={selectedArtwork.image}/>}
-                        <p>{selectedArtwork.medium}</p> */}
+                        ))}
+                        <p>{visibleArtwork.medium}</p>
                     </>
                 )
             }}

@@ -15,21 +15,19 @@ const Layout = ({ children, data }) => (
       <StaticQuery
       query={graphql`
         {
-          postgres {
-            artworks: allArtworksList {
-              title
-              image
-              medium
-            }
-            galleries: allGalleriesList {
-              name
+          allFile {
+            edges {
+              node {
+                name
+                ...fluidImage
+              }
             }
           }
         }
       `}
-      render={data => {
+      render={({ allFile: { edges }}) => {
         return (
-          <galleryContext.Provider value={data.postgres}>
+          <galleryContext.Provider value={{ artworks: edges.map(edge => edge.node)}}>
             {children}
           </galleryContext.Provider>
         ) 
@@ -44,34 +42,6 @@ Layout.propTypes = {
 }
 
 export default Layout
-
-export const query = graphql`
-  {
-    postgres {
-      images: allArtworksList {
-        title
-        image
-        medium
-      }
-    }
-
-    image1: file(relativePath: { eq: "brown_horse.jpg" }) {
-      ...fluidImage
-    }
-
-    image2: file(relativePath: { eq: "black_dog.jpg" }) {
-      ...fluidImage
-    }
-    
-    image3: file(relativePath: { eq: "dalmation.jpg" }) {
-      ...fluidImage
-    }
-    
-    image4: file(relativePath: { eq: "irish_wolf_hound.jpg" }) {
-      ...fluidImage
-    }
-  }
-`
 
 export const fluidImage = graphql`
   fragment fluidImage on File {
