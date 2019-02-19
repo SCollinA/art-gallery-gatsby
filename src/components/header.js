@@ -12,7 +12,7 @@ import SocialLinks from './SocialLinks'
 import HamburgerLinks from './HamburgerLinks';
 library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle)
 
-const Header = ({ siteImage }) => (
+const Header = ({ brandImage }) => (
   <div className='Header'>
     <div className='headerLinks'>
       <div className='homeLink'>
@@ -22,7 +22,21 @@ const Header = ({ siteImage }) => (
             textDecoration: `none`,
           }}
         >
-          <Img fluid={siteImage}/>
+          <StaticQuery
+            query={graphql`
+              query {
+                brandImage: file(relativePath: { eq: "brand.png" }) {
+                  childImageSharp {
+                    fluid(maxWidth: 2000) {
+                      ...GatsbyImageSharpFluid
+                    }
+                  }
+                }
+              }
+            `}
+            render={data => (
+              <Img fluid={data.brandImage.childImageSharp.fluid}/>
+            )}/>
         </Link>
       </div>
       <SocialLinks />
