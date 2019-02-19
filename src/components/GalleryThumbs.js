@@ -3,7 +3,7 @@ import Img from 'gatsby-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { galleryContext } from './layout'
 
-export default ({ selectImage }) => (
+export default ({ selectArtwork }) => (
     <div className='GalleryThumbs'>
         <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
@@ -14,7 +14,7 @@ export default ({ selectImage }) => (
                 <div id='galleryThumbs'>
                     {artworks.map((artwork, index) => (
                         <div key={index} className='galleryThumb'
-                        onClick={() => selectImage(artwork.name)}
+                        onClick={() => selectArtwork(artwork.name)}
                         >
                             <Img fluid={artwork.childImageSharp.fluid}/>
                         </div>

@@ -15,7 +15,7 @@ export default class Gallery extends Component {
         })
     }
     
-    _selectArtwork = selectedArtworkTitle => { this.setState({ selectedArtworkTitle: this.context.artworks.find(artwork => artwork.name === selectedArtworkTitle) }) }
+    _selectArtwork = selectedArtworkTitle => { this.setState({ selectedArtworkTitle: this.context.artworks.find(artwork => artwork.name === selectedArtworkTitle).name }) }
 
     render() {
         return (
