@@ -6,6 +6,8 @@ import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
+export const galleryContext = React.createContext({})
+
 const Layout = ({ children, data }) => (
   <div className='Layout'>
     <Header/>
@@ -14,19 +16,21 @@ const Layout = ({ children, data }) => (
       query={graphql`
         {
           postgres {
-            images: allArtworksList {
+            artworks: allArtworksList {
               title
               image
               medium
+            }
+            galleries: allGalleriesList {
+              name
             }
           }
         }
       `}
       render={data => {
-        const galleryContext = React.createContext(data)
         return (
-          <galleryContext.Provider value={data}>
-            {children} }
+          <galleryContext.Provider value={data.postgres}>
+            {children}
           </galleryContext.Provider>
         ) 
       }}/>
