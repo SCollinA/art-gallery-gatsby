@@ -276,6 +276,11 @@ a {
     }
 }
 
+.Footer {
+    display: flex;
+    justify-content: space-around;
+}
+
 @media (max-height: 750px) {
     /* below is for making header scroll */
     .Layout {
