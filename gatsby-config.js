@@ -15,6 +15,14 @@ module.exports = {
       },
     }, 
     {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        typeName: 'AGAPI',
+        fieldName: 'artGallery',
+        url: 'http://localhost:4000/graphql',
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
