@@ -147,6 +147,7 @@ a {
     align-items: center;
 }
 
+/* This is the inner container */
 #galleryThumbs {
     flex: 1;
     padding: 2%;
@@ -172,6 +173,10 @@ a {
     width: 20%;
     min-width: 80px;
     cursor: pointer;
+}
+
+.galleryThumb > * {
+    height: 100%;
 }
 
 /* ============================ */
