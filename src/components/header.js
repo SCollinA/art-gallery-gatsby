@@ -1,7 +1,7 @@
 import Img from 'gatsby-image'
 import PropTypes from "prop-types"
 import React from "react"
-import { Link } from 'gatsby'
+import { Link, StaticQuery, graphql } from "gatsby"
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
@@ -12,7 +12,7 @@ import SocialLinks from './SocialLinks'
 import HamburgerLinks from './HamburgerLinks';
 library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle)
 
-const Header = ({ brandImage }) => (
+const Header = () => (
   <div className='Header'>
     <div className='headerLinks'>
       <div className='homeLink'>
