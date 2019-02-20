@@ -58,12 +58,11 @@ class AdminPage extends React.Component {
                     <AdminGalleries/>
                     <AdminArtworks/>
                     {isUpdating && 
-                        ((updatingGallery && 
-                            <UpdateGalleryForm/>
-                            ) || 
-                            (updatingArtwork && 
-                                <UpdateArtworkForm/>
-                                ))}
+                        ((updatingGallery.id && 
+                            <UpdateGalleryForm/>) || 
+                        (updatingArtwork.id && 
+                            <UpdateArtworkForm/>))
+                    }
                 </AdminContext.Provider>
             </Layout>
         )

@@ -49,8 +49,8 @@ export default () => {
 }
 
 const UPDATE_GALLERY = gql`
-    mutation UpdateGallery($ID: String, $input: GalleryInput) {
-        updateGallery(id: $ID, input: $input) {
+    mutation UpdateGallery($id: ID!, $input: GalleryInput!) {
+        updateGallery(id: $id, input: $input) {
             id
             name
         }

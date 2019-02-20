@@ -2,6 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { AdminContext } from '../pages/admin'
+import { ALL_ARTWORKS } from './AdminArtworks'
 
 export default () => {
     return (
@@ -108,8 +109,8 @@ export default () => {
 }
 
 const UPDATE_ARTWORK = gql`
-    mutation UpdateArtwork($ID: String, $input: ArtworkInput){
-        updateArtwork(id: $ID, input: $input) {
+    mutation UpdateArtwork($id: ID!, $input: ArtworkInput!){
+        updateArtwork(id: $id, input: $input) {
             id
             galleryId
             title

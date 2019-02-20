@@ -4,10 +4,10 @@ import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
 import { AdminContext } from '../pages/admin';
 
-export default ({ updatingArtwork }) => {
+export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork }) => (
+            {({ selectArtwork, updatingArtwork }) => (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
                     <Query query={ALL_ARTWORKS}>
@@ -16,9 +16,23 @@ export default ({ updatingArtwork }) => {
                                 {!loading && 
                                     data.getAllArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
-                                            onClick={() => selectArtwork(artwork)}
+                                            onClick={() => selectArtwork({
+                                                id: artwork.id,
+                                                galleryId: artwork.galleryId,
+                                                title: artwork.title,
+                                                width: artwork.width,
+                                                height: artwork.height,
+                                                medium: artwork.medium,
+                                                image: artwork.image,
+                                                price: artwork.price,
+                                                sold: artwork.sold
+                                            })}
                                         >
-                                            <h3>{artwork.title}</h3>
+                                            <h3>
+                                                {updatingArtwork.id === artwork.id ?
+                                                updatingArtwork.title :
+                                                artwork.title}
+                                            </h3>
                                         </div>
                                     ))
                                 }
