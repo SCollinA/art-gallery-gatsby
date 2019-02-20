@@ -1,12 +1,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-
+import galleryContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
-
-export const galleryContext = React.createContext({})
 
 const Layout = ({ children, data }) => (
   <div className='Layout'>

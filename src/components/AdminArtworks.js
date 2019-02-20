@@ -2,7 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
-import { AdminContext } from '../pages/admin';
+import AdminContext from '../pages/admin';
 
 export default () => {
     return (
