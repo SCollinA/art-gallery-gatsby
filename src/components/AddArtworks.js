@@ -8,21 +8,21 @@ export default () => {
     return (
         <AdminContext.Consumer>
             {({ selectArtwork }) => (
-                <div className='addArtworks'>
+                <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
                         update={(cache, { data: { addArtwork } }) => {
                             // select the new artwork for updating immediately
                             selectArtwork(addArtwork)
-                            const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS });
+                            const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
                             cache.writeQuery({
                                 query: ALL_ARTWORKS,
                                 data: { getAllArtworks: getAllArtworks.concat([addArtwork]) },
-                            });
+                            })
                         }}
-                        >
+                    >
                         {(addArtwork, { data }) => (
                             <div className='addArtwork'
-                            onClick={addArtwork}
+                                onClick={addArtwork}
                             >
                                 <h3> + </h3>
                             </div>

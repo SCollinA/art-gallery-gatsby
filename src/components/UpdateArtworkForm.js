@@ -1,14 +1,23 @@
 import React from 'react'
-import { Mutation, gql } from 'react-apollo'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
 import { AdminContext } from '../pages/admin'
 
-export default UpdateArtworkForm = () => {
+export default () => {
     return (
         <AdminContext.Consumer>
             {({ updatingArtwork, selectArtwork, changeArtwork, submitArtwork }) => (
-                <Mutation mutation={UPDATE_ARTWORK}>
+                <Mutation mutation={UPDATE_ARTWORK}
+                    update={(cache, { data: { updateArtwork } }) => {
+                        const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
+                        cache.writeQuery({
+                            query: ALL_ARTWORKS,
+                            data: { getAllArtworks: getAllArtworks.concat([updateArtwork]) },
+                        })
+                    }}
+                >
                 {(updateArtwork, { data, loading, error }) => (
-                    <form 
+                    <form id='UpdateArtworkForm'
                         onSubmit={event => {
                             event.preventDefault()
                             submitArtwork()
@@ -18,7 +27,6 @@ export default UpdateArtworkForm = () => {
                                 input: updatingArtwork
                             }})
                         }}
-                        onReset={() => selectArtwork()}
                     >
                         <label>title
                             <input type='text' name='title'
@@ -100,17 +108,7 @@ export default UpdateArtworkForm = () => {
 }
 
 const UPDATE_ARTWORK = gql`
-    mutation UpdateArtwork($ID: String, $input: {
-        id: String,
-        galleryId: String,
-        title: String,
-        width: Int,
-        height: Int,
-        medium: String,
-        image: String,
-        price: Float,
-        sold: Boolean
-    }){
+    mutation UpdateArtwork($ID: String, $input: ArtworkInput){
         updateArtwork(id: $ID, input: $input) {
             id
             galleryId

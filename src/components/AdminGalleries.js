@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import AddGalleries from './AddGalleries';
 import { AdminContext } from '../pages/admin';
 
-export default AdminGalleries = ({ updatingGallery }) => {
+export default ({ updatingGallery }) => {
     return (
         <AdminContext.Consumer>
             {({ selectGallery }) => (

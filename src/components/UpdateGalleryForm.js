@@ -1,14 +1,24 @@
 import React from 'react'
-import { Mutation, gql } from 'apollo-boost'
+import { Mutation } from 'react-apollo'
+import gql from 'graphql-tag'
 import { AdminContext } from '../pages/admin'
+import { ALL_GALLERIES } from './AdminGalleries';
 
-export default UpdateGalleryForm = () => {
+export default () => {
     return (
         <AdminContext.Consumer>
             {({ updatingGallery, selectGallery, changeGallery, submitGallery }) => (
-                <Mutation mutation={UPDATE_GALLERY}>
+                <Mutation mutation={UPDATE_GALLERY}
+                    update={(cache, { data: { updateGallery } }) => {
+                        const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
+                        cache.writeQuery({
+                            query: ALL_GALLERIES,
+                            data: { getAllGalleries: getAllGalleries.concat([updateGallery]) },
+                        })
+                    }}
+                >
                     {(updateGallery, { data, loading, error }) => (
-                        <form
+                        <form id='UpdateGalleryForm'
                             onSubmit={event => {
                                 event.preventDefault()
                                 submitGallery()
@@ -39,10 +49,7 @@ export default UpdateGalleryForm = () => {
 }
 
 const UPDATE_GALLERY = gql`
-    mutation UpdateGallery($ID: String, $input: {
-        id: String,
-        name: String
-    }) {
+    mutation UpdateGallery($ID: String, $input: GalleryInput) {
         updateGallery(id: $ID, input: $input) {
             id
             name

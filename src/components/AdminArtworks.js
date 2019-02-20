@@ -4,7 +4,7 @@ import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
 import { AdminContext } from '../pages/admin';
 
-export default AdminArtworks = ({ updatingArtwork }) => {
+export default ({ updatingArtwork }) => {
     return (
         <AdminContext.Consumer>
             {({ selectArtwork }) => (
