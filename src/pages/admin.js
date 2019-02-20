@@ -16,19 +16,48 @@ class AdminPage extends React.Component {
         }
     }
 
-    componentDidMount() {
+    // select a gallery to update
+    // when selecting, if one already exists, remove it
+    _selectGallery = updatingGallery => this.state.isUpdating ? this.setState({ updatingGallery: {}, isUpdating: false }) : this.setState({ updatingGallery, isUpdating: true })
+    
+    // select an artwork to update
+    // when selecting, if one already exists, remove it
+    _selectArtwork = updatingArtwork => this.state.isUpdating ? this.setState({ updatingArtwork: {}, isUpdating: false }) : this.setState({ updatingArtwork, isUpdating: true })
 
-    }
+    // update the gallery in state
+    _handleGalleryChange = updatingGallery => this.setState({ updatingGallery })
+    
+    // update the gallery in state
+    _handleArtworkChange = updatingArtwork => this.setState({ updatingArtwork })
+
+    // submission will be a mutation defined in the form
+    _submitGalleryChange = () => this.setState({ updatingGallery: {}, isUpdating: false })
+    
+    // submission will be a mutation defined in the form
+    _submitArtworkChange = () => this.setState({ updatingArtwork: {}, isUpdating: false })
 
     render() {
-      return (
+        const { isUpdating, updatingGallery, updatingArtwork } = this.state
+        return (
             <Layout>
                 <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
                 <AddGalleries/>
                 <AddArtworks/>
-                {this.state.isUpdating && 
-                    ((updatingGallery && <UpdateGalleryForm/>) || 
-                        (updatingArtwork && <UpdateArtworkForm/>))}
+                {isUpdating && 
+                    ((updatingGallery && 
+                        <UpdateGalleryForm
+                            selectGallery={this._selectGallery}
+                            handleChange={this._handleGalleryChange}
+                            submitChange={this._submitGalleryChange}
+                        />
+                    ) || 
+                        (updatingArtwork && 
+                            <UpdateArtworkForm
+                                selectArtwork={this._selectArtwork}
+                                handleChange={this._handleArtworkChange}
+                                submitChange={this._submitArtworkChange}
+                            />
+                        ))}
             </Layout>
         )
     }
