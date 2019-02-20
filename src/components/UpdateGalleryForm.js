@@ -5,7 +5,7 @@ import { AdminContext } from '../pages/admin';
 export default UpdateGalleryForm = () => {
     return (
         <AdminContext.Consumer>
-            {() => (
+            {({ updatingGallery, selectGallery, changeGallery, submitGallery }) => (
                 <form>
                     <input/>
                     <input/>
