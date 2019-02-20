@@ -32,6 +32,9 @@ export default () => {
                                                 galleryId: event.target.value
                                             })}
                                         >
+                                            <option name='galleryId' value={null}>
+                                                -
+                                            </option>
                                             {data.getAllGalleries.map(gallery => (
                                                 <option key={gallery.id} 
                                                     value={gallery.id} 

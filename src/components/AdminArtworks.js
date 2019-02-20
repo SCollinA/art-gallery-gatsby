@@ -33,26 +33,43 @@ export default () => {
                                                 updatingArtwork.title :
                                                 artwork.title}
                                             </h3>
-                                            <h3>
-                                                {updatingArtwork.id === artwork.id ?
-                                                updatingArtwork.galleryId :
-                                                artwork.galleryId}
-                                            </h3>
-                                            <h3>
+                                            <Query query={gql`
+                                                    query GetGallery($id: ID!) {
+                                                        getGallery(id: $id) {
+                                                            name
+                                                        }
+                                                    }
+                                                `}
+                                                variables={{
+                                                    id: updatingArtwork.id === artwork.id ?
+                                                    updatingArtwork.galleryId :
+                                                    artwork.galleryId
+                                                }}
+                                            >
+                                                {({ data, loading, error }) => (
+                                                    <h5>
+                                                        {!(loading || error) ? 
+                                                        data.getGallery.name :
+                                                        'no gallery'
+                                                    }
+                                                    </h5>
+                                                )}
+                                            </Query>
+                                            <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.image :
                                                 artwork.image}
-                                            </h3>
-                                            <h3>
+                                            </h5>
+                                            <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :
                                                 artwork.price}
-                                            </h3>
-                                            <h3>
+                                            </h5>
+                                            <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.sold :
                                                 artwork.sold}
-                                            </h3>
+                                            </h5>
                                         </div>
                                     ))
                                 }
