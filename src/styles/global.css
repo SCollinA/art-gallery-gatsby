@@ -85,11 +85,10 @@ a {
     margin: 0 auto;
     padding: 0 5% 5%;
     overflow: auto;
-    position: relative;
 }
 
 .Content > * {
-    width: 75%;
+    /* width: 75%; */
     margin: auto;
     padding: 5%;
 }
@@ -199,6 +198,59 @@ a {
     width: 100%;
 }
 
+/* ================================ */
+/*           Admin Page             */
+/* ================================ */
+
+.currentGalleries, .currentArtworks {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.currentGalleries > *, .currentArtworks > * {
+    margin: 2%;
+    padding: 2%;
+    border: solid black 2px;
+    border-radius: 10px;
+}
+
+.updateForm {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+#UpdateGalleryForm, #UpdateArtworkForm {
+    position: fixed;
+    width: 75%;
+    height: 50%;
+    top: 25%;
+    left: 12.5%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5%;
+    overflow-y: auto;
+    border: solid black 2px;
+    border-radius: 10px;
+}
+
+#UpdateGalleryForm > *, #UpdateArtworkForm > * {
+    margin: auto;
+    padding: 2%;
+}
+/* ================================ */
+/*              Footer              */
+/* ================================ */
+.Footer {
+    display: flex;
+    justify-content: space-around;
+}
+
 @media (max-width: 500px) {
     /* make hamburger menu visible */
     .HamburgerLinks {
@@ -238,45 +290,6 @@ a {
         position: fixed;
         top: -100px;
     }
-}
-
-/* ================================ */
-/*           Admin Page             */
-/* ================================ */
-
-.updateForm {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-#UpdateGalleryForm, #UpdateArtworkForm {
-    position: fixed;
-    width: 75%;
-    height: 50%;
-    top: 25%;
-    left: 12.5%;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    border-radius: 10px;
-    padding: 5%;
-    overflow-y: auto;
-}
-
-#UpdateGalleryForm > *, #UpdateArtworkForm > * {
-    margin: auto;
-    padding: 2%;
-}
-/* ================================ */
-/*              Footer              */
-/* ================================ */
-.Footer {
-    display: flex;
-    justify-content: space-around;
 }
 
 /* @media (max-height: 750px) {
