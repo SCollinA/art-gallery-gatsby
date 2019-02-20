@@ -1,6 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import AddArtworks from './AddArtworks';
 
 export default AdminArtworks = ({ updatingArtwork }) => {
     return (
@@ -16,7 +17,8 @@ export default AdminArtworks = ({ updatingArtwork }) => {
                                 </div>
                             ))
                         }
-                                </div>
+                        <AddArtworks/>
+                    </div>
                 )}
             </Query>
         </div>

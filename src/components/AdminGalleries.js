@@ -1,6 +1,7 @@
 import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
+import AddGalleries from './AddGalleries';
 
 export default AdminGalleries = ({ updatingGallery }) => {
     return (
@@ -16,6 +17,7 @@ export default AdminGalleries = ({ updatingGallery }) => {
                                 </div>
                             ))
                         }
+                        <AddGalleries/>
                     </div>
                 )}
             </Query>

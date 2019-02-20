@@ -1,18 +1,23 @@
 import React from 'react'
-import { Mutation, gql } from 'apollo-boost'
+// import { Mutation, gql } from 'apollo-boost'
+import { AdminContext } from '../pages/admin';
 
-export default UpdateGalleryForm = ({ selectGallery, changeGallery, submitGallery }) => {
+export default UpdateGalleryForm = () => {
     return (
-        <form>
-            <input/>
-            <input/>
-            <input/>
-            <input/>
-            <input type='submit'/>
-        </form>
+        <AdminContext>
+            {() => (
+                <form>
+                    <input/>
+                    <input/>
+                    <input/>
+                    <input/>
+                    <input type='submit'/>
+                </form>
+            )}
+        </AdminContext>
     )
 }
 
-const UPDATE_GALLERY = gql`
+// const UPDATE_GALLERY = gql`
 
-`
+// `

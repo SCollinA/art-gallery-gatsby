@@ -1,10 +1,12 @@
 import React from "react"
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import AddArtworks from "../components/AddArtworks"
-import AddGalleries from "../components/AddGalleries"
+import AdminArtworks from "../components/AdminArtworks"
+import AdminGalleries from "../components/AdminGalleries"
 import UpdateGalleryForm from '../components/UpdateGalleryForm'
 import UpdateArtworkForm from '../components/UpdateArtworkForm'
+
+export const AdminContext = React.createContext({})
 
 class AdminPage extends React.Component {
     constructor(props) {
@@ -41,22 +43,14 @@ class AdminPage extends React.Component {
         return (
             <Layout>
                 <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-                <AddGalleries/>
-                <AddArtworks/>
+                <AdminGalleries/>
+                <AdminArtworks/>
                 {isUpdating && 
                     ((updatingGallery && 
-                        <UpdateGalleryForm
-                            selectGallery={this._selectGallery}
-                            changeGallery={this._handleGalleryChange}
-                            submitGallery={this._submitGalleryChange}
-                        />
+                        <UpdateGalleryForm/>
                     ) || 
                         (updatingArtwork && 
-                            <UpdateArtworkForm
-                                selectArtwork={this._selectArtwork}
-                                changeArtwork={this._handleArtworkChange}
-                                submitArtwork={this._submitArtworkChange}
-                            />
+                            <UpdateArtworkForm/>
                         ))}
             </Layout>
         )
