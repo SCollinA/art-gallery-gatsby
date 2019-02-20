@@ -47,15 +47,15 @@ class AdminPage extends React.Component {
                     ((updatingGallery && 
                         <UpdateGalleryForm
                             selectGallery={this._selectGallery}
-                            handleChange={this._handleGalleryChange}
-                            submitChange={this._submitGalleryChange}
+                            changeGallery={this._handleGalleryChange}
+                            submitGallery={this._submitGalleryChange}
                         />
                     ) || 
                         (updatingArtwork && 
                             <UpdateArtworkForm
                                 selectArtwork={this._selectArtwork}
-                                handleChange={this._handleArtworkChange}
-                                submitChange={this._submitArtworkChange}
+                                changeArtwork={this._handleArtworkChange}
+                                submitArtwork={this._submitArtworkChange}
                             />
                         ))}
             </Layout>
