@@ -6,33 +6,59 @@ import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
-const Layout = ({ children }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        siteImage: file(relativePath: { eq: "site_image.png" }) {
-          childImageSharp {
-            fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid
+export const galleryContext = React.createContext({})
+
+const Layout = ({ children, data }) => (
+  <div className='Layout'>
+    <Header/>
+    <div className='Content'>
+      <StaticQuery
+      query={graphql`
+        {
+          allFile(filter: { relativeDirectory: { eq: "artworks" } }) {
+            edges {
+              node {
+                name
+                ...fluidImage
+              }
             }
           }
         }
-      }
-    `}
-    render={data => (
-      <div className='Layout'>
-        <Header siteImage={data.siteImage.childImageSharp.fluid} />
-        <div className='Content'>
-          {children}
-          <Footer />
-        </div>
-      </div>
-    )}
-  />
+      `}
+      render={({ allFile: { edges }}) => {
+        return (
+          <galleryContext.Provider value={{ artworks: edges.map(edge => edge.node)}}>
+            {children}
+          </galleryContext.Provider>
+        ) 
+      }}/>
+        <Footer/>
+    </div>
+  </div>
 )
 
 Layout.propTypes = {
-  children: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 }
 
 export default Layout
+
+export const fluidImage = graphql`
+  fragment fluidImage on File {
+    childImageSharp {
+      fluid(maxWidth: 500, maxHeight: 500, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
+        ...GatsbyImageSharpFluid
+      }
+    }
+  }
+`
+
+export const fixedImage = graphql`
+  fragment fixedImage on File {
+    childImageSharp {
+      fixed(width: 1000, quality: 100) {
+        ...GatsbyImageSharpFixed
+      }
+    }
+  }
+`
