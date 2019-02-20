@@ -2,21 +2,12 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import { AdminContext } from '../pages/admin'
-import { ALL_GALLERIES } from './AdminGalleries';
 
 export default () => {
     return (
         <AdminContext.Consumer>
             {({ updatingGallery, changeGallery, submitGallery, resetGallery }) => (
-                <Mutation mutation={UPDATE_GALLERY}
-                    update={(cache, { data: { updateGallery } }) => {
-                        const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
-                        cache.writeQuery({
-                            query: ALL_GALLERIES,
-                            data: { getAllGalleries: getAllGalleries.concat([updateGallery]) },
-                        })
-                    }}
-                >
+                <Mutation mutation={UPDATE_GALLERY}>
                     {(updateGallery, { data, loading, error }) => (
                         <form id='UpdateGalleryForm'
                             onSubmit={event => {
