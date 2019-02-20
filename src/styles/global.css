@@ -1,13 +1,8 @@
 /* Set everything to be screen sized until you reach the app */
 html, body, #___gatsby, #___gatsby > div, .Layout {
-    height: 100%;
     width: 100%;
-    overflow: hidden;
 }
-/* .Layout > * {
-    height: unset;
-    width: unset;
-} */
+
 a {
     color: black;
     text-decoration: none;
@@ -18,11 +13,6 @@ a {
 /*          Layout             */
 /* ============================ */
 
-.Layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
 
 /* ============================ */
 /*          Header              */
@@ -40,10 +30,6 @@ a {
     min-width: 100px;
     max-width: 250px;
 }
-
-/* .SocialLinks {
-    display: flex;
-} */
 
 .PageLinks {
     width: 90%;
@@ -96,10 +82,6 @@ a {
 .Content {
     /* 15 px is width of ugly scroll bar */
     width: calc(100% + 15px);
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     margin: 0 auto;
     padding: 0 5% 5%;
     overflow: auto;
@@ -107,7 +89,6 @@ a {
 
 .Content > * {
     width: 75%;
-    /* max-width: 960px; */
     margin: auto;
     padding: 5%;
 }
@@ -116,22 +97,10 @@ a {
     padding: unset;
 }
 
-.pageHeader {
-    display: flex;
-    align-items: center;
-    padding-bottom: 5%;
-}
-
-.pageHeader > * {
-    margin: auto 5% auto 0;
-}
-
-
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
 .Gallery {
-    /* margin: auto; */
     width: 100%;
 }
 
@@ -227,18 +196,7 @@ a {
 
 .aboutContent {
     width: 100%;
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between; */
 }
-
-/* .aboutContent > p {
-    flex-basis: 50%;
-} */
-
-/* .aboutContent > *:nth-child(2){
-    width: 250px;
-} */
 
 @media (max-width: 500px) {
     /* make hamburger menu visible */

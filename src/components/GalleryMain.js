@@ -11,13 +11,14 @@ export default ({ selectedArtworkTitle }) => (
                     <>
                         <h1>{artworks && visibleArtworkTitle}</h1>
                         {artworks.map((artwork, index) => (
-                            <Img key={index} style={{
-                                position: `${visibleArtworkTitle === artwork.name ? 'relative' : 'fixed'}`,
-                                visibility: `${visibleArtworkTitle === artwork.name ? 'visible' : 'hidden'}`
-                                }} 
-                                fluid={artwork.childImageSharp.fluid} 
-                                // alt='artwork'
-                            />
+                            <div key={index} className={`galleryArtwork${visibleArtworkTitle === artwork.name ? ' current' : ' hidden'}`}>
+                                <Img  
+                                    style={{
+                                        display: `${visibleArtworkTitle === artwork.name ? 'block' : 'none'}`
+                                    }} 
+                                    fluid={artwork.childImageSharp.fluid} 
+                                />
+                            </div>
                         ))}
                         <p>stuff will go here</p>
                     </>

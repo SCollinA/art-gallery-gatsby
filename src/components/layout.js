@@ -46,7 +46,7 @@ export default Layout
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
-      fluid(maxHeight: 2000, quality: 100) {
+      fluid(maxWidth: 500, maxHeight: 500, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
         ...GatsbyImageSharpFluid
       }
     }
