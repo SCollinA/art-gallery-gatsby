@@ -27,7 +27,8 @@ const Layout = ({ children, data }) => (
       `}
       render={({ allFile: { edges }}) => {
         return (
-          <galleryContext.Provider value={{ artworks: edges.map(edge => edge.node)}}>
+          // set context to the files returned from the query above
+          <galleryContext.Provider value={{ artworks: edges.map(edge => edge.node) }}>
             {children}
           </galleryContext.Provider>
         ) 

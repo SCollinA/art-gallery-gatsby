@@ -43,15 +43,28 @@ class AdminPage extends React.Component {
         return (
             <Layout>
                 <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-                <AdminGalleries/>
-                <AdminArtworks/>
-                {isUpdating && 
-                    ((updatingGallery && 
-                        <UpdateGalleryForm/>
-                    ) || 
-                        (updatingArtwork && 
-                            <UpdateArtworkForm/>
-                        ))}
+                <AdminContext.Provider 
+                    value={{ 
+                        updatingGallery: this.state.updatingGallery,
+                        selectGallery: this._selectGallery,
+                        changeGallery: this._handleGalleryChange,
+                        submitGallery: this._submitGalleryChange,
+                        updatingArtwork: this.state.updatingArtwork,
+                        selectArtwork: this._selectArtwork,
+                        changeArtwork: this._handleArtworkChange,
+                        submitArtwork: this._submitArtworkChange,
+                    }}
+                >
+                    <AdminGalleries/>
+                    <AdminArtworks/>
+                    {isUpdating && 
+                        ((updatingGallery && 
+                            <UpdateGalleryForm/>
+                            ) || 
+                            (updatingArtwork && 
+                                <UpdateArtworkForm/>
+                                ))}
+                </AdminContext.Provider>
             </Layout>
         )
     }

@@ -4,7 +4,7 @@ import { AdminContext } from '../pages/admin';
 
 export default UpdateGalleryForm = () => {
     return (
-        <AdminContext>
+        <AdminContext.Consumer>
             {() => (
                 <form>
                     <input/>
@@ -14,7 +14,7 @@ export default UpdateGalleryForm = () => {
                     <input type='submit'/>
                 </form>
             )}
-        </AdminContext>
+        </AdminContext.Consumer>
     )
 }
 
