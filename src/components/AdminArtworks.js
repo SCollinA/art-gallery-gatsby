@@ -33,6 +33,26 @@ export default () => {
                                                 updatingArtwork.title :
                                                 artwork.title}
                                             </h3>
+                                            <h3>
+                                                {updatingArtwork.id === artwork.id ?
+                                                updatingArtwork.galleryId :
+                                                artwork.galleryId}
+                                            </h3>
+                                            <h3>
+                                                {updatingArtwork.id === artwork.id ?
+                                                updatingArtwork.image :
+                                                artwork.image}
+                                            </h3>
+                                            <h3>
+                                                {updatingArtwork.id === artwork.id ?
+                                                updatingArtwork.price :
+                                                artwork.price}
+                                            </h3>
+                                            <h3>
+                                                {updatingArtwork.id === artwork.id ?
+                                                updatingArtwork.sold :
+                                                artwork.sold}
+                                            </h3>
                                         </div>
                                     ))
                                 }

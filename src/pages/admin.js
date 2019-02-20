@@ -90,7 +90,15 @@ class AdminPage extends React.Component {
                     <AdminGalleries/>
                     <AdminArtworks/>
                     {isUpdating && (
-                        <div className='updateForm'>
+                        <div className='updateForm'
+                            onClick={() => this.setState({
+                                isUpdating: false,
+                                selectedGallery: {},
+                                updatingGallery: {},
+                                selectedArtwork: {},
+                                updatingArtwork: {},
+                            })}
+                        >
                             {((updatingGallery.id && 
                                 <UpdateGalleryForm/>) || 
                             (updatingArtwork.id && 

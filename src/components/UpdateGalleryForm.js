@@ -19,6 +19,7 @@ export default () => {
                                 }})
                             }}
                             onReset={() => resetGallery()}
+                            onClick={event => event.stopPropagation()}
                         >
                             <input type='text' name='name'
                                 value={updatingGallery.name}
