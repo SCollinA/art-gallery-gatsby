@@ -1,7 +1,6 @@
 import React from 'react'
 import { Mutation, gql } from 'react-apollo'
 import { AdminContext } from '../pages/admin'
-import { Mutation } from 'react-apollo';
 
 export default UpdateArtworkForm = () => {
     return (
@@ -14,7 +13,10 @@ export default UpdateArtworkForm = () => {
                             event.preventDefault()
                             submitArtwork()
                             // updating artwork values will match form values
-                            updateArtwork({ variables: updatingArtwork })
+                            updateArtwork({ variables: {
+                                id: updatingArtwork.id,
+                                input: updatingArtwork
+                            }})
                         }}
                         onReset={() => selectArtwork()}
                     >
@@ -86,6 +88,9 @@ export default UpdateArtworkForm = () => {
                         </label>
                         <input type='submit' value='submit'/>
                         <input type='reset' value='reset'/>
+                        <input type='button' value='cancel'
+                            onClick={() => selectArtwork()}
+                        />
                     </form>
                 )}
                 </Mutation>

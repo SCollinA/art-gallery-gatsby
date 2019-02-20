@@ -1,6 +1,6 @@
 import React from 'react'
 import { Mutation, gql } from 'apollo-boost'
-import { AdminContext } from '../pages/admin';
+import { AdminContext } from '../pages/admin'
 
 export default UpdateGalleryForm = () => {
     return (
@@ -11,8 +11,11 @@ export default UpdateGalleryForm = () => {
                         <form
                             onSubmit={event => {
                                 event.preventDefault()
-                                submitGallery(updatingGallery)
-                                updateGallery(updatingGallery)
+                                submitGallery()
+                                updateGallery({variables: { 
+                                    id: updatingGallery.id,
+                                    input: updatingGallery
+                                }})
                             }}
                         >
                             <input type='text' name='name'
@@ -24,6 +27,9 @@ export default UpdateGalleryForm = () => {
                             />
                             <input type='submit' value='submit'/>
                             <input type='reset' value='reset'/>
+                            <input type='button' value='cancel'
+                                onClick={() => selectGallery()}
+                            />
                         </form>
                     )}
                 </Mutation>
@@ -37,7 +43,9 @@ const UPDATE_GALLERY = gql`
         id: String,
         name: String
     }) {
-        id
-        name
+        updateGallery(id: $ID, input: $input) {
+            id
+            name
+        }
     }
 `
