@@ -7,7 +7,7 @@ import { AdminContext } from '../pages/admin';
 export default AdminArtworks = ({ updatingArtwork }) => {
     return (
         <AdminContext.Consumer>
-            {() => (
+            {({ selectArtwork }) => (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
                     <Query query={ALL_ARTWORKS}>
@@ -15,7 +15,9 @@ export default AdminArtworks = ({ updatingArtwork }) => {
                             <div className='currentArtworks'>
                                 {!loading && 
                                     data.getAllArtworks.map(artwork => (
-                                        <div className='currentArtwork' key={artwork.id}>
+                                        <div className='currentArtwork' key={artwork.id}
+                                            onClick={() => selectArtwork(artwork)}
+                                        >
                                             <h3>{artwork.title}</h3>
                                         </div>
                                     ))

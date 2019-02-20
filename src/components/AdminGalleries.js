@@ -7,7 +7,7 @@ import { AdminContext } from '../pages/admin';
 export default AdminGalleries = ({ updatingGallery }) => {
     return (
         <AdminContext.Consumer>
-            {() => (
+            {({ selectGallery }) => (
                 <div className='AdminGalleries'>
                     <h1>galleries</h1>
                     <Query query={ALL_GALLERIES}>
@@ -15,7 +15,9 @@ export default AdminGalleries = ({ updatingGallery }) => {
                             <div className='currentGalleries'>
                                 {!loading && 
                                     data.getAllGalleries.map(gallery => (
-                                        <div className='currentGallery' key={gallery.id}>
+                                        <div className='currentGallery' key={gallery.id}
+                                            onClick={() => selectGallery(gallery)}
+                                        >
                                             <h3>{gallery.name}</h3>
                                         </div>
                                     ))

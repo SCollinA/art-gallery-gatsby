@@ -7,10 +7,11 @@ import { ALL_GALLERIES } from './AdminGalleries'
 export default () => {
     return (
         <AdminContext.Consumer>
-            {() => (
+            {({ selectGallery }) => (
                 <div className='AddGalleries'>
                     <Mutation mutation={ADD_GALLERY}
                         update={(cache, { data: { addGallery } }) => {
+                            selectGallery(addGallery)
                             const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
                             cache.writeQuery({
                                 query: ALL_GALLERIES,
