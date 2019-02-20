@@ -1,5 +1,5 @@
 import React from 'react'
-import { Mutation } from 'react-apollo'
+import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import { AdminContext } from '../pages/admin'
 
@@ -21,6 +21,28 @@ export default () => {
                         }}
                         onReset={() => resetArtwork()}
                     >
+                        <label>gallery
+                            <Query query={GALLERY_NAMES}>
+                            {({ data, loading, error }) => (
+                                <select name='galleryId'
+                                    value={updatingArtwork.galleryId}
+                                    onChange={event => changeArtwork({
+                                        ...updatingArtwork,
+                                        galleryId: event.target.value
+                                    })}
+                                >
+                                    {data.getAllGalleries.map(gallery => (
+                                        <option key={gallery.id} 
+                                            value={gallery.id} 
+                                            name='galleryId'
+                                        >
+                                            {gallery.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+                            </Query>
+                        </label>
                         <label>title
                             <input type='text' name='title'
                                 value={updatingArtwork.title}
@@ -116,6 +138,15 @@ const UPDATE_ARTWORK = gql`
             image
             price
             sold
+        }
+    }
+`
+
+const GALLERY_NAMES = gql`
+    {
+        getAllGalleries {
+            id
+            name
         }
     }
 `
