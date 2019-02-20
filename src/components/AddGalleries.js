@@ -11,7 +11,12 @@ export default () => {
                 <div className='AddGalleries'>
                     <Mutation mutation={ADD_GALLERY}
                         update={(cache, { data: { addGallery } }) => {
-                            selectGallery(addGallery)
+                            // immediately select the gallery for updating
+                            const { id, name } = addGallery
+                            selectGallery({
+                                id,
+                                name
+                            })
                             const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
                             cache.writeQuery({
                                 query: ALL_GALLERIES,

@@ -12,7 +12,17 @@ export default () => {
                     <Mutation mutation={ADD_ARTWORK}
                         update={(cache, { data: { addArtwork } }) => {
                             // select the new artwork for updating immediately
-                            selectArtwork(addArtwork)
+                            const { id, galleryId, title, width, height, medium, price, sold } = addArtwork
+                            selectArtwork({
+                                id,
+                                galleryId,
+                                title,
+                                width,
+                                height,
+                                medium,
+                                price,
+                                sold
+                            })
                             const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
                             cache.writeQuery({
                                 query: ALL_ARTWORKS,
