@@ -10,11 +10,6 @@ export default class UpdateArtworkForm extends React.Component {
             imageFile: null,
             imageLoaded: false,
         }
-        console.log(props)
-    }
-
-    componentDidUpdate() {
-        console.log(this.context)
     }
 
     render() {
@@ -100,10 +95,17 @@ export default class UpdateArtworkForm extends React.Component {
                                 <input type='file' name='image' accept='image/*'/>
                             </label>
                             <input type='button' value='Upload' onClick={event => {
-                                const imageFile = event.target.form.newPicture.files[0]
+                                const imageFile = event.target.form.image.files[0]
                                 const imageLoaded = imageFile && true
                                 this.setState({imageFile, imageLoaded})
                             }}/>
+                            {this.state.imageLoaded && (
+                                <div className='uploadedImage'>
+                                    <canvas id='imageCanvas' width={100} height={100}/> 
+                                    <img id='uploadedImage' src={blobUrl(this.state.imageFile)}
+                                        alt ='uploaded profile' width={100} height={100}/>
+                                </div>
+                            )}
                         </div>
                         <label>price
                             <input type='number' name='price'
@@ -175,3 +177,16 @@ const GALLERY_NAMES = gql`
         }
     }
 `
+
+// For the image uploading
+let urls = new WeakMap()
+
+let blobUrl = blob => {
+  if (urls.has(blob)) {
+    return urls.get(blob)
+  } else {
+    let url = URL.createObjectURL(blob)  
+    urls.set(blob, url)
+    return url
+  }
+}
