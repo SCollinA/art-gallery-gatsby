@@ -87,7 +87,14 @@ export const ALL_ARTWORKS = gql`
     {
         getAllArtworks {
             id
+            galleryId
             title
+            width
+            height
+            medium
+            image
+            price
+            sold
         }
     }
 `

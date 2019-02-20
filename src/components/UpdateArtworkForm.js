@@ -58,7 +58,7 @@ export default () => {
                             </label>
                             <label>width
                                 <input type='number' name='width'
-                                    value={updatingArtwork.width}
+                                    value={updatingArtwork.width || ''}
                                     onChange={event => changeArtwork({
                                         ...updatingArtwork,
                                         width: event.target.value
@@ -67,7 +67,7 @@ export default () => {
                             </label>
                             <label>height
                                 <input type='number' name='height'
-                                    value={updatingArtwork.height}
+                                    value={updatingArtwork.height || ''}
                                     onChange={event => changeArtwork({
                                         ...updatingArtwork,
                                         height: event.target.value
@@ -87,7 +87,7 @@ export default () => {
                             </label>
                             <label>price
                                 <input type='number' name='price'
-                                    value={updatingArtwork.price}
+                                    value={updatingArtwork.price || ''}
                                     onChange={event => changeArtwork({
                                         ...updatingArtwork,
                                         price: event.target.value
