@@ -13,18 +13,32 @@ class AdminPage extends React.Component {
         super(props)
         this.state = {
             isUpdating: false,
+            selectedGallery: {},
             updatingGallery: {},
+            selectedArtwork: {},
             updatingArtwork: {},
         }
     }
 
     // select a gallery to update
     // when selecting, if one already exists, remove it
-    _selectGallery = updatingGallery => this.state.isUpdating ? this.setState({ updatingGallery: {}, isUpdating: false }) : this.setState({ updatingGallery, isUpdating: true })
+    _selectGallery = selectedGallery => this.setState({
+        updatingArtwork: {},
+        selectedArtwork: {},
+        selectedGallery,
+        updatingGallery: selectedGallery,
+        isUpdating: true 
+    })
     
     // select an artwork to update
     // when selecting, if one already exists, remove it
-    _selectArtwork = updatingArtwork => this.state.isUpdating ? this.setState({ updatingArtwork: {}, isUpdating: false }) : this.setState({ updatingArtwork, isUpdating: true })
+    _selectArtwork = selectedArtwork => this.setState({
+        updatingGallery: {},
+        selectedGallery: {}, 
+        selectedArtwork,
+        updatingArtwork: selectedArtwork, 
+        isUpdating: true
+    })
 
     // update the gallery in state
     _handleGalleryChange = updatingGallery => this.setState({ updatingGallery })
@@ -33,10 +47,26 @@ class AdminPage extends React.Component {
     _handleArtworkChange = updatingArtwork => this.setState({ updatingArtwork })
 
     // submission will be a mutation defined in the form
-    _submitGalleryChange = () => this.setState({ updatingGallery: {}, isUpdating: false })
+    _submitGalleryChange = () => this.setState({ 
+        updatingGallery: {},
+        selectedGallery: {}, 
+        isUpdating: false 
+    })
     
     // submission will be a mutation defined in the form
-    _submitArtworkChange = () => this.setState({ updatingArtwork: {}, isUpdating: false })
+    _submitArtworkChange = () => this.setState({ 
+        updatingArtwork: {}, 
+        selectedArtwork: {},
+        isUpdating: false 
+    })
+
+    _resetGallery = () => this.setState({
+        updatingGallery: this.state.selectedGallery,
+    })
+
+    _resetArtwork = () => this.setState({
+        updatingArtwork: this.state.selectedArtwork,
+    })
 
     render() {
         const { isUpdating, updatingGallery, updatingArtwork } = this.state
@@ -49,20 +79,24 @@ class AdminPage extends React.Component {
                         selectGallery: this._selectGallery,
                         changeGallery: this._handleGalleryChange,
                         submitGallery: this._submitGalleryChange,
+                        resetGallery: this._resetGallery,
                         updatingArtwork: this.state.updatingArtwork,
                         selectArtwork: this._selectArtwork,
                         changeArtwork: this._handleArtworkChange,
                         submitArtwork: this._submitArtworkChange,
+                        resetArtwork: this._resetArtwork,
                     }}
                 >
                     <AdminGalleries/>
                     <AdminArtworks/>
-                    {isUpdating && 
-                        ((updatingGallery.id && 
-                            <UpdateGalleryForm/>) || 
-                        (updatingArtwork.id && 
-                            <UpdateArtworkForm/>))
-                    }
+                    {isUpdating && (
+                        <div className='updateForm'>
+                            {((updatingGallery.id && 
+                                <UpdateGalleryForm/>) || 
+                            (updatingArtwork.id && 
+                                <UpdateArtworkForm/>))}
+                        </div>
+                    )}
                 </AdminContext.Provider>
             </Layout>
         )

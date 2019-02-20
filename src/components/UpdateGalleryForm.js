@@ -7,7 +7,7 @@ import { ALL_GALLERIES } from './AdminGalleries';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ updatingGallery, selectGallery, changeGallery, submitGallery }) => (
+            {({ updatingGallery, changeGallery, submitGallery, resetGallery }) => (
                 <Mutation mutation={UPDATE_GALLERY}
                     update={(cache, { data: { updateGallery } }) => {
                         const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
@@ -27,6 +27,7 @@ export default () => {
                                     input: updatingGallery
                                 }})
                             }}
+                            onReset={() => resetGallery()}
                         >
                             <input type='text' name='name'
                                 value={updatingGallery.name}
@@ -38,7 +39,7 @@ export default () => {
                             <input type='submit' value='submit'/>
                             <input type='reset' value='reset'/>
                             <input type='button' value='cancel'
-                                onClick={() => selectGallery()}
+                                onClick={() => submitGallery()}
                             />
                         </form>
                     )}

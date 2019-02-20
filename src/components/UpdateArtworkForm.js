@@ -7,7 +7,7 @@ import { ALL_ARTWORKS } from './AdminArtworks'
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ updatingArtwork, selectArtwork, changeArtwork, submitArtwork }) => (
+            {({ updatingArtwork, changeArtwork, submitArtwork, resetArtwork }) => (
                 <Mutation mutation={UPDATE_ARTWORK}
                     update={(cache, { data: { updateArtwork } }) => {
                         const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
@@ -28,6 +28,7 @@ export default () => {
                                 input: updatingArtwork
                             }})
                         }}
+                        onReset={() => resetArtwork()}
                     >
                         <label>title
                             <input type='text' name='title'
@@ -98,7 +99,7 @@ export default () => {
                         <input type='submit' value='submit'/>
                         <input type='reset' value='reset'/>
                         <input type='button' value='cancel'
-                            onClick={() => selectArtwork()}
+                            onClick={() => submitArtwork()}
                         />
                     </form>
                 )}

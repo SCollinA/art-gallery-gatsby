@@ -239,13 +239,22 @@ a {
     }
 }
 
+/* ================================ */
+/*           Admin Page             */
+/* ================================ */
+
+
+
+/* ================================ */
+/*              Footer              */
+/* ================================ */
 .Footer {
     display: flex;
     justify-content: space-around;
 }
 
-@media (max-height: 750px) {
-    /* below is for making header scroll */
+/* @media (max-height: 750px) {
+    below is for making header scroll
     .Layout {
         overflow-y: auto;
     }
@@ -253,7 +262,7 @@ a {
     .Content {
         overflow: visible;
     }
-}
+} */
 
 /* @media (max-width: 960px) {
     .aboutContent > p {
