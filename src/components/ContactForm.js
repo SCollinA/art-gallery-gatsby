@@ -1,11 +1,11 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
-import { galleryContext } from './layout'
+import LayoutContext from '../contexts/LayoutContext'
 
 export default () => (
     <div className='Contact'>
-        <galleryContext.Consumer> 
+        <LayoutContext.Consumer> 
             {({ artworks }) => (
                 <label>
                     <div className='pageHeader'>
@@ -46,7 +46,7 @@ export default () => (
                     </Mutation>
                 </label>
             )}
-        </galleryContext.Consumer>
+        </LayoutContext.Consumer>
     </div>
 )
 

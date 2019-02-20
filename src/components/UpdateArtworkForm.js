@@ -1,7 +1,7 @@
 import React from 'react'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import AdminContext from '../pages/admin'
+import AdminContext from '../contexts/AdminContext'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {

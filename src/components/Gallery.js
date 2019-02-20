@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import GalleryMain from './GalleryMain';
 import GalleryThumbs from './GalleryThumbs';
-import { galleryContext } from './layout';
+// import { galleryContext } from './layout';
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -27,4 +27,4 @@ export default class Gallery extends Component {
     }
 }
 
-Gallery.contextType = galleryContext
+// Gallery.contextType = galleryContext

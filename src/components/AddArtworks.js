@@ -1,7 +1,7 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import AdminContext from '../pages/admin';
+import AdminContext from '../contexts/AdminContext';
 import { ALL_ARTWORKS } from './AdminArtworks'
 
 export default () => {

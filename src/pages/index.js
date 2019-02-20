@@ -1,7 +1,7 @@
 import React from "react"
 import Img from 'gatsby-image'
-
-import Layout, { galleryContext } from "../components/layout"
+import LayoutContext from '../contexts/LayoutContext'
+import Layout from "../components/layout"
 import SEO from "../components/seo"
 
 const IndexPage = () => {
@@ -10,11 +10,11 @@ const IndexPage = () => {
     <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
     {/* random artwork */}
     <div className='randomArtwork'>
-      <galleryContext.Consumer>
+      <LayoutContext.Consumer>
         {({ artworks }) => (
           <Img fluid={artworks[Math.floor(Math.random() * artworks.length)].childImageSharp.fluid}/>
         )}
-      </galleryContext.Consumer>
+      </LayoutContext.Consumer>
     </div>
     <div className='welcomeMessage'>
       <h4>Welcome!</h4>

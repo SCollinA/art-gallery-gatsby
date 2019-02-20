@@ -1,7 +1,7 @@
 import React from 'react'
 import Img from 'gatsby-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { galleryContext } from './layout'
+import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ selectArtwork }) => (
     <div className='GalleryThumbs'>
@@ -9,7 +9,7 @@ export default ({ selectArtwork }) => (
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
         {/* <h1 className='galleryArrow'>{'<'}</h1> */}
-        <galleryContext.Consumer>
+        <LayoutContext.Consumer>
             {({ artworks }) => (
                 <div id='galleryThumbs'>
                     {artworks.map((artwork, index) => (
@@ -21,7 +21,7 @@ export default ({ selectArtwork }) => (
                     ))}
                 </div>
             )}
-        </galleryContext.Consumer>
+        </LayoutContext.Consumer>
         {/* <h1 className='galleryArrow'>{'>'}</h1> */}
         <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>

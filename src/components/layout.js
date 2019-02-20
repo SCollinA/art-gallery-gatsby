@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
-import galleryContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
@@ -26,9 +26,9 @@ const Layout = ({ children, data }) => (
       render={({ allFile: { edges }}) => {
         return (
           // set context to the files returned from the query above
-          <galleryContext.Provider value={{ artworks: edges.map(edge => edge.node) }}>
+          <LayoutContext.Provider value={{ artworks: edges.map(edge => edge.node) }}>
             {children}
-          </galleryContext.Provider>
+          </LayoutContext.Provider>
         ) 
       }}/>
         <Footer/>
