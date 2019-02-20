@@ -33,28 +33,31 @@ export default () => {
                                                 updatingArtwork.title :
                                                 artwork.title}
                                             </h3>
-                                            <Query query={gql`
-                                                    query GetGallery($id: ID!) {
-                                                        getGallery(id: $id) {
-                                                            name
+                                            {((updatingArtwork.id === artwork.id &&
+                                                updatingArtwork.galleryId) ||
+                                                artwork.galleryId) && (                                        
+                                                <Query query={gql`
+                                                        query GetGallery($id: ID!) {
+                                                            getGallery(id: $id) {
+                                                                name
+                                                            }
                                                         }
-                                                    }
-                                                `}
-                                                variables={{
-                                                    id: updatingArtwork.id === artwork.id ?
-                                                    updatingArtwork.galleryId :
-                                                    artwork.galleryId
-                                                }}
-                                            >
-                                                {({ data, loading, error }) => (
-                                                    <h5>
-                                                        {!(loading || error) ? 
-                                                        data.getGallery.name :
-                                                        'no gallery'
-                                                    }
-                                                    </h5>
-                                                )}
-                                            </Query>
+                                                    `}
+                                                    variables={{
+                                                        id: updatingArtwork.id === artwork.id ?
+                                                        updatingArtwork.galleryId :
+                                                        artwork.galleryId
+                                                    }}
+                                                >
+                                                    {({ data, loading, error }) => (
+                                                        <h5>
+                                                            {!(loading || error) ? 
+                                                            data.getGallery.name :
+                                                            'no gallery'}
+                                                        </h5>
+                                                    )}
+                                                </Query>
+                                            )}
                                             <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.image :

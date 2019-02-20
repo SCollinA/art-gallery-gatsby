@@ -75,7 +75,7 @@ export default () => {
                             </label>
                             <label>medium
                                 <input type='text' name='medium'
-                                    value={updatingArtwork.medium}
+                                    value={updatingArtwork.medium || ''}
                                     onChange={event => changeArtwork({
                                         ...updatingArtwork,
                                         medium: event.target.value
