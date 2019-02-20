@@ -21,6 +21,25 @@ export default class UpdateArtworkForm extends React.Component {
                         onSubmit={event => {
                             event.preventDefault()
                             submitArtwork()
+                            if (this.state.imageLoaded) {
+                                const imageCanvas = document.getElementById('imageCanvas')
+                                const uploadedImage = document.getElementById('uploadedImage')
+                                const canvasContext = imageCanvas.getContext('2d')
+                                console.log(uploadedImage)
+                                // draw image takes (img, x, y, w, h)
+                                canvasContext.drawImage(uploadedImage, 0, 0, 1000, 1000)
+                                imageCanvas.toBlob((imageBlob) => {
+                                    const fr = new FileReader()
+                                    fr.onload = () => {
+                                        updatingArtwork.image = fr.result
+                                    }
+                                    fr.readAsBinaryString(imageBlob)
+                                }, 'image/png', .5)
+                            }
+                            this.setState({
+                                imageFile: null,
+                                imageLoaded: false,
+                            })
                             // updating artwork values will match form values
                             updateArtwork({ variables: {
                                 id: updatingArtwork.id,
@@ -103,7 +122,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 <div className='uploadedImage'>
                                     <canvas id='imageCanvas' width={100} height={100}/> 
                                     <img id='uploadedImage' src={blobUrl(this.state.imageFile)}
-                                        alt ='uploaded profile' width={100} height={100}/>
+                                        alt ='uploaded profile' width={`100%`}/>
                                 </div>
                             )}
                         </div>

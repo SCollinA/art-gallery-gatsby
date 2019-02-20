@@ -58,11 +58,9 @@ export default () => {
                                                     )}
                                                 </Query>
                                             )}
-                                            <h5>
-                                                {updatingArtwork.id === artwork.id ?
+                                            {<img src={`${updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.image :
-                                                artwork.image}
-                                            </h5>
+                                                artwork.image}`} alt='uploaded artwork'/>}
                                             <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :
