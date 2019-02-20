@@ -85,6 +85,7 @@ a {
     margin: 0 auto;
     padding: 0 5% 5%;
     overflow: auto;
+    position: relative;
 }
 
 .Content > * {
@@ -243,8 +244,32 @@ a {
 /*           Admin Page             */
 /* ================================ */
 
+.updateForm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+}
 
+#UpdateGalleryForm, #UpdateArtworkForm {
+    position: fixed;
+    width: 75%;
+    height: 50%;
+    top: 25%;
+    left: 12.5%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    padding: 5%;
+}
 
+#UpdateGalleryForm > *, #UpdateArtworkForm > * {
+    margin: auto;
+    padding: 2%;
+}
 /* ================================ */
 /*              Footer              */
 /* ================================ */

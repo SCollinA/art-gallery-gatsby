@@ -27,11 +27,13 @@ export default () => {
                                     name: event.target.value
                                 })}
                             />
-                            <input type='submit' value='submit'/>
-                            <input type='reset' value='reset'/>
-                            <input type='button' value='cancel'
-                                onClick={() => submitGallery()}
-                            />
+                            <div className='updateGalleryButtons'>
+                                <input type='submit' value='submit'/>
+                                <input type='reset' value='reset'/>
+                                <input type='button' value='cancel'
+                                    onClick={() => submitGallery()}
+                                />
+                            </div>
                         </form>
                     )}
                 </Mutation>

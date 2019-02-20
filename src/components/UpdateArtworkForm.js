@@ -67,31 +67,35 @@ export default () => {
                                     price: event.target.value
                                 })}/>
                         </label>
-                        <label>sold
-                            <input type='radio' name='sold'
-                                value='sold'
-                                checked={updatingArtwork.sold}
-                                onChange={event => changeArtwork({
-                                    ...updatingArtwork,
-                                    sold: event.target.checked
-                                })}
+                        <div className='artworkRadioButtons'>
+                            <label>sold
+                                <input type='radio' name='sold'
+                                    value='sold'
+                                    checked={updatingArtwork.sold}
+                                    onChange={event => changeArtwork({
+                                        ...updatingArtwork,
+                                        sold: event.target.checked
+                                    })}
+                                />
+                            </label>
+                            <label>unsold
+                                <input type='radio' name='sold'
+                                    value='unsold'
+                                    checked={!updatingArtwork.sold}
+                                    onChange={event => changeArtwork({
+                                        ...updatingArtwork,
+                                        sold: !event.target.checked
+                                    })}
+                                />
+                            </label>
+                        </div>
+                        <div className='updateArtworkButtons'>
+                            <input type='submit' value='submit'/>
+                            <input type='reset' value='reset'/>
+                            <input type='button' value='cancel'
+                                onClick={() => submitArtwork()}
                             />
-                        </label>
-                        <label>unsold
-                            <input type='radio' name='sold'
-                                value='unsold'
-                                checked={!updatingArtwork.sold}
-                                onChange={event => changeArtwork({
-                                    ...updatingArtwork,
-                                    sold: !event.target.checked
-                                })}
-                            />
-                        </label>
-                        <input type='submit' value='submit'/>
-                        <input type='reset' value='reset'/>
-                        <input type='button' value='cancel'
-                            onClick={() => submitArtwork()}
-                        />
+                        </div>
                     </form>
                 )}
                 </Mutation>
