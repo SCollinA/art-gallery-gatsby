@@ -13,7 +13,10 @@ const Layout = ({ children, data }) => (
       <StaticQuery
       query={graphql`
         {
-          allFile(filter: { relativeDirectory: { eq: "artworks" } }) {
+          allFile(filter: { 
+            relativeDirectory: { eq: "artworks" },
+            extension: { eq: "jpeg" }
+          }) {
             edges {
               node {
                 name
