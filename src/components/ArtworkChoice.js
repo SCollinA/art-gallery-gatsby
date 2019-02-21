@@ -1,24 +1,31 @@
 import React from 'react'
 import Img from 'gatsby-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import LayoutContext from '../contexts/LayoutContext'
+// import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
-    <div className='GalleryThumbs'>
+export default ArtworkChoice = ({ selectedGallery, selectArtwork, selectedArtwork }) => (
+    <div className='ArtworkChoice'>
         <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
         {/* <h1 className='galleryArrow'>{'<'}</h1> */}
         {/* <LayoutContext.Consumer>
             {({ artworks }) => ( */}
-                <div id='galleryThumbs'>
+                <div id='artworkThumbs'>
                     {selectedGallery.artworks.map((artwork, index) => (
-                        <div key={index} className='galleryThumb'
-                        onClick={() => selectArtwork(artwork.name)}
+                        <div key={index} 
+                            className={`
+                                artworkThumb
+                                ${artwork.id === selectedArtwork.id ?
+                                    ' selectedArtwork' : ''}
+                            `}
+                            onClick={() => selectArtwork(artwork.name)}
                         >
-                            {artwork.file && (
+                            {(artwork.file && (
                                 <Img fluid={artwork.file.childImageSharp.fluid}/>
-                            ) 
+                            )) || (
+                                <img src={artwork.image} alt={artwork.title}/>
+                            )}
                         </div>
                     ))}
                 </div>

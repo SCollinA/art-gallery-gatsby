@@ -14,17 +14,17 @@ export default ({ selectedGallery, selectedArtwork }) => (
                         <h1>{visibleArtwork.title}</h1>
                         {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                             <div key={index} className={`galleryArtwork${visibleArtwork.title === artwork.title ? ' current' : ' hidden'}`}>
-                                {artwork.file && (
+                                {(artwork.file && (
                                     <Img  
                                         // style={{
                                         //     display: `${visibleArtworkTitle === artwork.name ? 'block' : 'none'}`
                                         // }} 
                                         fluid={artwork.file.childImageSharp.fluid} 
                                     />
-                                ) || (
+                                )) || (
                                     <img 
                                         src={`data:image/jepg;base64,${artwork.image}`} 
-                                        alt={`${artwork.medium}`}
+                                        alt={`${artwork.title}`}
                                     />
                                 )}
                             </div>

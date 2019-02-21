@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import GalleryMain from './GalleryMain';
-import GalleryThumbs from './GalleryThumbs';
+import GalleryThumbs from './ArtworkChoice';
 import LayoutContext from '../contexts/LayoutContext'
 
 export default class Gallery extends Component {
