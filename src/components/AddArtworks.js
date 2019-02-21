@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext';
-import { GALLERY_ARTWORKS } from './AdminArtworks'
+import { GALLERY_ARTWORKS } from './AdminArtworks';
 
 export default () => {
     return (
@@ -10,29 +10,34 @@ export default () => {
             {({ selectArtwork, selectedGallery }) => (
                 <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
-                        variables={{
-                            galleryId: selectedGallery ? selectedGallery.id : ''
+                        variables={selectedGallery && {
+                            galleryId: selectedGallery.id,
                         }}
-                        update={(cache, { data: { addArtwork } }) => {
-                            // select the new artwork for updating immediately
-                            const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
-                            selectArtwork({
-                                id,
-                                galleryId,
-                                title,
-                                width,
-                                height,
-                                image,
-                                medium,
-                                price,
-                                sold
-                            })
-                            const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS })
-                            cache.writeQuery({
-                                query: GALLERY_ARTWORKS,
-                                data: { getArtworks: getArtworks.concat([addArtwork]) },
-                            })
-                        }}
+                        // update={(cache, { data: { addArtwork } }) => {
+                        //     // select the new artwork for updating immediately
+                        //     const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
+                        //     selectArtwork({
+                        //         id,
+                        //         galleryId,
+                        //         title,
+                        //         width,
+                        //         height,
+                        //         image,
+                        //         medium,
+                        //         price,
+                        //         sold
+                        //     })
+                        //     const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS, variables: { galleryId } })
+                        //     cache.writeQuery({
+                        //         query: GALLERY_ARTWORKS,
+                        //         variables: { galleryId },
+                        //         data: { getArtworks: getArtworks.concat([addArtwork]) },
+                        //     })
+                        // }}
+                        refetchQueries={() => [{
+                            query: GALLERY_ARTWORKS,
+                            variables: selectedGallery ? { galleryId: selectedGallery.id } : {},
+                        }]}
                     >
                         {(addArtwork, { data }) => (
                             <div className='addArtwork'

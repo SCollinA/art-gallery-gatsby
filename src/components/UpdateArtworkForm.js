@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import GALLERY_ARTWORKS from './Admin'
+// import { GALLERY_ARTWORKS } from './AdminArtworks'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -17,13 +17,14 @@ export default class UpdateArtworkForm extends React.Component {
         const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
         return (
             <Mutation mutation={UPDATE_ARTWORK}
-                update={(cache, { data: { updateArtwork }, loading, error }) => {
-                    const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS })
-                    cache.writeQuery({
-                        query: GALLERY_ARTWORKS,
-                        data: { getArtworks: getArtworks.filter(artwork => artwork.id !== updateArtwork.id).push(updateArtwork) },
-                    })
-                }}
+                // update={(cache, { data: { updateArtwork }, loading, error }) => {
+                //     const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS, variables: { galleryId: updateArtwork.galleryId } })
+                //     cache.writeQuery({
+                //         query: GALLERY_ARTWORKS,
+                //         variables: { galleryId: updateArtwork.galleryId },
+                //         data: { getArtworks: getArtworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
+                //     })
+                // }}
             >
                 {(updateArtwork, { data, loading, error }) => (
                     <form id='UpdateArtworkForm'

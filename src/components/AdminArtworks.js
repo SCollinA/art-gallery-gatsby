@@ -12,13 +12,13 @@ export default () => {
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
                     <Query query={GALLERY_ARTWORKS}
-                        variables={{
-                            input: {
-                                galleryId: selectedGallery.id,
-                            }
+                        variables={selectedGallery && {
+                            galleryId: selectedGallery.id,
                         }}
                     >
-                        {({ data, loading, error }) => (
+                        {({ data, loading, error }) => {
+                            console.log(data)
+                            return (
                             <div className='currentArtworks'>
                                 {(!loading && data.getArtworks) && 
                                     data.getArtworks.map(artwork => (
@@ -91,7 +91,7 @@ export default () => {
                                 }
                                 <AddArtworks/>
                             </div>
-                        )}
+                        )}}
                     </Query>
                 </div>
             )}
@@ -100,8 +100,8 @@ export default () => {
 }
 
 export const GALLERY_ARTWORKS = gql`
-    query GetArtworks($input: ArtworkInput!) {
-        getArtworks(input: $input) {
+    query GetArtworksForGallery($galleryId: ID) {
+        getArtworks(input: { galleryId: $galleryId }) {
             id
             galleryId
             title
