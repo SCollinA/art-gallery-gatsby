@@ -22,7 +22,6 @@ export default class Gallery extends Component {
     }
     
     _selectGallery = galleryChoice => {
-        console.log(this.state, galleryChoice)
         const selectedGallery = this.context.galleries.find(gallery => gallery.id === galleryChoice.id)
         galleryChoice.id === this.state.selectedGallery.id ?
             this.setState({
@@ -34,11 +33,12 @@ export default class Gallery extends Component {
             })
     }
 
-    _selectArtwork = selectedArtwork => this.setState({ 
-        selectedArtwork: selectedArtwork.id === this.state.selectedArtwork.id ?
+    _selectArtwork = selectedArtwork => this.setState({
+        selectedArtwork: (this.state.selectedArtwork && 
+            selectedArtwork.id === this.state.selectedArtwork.id) ?
             null :
-            this.state.selectedGallery.find(artwork => artwork.id === selectedArtwork.id),
-     })
+            this.state.selectedGallery.artworks.find(artwork => artwork.id === selectedArtwork.id),
+    })
 
     render() {
         return (

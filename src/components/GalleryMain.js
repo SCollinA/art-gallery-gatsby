@@ -6,6 +6,7 @@ export default ({ selectedGallery, selectedArtwork }) => (
     <div className='GalleryMain'>
         <LayoutContext.Consumer>
             {({ galleries }) => {
+                console.log(galleries)
                 return selectedArtwork && (
                     <>
                         <h2>{selectedGallery.name}</h2>

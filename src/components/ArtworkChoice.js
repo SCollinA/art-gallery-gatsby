@@ -14,8 +14,8 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
                 <div id='artworkThumbs'>
                     {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => (
                         <div key={index} 
-                            className={`artworkThumb${artwork.id === selectedArtwork.id ? ' selectedArtwork' : ''}`}
-                            onClick={() => selectArtwork(artwork.name)}
+                            className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
+                            onClick={() => selectArtwork(artwork)}
                         >
                             {(artwork.file && (
                                 <Img fluid={artwork.file.childImageSharp.fluid}/>

@@ -15,7 +15,6 @@ const Layout = ({ children }) => (
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
           const { galleries, artworks } = (data.galleries && data.artworks) ? data : { galleries: [], artworks: [] }
-          console.log(galleries, artworks)
           return (
             <StaticQuery query={ARTWORK_FILES}
               render={data => {
@@ -25,13 +24,22 @@ const Layout = ({ children }) => (
                     value={{ 
                       galleries: galleries.length > 0 ? galleries.map(gallery => {
                         return {
-                          ...gallery,
-                          artworks: artworks.length > 0 ? artworks.map(artwork => {
+                          id: gallery.id,
+                          name: gallery.name,
+                          artworks: artworks.length > 0 ? artworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
                             // if an artwork file exist add it
                             // will check if file is there to determine proper element for image
                             return {
-                              ...artwork,
-                              file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
+                              id,
+                              galleryId,
+                              title,
+                              width,
+                              height,
+                              image,
+                              medium,
+                              price,
+                              sold,
+                              file: artworkFiles.find(artworkFile => artworkFile.name === id),
                             }
                           })
                           .filter(artwork => artwork.galleryId === gallery.id) :
