@@ -11,9 +11,12 @@ const IndexPage = () => {
     {/* random artwork */}
     <div className='randomArtwork'>
       <LayoutContext.Consumer>
-        {({ artworks }) => (
-          <Img fluid={artworks[Math.floor(Math.random() * artworks.length)].childImageSharp.fluid}/>
-        )}
+        {({ galleries }) => {
+          const { artworks } = galleries[Math.floor(Math.random() * galleries.length)] || { artworks: null }
+          return artworks && (
+              <Img fluid={artworks[Math.floor(Math.random() * artworks.length)].childImageSharp.fluid}/>
+          )
+        }}
       </LayoutContext.Consumer>
     </div>
     <div className='welcomeMessage'>
