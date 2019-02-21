@@ -13,7 +13,7 @@ export default () => {
                     <Query query={ALL_ARTWORKS}>
                         {({ data, loading, error }) => (
                             <div className='currentArtworks'>
-                                {!loading  && 
+                                {(!loading && data.getAllArtworks) && 
                                     data.getAllArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
                                             onClick={() => selectArtwork({
