@@ -15,13 +15,13 @@ export default () => {
                             const { id, galleryId, title, width, height, medium, price, sold } = addArtwork
                             selectArtwork({
                                 id,
-                                galleryId,
+                                // galleryId,
                                 title,
-                                width,
-                                height,
-                                medium,
-                                price,
-                                sold
+                                // width,
+                                // height,
+                                // medium,
+                                // price,
+                                // sold
                             })
                             const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
                             cache.writeQuery({

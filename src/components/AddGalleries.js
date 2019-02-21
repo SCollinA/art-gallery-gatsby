@@ -26,7 +26,7 @@ export default () => {
                         >
                         {(addGallery, { data }) => (
                             <div className='addGallery'
-                            onClick={addGallery}
+                                onClick={addGallery}
                             >
                                 <h3> + </h3>
                             </div>

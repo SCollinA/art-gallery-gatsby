@@ -29,7 +29,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 imageCanvas.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
-                                        const image = `${fr.result}`
+                                        const image = fr.result
                                         // console.log(typeof image, fr.result.length)
                                         // updating artwork values will match form values
                                         console.log({...updatingArtwork, image})
@@ -40,8 +40,8 @@ export default class UpdateArtworkForm extends React.Component {
                                                 image
                                             }
                                         }})
-                                        .then(() => {
-                                            console.log('we made it')
+                                        .then(data => {
+                                            console.log('we made it', data, error)
                                             this.setState({
                                                 imageFile: null,
                                                 imageLoaded: false,
@@ -49,6 +49,7 @@ export default class UpdateArtworkForm extends React.Component {
                                                 submitArtwork()
                                             })
                                         })
+                                        .catch(console.log)
                                     }
                                     fr.readAsBinaryString(imageBlob)
                                 }, 'image/jpg')

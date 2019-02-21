@@ -216,6 +216,20 @@ a {
     cursor: pointer;
 }
 
+.AddGalleries, .AddArtworks {
+    width: 10%;
+}
+
+.addGallery, .addArtwork {
+    padding: 10%;
+    margin: auto;
+    text-align: center;
+}
+
+.addGallery > h3, .addArtwork > h3 {
+    margin: auto;
+}
+
 .updateForm {
     position: fixed;
     top: 0;
