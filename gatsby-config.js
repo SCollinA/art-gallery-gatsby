@@ -15,6 +15,7 @@ module.exports = {
     //     refetchInterval: 60, // Refetch data every 60 seconds
     //   },
     // }, 
+    // can use this plugin to connect directly to graphql server
     // {
     //   resolve: 'gatsby-source-graphql',
     //   options: {
