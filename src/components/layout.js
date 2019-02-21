@@ -17,34 +17,39 @@ const Layout = ({ children }) => (
           const galleries = data.galleries || []
           const artworks = data.artworks || []
           return (
-          <StaticQuery query={ARTWORK_FILES}
-            render={data => {
-              const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
-              return (
-                <LayoutContext.Provider 
-                  value={{ 
-                    galleries: galleries.map(gallery => {
-                      return {
-                        ...gallery,
-                        artworks: artworks.map(artwork => {
-                          // if an artwork file exist add it
-                          // will check if file is there to determine proper element for image
-                          return {
-                            ...artworks,
-                            file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
-                          }
-                        })
-                        .filter(artwork => artwork.galleryId === gallery.id)
-                      }
-                    })
-                  }}
-                >
-                  {children}
-                </LayoutContext.Provider>
-              )
-            }}
-          />
-        )}}
+            <StaticQuery query={ARTWORK_FILES}
+              render={data => {
+                const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
+                return (
+                  <LayoutContext.Provider 
+                    value={{ 
+                      galleries: galleries.map(gallery => {
+                        return {
+                          ...gallery,
+                          artworks: artworks.map(artwork => {
+                            // if an artwork file exist add it
+                            // will check if file is there to determine proper element for image
+                            return {
+                              ...artworks,
+                              file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
+                            }
+                          })
+                          .filter(artwork => artwork.galleryId === gallery.id)
+                        }
+                      }) || [{ 
+                        id: 'none', 
+                        name: 'no galleries', 
+                        artworks: [{ id: 'nada', title: 'no galleries #1'}]
+                      }]
+                    }}
+                  >
+                    {children}
+                  </LayoutContext.Provider>
+                )
+              }}
+            />
+          )
+        }}
       </Query>  
       <Footer/>
     </div>
