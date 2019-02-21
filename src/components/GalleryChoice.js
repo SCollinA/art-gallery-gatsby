@@ -22,8 +22,9 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                 {(artwork.file && (
                                     <Img fluid={artwork.file.childImageSharp.fluid}/>
                                 )) || (
+                                artwork.image && (
                                     <img src={artwork.image} alt={artwork.title}/>
-                                )}
+                                ))}
                                 <h6>{gallery.name}</h6>
                             </div>
                         ))[0])}

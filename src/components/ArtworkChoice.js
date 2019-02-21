@@ -12,7 +12,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
         {/* <LayoutContext.Consumer>
             {({ artworks }) => ( */}
                 <div id='artworkThumbs'>
-                    {selectedGallery && selectedGallery.artworks.map((artwork, index) => (
+                    {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => (
                         <div key={index} 
                             className={`artworkThumb${artwork.id === selectedArtwork.id ? ' selectedArtwork' : ''}`}
                             onClick={() => selectArtwork(artwork.name)}
@@ -20,8 +20,9 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
                             {(artwork.file && (
                                 <Img fluid={artwork.file.childImageSharp.fluid}/>
                             )) || (
+                            artwork.image && (
                                 <img src={artwork.image} alt={artwork.title}/>
-                            )}
+                            ))}
                             <p>{artwork.title}</p>
                         </div>
                     ))}

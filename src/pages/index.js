@@ -12,6 +12,7 @@ const IndexPage = () => {
     <div className='randomArtwork'>
       <LayoutContext.Consumer>
         {({ galleries }) => {
+          console.log(galleries)
           const randomGallery = galleries[Math.floor(Math.random() * galleries.length)]
           const randomArtwork = randomGallery[Math.floor(Math.random() * randomGallery.length)]
           return randomArtwork && (
