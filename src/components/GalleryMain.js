@@ -13,11 +13,7 @@ export default ({ selectedGallery, selectedArtwork }) => (
                         <h1>{selectedArtwork.title}</h1>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
-                                    className={`
-                                        galleryArtwork
-                                        ${selectedArtwork.title === artwork.title ?
-                                            ' current' : ' hidden'}
-                                    `}
+                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
                                         <Img  
