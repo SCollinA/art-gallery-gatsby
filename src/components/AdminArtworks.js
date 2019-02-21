@@ -76,14 +76,14 @@ export default () => {
                                                     artwork.image}`} alt='uploaded artwork'/>
                                             ))}
                                             <h5>
-                                                {updatingArtwork.id === artwork.id ?
+                                                {`$${updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :
-                                                artwork.price}
+                                                artwork.price}`}
                                             </h5>
                                             <h5>
-                                                {updatingArtwork.id === artwork.id ?
+                                                {`${(updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.sold :
-                                                artwork.sold}
+                                                artwork.sold) ? 'sold' : 'unsold'}`}
                                             </h5>
                                         </div>
                                     ))
