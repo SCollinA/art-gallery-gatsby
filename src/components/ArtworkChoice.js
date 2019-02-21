@@ -14,11 +14,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
                 <div id='artworkThumbs'>
                     {selectedGallery && selectedGallery.artworks.map((artwork, index) => (
                         <div key={index} 
-                            className={`
-                                artworkThumb
-                                ${artwork.id === selectedArtwork.id ?
-                                    ' selectedArtwork' : ''}
-                            `}
+                            className={`artworkThumb${artwork.id === selectedArtwork.id ? ' selectedArtwork' : ''}`}
                             onClick={() => selectArtwork(artwork.name)}
                         >
                             {(artwork.file && (

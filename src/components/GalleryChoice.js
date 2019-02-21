@@ -16,11 +16,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                         {/* map galleries to their first artwork image */}
                         {galleries.map((gallery, index) => gallery.artworks.map((artwork) => (
                             <div key={index} 
-                                className={`
-                                    galleryThumb
-                                    ${artwork.id === selectedGallery.id ?
-                                        ' selectedGallery' : ''}
-                                `}
+                                className={`galleryThumb${artwork.id === selectedGallery.id ? ' selectedGallery' : ''}`}
                                 onClick={() => selectGallery(gallery)}
                             >
                                 {(artwork.file && (

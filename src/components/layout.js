@@ -14,6 +14,7 @@ const Layout = ({ children }) => (
     <div className='Content'>
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
+          console.log(data.artworks)
           const galleries = data.galleries || false
           const artworks = data.artworks || false
           return (
@@ -30,7 +31,7 @@ const Layout = ({ children }) => (
                             // if an artwork file exist add it
                             // will check if file is there to determine proper element for image
                             return {
-                              ...artworks,
+                              ...artwork,
                               file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
                             }
                           })
