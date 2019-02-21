@@ -34,10 +34,11 @@ export default class Gallery extends Component {
     }
 
     _selectArtwork = selectedArtwork => this.setState({
-        selectedArtwork: (this.state.selectedArtwork && 
-            selectedArtwork.id === this.state.selectedArtwork.id) ?
-            null :
-            this.state.selectedGallery.artworks.find(artwork => artwork.id === selectedArtwork.id),
+        selectedArtwork
+        // (this.state.selectedArtwork && 
+        //     selectedArtwork.id === this.state.selectedArtwork.id) ?
+        //     null :
+        //     this.state.selectedGallery.artworks.find(artwork => artwork.id === selectedArtwork.id),
     })
 
     render() {
