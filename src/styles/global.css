@@ -222,6 +222,10 @@ a {
     cursor: pointer;
 }
 
+/* .currentGallery, .currentArtwork {
+    max-width: 25%;
+} */
+
 .currentGallery.selected, .currentArtwork.selected {
     background-color: rgba(0, 0, 0, 0.25);
 }

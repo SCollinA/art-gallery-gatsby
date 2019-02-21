@@ -1,9 +1,9 @@
 import React from 'react'
+import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
-// import { GALLERY_ARTWORKS } from './AdminArtworks'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -154,7 +154,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 const imageLoaded = imageFile && true
                                 this.setState({imageFile, imageLoaded})
                             }}/>
-                            {this.state.imageLoaded && (
+                            {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
                                     <canvas id='imageCanvas' 
                                         width={1000}
@@ -169,7 +169,11 @@ export default class UpdateArtworkForm extends React.Component {
                                         width={'100%'}
                                     />
                                 </div>
-                            )}
+                            )) || (updatingArtwork.file && (
+                                <Img fluid={updatingArtwork.file.childImageSharp.fluid}/>
+                            )) || (updatingArtwork.image && (
+                                <img src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                            ))}
                         </div>
                         <label>price
                             <input type='number' name='price'
