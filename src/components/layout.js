@@ -14,8 +14,8 @@ const Layout = ({ children }) => (
     <div className='Content'>
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
-          const galleries = data.galleries || []
-          const artworks = data.artworks || []
+          const galleries = data.galleries || false
+          const artworks = data.artworks || false
           return (
             <StaticQuery query={ARTWORK_FILES}
               render={data => {
@@ -23,10 +23,10 @@ const Layout = ({ children }) => (
                 return (
                   <LayoutContext.Provider 
                     value={{ 
-                      galleries: galleries.map(gallery => {
+                      galleries: galleries ? galleries.map(gallery => {
                         return {
                           ...gallery,
-                          artworks: artworks.map(artwork => {
+                          artworks: artworks ? artworks.map(artwork => {
                             // if an artwork file exist add it
                             // will check if file is there to determine proper element for image
                             return {
@@ -34,9 +34,10 @@ const Layout = ({ children }) => (
                               file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
                             }
                           })
-                          .filter(artwork => artwork.galleryId === gallery.id)
+                          .filter(artwork => artwork.galleryId === gallery.id) :
+                          [{ id: 'nada', title: 'no galleries #1'}]
                         }
-                      }) || [{ 
+                      }) : [{ 
                         id: 'none', 
                         name: 'no galleries', 
                         artworks: [{ id: 'nada', title: 'no galleries #1'}]

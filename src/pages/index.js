@@ -12,9 +12,17 @@ const IndexPage = () => {
     <div className='randomArtwork'>
       <LayoutContext.Consumer>
         {({ galleries }) => {
-          const { artworks } = galleries[Math.floor(Math.random() * galleries.length)] || { artworks: false }
-          return artworks && (
-              <Img fluid={artworks[Math.floor(Math.random() * artworks.length)].childImageSharp.fluid}/>
+          const randomGallery = galleries[Math.floor(Math.random() * galleries.length)]
+          const randomArtwork = randomGallery[Math.floor(Math.random() * randomGallery.length)]
+          return randomArtwork && (
+            <>
+              {(randomArtwork.file && (
+                <Img fluid={randomArtwork[Math.floor(Math.random() * randomArtwork.length)].childImageSharp.fluid}/>
+              )) || (
+              randomArtwork.image && (
+                <img src={randomArtwork.image} alt={randomArtwork.title}/>
+              ))}
+            </>
           )
         }}
       </LayoutContext.Consumer>
