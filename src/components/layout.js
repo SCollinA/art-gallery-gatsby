@@ -21,6 +21,7 @@ const Layout = ({ children, data }) => (
           }) {
             edges {
               node {
+                name
                 ...fluidImage
               }
             }
@@ -58,7 +59,15 @@ const Layout = ({ children, data }) => (
                     galleries: galleries.map(gallery => {
                       return {
                         ...gallery,
-                        artworks: artworks.filter(artwork => artwork.galleryId === gallery.id)
+                        artworks: artworks.map(artwork => {
+                          // if an artwork file exist add it
+                          // will check if file is there to determine proper element for image
+                          return {
+                            ...artworks,
+                            artworkFile: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
+                          }
+                        })
+                        .filter(artwork => artwork.galleryId === gallery.id)
                       }
                     })
                   }}
