@@ -1,6 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { StaticQuery, graphql } from "gatsby"
+import { Query } from "react-apollo";
+import { gql } from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
@@ -13,25 +15,59 @@ const Layout = ({ children, data }) => (
       <StaticQuery
       query={graphql`
         {
-          allFile(filter: { 
+          artworks: allFile(filter: { 
             relativeDirectory: { eq: "artworks" },
             extension: { eq: "jpeg" }
           }) {
             edges {
               node {
-                name
                 ...fluidImage
               }
             }
           }
         }
       `}
-      render={({ allFile: { edges }}) => {
+      render={({ artworks: { edges }}) => {
         return (
           // set context to the files returned from the query above
-          <LayoutContext.Provider value={{ artworks: edges.map(edge => edge.node) }}>
-            {children}
-          </LayoutContext.Provider>
+          <Query query={gql`
+            {
+              galleries: getAllGalleries {
+                id
+                name
+              }
+
+              artworks: getAllArtworks {
+                id
+                galleryId
+                title
+                width
+                height
+                medium
+                image
+                price
+                sold
+              }
+            }
+          `}>
+            {({ data: { galleries, artworks }, loading, error }) => {
+              const artworkFiles = edges.map(edge => edge.node)
+              return (
+                <LayoutContext.Provider 
+                  value={{ 
+                    galleries: galleries.map(gallery => {
+                      return {
+                        ...gallery,
+                        artworks: artworks.filter(artwork => artwork.galleryId === gallery.id)
+                      }
+                    })
+                  }}
+                >
+                  {children}
+                </LayoutContext.Provider>
+              )
+            }}
+          </Query>
         ) 
       }}/>
         <Footer/>
