@@ -5,8 +5,7 @@ import AdminArtworks from "../components/AdminArtworks"
 import AdminGalleries from "../components/AdminGalleries"
 import UpdateGalleryForm from '../components/UpdateGalleryForm'
 import UpdateArtworkForm from '../components/UpdateArtworkForm'
-
-export const AdminContext = React.createContext({})
+import AdminContext from '../contexts/AdminContext'
 
 class AdminPage extends React.Component {
     constructor(props) {

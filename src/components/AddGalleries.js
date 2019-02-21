@@ -1,7 +1,7 @@
 import React from 'react'
 import {  Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { AdminContext } from '../pages/admin'
+import AdminContext from '../contexts/AdminContext'
 import { ALL_GALLERIES } from './AdminGalleries'
 
 export default () => {
@@ -26,7 +26,7 @@ export default () => {
                         >
                         {(addGallery, { data }) => (
                             <div className='addGallery'
-                            onClick={addGallery}
+                                onClick={addGallery}
                             >
                                 <h3> + </h3>
                             </div>

@@ -1,10 +1,10 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import { galleryContext } from './layout'
+import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ selectedArtworkTitle }) => (
     <div className='GalleryMain'>
-        <galleryContext.Consumer>
+        <LayoutContext.Consumer>
             {({ artworks }) => {
                 const visibleArtworkTitle = selectedArtworkTitle || artworks[0].name
                 return (
@@ -24,6 +24,6 @@ export default ({ selectedArtworkTitle }) => (
                     </>
                 )
             }}
-        </galleryContext.Consumer>
+        </LayoutContext.Consumer>
     </div>
 )

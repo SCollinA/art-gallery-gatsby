@@ -2,7 +2,7 @@ import React from 'react'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
-import { AdminContext } from '../pages/admin';
+import AdminContext from '../contexts/AdminContext';
 
 export default () => {
     return (
@@ -13,7 +13,7 @@ export default () => {
                     <Query query={ALL_ARTWORKS}>
                         {({ data, loading, error }) => (
                             <div className='currentArtworks'>
-                                {!loading && 
+                                {(!loading && data.getAllArtworks) && 
                                     data.getAllArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
                                             onClick={() => selectArtwork({
@@ -33,26 +33,44 @@ export default () => {
                                                 updatingArtwork.title :
                                                 artwork.title}
                                             </h3>
-                                            <h3>
-                                                {updatingArtwork.id === artwork.id ?
-                                                updatingArtwork.galleryId :
-                                                artwork.galleryId}
-                                            </h3>
-                                            <h3>
-                                                {updatingArtwork.id === artwork.id ?
+                                            {((updatingArtwork.id === artwork.id &&
+                                                updatingArtwork.galleryId) ||
+                                                artwork.galleryId) && (                                        
+                                                <Query query={gql`
+                                                        query GetGallery($id: ID!) {
+                                                            getGallery(id: $id) {
+                                                                name
+                                                            }
+                                                        }
+                                                    `}
+                                                    variables={{
+                                                        id: updatingArtwork.id === artwork.id ?
+                                                        updatingArtwork.galleryId :
+                                                        artwork.galleryId
+                                                    }}
+                                                >
+                                                    {({ data, loading, error }) => (
+                                                        <h5>
+                                                            {!(loading || error) ? 
+                                                            data.getGallery.name :
+                                                            'no gallery'}
+                                                        </h5>
+                                                    )}
+                                                </Query>
+                                            )}
+                                            {<img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.image :
-                                                artwork.image}
-                                            </h3>
-                                            <h3>
+                                                artwork.image}`} alt='uploaded artwork'/>}
+                                            <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :
                                                 artwork.price}
-                                            </h3>
-                                            <h3>
+                                            </h5>
+                                            <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.sold :
                                                 artwork.sold}
-                                            </h3>
+                                            </h5>
                                         </div>
                                     ))
                                 }
@@ -70,7 +88,14 @@ export const ALL_ARTWORKS = gql`
     {
         getAllArtworks {
             id
+            galleryId
             title
+            width
+            height
+            medium
+            image
+            price
+            sold
         }
     }
 `

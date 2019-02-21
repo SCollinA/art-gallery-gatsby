@@ -207,11 +207,27 @@ a {
     flex-wrap: wrap;
 }
 
+/* current artworks/galleries and add artwork/gallery */
 .currentGalleries > *, .currentArtworks > * {
     margin: 2%;
     padding: 2%;
     border: solid black 2px;
     border-radius: 10px;
+    cursor: pointer;
+}
+
+.AddGalleries, .AddArtworks {
+    width: 10%;
+}
+
+.addGallery, .addArtwork {
+    padding: 10%;
+    margin: auto;
+    text-align: center;
+}
+
+.addGallery > h3, .addArtwork > h3 {
+    margin: auto;
 }
 
 .updateForm {
