@@ -25,13 +25,21 @@ export default class UpdateArtworkForm extends React.Component {
                                 const imageCanvas = document.getElementById('imageCanvas')
                                 const uploadedImage = document.getElementById('uploadedImage')
                                 const canvasContext = imageCanvas.getContext('2d')
-                                console.log(uploadedImage)
                                 // draw image takes (img, x, y, w, h)
                                 canvasContext.drawImage(uploadedImage, 0, 0, 1000, 1000)
                                 imageCanvas.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
-                                        updatingArtwork.image = fr.result
+                                        const image = fr.result
+                                        console.log(image, fr.result.length)
+                                        // updating artwork values will match form values
+                                        updateArtwork({ variables: {
+                                            id: updatingArtwork.id,
+                                            input: {
+                                                ...updatingArtwork, 
+                                                image
+                                            }
+                                        }})
                                     }
                                     fr.readAsBinaryString(imageBlob)
                                 }, 'image/png', .5)
@@ -40,11 +48,6 @@ export default class UpdateArtworkForm extends React.Component {
                                 imageFile: null,
                                 imageLoaded: false,
                             })
-                            // updating artwork values will match form values
-                            updateArtwork({ variables: {
-                                id: updatingArtwork.id,
-                                input: updatingArtwork
-                            }})
                         }}
                         onReset={() => resetArtwork()}
                         onClick={event => event.stopPropagation()}
@@ -56,7 +59,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         value={updatingArtwork.galleryId}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
-                                            galleryId: event.target.value
+                                            galleryId: parseInt(event.target.value)
                                         })}
                                     >
                                         <option name='galleryId' value={null}>
@@ -88,7 +91,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 value={updatingArtwork.width || ''}
                                 onChange={event => changeArtwork({
                                     ...updatingArtwork,
-                                    width: event.target.value
+                                    width: parseInt(event.target.value)
                                 })}
                             />
                         </label>
@@ -97,7 +100,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 value={updatingArtwork.height || ''}
                                 onChange={event => changeArtwork({
                                     ...updatingArtwork,
-                                    height: event.target.value
+                                    height: parseInt(event.target.value)
                                 })}/>
                         </label>
                         <label>medium
@@ -131,7 +134,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 value={updatingArtwork.price || ''}
                                 onChange={event => changeArtwork({
                                     ...updatingArtwork,
-                                    price: event.target.value
+                                    price: parseInt(event.target.value)
                                 })}/>
                         </label>
                         <div className='artworkRadioButtons'>
