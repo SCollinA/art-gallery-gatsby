@@ -43,6 +43,13 @@ export default class UpdateArtworkForm extends React.Component {
                                     }
                                     fr.readAsBinaryString(imageBlob)
                                 }, 'image/png', .5)
+                            } else {
+                                // updating artwork values will match form values
+                                updateArtwork({ variables: {
+                                    id: updatingArtwork.id,
+                                    input: updatingArtwork
+                                }})
+
                             }
                             this.setState({
                                 imageFile: null,
