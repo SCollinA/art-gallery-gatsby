@@ -1,40 +1,66 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
+import { graphql, StaticQuery } from "gatsby"
+import { Query } from "react-apollo"
+import gql from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
-const Layout = ({ children, data }) => (
+const Layout = ({ children }) => (
   <div className='Layout'>
     <Header/>
     <div className='Content'>
-      <StaticQuery
-      query={graphql`
-        {
-          allFile(filter: { 
-            relativeDirectory: { eq: "artworks" },
-            extension: { eq: "jpeg" }
-          }) {
-            edges {
-              node {
-                name
-                ...fluidImage
-              }
-            }
-          }
-        }
-      `}
-      render={({ allFile: { edges }}) => {
-        return (
-          // set context to the files returned from the query above
-          <LayoutContext.Provider value={{ artworks: edges.map(edge => edge.node) }}>
-            {children}
-          </LayoutContext.Provider>
-        ) 
-      }}/>
-        <Footer/>
+      <Query query={DB_CONTENT}>
+        {({ data, loading, error }) => {
+          const { galleries, artworks } = (data.galleries && data.artworks) ? data : { galleries: [], artworks: [] }
+          return (
+            <StaticQuery query={ARTWORK_FILES}
+              render={data => {
+                const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
+                return (
+                  <LayoutContext.Provider 
+                    value={{ 
+                      galleries: galleries.length > 0 ? galleries.map(gallery => {
+                        return {
+                          id: gallery.id,
+                          name: gallery.name,
+                          artworks: artworks.length > 0 ? artworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                            // if an artwork file exist add it
+                            // will check if file is there to determine proper element for image
+                            return {
+                              id,
+                              galleryId,
+                              title,
+                              width,
+                              height,
+                              image,
+                              medium,
+                              price,
+                              sold,
+                              file: artworkFiles.find(artworkFile => artworkFile.name === id),
+                            }
+                          })
+                          .filter(artwork => artwork.galleryId === gallery.id) :
+                          [{ id: 'nada', title: 'no galleries #1'}]
+                        }
+                      }) : [{ 
+                        id: 'none', 
+                        name: 'no galleries', 
+                        artworks: [{ id: 'nada', title: 'no galleries #1'}]
+                      }]
+                    }}
+                  >
+                    {children}
+                  </LayoutContext.Provider>
+                )
+              }}
+            />
+          )
+        }}
+      </Query>  
+      <Footer/>
     </div>
   </div>
 )
@@ -44,6 +70,43 @@ Layout.propTypes = {
 }
 
 export default Layout
+
+const DB_CONTENT = gql`
+  {
+    galleries: getAllGalleries {
+      id
+      name
+    }
+
+    artworks: getAllArtworks {
+      id
+      galleryId
+      title
+      width
+      height
+      image
+      medium
+      price
+      sold
+    }
+  }
+`
+
+const ARTWORK_FILES = graphql`
+  {
+    artworkFiles: allFile(filter: { 
+        relativeDirectory: { eq: "artworks" },
+        extension: { eq: "jpeg" }
+    }) {
+      edges {
+        node {
+          name
+          ...fluidImage
+        }
+      }
+    }
+  }
+`
 
 export const fluidImage = graphql`
   fragment fluidImage on File {

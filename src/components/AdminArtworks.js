@@ -1,4 +1,5 @@
 import React from 'react'
+import { Img } from 'gatsby-image'
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
@@ -58,9 +59,14 @@ export default () => {
                                                     )}
                                                 </Query>
                                             )}
-                                            {<img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
-                                                updatingArtwork.image :
-                                                artwork.image}`} alt='uploaded artwork'/>}
+                                            {(artwork.file && (
+                                                <Img fluid={artwork.file.childImageSharp.fluid}/>
+                                            )) || (
+                                            artwork.image && (
+                                                <img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
+                                                    updatingArtwork.image :
+                                                    artwork.image}`} alt='uploaded artwork'/>
+                                            ))}
                                             <h5>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :

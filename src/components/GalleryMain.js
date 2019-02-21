@@ -2,24 +2,35 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ selectedArtworkTitle }) => (
+export default ({ selectedGallery, selectedArtwork }) => (
     <div className='GalleryMain'>
         <LayoutContext.Consumer>
-            {({ artworks }) => {
-                const visibleArtworkTitle = selectedArtworkTitle || artworks[0].name
-                return (
+            {({ galleries }) => {
+                console.log(galleries)
+                return selectedArtwork && (
                     <>
-                        <h1>{artworks && visibleArtworkTitle}</h1>
-                        {artworks.map((artwork, index) => (
-                            <div key={index} className={`galleryArtwork${visibleArtworkTitle === artwork.name ? ' current' : ' hidden'}`}>
-                                <Img  
-                                    style={{
-                                        display: `${visibleArtworkTitle === artwork.name ? 'block' : 'none'}`
-                                    }} 
-                                    fluid={artwork.childImageSharp.fluid} 
-                                />
-                            </div>
-                        ))}
+                        <h2>{selectedGallery.name}</h2>
+                        <h1>{selectedArtwork.title}</h1>
+                            {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
+                                <div key={index} 
+                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                >
+                                    {(artwork.file && (
+                                        <Img  
+                                            // style={{
+                                            //     display: `${selectedArtworkTitle === artwork.name ? 'block' : 'none'}`
+                                            // }} 
+                                            fluid={artwork.file.childImageSharp.fluid} 
+                                        />
+                                    )) || (
+                                    artwork.image && (
+                                        <img 
+                                            src={`data:image/jepg;base64,${artwork.image}`} 
+                                            alt={`${artwork.title}`}
+                                        />
+                                    ))}
+                                </div>
+                            )))}
                         <p>stuff will go here</p>
                     </>
                 )

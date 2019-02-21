@@ -6,7 +6,7 @@ import LayoutContext from '../contexts/LayoutContext'
 export default () => (
     <div className='Contact'>
         <LayoutContext.Consumer> 
-            {({ artworks }) => (
+            {({ galleries }) => (
                 <label>
                     <div className='pageHeader'>
                         <h1>contact</h1>
@@ -37,7 +37,15 @@ export default () => (
                                 <label>artwork
                                     <select name='artwork' id='artwork'>
                                         <option value='-'> - </option>
-                                        {artworks.map((artwork, index)=> <option key={index} value={artwork.name}>{artwork.name}</option>)}
+                                        {galleries.map(({ id, name, artworks }) => (
+                                            <optgroup key={id} label={name}>
+                                                {artworks.map((artwork)=> (
+                                                    <option key={artwork.id} value={artwork.name}>
+                                                        {artwork.name}
+                                                    </option>)
+                                                )}
+                                            </optgroup>
+                                        ))}
                                     </select>
                                 </label>
                                 <input type='submit' value='submit'/>

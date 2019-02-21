@@ -110,14 +110,18 @@ a {
     margin: auto;
 }
 
-.GalleryThumbs {
+.galleryArtwork.hidden {
+    display: none;
+}
+
+.GalleryChoice, .ArtworkChoice {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 /* This is the inner container */
-#galleryThumbs {
+#galleryThumbs, #artworkThumbs {
     flex: 1;
     padding: 2%;
     display: flex;
@@ -137,14 +141,14 @@ a {
     background-color: lightgrey;
 }
 
-.galleryThumb {
+.galleryThumb, .artworkThumb {
     padding: 2%;
     width: 20%;
     min-width: 80px;
     cursor: pointer;
 }
 
-.galleryThumb > * {
+.galleryThumb > *, .artworkThumb > * {
     height: 100%;
 }
 
