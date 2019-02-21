@@ -26,6 +26,7 @@ export default ArtworkChoice = ({ selectedGallery, selectArtwork, selectedArtwor
                             )) || (
                                 <img src={artwork.image} alt={artwork.title}/>
                             )}
+                            <p>{artwork.title}</p>
                         </div>
                     ))}
                 </div>
@@ -39,10 +40,10 @@ export default ArtworkChoice = ({ selectedGallery, selectArtwork, selectedArtwor
 )
 
 function scrollThumbs(isScrollingLeft) {
-    const galleryThumbs = document.getElementById('galleryThumbs')
-    galleryThumbs.scrollTo({
+    const artworkThumbs = document.getElementById('artworkThumbs')
+    artworkThumbs.scrollTo({
         top: 0,
-        left: galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
+        left: artworkThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
         behavior: 'smooth',
     })
         // galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
