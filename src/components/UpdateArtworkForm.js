@@ -20,7 +20,6 @@ export default class UpdateArtworkForm extends React.Component {
                     <form id='UpdateArtworkForm'
                         onSubmit={event => {
                             event.preventDefault()
-                            submitArtwork()
                             if (this.state.imageLoaded) {
                                 const imageCanvas = document.getElementById('imageCanvas')
                                 const uploadedImage = document.getElementById('uploadedImage')
@@ -30,9 +29,10 @@ export default class UpdateArtworkForm extends React.Component {
                                 imageCanvas.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
-                                        const image = fr.result
-                                        console.log(image, fr.result.length)
+                                        const image = `${fr.result}`
+                                        // console.log(typeof image, fr.result.length)
                                         // updating artwork values will match form values
+                                        console.log({...updatingArtwork, image})
                                         updateArtwork({ variables: {
                                             id: updatingArtwork.id,
                                             input: {
@@ -40,21 +40,34 @@ export default class UpdateArtworkForm extends React.Component {
                                                 image
                                             }
                                         }})
+                                        .then(() => {
+                                            console.log('we made it')
+                                            this.setState({
+                                                imageFile: null,
+                                                imageLoaded: false,
+                                            }, () => {
+                                                submitArtwork()
+                                            })
+                                        })
                                     }
                                     fr.readAsBinaryString(imageBlob)
-                                }, 'image/png', .5)
+                                }, 'image/jpg')
                             } else {
+                                console.log(updatingArtwork)
                                 // updating artwork values will match form values
                                 updateArtwork({ variables: {
                                     id: updatingArtwork.id,
                                     input: updatingArtwork
                                 }})
-
+                                .then(() => {
+                                    this.setState({
+                                        imageFile: null,
+                                        imageLoaded: false,
+                                    }, () => {
+                                        submitArtwork()
+                                    })
+                                })
                             }
-                            this.setState({
-                                imageFile: null,
-                                imageLoaded: false,
-                            })
                         }}
                         onReset={() => resetArtwork()}
                         onClick={event => event.stopPropagation()}
@@ -66,7 +79,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         value={updatingArtwork.galleryId}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
-                                            galleryId: parseInt(event.target.value)
+                                            galleryId: event.target.value
                                         })}
                                     >
                                         <option name='galleryId' value={null}>
@@ -183,7 +196,7 @@ export default class UpdateArtworkForm extends React.Component {
 UpdateArtworkForm.contextType = AdminContext
 
 const UPDATE_ARTWORK = gql`
-    mutation UpdateArtwork($id: ID!, $input: ArtworkInput!){
+    mutation UpdateArtwork($id: ID!, $input: ArtworkInput!) {
         updateArtwork(id: $id, input: $input) {
             id
             galleryId

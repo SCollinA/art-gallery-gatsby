@@ -12,6 +12,7 @@ export default () => {
                     <h1>galleries</h1>
                     <Query query={ALL_GALLERIES}>
                         {({ data, loading, error }) => {
+                            console.log(data)
                             return (
                                 <div className='currentGalleries'>
                                     {!loading && 
