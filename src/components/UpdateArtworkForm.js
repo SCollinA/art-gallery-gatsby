@@ -32,7 +32,6 @@ export default class UpdateArtworkForm extends React.Component {
                                         const image = btoa(fr.result)
                                         // console.log(typeof image, fr.result.length)
                                         // updating artwork values will match form values
-                                        console.log({...updatingArtwork, image})
                                         updateArtwork({ variables: {
                                             id: updatingArtwork.id,
                                             input: {
@@ -41,7 +40,6 @@ export default class UpdateArtworkForm extends React.Component {
                                             }
                                         }})
                                         .then(data => {
-                                            console.log('we made it', data, error)
                                             this.setState({
                                                 imageFile: null,
                                                 imageLoaded: false,
@@ -144,9 +142,18 @@ export default class UpdateArtworkForm extends React.Component {
                             }}/>
                             {this.state.imageLoaded && (
                                 <div className='uploadedImage'>
-                                    <canvas id='imageCanvas' width={100} height={100}/> 
-                                    <img id='uploadedImage' src={blobUrl(this.state.imageFile)}
-                                        alt ='uploaded profile' width={`100%`}/>
+                                    <canvas id='imageCanvas' 
+                                        width={1000}
+                                        height={1000}
+                                        style={{
+                                            display: 'none',
+                                        }}
+                                    /> 
+                                    <img id='uploadedImage' 
+                                        src={blobUrl(this.state.imageFile)}
+                                        alt='uploaded profile' 
+                                        width={'100%'}
+                                    />
                                 </div>
                             )}
                         </div>
