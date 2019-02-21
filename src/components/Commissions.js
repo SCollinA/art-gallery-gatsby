@@ -3,7 +3,7 @@ import React from 'react'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { StaticQuery, graphql } from 'gatsby';
 
-export default ({image}) => (
+export default () => (
     <div className='Commissions'>
         <div className='pageHeader'>
             {/* <FontAwesomeIcon icon={['far', 'money-bill-alt']} size='2x'/> */}

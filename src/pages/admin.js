@@ -25,8 +25,8 @@ class AdminPage extends React.Component {
         updatingArtwork: {},
         selectedArtwork: {},
         selectedGallery,
-        updatingGallery: selectedGallery,
-        isUpdating: true 
+        updatingGallery: this.state.selectedGallery.id === selectedGallery.id && selectedGallery,
+        isUpdating: this.state.selectedGallery.id === selectedGallery.id && true 
     })
     
     // select an artwork to update

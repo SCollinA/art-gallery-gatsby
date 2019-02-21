@@ -18,7 +18,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
                         <Img fluid={artwork.file.childImageSharp.fluid}/>
                     )) || (
                     artwork.image && (
-                        <img src={artwork.image} alt={artwork.title}/>
+                        <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
                     ))}
                     <p>{artwork.title}</p>
                 </div>
