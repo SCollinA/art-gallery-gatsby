@@ -8,26 +8,35 @@ import AdminContext from '../contexts/AdminContext';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork, updatingArtwork }) => (
+            {({ selectedGallery, selectArtwork, updatingArtwork }) => (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
-                    <Query query={ALL_ARTWORKS}>
+                    <Query query={GALLERY_ARTWORKS}
+                        variables={{
+                            input: {
+                                galleryId: selectedGallery.id,
+                            }
+                        }}
+                    >
                         {({ data, loading, error }) => (
                             <div className='currentArtworks'>
-                                {(!loading && data.getAllArtworks) && 
-                                    data.getAllArtworks.map(artwork => (
+                                {(!loading && data.getArtworks) && 
+                                    data.getArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
-                                            onClick={() => selectArtwork({
-                                                id: artwork.id,
-                                                galleryId: artwork.galleryId,
-                                                title: artwork.title,
-                                                width: artwork.width,
-                                                height: artwork.height,
-                                                medium: artwork.medium,
-                                                image: artwork.image,
-                                                price: artwork.price,
-                                                sold: artwork.sold
-                                            })}
+                                            onClick={event => {
+                                                event.stopPropagation()
+                                                selectArtwork({
+                                                    id: artwork.id,
+                                                    galleryId: artwork.galleryId,
+                                                    title: artwork.title,
+                                                    width: artwork.width,
+                                                    height: artwork.height,
+                                                    medium: artwork.medium,
+                                                    image: artwork.image,
+                                                    price: artwork.price,
+                                                    sold: artwork.sold
+                                                })
+                                        }}
                                         >
                                             <h3>
                                                 {updatingArtwork.id === artwork.id ?
@@ -90,9 +99,9 @@ export default () => {
     )
 }
 
-export const ALL_ARTWORKS = gql`
-    {
-        getAllArtworks {
+export const GALLERY_ARTWORKS = gql`
+    query GetArtworks($input: ArtworkInput!) {
+        getArtworks(input: $input) {
             id
             galleryId
             title

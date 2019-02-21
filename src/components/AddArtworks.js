@@ -2,14 +2,17 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext';
-import { ALL_ARTWORKS } from './AdminArtworks'
+import { GALLERY_ARTWORKS } from './AdminArtworks'
 
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork }) => (
+            {({ selectArtwork, selectedGallery }) => (
                 <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
+                        variables={{
+                            galleryId: selectedGallery ? selectedGallery.id : ''
+                        }}
                         update={(cache, { data: { addArtwork } }) => {
                             // select the new artwork for updating immediately
                             const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
@@ -24,10 +27,10 @@ export default () => {
                                 price,
                                 sold
                             })
-                            const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
+                            const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS })
                             cache.writeQuery({
-                                query: ALL_ARTWORKS,
-                                data: { getAllArtworks: getAllArtworks.concat([addArtwork]) },
+                                query: GALLERY_ARTWORKS,
+                                data: { getArtworks: getArtworks.concat([addArtwork]) },
                             })
                         }}
                     >
@@ -46,8 +49,8 @@ export default () => {
 }
 
 const ADD_ARTWORK = gql`
-    mutation {
-        addArtwork(input: { title: "new artwork" }) {
+    mutation AddArtwork($galleryId: ID){
+        addArtwork(input: { title: "new artwork", galleryId: $galleryId }) {
             id
             galleryId
             title

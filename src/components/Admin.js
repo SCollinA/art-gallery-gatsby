@@ -68,16 +68,26 @@ export default class Admin extends React.Component {
     render() {
         const { isUpdating, updatingGallery, updatingArtwork } = this.state
         return (
-            <div className='Admin'>
+            <div className='Admin'
+                onClick={event => this.setState({
+                    isUpdating: false,
+                    selectedGallery: {},
+                    updatingGallery: {},
+                    selectedArtwork: {},
+                    updatingArtwork: {},
+                })}
+            >
                 <AdminContext.Provider 
                     value={{ 
                         updatingGallery: this.state.updatingGallery,
                         selectGallery: this._selectGallery,
+                        selectedGallery: this.state.selectedGallery,
                         changeGallery: this._handleGalleryChange,
                         submitGallery: this._submitGalleryChange,
                         resetGallery: this._resetGallery,
                         updatingArtwork: this.state.updatingArtwork,
                         selectArtwork: this._selectArtwork,
+                        selectedArtwork: this.state.selectedArtwork,
                         changeArtwork: this._handleArtworkChange,
                         submitArtwork: this._submitArtworkChange,
                         resetArtwork: this._resetArtwork,

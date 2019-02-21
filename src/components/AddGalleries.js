@@ -17,6 +17,10 @@ export default () => {
                                 id,
                                 name
                             })
+                            selectGallery({
+                                id,
+                                name
+                            })
                             const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
                             cache.writeQuery({
                                 query: ALL_GALLERIES,

@@ -2,6 +2,7 @@ import React from 'react'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
+import GALLERY_ARTWORKS from './Admin'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -15,7 +16,15 @@ export default class UpdateArtworkForm extends React.Component {
     render() {
         const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
         return (
-            <Mutation mutation={UPDATE_ARTWORK}>
+            <Mutation mutation={UPDATE_ARTWORK}
+                update={(cache, { data: { updateArtwork }, loading, error }) => {
+                    const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS })
+                    cache.writeQuery({
+                        query: GALLERY_ARTWORKS,
+                        data: { getArtworks: getArtworks.filter(artwork => artwork.id !== updateArtwork.id).push(updateArtwork) },
+                    })
+                }}
+            >
                 {(updateArtwork, { data, loading, error }) => (
                     <form id='UpdateArtworkForm'
                         onSubmit={event => {
@@ -52,7 +61,6 @@ export default class UpdateArtworkForm extends React.Component {
                                     fr.readAsBinaryString(imageBlob)
                                 }, 'image/jpeg')
                             } else {
-                                console.log(updatingArtwork)
                                 // updating artwork values will match form values
                                 updateArtwork({ variables: {
                                     id: updatingArtwork.id,
