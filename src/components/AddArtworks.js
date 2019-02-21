@@ -13,27 +13,6 @@ export default () => {
                         variables={selectedGallery && {
                             galleryId: selectedGallery.id,
                         }}
-                        // update={(cache, { data: { addArtwork } }) => {
-                        //     // select the new artwork for updating immediately
-                        //     const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
-                        //     selectArtwork({
-                        //         id,
-                        //         galleryId,
-                        //         title,
-                        //         width,
-                        //         height,
-                        //         image,
-                        //         medium,
-                        //         price,
-                        //         sold
-                        //     })
-                        //     const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS, variables: { galleryId } })
-                        //     cache.writeQuery({
-                        //         query: GALLERY_ARTWORKS,
-                        //         variables: { galleryId },
-                        //         data: { getArtworks: getArtworks.concat([addArtwork]) },
-                        //     })
-                        // }}
                         refetchQueries={() => [{
                             query: GALLERY_ARTWORKS,
                             variables: selectedGallery ? { galleryId: selectedGallery.id } : {},

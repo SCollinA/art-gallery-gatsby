@@ -2,6 +2,7 @@ import React from 'react'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
+import { GALLERY_ARTWORKS } from './AdminArtworks';
 // import { GALLERY_ARTWORKS } from './AdminArtworks'
 
 export default class UpdateArtworkForm extends React.Component {
@@ -25,6 +26,10 @@ export default class UpdateArtworkForm extends React.Component {
                 //         data: { getArtworks: getArtworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
                 //     })
                 // }}
+                refetchQueries={() => [{
+                    query: GALLERY_ARTWORKS,
+                    variables: updatingArtwork.galleryId ? { galleryId: updatingArtwork.galleryId } : {},
+                }]}
             >
                 {(updateArtwork, { data, loading, error }) => (
                     <form id='UpdateArtworkForm'
@@ -90,7 +95,7 @@ export default class UpdateArtworkForm extends React.Component {
                                             galleryId: event.target.value
                                         })}
                                     >
-                                        <option name='galleryId' value={null}>
+                                        <option name='galleryId' value={''}>
                                             -
                                         </option>
                                         {data.getAllGalleries.map(gallery => (
