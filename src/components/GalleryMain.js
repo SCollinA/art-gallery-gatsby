@@ -6,7 +6,8 @@ export default ({ selectedGallery, selectedArtwork }) => (
     <div className='GalleryMain'>
         <LayoutContext.Consumer>
             {({ galleries }) => {
-                const visibleGallery = galleries.find(gallery => gallery.id === selectedGallery.id) || galleries[0]
+                const visibleGallery = galleries.find(gallery => gallery.id === selectedGallery.id) || 
+                    galleries[0] || { id: 'none', name: 'no galleries', artworks: [{ id: 'nada', title: 'no galleries #1'}] }
                 const visibleArtwork = selectedArtwork || visibleGallery.artworks[0]
                 return (
                     <>
@@ -22,11 +23,12 @@ export default ({ selectedGallery, selectedArtwork }) => (
                                         fluid={artwork.file.childImageSharp.fluid} 
                                     />
                                 )) || (
+                                artwork.image && (
                                     <img 
                                         src={`data:image/jepg;base64,${artwork.image}`} 
                                         alt={`${artwork.title}`}
                                     />
-                                )}
+                                ))}
                             </div>
                         )))}
                         <p>stuff will go here</p>
