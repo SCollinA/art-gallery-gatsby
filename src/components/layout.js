@@ -13,7 +13,10 @@ const Layout = ({ children }) => (
     <Header/>
     <div className='Content'>
       <Query query={DB_CONTENT}>
-        {({ galleries, artworks }) => (
+        {({ data, loading, error }) => {
+          const galleries = data.galleries || []
+          const artworks = data.artworks || []
+          return (
           <StaticQuery query={ARTWORK_FILES}
             render={data => {
               const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
@@ -41,7 +44,7 @@ const Layout = ({ children }) => (
               )
             }}
           />
-        )}
+        )}}
       </Query>  
       <Footer/>
     </div>
