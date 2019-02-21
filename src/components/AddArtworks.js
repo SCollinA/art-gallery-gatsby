@@ -12,16 +12,17 @@ export default () => {
                     <Mutation mutation={ADD_ARTWORK}
                         update={(cache, { data: { addArtwork } }) => {
                             // select the new artwork for updating immediately
-                            const { id, galleryId, title, width, height, medium, price, sold } = addArtwork
+                            const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
                             selectArtwork({
                                 id,
-                                // galleryId,
+                                galleryId,
                                 title,
-                                // width,
-                                // height,
-                                // medium,
-                                // price,
-                                // sold
+                                width,
+                                height,
+                                image,
+                                medium,
+                                price,
+                                sold
                             })
                             const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
                             cache.writeQuery({
@@ -48,7 +49,14 @@ const ADD_ARTWORK = gql`
     mutation {
         addArtwork(input: { title: "new artwork" }) {
             id
+            galleryId
             title
+            width
+            height
+            image
+            medium
+            price
+            sold
         }
     }
 `

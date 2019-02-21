@@ -29,7 +29,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 imageCanvas.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
-                                        const image = fr.result
+                                        const image = btoa(fr.result)
                                         // console.log(typeof image, fr.result.length)
                                         // updating artwork values will match form values
                                         console.log({...updatingArtwork, image})
@@ -52,7 +52,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         .catch(console.log)
                                     }
                                     fr.readAsBinaryString(imageBlob)
-                                }, 'image/jpg')
+                                }, 'image/jpeg')
                             } else {
                                 console.log(updatingArtwork)
                                 // updating artwork values will match form values
@@ -77,7 +77,7 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId}
+                                        value={updatingArtwork.galleryId || ''}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
                                             galleryId: event.target.value
