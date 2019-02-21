@@ -2,7 +2,8 @@ import React from "react"
 import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
 import { Query } from "react-apollo";
-import { gql } from 'graphql-tag'
+// import { gql } from 'graphql-tag'
+import DB_CONTENT from '../queries/dbContent.gql'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
@@ -16,7 +17,6 @@ const Layout = ({ children }) => (
       {({ galleries, artworks }) => (
         <StaticQuery query={ARTWORK_FILES}
           render={data => {
-            console.log(data)
             const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
             return (
               <LayoutContext.Provider 
@@ -55,26 +55,26 @@ Layout.propTypes = {
 
 export default Layout
 
-const DB_CONTENT = gql`
-  {
-    galleries: getAllGalleries {
-      id
-      name
-    }
+// const DB_CONTENT = gql`
+//   {
+//     galleries: getAllGalleries {
+//       id
+//       name
+//     }
 
-    artworks: getAllArtworks {
-      id
-      galleryId
-      title
-      width
-      height
-      image
-      medium
-      price
-      sold
-    }
-  }
-`
+//     artworks: getAllArtworks {
+//       id
+//       galleryId
+//       title
+//       width
+//       height
+//       image
+//       medium
+//       price
+//       sold
+//     }
+//   }
+// `
 
 const ARTWORK_FILES = graphql`
   {
