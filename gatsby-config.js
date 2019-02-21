@@ -6,22 +6,23 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
-    {
-      resolve: "gatsby-source-pg",
-      options: {
-        connectionString: "postgres:///art-gallery",
-        schema: "public",
-        refetchInterval: 60, // Refetch data every 60 seconds
-      },
-    }, 
-    {
-      resolve: 'gatsby-source-graphql',
-      options: {
-        typeName: 'AGAPI',
-        fieldName: 'artGallery',
-        url: 'http://localhost:4000/graphql',
-      },
-    },
+    // module below converts postgres db to graphql with postgraphile
+    // {
+    //   resolve: "gatsby-source-pg",
+    //   options: {
+    //     connectionString: "postgres:///art-gallery",
+    //     schema: "public",
+    //     refetchInterval: 60, // Refetch data every 60 seconds
+    //   },
+    // }, 
+    // {
+    //   resolve: 'gatsby-source-graphql',
+    //   options: {
+    //     typeName: 'AGAPI',
+    //     fieldName: 'artGallery',
+    //     url: 'http://localhost:4000/graphql',
+    //   },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
