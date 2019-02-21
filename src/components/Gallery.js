@@ -11,7 +11,7 @@ export default class Gallery extends Component {
 
     componentDidMount() {
         this.setState({
-            selectedArtworkTitle: this.context.artworks[0].name
+            selectedArtworkTitle: this.context.artworks && this.context.artworks[0].name
         })
     }
     
