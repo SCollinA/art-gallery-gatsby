@@ -110,6 +110,10 @@ a {
     margin: auto;
 }
 
+.galleryArtwork.hidden {
+    display: none;
+}
+
 .GalleryThumbs {
     display: flex;
     justify-content: space-between;

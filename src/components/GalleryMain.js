@@ -2,22 +2,24 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ selectedArtworkTitle }) => (
+export default ({ selectedGallery, selectedArtwork }) => (
     <div className='GalleryMain'>
         <LayoutContext.Consumer>
-            {({ artworks }) => {
-                const visibleArtworkTitle = selectedArtworkTitle || artworks[0].name
+            {({ galleries }) => {
+                const visibleGallery = galleries.find(gallery => gallery.id === selectedGallery.id) || galleries[0]
+                const visibleArtwork = selectedArtwork || visibleGallery.artworks[0]
                 return (
                     <>
-                        <h1>{artworks && visibleArtworkTitle}</h1>
-                        {artworks.map((artwork, index) => (
-                            <div key={index} className={`galleryArtwork${visibleArtworkTitle === artwork.name ? ' current' : ' hidden'}`}>
-                                {artwork.artworkFile && (
+                        <h2>{visibleGallery.name}</h2>
+                        <h1>{visibleArtwork.title}</h1>
+                        {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
+                            <div key={index} className={`galleryArtwork${visibleArtwork.title === artwork.title ? ' current' : ' hidden'}`}>
+                                {artwork.file && (
                                     <Img  
                                         // style={{
                                         //     display: `${visibleArtworkTitle === artwork.name ? 'block' : 'none'}`
                                         // }} 
-                                        fluid={artwork.childImageSharp.fluid} 
+                                        fluid={artwork.file.childImageSharp.fluid} 
                                     />
                                 ) || (
                                     <img 
@@ -26,7 +28,7 @@ export default ({ selectedArtworkTitle }) => (
                                     />
                                 )}
                             </div>
-                        ))}
+                        )))}
                         <p>stuff will go here</p>
                     </>
                 )

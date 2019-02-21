@@ -64,7 +64,7 @@ const Layout = ({ children, data }) => (
                           // will check if file is there to determine proper element for image
                           return {
                             ...artworks,
-                            artworkFile: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
+                            file: artworkFiles.find(artworkFile => artworkFile.name === artwork.id),
                           }
                         })
                         .filter(artwork => artwork.galleryId === gallery.id)
