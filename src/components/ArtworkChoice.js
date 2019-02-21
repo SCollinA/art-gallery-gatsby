@@ -3,7 +3,7 @@ import Img from 'gatsby-image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import LayoutContext from '../contexts/LayoutContext'
 
-export default ArtworkChoice = ({ selectedGallery, selectArtwork, selectedArtwork }) => (
+export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
     <div className='ArtworkChoice'>
         <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>

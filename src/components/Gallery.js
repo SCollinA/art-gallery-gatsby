@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import GalleryMain from './GalleryMain';
-import GalleryThumbs from './ArtworkChoice';
+import GalleryChoice from './GalleryChoice'
+import GalleryMain from './GalleryMain'
+import ArtworkChoice from './ArtworkChoice'
 import LayoutContext from '../contexts/LayoutContext'
 
 export default class Gallery extends Component {
@@ -39,8 +40,11 @@ export default class Gallery extends Component {
                     selectGallery={this._selectGallery}
                     selectedGallery={this.state.selectedGallery}
                 />
-                <GalleryMain selectedArtwork={this.state.selectedArtwork}/>
-                <GalleryThumbs 
+                <GalleryMain 
+                    selectedGallery={this.state.selectedGallery} 
+                    selectedArtwork={this.state.selectedArtwork}
+                />
+                <ArtworkChoice
                     galleries={this.state.galleries} 
                     selectArtwork={this._selectArtwork}
                     selectedArtwork={this.state.selectedArtwork}

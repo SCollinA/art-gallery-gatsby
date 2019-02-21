@@ -1,6 +1,9 @@
 import React from 'react'
+import Img from 'gatsby-image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import LayoutContext from '../contexts/LayoutContext'
 
-export default GalleryChoice = ({ galleries, selectGallery }) => {
+export default ({ galleries, selectGallery, selectedGallery }) => {
     return (
         <div className='GalleryChoice'>
             <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
@@ -15,8 +18,8 @@ export default GalleryChoice = ({ galleries, selectGallery }) => {
                             <div key={index} 
                                 className={`
                                     galleryThumb
-                                    ${artwork.id === selectedArtwork.id ?
-                                        ' selectedArtwork' : ''}
+                                    ${artwork.id === selectedGallery.id ?
+                                        ' selectedGallery' : ''}
                                 `}
                                 onClick={() => selectGallery(gallery)}
                             >
