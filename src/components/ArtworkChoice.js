@@ -12,7 +12,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
         {/* <LayoutContext.Consumer>
             {({ artworks }) => ( */}
                 <div id='artworkThumbs'>
-                    {selectedGallery.artworks.map((artwork, index) => (
+                    {selectedGallery && selectedGallery.artworks.map((artwork, index) => (
                         <div key={index} 
                             className={`
                                 artworkThumb
