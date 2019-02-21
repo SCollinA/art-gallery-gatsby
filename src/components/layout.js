@@ -1,60 +1,23 @@
 import React from "react"
 import PropTypes from "prop-types"
-import { StaticQuery, graphql } from "gatsby"
-// import { Query } from "react-apollo";
-// import { gql } from 'graphql-tag'
+import { graphql, StaticQuery } from "gatsby"
+import { Query } from "react-apollo";
+import { gql } from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
-const Layout = ({ children }, data) => (
+const Layout = ({ children }) => (
   <div className='Layout'>
     <Header/>
     <div className='Content'>
-      <StaticQuery
-        query={graphql`
-          {
-            artworks: allFile(filter: { 
-              relativeDirectory: { eq: "artworks" },
-              extension: { eq: "jpeg" }
-            }) {
-              edges {
-                node {
-                  name
-                  ...fluidImage
-                }
-              }
-            }
-          }
-        `}
-        render={({ artworks: { edges }, }) => {
-        //   <Query 
-        //   // set context to the files returned from the query above
-        //     query={gql`
-        //     {
-        //       galleries: getAllGalleries {
-        //         id
-        //         name
-        //       }
-            
-        //       artworks: getAllArtworks {
-        //         id
-        //         galleryId
-        //         title
-        //         width
-        //         height
-        //         medium
-        //         image
-        //         price
-        //         sold
-        //       }
-        //     }
-        // `}>
-        //   {({ data: { galleries, artworks }, loading, error }) => {
+    <Query query={DB_CONTENT}>
+      {({ galleries, artworks }) => (
+        <StaticQuery query={ARTWORK_FILES}
+          render={data => {
             console.log(data)
-            const { galleries, artworks } = data.postgres || { galleries: [], artworks: [] }
-            const artworkFiles = edges.map(edge => edge.node)
+            const artworkFiles = data.artworkFiles.edges.map(edge => edge.node)
             return (
               <LayoutContext.Provider 
                 value={{ 
@@ -78,9 +41,9 @@ const Layout = ({ children }, data) => (
               </LayoutContext.Provider>
             )
           }}
-        // </Query>
-      // )}
-      />
+        />
+      )}}
+      </Query>  
       <Footer/>
     </div>
   </div>
@@ -92,28 +55,43 @@ Layout.propTypes = {
 
 export default Layout
 
-export const allDB = graphql`
+const DB_CONTENT = gql`
   {
-    postgres {
-      galleries: allGalleriesList {
-        id
-        name
-      }
+    galleries: getAllGalleries {
+      id
+      name
+    }
 
-      artworks: allArtworksList {
-        id
-        galleryId
-        title
-        width
-        height
-        medium
-        image
-        price
-        sold
+    artworks: getAllArtworks {
+      id
+      galleryId
+      title
+      width
+      height
+      image
+      medium
+      price
+      sold
+    }
+  }
+`
+
+const ARTWORK_FILES = graphql`
+  {
+    artworkFiles: allFile(filter: { 
+        relativeDirectory: { eq: "artworks" },
+        extension: { eq: "jpeg" }
+    }) {
+      edges {
+        node {
+          name
+          ...fluidImage
+        }
       }
     }
   }
 `
+
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {

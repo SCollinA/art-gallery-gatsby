@@ -12,7 +12,7 @@ const IndexPage = () => {
     <div className='randomArtwork'>
       <LayoutContext.Consumer>
         {({ galleries }) => {
-          const { artworks } = galleries[Math.floor(Math.random() * galleries.length)] || { artworks: null }
+          const { artworks } = galleries[Math.floor(Math.random() * galleries.length)] || { artworks: false }
           return artworks && (
               <Img fluid={artworks[Math.floor(Math.random() * artworks.length)].childImageSharp.fluid}/>
           )
