@@ -8,6 +8,7 @@ export default ({ adminLogin }) => (
             localStorage.setItem('auth-token', token)
             adminLogin(true)
         }}
+        onError={err => window.alert(err.message)}
     >
         {(adminLogin, { data, loading, error }) => (
             <form className='AdminLogin'
