@@ -269,6 +269,8 @@ export default class UpdateArtworkForm extends React.Component {
                                     variables: updatingArtwork.galleryId && {
                                         galleryId: updatingArtwork.galleryId
                                     }
+                                },{
+                                    query: GALLERY_ARTWORKS,
                                 }]}
                             >
                             {(deleteArtwork, { data, loading, error }) => (
