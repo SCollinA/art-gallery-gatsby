@@ -7,14 +7,14 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     // module below converts postgres db to graphql with postgraphile
-    {
-      resolve: "gatsby-source-pg",
-      options: {
-        connectionString: "postgres:///art-gallery",
-        schema: "public",
-        refetchInterval: 60, // Refetch data every 60 seconds
-      },
-    }, 
+    // {
+    //   resolve: "gatsby-source-pg",
+    //   options: {
+    //     connectionString: "postgres:///art-gallery",
+    //     schema: "public",
+    //     refetchInterval: 60, // Refetch data every 60 seconds
+    //   },
+    // }, 
     // can use this plugin to connect directly to graphql server
     // {
     //   resolve: 'gatsby-source-graphql',

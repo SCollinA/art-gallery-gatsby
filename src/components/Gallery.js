@@ -21,7 +21,7 @@ export default class Gallery extends Component {
         })
     }
     
-    _selectGallery = galleryChoice => {
+    _selectGallery = selectedGallery => {
         // const selectedGallery = this.context.galleries.find(gallery => gallery.id === galleryChoice.id)
         // galleryChoice.id === this.state.selectedGallery.id ?
         //     this.setState({

@@ -14,7 +14,9 @@ const Layout = ({ children }) => (
     <div className='Content'>
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
-          const { galleries, artworks } = (data.galleries && data.artworks) ? data : { galleries: [], artworks: [] }
+          const { galleries, artworks } = (data.galleries && data.artworks) ?
+            data : 
+            { galleries: [], artworks: [] }
           return (
             <StaticQuery query={ARTWORK_FILES}
               render={data => {

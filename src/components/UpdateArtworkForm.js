@@ -91,7 +91,7 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId}
+                                        value={updatingArtwork.galleryId || ''}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
                                             galleryId: event.target.value

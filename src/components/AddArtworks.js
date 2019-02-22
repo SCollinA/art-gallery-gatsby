@@ -3,6 +3,7 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext';
 import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { DB_CONTENT } from './layout';
 
 export default () => {
     return (
@@ -12,6 +13,35 @@ export default () => {
                     <Mutation mutation={ADD_ARTWORK}
                         variables={selectedGallery && {
                             galleryId: selectedGallery.id,
+                        }}
+                        update={(cache, { data: { addArtwork } }) => {
+                            // get only needed variables, i.e. no '__typename'
+                            const { 
+                                id,
+                                galleryId, 
+                                title, 
+                                width, 
+                                height, 
+                                image, 
+                                medium, 
+                                price, 
+                                sold } = addArtwork
+                            selectArtwork({
+                                id, 
+                                galleryId,
+                                title,
+                                width,
+                                height,
+                                image,
+                                medium,
+                                price,
+                                sold,
+                            })
+                            const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                            cache.writeQuery({
+                                query: DB_CONTENT,
+                                data: { galleries, artworks: [...artworks, addArtwork] }
+                            })
                         }}
                         refetchQueries={() => [{
                             query: GALLERY_ARTWORKS,
