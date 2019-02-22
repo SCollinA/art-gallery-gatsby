@@ -17,6 +17,7 @@ export default () => {
                         }}
                     >
                         {({ data, loading, error }) => {
+                            console.log(data, 'herrooo')
                             return (
                             <div className='currentArtworks'>
                                 {(!loading && data.getArtworks) && 
@@ -37,11 +38,13 @@ export default () => {
                                                 })
                                         }}
                                         >
+                                            {/* artwork title */}
                                             <h3>
                                                 {updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.title :
                                                 artwork.title}
                                             </h3>
+                                            {/* artwork gallery name */}
                                             {((updatingArtwork.id === artwork.id &&
                                                 updatingArtwork.galleryId) ||
                                                 artwork.galleryId) && (                                        
@@ -59,6 +62,7 @@ export default () => {
                                                     )}
                                                 </Query>
                                             )}
+                                            {/* artwork image */}
                                             {(artwork.file && (
                                                 <Img fluid={artwork.file.childImageSharp.fluid}/>
                                             )) || (

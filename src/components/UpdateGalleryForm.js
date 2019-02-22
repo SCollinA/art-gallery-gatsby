@@ -2,12 +2,18 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
+import { GALLERY_ARTWORKS } from './AdminArtworks';
 
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ updatingGallery, changeGallery, submitGallery, resetGallery }) => (
-                <Mutation mutation={UPDATE_GALLERY}>
+            {({ updatingGallery, changeGallery, submitGallery, resetGallery, selectGallery }) => (
+                <Mutation mutation={UPDATE_GALLERY}
+                    refetchQueries={[{
+                        query: GALLERY_ARTWORKS,
+                        variables: { id: updatingGallery.id }
+                    }]}
+                >
                     {(updateGallery, { data, loading, error }) => (
                         <form id='UpdateGalleryForm'
                             onSubmit={event => {
@@ -17,6 +23,7 @@ export default () => {
                                     id: updatingGallery.id,
                                     input: updatingGallery
                                 }})
+                                .then(({ gallery })=> selectGallery(updatingGallery))
                             }}
                             onReset={() => resetGallery()}
                             onClick={event => event.stopPropagation()}

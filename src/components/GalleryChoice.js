@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {
+    const randomGalleryImages = galleries.map((gallery, index) => gallery.artworks[Math.floor(Math.random() * gallery.artworks.length)])
     return (
         <div className='GalleryChoice'>
             <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
@@ -14,20 +15,23 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                 {({ artworks }) => ( */}
                     <div id='galleryThumbs'>
                         {/* map galleries to their first artwork image */}
-                        {galleries.map((gallery, index) => gallery.artworks.map((artwork) => (
-                            <div key={index} 
-                                className={`galleryThumb${artwork.id === selectedGallery.id ? ' selectedGallery' : ''}`}
-                                onClick={() => selectGallery(gallery)}
-                            >
-                                {(artwork.file && (
-                                    <Img fluid={artwork.file.childImageSharp.fluid}/>
-                                )) || (
-                                artwork.image && (
-                                    <img src={artwork.image} alt={artwork.title}/>
-                                ))}
-                                <h6>{gallery.name}</h6>
-                            </div>
-                        ))[0])}
+                        {galleries.map((gallery, index) => {
+                            const randomArtwork = randomGalleryImages[index]
+                            return (
+                                <div key={index} 
+                                    className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
+                                    onClick={() => selectGallery(gallery)}
+                                >
+                                    {(randomArtwork.file && (
+                                        <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
+                                    )) || (
+                                    randomArtwork.image && (
+                                        <img src={randomArtwork.image} alt={randomArtwork.title}/>
+                                    ))}
+                                    <h6>{gallery.name}</h6>
+                                </div>
+                            )
+                        })}
                     </div>
                 {/* )} */}
             {/* </LayoutContext.Consumer> */}

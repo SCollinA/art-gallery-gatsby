@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 // import { GALLERY_ARTWORKS } from './AdminArtworks';
 import { DB_CONTENT } from './layout'
+import { GALLERY_ARTWORKS } from './AdminArtworks';
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -28,9 +29,12 @@ export default class UpdateArtworkForm extends React.Component {
                         data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
                     })
                 }}
-                // refetchQueries={() => [{
-                //     query: DB_CONTENT,
-                // }]}
+                refetchQueries={() => [{
+                    query: GALLERY_ARTWORKS,
+                    variables: updatingArtwork.galleryId && {
+                        galleryId: updatingArtwork.galleryId
+                    },
+                }]}
             >
                 {(updateArtwork, { data, loading, error }) => {
                     return (
@@ -149,19 +153,22 @@ export default class UpdateArtworkForm extends React.Component {
                         </label>
                         <div className='changeImage'>
                             <label>image
-                                <input type='file' name='image' accept='image/*'/>
+                                <input type='file' name='image' accept='image/*' onChange={() => {
+                                    const imageUploadButton = document.getElementById('imageUploadButton')
+                                    imageUploadButton.click()
+                                }}/>
                             </label>
-                            <input type='button' value='Upload' onClick={event => {
-                                const imageFile = event.target.form.image.files[0]
-                                const imageLoaded = imageFile && true
-                                this.setState({imageFile, imageLoaded})
-                            }}/>
+                            <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
+                                onClick={event => {
+                                    const imageFile = event.target.form.image.files[0]
+                                    const imageLoaded = imageFile && true
+                                    this.setState({imageFile, imageLoaded})
+                                }}
+                            />
                             <canvas id='imageCanvas' 
                                 width={1000}
                                 height={1000}
-                                style={{
-                                    display: 'none',
-                                }}
+                                style={{ display: 'none' }}
                             /> 
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>

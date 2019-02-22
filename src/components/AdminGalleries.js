@@ -18,7 +18,7 @@ export default () => {
                                         <div className={`currentGallery${(selectedGallery && gallery.id === selectedGallery.id) ? ' selected' : ''}`} key={gallery.id}
                                             onClick={event => {
                                                 event.stopPropagation()
-                                                    selectGallery({
+                                                selectGallery({
                                                     id: gallery.id,
                                                     name: gallery.name
                                                 })
