@@ -3,6 +3,8 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { ALL_GALLERIES } from './AdminGalleries';
+import { DB_CONTENT } from './layout';
 
 export default () => {
     return (
@@ -41,6 +43,35 @@ export default () => {
                                 <input type='button' value='cancel'
                                     onClick={() => submitGallery()}
                                 />
+                                <Mutation mutation={DELETE_GALLERY}
+                                    update={(cache, { data, loading, error }) => {
+                                        const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                                        cache.writeQuery({ 
+                                            query: DB_CONTENT, 
+                                            data: { 
+                                                galleries: galleries.filter(gallery => gallery.id !== updatingGallery.id), 
+                                                artworks
+                                            } 
+                                        })
+                                    }}
+                                    refetchQueries={[{
+                                        query: ALL_GALLERIES
+                                    }]}
+                                >
+                                {(deleteGallery, { data, loading, error }) => (
+                                    <input type='button' value='remove'
+                                        onClick={() => {
+                                            window.confirm('are you sure you want to remove this gallery?')
+                                            deleteGallery({
+                                                variables: {
+                                                    id: updatingGallery.id
+                                                }
+                                            })
+                                            .then(() => removeGallery())
+                                        }}
+                                    />
+                                )}
+                                </Mutation>
                             </div>
                         </form>
                     )}
@@ -56,5 +87,11 @@ const UPDATE_GALLERY = gql`
             id
             name
         }
+    }
+`
+
+const DELETE_GALLERY = gql`
+    mutation DeleteGallery($id: ID!) {
+        deleteGallery(id: $id)
     }
 `
