@@ -7,7 +7,7 @@ import { GALLERY_ARTWORKS } from './AdminArtworks';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ updatingGallery, changeGallery, submitGallery, resetGallery }) => (
+            {({ updatingGallery, changeGallery, submitGallery, resetGallery, selectGallery }) => (
                 <Mutation mutation={UPDATE_GALLERY}
                     refetchQueries={[{
                         query: GALLERY_ARTWORKS,
@@ -23,6 +23,7 @@ export default () => {
                                     id: updatingGallery.id,
                                     input: updatingGallery
                                 }})
+                                .then(({ gallery })=> selectGallery(updatingGallery))
                             }}
                             onReset={() => resetGallery()}
                             onClick={event => event.stopPropagation()}
