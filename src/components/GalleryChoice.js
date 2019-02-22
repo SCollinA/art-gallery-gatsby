@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {
-    const randomGalleryImages = galleries.map((gallery, index) => gallery.artworks[Math.floor(Math.random() * gallery.artworks.length)])
+    const randomGalleryImages = galleries.map(gallery => gallery.artworks[Math.floor(Math.random() * gallery.artworks.length)])
     return (
         <div className='GalleryChoice'>
             <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
@@ -16,7 +16,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                     <div id='galleryThumbs'>
                         {/* map galleries to their first artwork image */}
                         {galleries.map((gallery, index) => {
-                            const randomArtwork = randomGalleryImages[index]
+                            const randomArtwork = randomGalleryImages[index] || { file: false, image: false }
                             return (
                                 <div key={index} 
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
