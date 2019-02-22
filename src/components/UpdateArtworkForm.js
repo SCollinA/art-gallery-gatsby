@@ -149,13 +149,18 @@ export default class UpdateArtworkForm extends React.Component {
                         </label>
                         <div className='changeImage'>
                             <label>image
-                                <input type='file' name='image' accept='image/*'/>
+                                <input type='file' name='image' accept='image/*' onChange={() => {
+                                    const imageUploadButton = document.getElementById('imageUploadButton')
+                                    imageUploadButton.click()
+                                }}/>
                             </label>
-                            <input type='button' value='Upload' onClick={event => {
-                                const imageFile = event.target.form.image.files[0]
-                                const imageLoaded = imageFile && true
-                                this.setState({imageFile, imageLoaded})
-                            }}/>
+                            <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
+                                onClick={event => {
+                                    const imageFile = event.target.form.image.files[0]
+                                    const imageLoaded = imageFile && true
+                                    this.setState({imageFile, imageLoaded})
+                                }}
+                            />
                             <canvas id='imageCanvas' 
                                 width={1000}
                                 height={1000}
