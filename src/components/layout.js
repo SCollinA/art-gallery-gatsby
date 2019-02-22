@@ -8,7 +8,8 @@ import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
-window.addEventListener('beforeunload', () => localStorage.removeItem('auth-token'))
+// window.onbeforeunload = () => 'are you sure you want to log out?'
+window.onunload = () => localStorage.removeItem('auth-token')
 
 const Layout = ({ children }) => (
   <div className='Layout'>
