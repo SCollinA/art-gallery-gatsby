@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
 import { ALL_GALLERIES } from './AdminGalleries';
 import { DB_CONTENT } from './layout';
 
@@ -13,6 +13,10 @@ export default () => {
                 <Mutation mutation={UPDATE_GALLERY}
                     refetchQueries={[{
                         query: GALLERY_ARTWORKS,
+                        variables: { galleryId: updatingGallery.id }
+                    },
+                    {
+                        query: GET_GALLERY,
                         variables: { id: updatingGallery.id }
                     }]}
                 >
