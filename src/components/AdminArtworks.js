@@ -20,9 +20,7 @@ export default () => {
                             return (
                             <div className='currentArtworks'>
                                 {(!loading && data.getArtworks) && 
-                                    data.getArtworks.map(artwork => {
-                                        console.log(artwork, updatingArtwork)
-                                        return (
+                                    data.getArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
                                             onClick={event => {
                                                 event.stopPropagation()
@@ -54,13 +52,11 @@ export default () => {
                                                         artwork.galleryId
                                                     }}
                                                 >
-                                                    {({ data: { getGallery }, loading, error }) => {
-                                                        console.log(data)
-                                                        return (
+                                                    {({ data: { getGallery }, loading, error }) => (
                                                         <h5>
                                                             {getGallery ? getGallery.name : ''}
                                                         </h5>
-                                                    )}}
+                                                    )}
                                                 </Query>
                                             )}
                                             {(artwork.file && (
@@ -82,7 +78,7 @@ export default () => {
                                                 artwork.sold) ? 'sold' : 'unsold'}`}
                                             </h5>
                                         </div>
-                                    )})
+                                    ))
                                 }
                                 <AddArtworks/>
                             </div>

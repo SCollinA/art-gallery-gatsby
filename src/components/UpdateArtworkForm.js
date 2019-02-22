@@ -17,21 +17,23 @@ export default class UpdateArtworkForm extends React.Component {
 
     render() {
         const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
+        console.log(updatingArtwork)
         return (
             <Mutation mutation={UPDATE_ARTWORK}
-                // update={(cache, { data: { updateArtwork }, loading, error }) => {
-                //     const { getArtworks } = cache.readQuery({ query: GALLERY_ARTWORKS, variables: { galleryId: updateArtwork.galleryId } })
-                //     cache.writeQuery({
-                //         query: GALLERY_ARTWORKS,
-                //         variables: { galleryId: updateArtwork.galleryId },
-                //         data: { getArtworks: getArtworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
-                //     })
-                // }}
-                refetchQueries={() => [{
-                    query: DB_CONTENT,
-                }]}
+                update={(cache, { data: { updateArtwork }, loading, error }) => {
+                    console.log(updateArtwork)
+                    const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                    cache.writeQuery({
+                        query: DB_CONTENT,
+                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
+                    })
+                }}
+                // refetchQueries={() => [{
+                //     query: DB_CONTENT,
+                // }]}
             >
-                {(updateArtwork, { data, loading, error }) => (
+                {(updateArtwork, { data, loading, error }) => {
+                    return (
                     <form id='UpdateArtworkForm'
                         onSubmit={event => {
                             event.preventDefault()
@@ -89,13 +91,13 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId || ''}
+                                        value={updatingArtwork.galleryId}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
-                                            galleryId: event.target.value || 0
+                                            galleryId: event.target.value
                                         })}
                                     >
-                                        <option name='galleryId' value={''}>
+                                        <option name='galleryId' value={-1}>
                                             -
                                         </option>
                                         {data.getAllGalleries.map(gallery => (
@@ -249,7 +251,7 @@ export default class UpdateArtworkForm extends React.Component {
                             />
                         </div>
                     </form>
-                )}
+                )}}
             </Mutation>
         )
     }
@@ -258,7 +260,7 @@ export default class UpdateArtworkForm extends React.Component {
 UpdateArtworkForm.contextType = AdminContext
 
 const UPDATE_ARTWORK = gql`
-    mutation UpdateArtwork($id: ID!, $input: ArtworkInput!) {
+    mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {
         updateArtwork(id: $id, input: $input) {
             id
             galleryId
