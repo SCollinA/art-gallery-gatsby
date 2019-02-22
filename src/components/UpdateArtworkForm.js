@@ -3,7 +3,6 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-// import { GALLERY_ARTWORKS } from './AdminArtworks';
 import { DB_CONTENT } from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 
@@ -21,7 +20,7 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     render() {
-        const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
+        const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -100,9 +99,8 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId || ''}
+                                        value={updatingArtwork.galleryId || -1}
                                         onChange={event => changeArtwork({
-                                            ...updatingArtwork,
                                             galleryId: event.target.value
                                         })}
                                     >
@@ -125,7 +123,6 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='text' name='title'
                                 value={updatingArtwork.title}
                                 onChange={event => changeArtwork({
-                                    ...updatingArtwork,
                                     title: event.target.value
                                 })}
                             />
@@ -134,7 +131,6 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='number' name='width'
                                 value={updatingArtwork.width || ''}
                                 onChange={event => changeArtwork({
-                                    ...updatingArtwork,
                                     width: parseInt(event.target.value)
                                 })}
                             />
@@ -143,7 +139,6 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='number' name='height'
                                 value={updatingArtwork.height || ''}
                                 onChange={event => changeArtwork({
-                                    ...updatingArtwork,
                                     height: parseInt(event.target.value)
                                 })}/>
                         </label>
@@ -151,7 +146,6 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='text' name='medium'
                                 value={updatingArtwork.medium || ''}
                                 onChange={event => changeArtwork({
-                                    ...updatingArtwork,
                                     medium: event.target.value
                                 })}
                             />
@@ -230,7 +224,6 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='number' name='price'
                                 value={updatingArtwork.price || ''}
                                 onChange={event => changeArtwork({
-                                    ...updatingArtwork,
                                     price: parseInt(event.target.value)
                                 })}/>
                         </label>
@@ -240,7 +233,6 @@ export default class UpdateArtworkForm extends React.Component {
                                     value='sold'
                                     checked={updatingArtwork.sold}
                                     onChange={event => changeArtwork({
-                                        ...updatingArtwork,
                                         sold: event.target.checked
                                     })}
                                 />
@@ -250,7 +242,6 @@ export default class UpdateArtworkForm extends React.Component {
                                     value='unsold'
                                     checked={!updatingArtwork.sold}
                                     onChange={event => changeArtwork({
-                                        ...updatingArtwork,
                                         sold: !event.target.checked
                                     })}
                                 />
@@ -262,6 +253,32 @@ export default class UpdateArtworkForm extends React.Component {
                             <input type='button' value='cancel'
                                 onClick={() => submitArtwork()}
                             />
+                            <Mutation mutation={DELETE_ARTWORK}
+                                update={(cache, { data, loading, error }) => {
+                                    const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                                    cache.writeQuery({
+                                        query: DB_CONTENT,
+                                        data: {
+                                            galleries,
+                                            artworks: artworks.filter(artwork => artwork.id !== updatingArtwork.id),
+                                        }
+                                    })
+                                }}
+                                refetchQueries={[{
+                                    query: GALLERY_ARTWORKS,
+                                    variables: updatingArtwork.galleryId && {
+                                        galleryId: updatingArtwork.galleryId
+                                    }
+                                },{
+                                    query: GALLERY_ARTWORKS,
+                                }]}
+                            >
+                            {(deleteArtwork, { data, loading, error }) => (
+                                <input type='button' value='remove'
+                                    onClick={() => window.confirm('are you sure you want to remove this artwork?') && deleteArtwork({ variables: { id: updatingArtwork.id } }).then(() => removeArtwork())}
+                                />
+                            )}
+                            </Mutation>
                         </div>
                     </form>
                 )}}
@@ -285,6 +302,12 @@ const UPDATE_ARTWORK = gql`
             price
             sold
         }
+    }
+`
+
+const DELETE_ARTWORK = gql`
+    mutation DeleteArtwork($id: ID!) {
+        deleteArtwork(id: $id)
     }
 `
 
