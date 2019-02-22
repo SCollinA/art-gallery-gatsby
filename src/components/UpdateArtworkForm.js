@@ -3,7 +3,8 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { GALLERY_ARTWORKS } from './AdminArtworks';
+// import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { DB_CONTENT } from './layout'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -27,8 +28,7 @@ export default class UpdateArtworkForm extends React.Component {
                 //     })
                 // }}
                 refetchQueries={() => [{
-                    query: GALLERY_ARTWORKS,
-                    variables: updatingArtwork.galleryId ? { galleryId: updatingArtwork.galleryId } : {},
+                    query: DB_CONTENT,
                 }]}
             >
                 {(updateArtwork, { data, loading, error }) => (
@@ -92,7 +92,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         value={updatingArtwork.galleryId || ''}
                                         onChange={event => changeArtwork({
                                             ...updatingArtwork,
-                                            galleryId: event.target.value
+                                            galleryId: event.target.value || 0
                                         })}
                                     >
                                         <option name='galleryId' value={''}>

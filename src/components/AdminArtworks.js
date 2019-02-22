@@ -20,7 +20,9 @@ export default () => {
                             return (
                             <div className='currentArtworks'>
                                 {(!loading && data.getArtworks) && 
-                                    data.getArtworks.map(artwork => (
+                                    data.getArtworks.map(artwork => {
+                                        console.log(artwork, updatingArtwork)
+                                        return (
                                         <div className='currentArtwork' key={artwork.id}
                                             onClick={event => {
                                                 event.stopPropagation()
@@ -45,26 +47,20 @@ export default () => {
                                             {((updatingArtwork.id === artwork.id &&
                                                 updatingArtwork.galleryId) ||
                                                 artwork.galleryId) && (                                        
-                                                <Query query={gql`
-                                                        query GetGallery($id: ID!) {
-                                                            getGallery(id: $id) {
-                                                                name
-                                                            }
-                                                        }
-                                                    `}
+                                                <Query query={GET_GALLERY}
                                                     variables={{
                                                         id: updatingArtwork.id === artwork.id ?
                                                         updatingArtwork.galleryId :
                                                         artwork.galleryId
                                                     }}
                                                 >
-                                                    {({ data, loading, error }) => (
+                                                    {({ data: { getGallery }, loading, error }) => {
+                                                        console.log(data)
+                                                        return (
                                                         <h5>
-                                                            {!(loading || error) ? 
-                                                            data.getGallery.name :
-                                                            'no gallery'}
+                                                            {getGallery ? getGallery.name : ''}
                                                         </h5>
-                                                    )}
+                                                    )}}
                                                 </Query>
                                             )}
                                             {(artwork.file && (
@@ -86,7 +82,7 @@ export default () => {
                                                 artwork.sold) ? 'sold' : 'unsold'}`}
                                             </h5>
                                         </div>
-                                    ))
+                                    )})
                                 }
                                 <AddArtworks/>
                             </div>
@@ -110,6 +106,14 @@ export const GALLERY_ARTWORKS = gql`
             image
             price
             sold
+        }
+    }
+`
+
+export const GET_GALLERY = gql`
+    query GetGallery($id: ID!) {
+        getGallery(id: $id) {
+            name
         }
     }
 `
