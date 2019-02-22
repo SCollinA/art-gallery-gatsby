@@ -206,16 +206,20 @@ export default class UpdateArtworkForm extends React.Component {
                                     console.log(rotatingImage)
                                     // rotate the canvas, draw the image, and rotate the canvas back
                                     // canvasContext.rotate÷(-90)
-                                    canvasContext.rotate(90)
-                                    canvasContext.drawImage(rotatingImage, 0, 0)
+                                    // canvasContext.rotate(90)
+                                    canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                    canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
                                     // canvasContext.save()
 
                                     // convert canvas contents to blob
                                     imageCanvasNode.toBlob((imageBlob) => {
+                                        console.log(imageBlob)
                                         this.setState({
                                             imageFile: imageBlob,
-                                            
-                                        }, () => this.setState({ imageLoaded: true, }))
+                                        }, () => {
+                                            console.log(this.state.imageFile)
+                                            this.setState({ imageLoaded: true, })
+                                        })
                                         // // prepare to read blob
                                         // const fr = new FileReader()
                                         // fr.onload = () => {
@@ -223,7 +227,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         //     const image = btoa(fr.result)
                                         // }
                                         // fr.readAsBinaryString(imageBlob)
-                                    }, 'image/jpeg')
+                                    }, 'image/jpeg', 1.0)
                                 }}
                             >
                                 rotate right
@@ -305,10 +309,8 @@ let urls = new WeakMap()
 
 let blobUrl = blob => {
   if (urls.has(blob)) {
-      console.log('has blob')
       return urls.get(blob)
     } else {
-        console.log('no has blob', blob, urls)
     let url = URL.createObjectURL(blob)  
     urls.set(blob, url)
     return url
