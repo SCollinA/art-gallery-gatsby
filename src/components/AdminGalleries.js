@@ -7,7 +7,7 @@ import AdminContext from '../contexts/AdminContext';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectGallery, updatingGallery }) => (
+            {({ selectGallery, selectedGallery, updatingGallery }) => (
                 <div className='AdminGalleries'>
                     <h1>galleries</h1>
                     <Query query={ALL_GALLERIES}>
@@ -15,11 +15,14 @@ export default () => {
                             <div className='currentGalleries'>
                                 {!loading && 
                                     data.getAllGalleries.map(gallery => (
-                                        <div className='currentGallery' key={gallery.id}
-                                            onClick={() => selectGallery({
-                                                id: gallery.id,
-                                                name: gallery.name
-                                            })}
+                                        <div className={`currentGallery${(selectedGallery && gallery.id === selectedGallery.id) ? ' selected' : ''}`} key={gallery.id}
+                                            onClick={event => {
+                                                event.stopPropagation()
+                                                    selectGallery({
+                                                    id: gallery.id,
+                                                    name: gallery.name
+                                                })
+                                            }}
                                         >
                                             <h3>{updatingGallery.id === gallery.id ? 
                                             updatingGallery.name :

@@ -13,6 +13,12 @@ export default () => {
                         update={(cache, { data: { addGallery } }) => {
                             // immediately select the gallery for updating
                             const { id, name } = addGallery
+                            // select once to get artwork
+                            selectGallery({
+                                id,
+                                name
+                            })
+                            // select again to make available for editing
                             selectGallery({
                                 id,
                                 name

@@ -8,28 +8,22 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
         <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
-        {/* <h1 className='galleryArrow'>{'<'}</h1> */}
-        {/* <LayoutContext.Consumer>
-            {({ artworks }) => ( */}
-                <div id='artworkThumbs'>
-                    {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => (
-                        <div key={index} 
-                            className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
-                            onClick={() => selectArtwork(artwork)}
-                        >
-                            {(artwork.file && (
-                                <Img fluid={artwork.file.childImageSharp.fluid}/>
-                            )) || (
-                            artwork.image && (
-                                <img src={artwork.image} alt={artwork.title}/>
-                            ))}
-                            <p>{artwork.title}</p>
-                        </div>
+        <div id='artworkThumbs'>
+            {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => (
+                <div key={index} 
+                    className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
+                    onClick={() => selectArtwork(artwork)}
+                >
+                    {(artwork.file && (
+                        <Img fluid={artwork.file.childImageSharp.fluid}/>
+                    )) || (
+                    artwork.image && (
+                        <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
                     ))}
+                    <p>{artwork.title}</p>
                 </div>
-            {/* )} */}
-        {/* </LayoutContext.Consumer> */}
-        {/* <h1 className='galleryArrow'>{'>'}</h1> */}
+            ))}
+        </div>
         <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
         </div>

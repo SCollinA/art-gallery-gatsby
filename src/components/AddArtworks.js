@@ -2,19 +2,32 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext';
-import { ALL_ARTWORKS } from './AdminArtworks'
+import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { DB_CONTENT } from './layout';
 
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork }) => (
+            {({ selectArtwork, selectedGallery }) => (
                 <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
+                        variables={selectedGallery && {
+                            galleryId: selectedGallery.id,
+                        }}
                         update={(cache, { data: { addArtwork } }) => {
-                            // select the new artwork for updating immediately
-                            const { id, galleryId, title, width, height, image, medium, price, sold } = addArtwork
-                            selectArtwork({
+                            // get only needed variables, i.e. no '__typename'
+                            const { 
                                 id,
+                                galleryId, 
+                                title, 
+                                width, 
+                                height, 
+                                image, 
+                                medium, 
+                                price, 
+                                sold } = addArtwork
+                            selectArtwork({
+                                id, 
                                 galleryId,
                                 title,
                                 width,
@@ -22,14 +35,18 @@ export default () => {
                                 image,
                                 medium,
                                 price,
-                                sold
+                                sold,
                             })
-                            const { getAllArtworks } = cache.readQuery({ query: ALL_ARTWORKS })
+                            const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
                             cache.writeQuery({
-                                query: ALL_ARTWORKS,
-                                data: { getAllArtworks: getAllArtworks.concat([addArtwork]) },
+                                query: DB_CONTENT,
+                                data: { galleries, artworks: [...artworks, addArtwork] }
                             })
                         }}
+                        refetchQueries={() => [{
+                            query: GALLERY_ARTWORKS,
+                            variables: selectedGallery ? { galleryId: selectedGallery.id } : {},
+                        }]}
                     >
                         {(addArtwork, { data }) => (
                             <div className='addArtwork'
@@ -46,8 +63,8 @@ export default () => {
 }
 
 const ADD_ARTWORK = gql`
-    mutation {
-        addArtwork(input: { title: "new artwork" }) {
+    mutation AddArtwork($galleryId: ID){
+        addArtwork(input: { title: "new artwork", galleryId: $galleryId }) {
             id
             galleryId
             title

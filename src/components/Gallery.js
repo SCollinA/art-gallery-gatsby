@@ -21,24 +21,22 @@ export default class Gallery extends Component {
         })
     }
     
-    _selectGallery = galleryChoice => {
-        const selectedGallery = this.context.galleries.find(gallery => gallery.id === galleryChoice.id)
-        galleryChoice.id === this.state.selectedGallery.id ?
+    _selectGallery = selectedGallery => {
+        // const selectedGallery = this.context.galleries.find(gallery => gallery.id === galleryChoice.id)
+        // galleryChoice.id === this.state.selectedGallery.id ?
+        //     this.setState({
+        //         selectedGallery: {},
+        //         selectedArtwork: null,
+        //     }) : 
             this.setState({
-                selectedGallery: {},
-                selectedArtwork: null,
-            }) : this.setState({
                 selectedGallery,
                 selectedArtwork: selectedGallery.artworks[0]
             })
     }
 
     _selectArtwork = selectedArtwork => this.setState({
-        selectedArtwork: (this.state.selectedArtwork && 
-            selectedArtwork.id === this.state.selectedArtwork.id) ?
-            null :
-            this.state.selectedGallery.artworks.find(artwork => artwork.id === selectedArtwork.id),
-    })
+        selectedArtwork
+   })
 
     render() {
         return (

@@ -8,26 +8,34 @@ import AdminContext from '../contexts/AdminContext';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork, updatingArtwork }) => (
+            {({ selectedGallery, selectArtwork, updatingArtwork }) => (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
-                    <Query query={ALL_ARTWORKS}>
-                        {({ data, loading, error }) => (
+                    <Query query={GALLERY_ARTWORKS}
+                        variables={selectedGallery && {
+                            galleryId: selectedGallery.id,
+                        }}
+                    >
+                        {({ data, loading, error }) => {
+                            return (
                             <div className='currentArtworks'>
-                                {(!loading && data.getAllArtworks) && 
-                                    data.getAllArtworks.map(artwork => (
+                                {(!loading && data.getArtworks) && 
+                                    data.getArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
-                                            onClick={() => selectArtwork({
-                                                id: artwork.id,
-                                                galleryId: artwork.galleryId,
-                                                title: artwork.title,
-                                                width: artwork.width,
-                                                height: artwork.height,
-                                                medium: artwork.medium,
-                                                image: artwork.image,
-                                                price: artwork.price,
-                                                sold: artwork.sold
-                                            })}
+                                            onClick={event => {
+                                                event.stopPropagation()
+                                                selectArtwork({
+                                                    id: artwork.id,
+                                                    galleryId: artwork.galleryId,
+                                                    title: artwork.title,
+                                                    width: artwork.width,
+                                                    height: artwork.height,
+                                                    medium: artwork.medium,
+                                                    image: artwork.image,
+                                                    price: artwork.price,
+                                                    sold: artwork.sold
+                                                })
+                                        }}
                                         >
                                             <h3>
                                                 {updatingArtwork.id === artwork.id ?
@@ -37,24 +45,16 @@ export default () => {
                                             {((updatingArtwork.id === artwork.id &&
                                                 updatingArtwork.galleryId) ||
                                                 artwork.galleryId) && (                                        
-                                                <Query query={gql`
-                                                        query GetGallery($id: ID!) {
-                                                            getGallery(id: $id) {
-                                                                name
-                                                            }
-                                                        }
-                                                    `}
+                                                <Query query={GET_GALLERY}
                                                     variables={{
                                                         id: updatingArtwork.id === artwork.id ?
                                                         updatingArtwork.galleryId :
                                                         artwork.galleryId
                                                     }}
                                                 >
-                                                    {({ data, loading, error }) => (
+                                                    {({ data: { getGallery }, loading, error }) => (
                                                         <h5>
-                                                            {!(loading || error) ? 
-                                                            data.getGallery.name :
-                                                            'no gallery'}
+                                                            {getGallery ? getGallery.name : ''}
                                                         </h5>
                                                     )}
                                                 </Query>
@@ -68,21 +68,21 @@ export default () => {
                                                     artwork.image}`} alt='uploaded artwork'/>
                                             ))}
                                             <h5>
-                                                {updatingArtwork.id === artwork.id ?
+                                                {`$${updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.price :
-                                                artwork.price}
+                                                artwork.price}`}
                                             </h5>
                                             <h5>
-                                                {updatingArtwork.id === artwork.id ?
+                                                {`${(updatingArtwork.id === artwork.id ?
                                                 updatingArtwork.sold :
-                                                artwork.sold}
+                                                artwork.sold) ? 'sold' : 'unsold'}`}
                                             </h5>
                                         </div>
                                     ))
                                 }
                                 <AddArtworks/>
                             </div>
-                        )}
+                        )}}
                     </Query>
                 </div>
             )}
@@ -90,9 +90,9 @@ export default () => {
     )
 }
 
-export const ALL_ARTWORKS = gql`
-    {
-        getAllArtworks {
+export const GALLERY_ARTWORKS = gql`
+    query GetArtworksForGallery($galleryId: ID) {
+        getArtworks(input: { galleryId: $galleryId }) {
             id
             galleryId
             title
@@ -102,6 +102,14 @@ export const ALL_ARTWORKS = gql`
             image
             price
             sold
+        }
+    }
+`
+
+export const GET_GALLERY = gql`
+    query GetGallery($id: ID!) {
+        getGallery(id: $id) {
+            name
         }
     }
 `

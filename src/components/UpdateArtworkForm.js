@@ -1,7 +1,10 @@
 import React from 'react'
+import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
+// import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { DB_CONTENT } from './layout'
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -14,9 +17,23 @@ export default class UpdateArtworkForm extends React.Component {
 
     render() {
         const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
+        console.log(updatingArtwork)
         return (
-            <Mutation mutation={UPDATE_ARTWORK}>
-                {(updateArtwork, { data, loading, error }) => (
+            <Mutation mutation={UPDATE_ARTWORK}
+                update={(cache, { data: { updateArtwork }, loading, error }) => {
+                    console.log(updateArtwork)
+                    const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                    cache.writeQuery({
+                        query: DB_CONTENT,
+                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
+                    })
+                }}
+                // refetchQueries={() => [{
+                //     query: DB_CONTENT,
+                // }]}
+            >
+                {(updateArtwork, { data, loading, error }) => {
+                    return (
                     <form id='UpdateArtworkForm'
                         onSubmit={event => {
                             event.preventDefault()
@@ -52,7 +69,6 @@ export default class UpdateArtworkForm extends React.Component {
                                     fr.readAsBinaryString(imageBlob)
                                 }, 'image/jpeg')
                             } else {
-                                console.log(updatingArtwork)
                                 // updating artwork values will match form values
                                 updateArtwork({ variables: {
                                     id: updatingArtwork.id,
@@ -81,7 +97,7 @@ export default class UpdateArtworkForm extends React.Component {
                                             galleryId: event.target.value
                                         })}
                                     >
-                                        <option name='galleryId' value={null}>
+                                        <option name='galleryId' value={-1}>
                                             -
                                         </option>
                                         {data.getAllGalleries.map(gallery => (
@@ -140,22 +156,62 @@ export default class UpdateArtworkForm extends React.Component {
                                 const imageLoaded = imageFile && true
                                 this.setState({imageFile, imageLoaded})
                             }}/>
-                            {this.state.imageLoaded && (
+                            <canvas id='imageCanvas' 
+                                width={1000}
+                                height={1000}
+                                style={{
+                                    display: 'none',
+                                }}
+                            /> 
+                            {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
-                                    <canvas id='imageCanvas' 
-                                        width={1000}
-                                        height={1000}
-                                        style={{
-                                            display: 'none',
-                                        }}
-                                    /> 
                                     <img id='uploadedImage' 
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         width={'100%'}
                                     />
                                 </div>
-                            )}
+                            )) || (updatingArtwork.file && (
+                                <Img id='currentImageFromFile' fluid={updatingArtwork.file.childImageSharp.fluid}/>
+                            )) || (updatingArtwork.image && (
+                                <img id='currentImageFromSource' src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                            ))}
+                            {<div className='rotateImage'
+                                onClick={() => {
+                                    // get canvas and image elements from page
+                                    const imageCanvas = document.getElementById('imageCanvas')
+                                    const uploadedImage = document.getElementById('uploadedImage')
+                                    const currentImageFromFile = document.getElementById('currentImageFromFile')
+                                    const currentImageFromSource = document.getElementById('currentImageFromSource')
+                                    const canvasContext = imageCanvas.getContext('2d')
+                                    // get whichever element actually exists
+                                    console.log(uploadedImage, currentImageFromFile, currentImageFromSource)
+                                    const rotatingImage = uploadedImage || currentImageFromFile || currentImageFromSource
+                                    console.log(rotatingImage)
+                                    // rotate the canvas, draw the image, and rotate the canvas back
+                                    // canvasContext.rotate÷(-90)
+                                    canvasContext.rotate(90)
+                                    canvasContext.drawImage(rotatingImage, 0, 0)
+                                    // canvasContext.save()
+
+                                    // convert canvas contents to blob
+                                    imageCanvas.toBlob((imageBlob) => {
+                                        this.setState({
+                                            imageFile: imageBlob,
+                                            
+                                        }, () => this.setState({ imageLoaded: true, }))
+                                        // // prepare to read blob
+                                        // const fr = new FileReader()
+                                        // fr.onload = () => {
+                                        //     // convert read blob to base64
+                                        //     const image = btoa(fr.result)
+                                        // }
+                                        // fr.readAsBinaryString(imageBlob)
+                                    }, 'image/jpeg')
+                                }}
+                            >
+                                rotate right
+                            </div>}
                         </div>
                         <label>price
                             <input type='number' name='price'
@@ -195,7 +251,7 @@ export default class UpdateArtworkForm extends React.Component {
                             />
                         </div>
                     </form>
-                )}
+                )}}
             </Mutation>
         )
     }
@@ -204,7 +260,7 @@ export default class UpdateArtworkForm extends React.Component {
 UpdateArtworkForm.contextType = AdminContext
 
 const UPDATE_ARTWORK = gql`
-    mutation UpdateArtwork($id: ID!, $input: ArtworkInput!) {
+    mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {
         updateArtwork(id: $id, input: $input) {
             id
             galleryId
@@ -233,8 +289,10 @@ let urls = new WeakMap()
 
 let blobUrl = blob => {
   if (urls.has(blob)) {
-    return urls.get(blob)
-  } else {
+      console.log('has blob')
+      return urls.get(blob)
+    } else {
+        console.log('no has blob', blob, urls)
     let url = URL.createObjectURL(blob)  
     urls.set(blob, url)
     return url

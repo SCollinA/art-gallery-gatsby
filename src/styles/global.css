@@ -1,6 +1,7 @@
 /* Set everything to be screen sized until you reach the app */
 html, body, #___gatsby, #___gatsby > div, .Layout {
     width: 100%;
+    overflow: hidden;
 }
 
 a {
@@ -84,7 +85,7 @@ a {
     width: calc(100% + 15px);
     margin: 0 auto;
     padding: 0 5% 5%;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .Content > * {
@@ -105,7 +106,7 @@ a {
 }
 
 .GalleryMain {
-    padding: 0 2% 2% 2%;
+    padding: 2%;
     max-width: 750px;
     margin: auto;
 }
@@ -135,6 +136,7 @@ a {
     padding: 2%;
     text-align: center;
     border-radius: 10px;
+    display: none;
 }
 
 .galleryArrow:active {
@@ -143,13 +145,13 @@ a {
 
 .galleryThumb, .artworkThumb {
     padding: 2%;
-    width: 20%;
-    min-width: 80px;
+    max-width: 150px;
     cursor: pointer;
+    flex: 1;
 }
 
 .galleryThumb > *, .artworkThumb > * {
-    height: 100%;
+    margin: auto;
 }
 
 /* ============================ */
@@ -220,14 +222,25 @@ a {
     cursor: pointer;
 }
 
+/* .currentGallery, .currentArtwork {
+    max-width: 25%;
+} */
+
+.currentGallery.selected, .currentArtwork.selected {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
 .AddGalleries, .AddArtworks {
     width: 10%;
+    padding: unset;
 }
 
 .addGallery, .addArtwork {
-    padding: 10%;
+    width: 100%;
+    height: 100%;
     margin: auto;
     text-align: center;
+    display: flex;
 }
 
 .addGallery > h3, .addArtwork > h3 {
@@ -251,7 +264,7 @@ a {
     left: 12.5%;
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
     padding: 5%;
     overflow-y: auto;
@@ -263,6 +276,11 @@ a {
     margin: auto;
     padding: 2%;
 }
+
+.rotateImage {
+    cursor: pointer;
+}
+
 /* ================================ */
 /*              Footer              */
 /* ================================ */
