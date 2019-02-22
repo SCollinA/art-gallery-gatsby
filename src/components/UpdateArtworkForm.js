@@ -154,15 +154,15 @@ export default class UpdateArtworkForm extends React.Component {
                                 const imageLoaded = imageFile && true
                                 this.setState({imageFile, imageLoaded})
                             }}/>
+                            <canvas id='imageCanvas' 
+                                width={1000}
+                                height={1000}
+                                style={{
+                                    display: 'none',
+                                }}
+                            /> 
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
-                                    <canvas id='imageCanvas' 
-                                        width={1000}
-                                        height={1000}
-                                        style={{
-                                            display: 'none',
-                                        }}
-                                    /> 
                                     <img id='uploadedImage' 
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
@@ -170,10 +170,45 @@ export default class UpdateArtworkForm extends React.Component {
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
-                                <Img fluid={updatingArtwork.file.childImageSharp.fluid}/>
+                                <Img id='currentImageFromFile' fluid={updatingArtwork.file.childImageSharp.fluid}/>
                             )) || (updatingArtwork.image && (
-                                <img src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                                <img id='currentImageFromSource' src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
                             ))}
+                            {<div className='rotateImage'
+                                onClick={() => {
+                                    // get canvas and image elements from page
+                                    const imageCanvas = document.getElementById('imageCanvas')
+                                    const uploadedImage = document.getElementById('uploadedImage')
+                                    const currentImageFromFile = document.getElementById('currentImageFromFile')
+                                    const currentImageFromSource = document.getElementById('currentImageFromSource')
+                                    const canvasContext = imageCanvas.getContext('2d')
+                                    // get whichever element actually exists
+                                    console.log(uploadedImage, currentImageFromFile, currentImageFromSource)
+                                    const rotatingImage = uploadedImage || currentImageFromFile || currentImageFromSource
+                                    console.log(rotatingImage)
+                                    // rotate the canvas, draw the image, and rotate the canvas back
+                                    // canvasContext.rotate÷(-90)
+                                    canvasContext.rotate(90)
+                                    canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
+
+                                    // convert canvas contents to blob
+                                    imageCanvas.toBlob((imageBlob) => {
+                                        this.setState({
+                                            imageFile: imageBlob,
+                                            imageLoaded: true,
+                                        })
+                                        // // prepare to read blob
+                                        // const fr = new FileReader()
+                                        // fr.onload = () => {
+                                        //     // convert read blob to base64
+                                        //     const image = btoa(fr.result)
+                                        // }
+                                        // fr.readAsBinaryString(imageBlob)
+                                    }, 'image/jpeg')
+                                }}
+                            >
+                                rotate right
+                            </div>}
                         </div>
                         <label>price
                             <input type='number' name='price'
@@ -251,8 +286,10 @@ let urls = new WeakMap()
 
 let blobUrl = blob => {
   if (urls.has(blob)) {
-    return urls.get(blob)
-  } else {
+      console.log('has blob')
+      return urls.get(blob)
+    } else {
+        console.log('no has blob', blob, urls)
     let url = URL.createObjectURL(blob)  
     urls.set(blob, url)
     return url
