@@ -93,7 +93,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 })
                             }
                         }}
-                        onReset={() => resetArtwork()}
+                        onReset={() => this.setState({ imageFile: null, imageLoaded: false }, () => resetArtwork())}
                         onClick={event => event.stopPropagation()}
                     >
                         <label>gallery
@@ -213,11 +213,9 @@ export default class UpdateArtworkForm extends React.Component {
 
                                     // convert canvas contents to blob
                                     imageCanvasNode.toBlob((imageBlob) => {
-                                        console.log(imageBlob)
                                         this.setState({
                                             imageFile: imageBlob,
                                         }, () => {
-                                            console.log(this.state.imageFile)
                                             this.setState({ imageLoaded: true, })
                                         })
                                         // // prepare to read blob
