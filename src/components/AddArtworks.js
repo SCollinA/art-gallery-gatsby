@@ -43,9 +43,8 @@ export default () => {
                                 data: { galleries, artworks: [...artworks, addArtwork] }
                             })
                         }}
-                        refetchQueries={() => [{
+                        refetchQueries={[{
                             query: GALLERY_ARTWORKS,
-                            variables: selectedGallery ? { galleryId: selectedGallery.id } : {},
                         }]}
                     >
                         {(addArtwork, { data }) => (

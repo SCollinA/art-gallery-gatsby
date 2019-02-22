@@ -4,7 +4,7 @@ import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { DB_CONTENT } from './layout'
-import { GALLERY_ARTWORKS } from './AdminArtworks';
+import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -20,11 +20,10 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     render() {
-        const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
+        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
-                    console.log(updateArtwork)
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
                     cache.writeQuery({
                         query: DB_CONTENT,
@@ -36,6 +35,12 @@ export default class UpdateArtworkForm extends React.Component {
                     variables: updatingArtwork.galleryId && {
                         galleryId: updatingArtwork.galleryId
                     },
+                }, 
+                {
+                    query: GET_GALLERY,
+                    variables: {
+                        id: updatingArtwork.galleryId || selectedArtwork.galleryId || 1
+                    }
                 }]}
             >
                 {(updateArtwork, { data, loading, error }) => {
@@ -99,12 +104,12 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId || -1}
+                                        value={updatingArtwork.galleryId || ''}
                                         onChange={event => changeArtwork({
-                                            galleryId: event.target.value
+                                            galleryId: event.target.value || null
                                         })}
                                     >
-                                        <option name='galleryId' value={-1}>
+                                        <option name='galleryId' value={''}>
                                             -
                                         </option>
                                         {data.getAllGalleries.map(gallery => (

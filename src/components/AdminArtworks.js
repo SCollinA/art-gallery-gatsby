@@ -45,8 +45,9 @@ export default () => {
                                             </h3>
                                             {/* artwork gallery name */}
                                             {((updatingArtwork.id === artwork.id &&
-                                                updatingArtwork.galleryId) ||
-                                                artwork.galleryId) && (                                        
+                                                updatingArtwork.galleryId) || 
+                                            (updatingArtwork.id !== artwork.id &&
+                                                artwork.galleryId)) && (                                        
                                                 <Query query={GET_GALLERY}
                                                     variables={{
                                                         id: updatingArtwork.id === artwork.id ?
