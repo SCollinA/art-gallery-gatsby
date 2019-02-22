@@ -14,11 +14,14 @@ export default class UpdateArtworkForm extends React.Component {
             imageFile: null,
             imageLoaded: false,
         }
+        this.imageCanvas = React.createRef()
+        this.uploadedImage = React.createRef()
+        this.currentImageFromFile = React.createRef()
+        this.currentImageFromSource = React.createRef()
     }
 
     render() {
         const { updatingArtwork, changeArtwork, submitArtwork, resetArtwork } = this.context
-        console.log(updatingArtwork)
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -42,12 +45,14 @@ export default class UpdateArtworkForm extends React.Component {
                         onSubmit={event => {
                             event.preventDefault()
                             if (this.state.imageLoaded) {
-                                const imageCanvas = document.getElementById('imageCanvas')
-                                const uploadedImage = document.getElementById('uploadedImage')
-                                const canvasContext = imageCanvas.getContext('2d')
+                                // const imageCanvas = document.getElementById('imageCanvas')
+                                const imageCanvasNode = this.imageCanvas.current 
+                                const uploadedImageNode = this.uploadedImage.current
+                                // const uploadedImage = document.getElementById('uploadedImage')
+                                const canvasContext = imageCanvasNode.getContext('2d')
                                 // draw image takes (img, x, y, w, h)
-                                canvasContext.drawImage(uploadedImage, 0, 0, 1000, 1000)
-                                imageCanvas.toBlob((imageBlob) => {
+                                canvasContext.drawImage(uploadedImageNode, 0, 0, 1000, 1000)
+                                imageCanvasNode.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
                                         const image = btoa(fr.result)
@@ -88,7 +93,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 })
                             }
                         }}
-                        onReset={() => resetArtwork()}
+                        onReset={() => this.setState({ imageFile: null, imageLoaded: false }, () => resetArtwork())}
                         onClick={event => event.stopPropagation()}
                     >
                         <label>gallery
@@ -165,56 +170,57 @@ export default class UpdateArtworkForm extends React.Component {
                                     this.setState({imageFile, imageLoaded})
                                 }}
                             />
-                            <canvas id='imageCanvas' 
+                            <canvas id='imageCanvas' ref={this.imageCanvas}
                                 width={1000}
                                 height={1000}
                                 style={{ display: 'none' }}
                             /> 
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
-                                    <img id='uploadedImage' 
+                                    <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         width={'100%'}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
-                                <Img id='currentImageFromFile' fluid={updatingArtwork.file.childImageSharp.fluid}/>
+                                <Img id='currentImageFromFile' ref={this.currentImageFromFile} fluid={updatingArtwork.file.childImageSharp.fluid}/>
                             )) || (updatingArtwork.image && (
-                                <img id='currentImageFromSource' src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                                <img id='currentImageFromSource' ref={this.currentImageFromSource} src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
                                     // get canvas and image elements from page
-                                    const imageCanvas = document.getElementById('imageCanvas')
-                                    const uploadedImage = document.getElementById('uploadedImage')
-                                    const currentImageFromFile = document.getElementById('currentImageFromFile')
-                                    const currentImageFromSource = document.getElementById('currentImageFromSource')
-                                    const canvasContext = imageCanvas.getContext('2d')
+                                    const imageCanvasNode = this.imageCanvas.current
+                                    // const imageCanvas = document.getElementById('imageCanvas')
+                                    const uploadedImageNode = this.uploadedImage.current
+                                    // const uploadedImage = document.getElementById('uploadedImage')
+                                    const currentImageFromFileNode = this.currentImageFromFile.current
+                                    // const currentImageFromFile = document.getElementById('currentImageFromFile')
+                                    const currentImageFromSourceNode = this.currentImageFromSource.current
+                                    // const currentImageFromSource = document.getElementById('currentImageFromSource')
+                                    const canvasContext = imageCanvasNode.getContext('2d')
                                     // get whichever element actually exists
-                                    console.log(uploadedImage, currentImageFromFile, currentImageFromSource)
-                                    const rotatingImage = uploadedImage || currentImageFromFile || currentImageFromSource
+                                    console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
+                                    const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
                                     console.log(rotatingImage)
                                     // rotate the canvas, draw the image, and rotate the canvas back
                                     // canvasContext.rotate÷(-90)
-                                    canvasContext.rotate(90)
-                                    canvasContext.drawImage(rotatingImage, 0, 0)
-                                    // canvasContext.save()
-
+                                    canvasContext.save()
+                                    canvasContext.translate(imageCanvasNode.width / 2, imageCanvasNode.height / 2)
+                                    canvasContext.rotate(Math.PI / 2)
+                                    canvasContext.translate((-1 * imageCanvasNode.width / 2), (-1 * imageCanvasNode.height / 2))
+                                    // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                    canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
+                                    canvasContext.restore()
                                     // convert canvas contents to blob
-                                    imageCanvas.toBlob((imageBlob) => {
+                                    imageCanvasNode.toBlob((imageBlob) => {
                                         this.setState({
                                             imageFile: imageBlob,
-                                            
-                                        }, () => this.setState({ imageLoaded: true, }))
-                                        // // prepare to read blob
-                                        // const fr = new FileReader()
-                                        // fr.onload = () => {
-                                        //     // convert read blob to base64
-                                        //     const image = btoa(fr.result)
-                                        // }
-                                        // fr.readAsBinaryString(imageBlob)
-                                    }, 'image/jpeg')
+                                        }, () => {
+                                            this.setState({ imageLoaded: true, })
+                                        })
+                                    }, 'image/jpeg', 1.0)
                                 }}
                             >
                                 rotate right
@@ -296,10 +302,8 @@ let urls = new WeakMap()
 
 let blobUrl = blob => {
   if (urls.has(blob)) {
-      console.log('has blob')
       return urls.get(blob)
     } else {
-        console.log('no has blob', blob, urls)
     let url = URL.createObjectURL(blob)  
     urls.set(blob, url)
     return url
