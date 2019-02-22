@@ -21,7 +21,10 @@ export default class Admin extends React.Component {
 
     _login = isLoggedIn => this.setState({ isLoggedIn })
 
-    _logout = () => this.setState({ isLoggedIn: false })
+    _logout = () => {
+        localStorage.removeItem('auth-token')
+        this.setState({ isLoggedIn: false })
+    }
 
     // select a gallery to update
     // when selecting, if one already exists, remove it
@@ -73,7 +76,7 @@ export default class Admin extends React.Component {
 
     render() {
         const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
-        return (!isLoggedIn && (<AdminLogin adminLogin={this._login} adminLogout={this._logout}/>)) || (
+        return (!isLoggedIn && (<AdminLogin adminLogin={this._login}/>)) || (
             <div className='Admin'
                 onClick={event => this.setState({
                     isUpdating: false,
@@ -83,6 +86,11 @@ export default class Admin extends React.Component {
                     updatingArtwork: {},
                 })}
             >
+            <div className='logout'>
+                <input type='button' value='logout'
+                    onClick={() => this._logout()}
+                />
+            </div>
                 <AdminContext.Provider 
                     value={{ 
                         updatingGallery: this.state.updatingGallery,
