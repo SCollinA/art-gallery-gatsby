@@ -4,6 +4,7 @@ import AdminGalleries from "../components/AdminGalleries"
 import UpdateGalleryForm from '../components/UpdateGalleryForm'
 import UpdateArtworkForm from '../components/UpdateArtworkForm'
 import AdminContext from '../contexts/AdminContext'
+import AdminLogin from './AdminLogin';
 
 export default class Admin extends React.Component {
     constructor(props) {
@@ -14,8 +15,13 @@ export default class Admin extends React.Component {
             updatingGallery: {},
             selectedArtwork: {},
             updatingArtwork: {},
+            isLoggedIn: false,
         }
     }
+
+    _login = isLoggedIn => this.setState({ isLoggedIn })
+
+    _logout = () => this.setState({ isLoggedIn: false })
 
     // select a gallery to update
     // when selecting, if one already exists, remove it
@@ -66,8 +72,8 @@ export default class Admin extends React.Component {
     })
 
     render() {
-        const { isUpdating, updatingGallery, updatingArtwork } = this.state
-        return (
+        const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
+        return (!isLoggedIn && (<AdminLogin adminLogin={this._login} adminLogout={this._logout}/>)) || (
             <div className='Admin'
                 onClick={event => this.setState({
                     isUpdating: false,
