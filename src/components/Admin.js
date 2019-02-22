@@ -22,11 +22,12 @@ export default class Admin extends React.Component {
     componentDidMount() {
         localStorage.getItem('auth-token') && this.setState({ isLoggedIn: true })
     }
-
+    
     _login = isLoggedIn => {
         this.setState({ isLoggedIn })
         if (isLoggedIn) {
             window.onbeforeunload = () => 'are you sure you want to log out?'
+            window.onunload = () => localStorage.removeItem('auth-token')
         }
     }
 
