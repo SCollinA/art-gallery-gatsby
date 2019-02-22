@@ -8,6 +8,8 @@ import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
 
+window.addEventListener('beforeunload', () => localStorage.removeItem('auth-token'))
+
 const Layout = ({ children }) => (
   <div className='Layout'>
     <Header/>
