@@ -58,7 +58,7 @@ export default class Admin extends React.Component {
     _handleGalleryChange = updatingGallery => this.setState({ updatingGallery })
     
     // update the gallery in state
-    _handleArtworkChange = updatingArtwork => this.setState({ ...this.state.updatingArtwork, ...updatingArtwork })
+    _handleArtworkChange = updatingArtwork => this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
 
     // submission will be a mutation defined in the form
     _submitGalleryChange = () => this.setState({ 

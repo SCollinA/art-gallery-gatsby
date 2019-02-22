@@ -3,7 +3,6 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-// import { GALLERY_ARTWORKS } from './AdminArtworks';
 import { DB_CONTENT } from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 
@@ -100,7 +99,7 @@ export default class UpdateArtworkForm extends React.Component {
                             <Query query={GALLERY_NAMES}>
                                 {({ data, loading, error }) => (
                                     <select name='galleryId'
-                                        value={updatingArtwork.galleryId || ''}
+                                        value={updatingArtwork.galleryId || -1}
                                         onChange={event => changeArtwork({
                                             galleryId: event.target.value
                                         })}
