@@ -189,14 +189,15 @@ export default class UpdateArtworkForm extends React.Component {
                                     // rotate the canvas, draw the image, and rotate the canvas back
                                     // canvasContext.rotate÷(-90)
                                     canvasContext.rotate(90)
-                                    canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
+                                    canvasContext.drawImage(rotatingImage, 0, 0)
+                                    // canvasContext.save()
 
                                     // convert canvas contents to blob
                                     imageCanvas.toBlob((imageBlob) => {
                                         this.setState({
                                             imageFile: imageBlob,
-                                            imageLoaded: true,
-                                        })
+                                            
+                                        }, () => this.setState({ imageLoaded: true, }))
                                         // // prepare to read blob
                                         // const fr = new FileReader()
                                         // fr.onload = () => {
