@@ -20,7 +20,7 @@ const Layout = ({ children }) => (
           return (
             <StaticQuery query={ARTWORK_FILES}
               render={data => {
-                const artworkFiles = data.artworkFiles && data.artworkFiles.edges.map(edge => edge.node)
+                const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
                 return (
                   <LayoutContext.Provider 
                     value={{ 

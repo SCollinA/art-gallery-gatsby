@@ -17,6 +17,7 @@ export default () => {
                         }}
                     >
                         {({ data, loading, error }) => {
+                            console.log(data, 'herrooo')
                             return (
                             <div className='currentArtworks'>
                                 {(!loading && data.getArtworks) && 
