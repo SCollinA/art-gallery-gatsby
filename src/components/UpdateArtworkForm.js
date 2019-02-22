@@ -206,11 +206,13 @@ export default class UpdateArtworkForm extends React.Component {
                                     console.log(rotatingImage)
                                     // rotate the canvas, draw the image, and rotate the canvas back
                                     // canvasContext.rotate÷(-90)
-                                    // canvasContext.rotate(90)
-                                    canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                    canvasContext.save()
+                                    canvasContext.translate(imageCanvasNode.width / 2, imageCanvasNode.height / 2)
+                                    canvasContext.rotate(Math.PI / 2)
+                                    canvasContext.translate((-1 * imageCanvasNode.width / 2), (-1 * imageCanvasNode.height / 2))
+                                    // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                     canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
-                                    // canvasContext.save()
-
+                                    canvasContext.restore()
                                     // convert canvas contents to blob
                                     imageCanvasNode.toBlob((imageBlob) => {
                                         this.setState({
@@ -218,13 +220,6 @@ export default class UpdateArtworkForm extends React.Component {
                                         }, () => {
                                             this.setState({ imageLoaded: true, })
                                         })
-                                        // // prepare to read blob
-                                        // const fr = new FileReader()
-                                        // fr.onload = () => {
-                                        //     // convert read blob to base64
-                                        //     const image = btoa(fr.result)
-                                        // }
-                                        // fr.readAsBinaryString(imageBlob)
                                     }, 'image/jpeg', 1.0)
                                 }}
                             >
