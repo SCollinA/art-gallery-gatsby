@@ -7,7 +7,7 @@ import { GALLERY_ARTWORKS } from './AdminArtworks';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ updatingGallery, changeGallery, submitGallery, resetGallery, selectGallery }) => (
+            {({ updatingGallery, changeGallery, submitGallery, resetGallery, removeGallery, selectGallery }) => (
                 <Mutation mutation={UPDATE_GALLERY}
                     refetchQueries={[{
                         query: GALLERY_ARTWORKS,

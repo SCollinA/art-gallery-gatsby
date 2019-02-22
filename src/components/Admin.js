@@ -50,7 +50,7 @@ export default class Admin extends React.Component {
     _handleGalleryChange = updatingGallery => this.setState({ updatingGallery })
     
     // update the gallery in state
-    _handleArtworkChange = updatingArtwork => this.setState({ updatingArtwork })
+    _handleArtworkChange = updatingArtwork => this.setState({ ...this.state.updatingArtwork, ...updatingArtwork })
 
     // submission will be a mutation defined in the form
     _submitGalleryChange = () => this.setState({ 
@@ -73,6 +73,10 @@ export default class Admin extends React.Component {
     _resetArtwork = () => this.setState({
         updatingArtwork: this.state.selectedArtwork,
     })
+
+    _removeGallery = () => this._submitGalleryChange()
+
+    _removeArtwork = () => this._submitArtworkChange()
 
     render() {
         const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
@@ -99,12 +103,14 @@ export default class Admin extends React.Component {
                         changeGallery: this._handleGalleryChange,
                         submitGallery: this._submitGalleryChange,
                         resetGallery: this._resetGallery,
+                        removeGallery: this._removeGallery,
                         updatingArtwork: this.state.updatingArtwork,
                         selectArtwork: this._selectArtwork,
                         selectedArtwork: this.state.selectedArtwork,
                         changeArtwork: this._handleArtworkChange,
                         submitArtwork: this._submitArtworkChange,
                         resetArtwork: this._resetArtwork,
+                        removeArtwork: this._removeArtwork,
                     }}
                 >
                     <AdminGalleries/>
