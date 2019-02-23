@@ -179,7 +179,6 @@ export default class UpdateArtworkForm extends React.Component {
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
-                                        width={'100%'}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
@@ -210,7 +209,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     canvasContext.rotate(Math.PI / 2)
                                     canvasContext.translate((-1 * imageCanvasNode.width / 2), (-1 * imageCanvasNode.height / 2))
                                     // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
-                                    canvasContext.drawImage(rotatingImage, 0, 0, 1000, 1000)
+                                    canvasContext.drawImage(rotatingImage, 0, 0)
                                     canvasContext.restore()
                                     // convert canvas contents to blob
                                     imageCanvasNode.toBlob((imageBlob) => {
