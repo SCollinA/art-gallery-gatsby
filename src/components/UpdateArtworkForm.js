@@ -12,6 +12,7 @@ export default class UpdateArtworkForm extends React.Component {
         this.state = {
             imageFile: null,
             imageLoaded: false,
+            aspectRatio: 0,
         }
         this.imageCanvas = React.createRef()
         this.uploadedImage = React.createRef()
@@ -179,6 +180,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
+                                        onLoad={() => this.setState({ aspectRatio: this.uploadedImage.current.width / this.uploadedImage.current.height })}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
