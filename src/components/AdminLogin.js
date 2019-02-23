@@ -22,7 +22,7 @@ export default ({ adminLogin }) => (
                 }}
             >
                 <label>admin password
-                    <input type='password' placeholder="it's 'brushCanvas'" name='adminPassword'/>
+                    <input type='password' placeholder="not 'password1'" name='adminPassword'/>
                 </label>
                 <label>submit
                     <input type='submit' value='proceed'/>
