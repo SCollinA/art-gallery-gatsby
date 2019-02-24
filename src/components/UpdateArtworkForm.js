@@ -212,7 +212,9 @@ export default class UpdateArtworkForm extends React.Component {
                                         // const currentImageFromSource = document.getElementById('currentImageFromSource')
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
+                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
+                                        console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         canvasContext.save()
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
@@ -231,6 +233,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         // imageCanvasNode.height = this.state.imageWidth
                                         // convert canvas contents to blob
                                         imageCanvasNode.toBlob((imageBlob) => {
+                                            console.log(imageBlob)
                                             this.setState({
                                                 imageFile: imageBlob,
                                             }, () => {
@@ -347,6 +350,7 @@ const GALLERY_NAMES = gql`
 let urls = new WeakMap()
 
 let blobUrl = blob => {
+    console.log(blob)
   if (urls.has(blob)) {
       return urls.get(blob)
     } else {
