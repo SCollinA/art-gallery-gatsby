@@ -115,6 +115,10 @@ a {
     display: flex;
 }
 
+.galleryArtwork.current > * {
+    flex: 1;
+}
+
 .galleryArtwork.hidden {
     display: none;
 }
