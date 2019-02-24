@@ -219,6 +219,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     imageCanvasNode.toBlob((imageBlob) => {
                                         this.setState({
                                             imageFile: imageBlob,
+                                            aspectRatio: 1 / this.state.aspectRatio,
                                         }, () => {
                                             this.setState({ imageLoaded: true, })
                                         })
