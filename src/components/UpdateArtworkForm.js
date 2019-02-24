@@ -158,21 +158,24 @@ export default class UpdateArtworkForm extends React.Component {
                         </label>
                         <div className='changeImage'>
                             <label>image
-                                <input type='file' name='image' accept='image/*' onChange={() => {
-                                    const imageUploadButton = document.getElementById('imageUploadButton')
-                                    imageUploadButton.click()
+                                <input type='file' name='image' accept='image/*' onChange={event => {
+                                    // const imageUploadButton = document.getElementById('imageUploadButton')
+                                    // imageUploadButton.click()
+                                    const imageFile = event.target.files[0]
+                                    const imageLoaded = imageFile && true
+                                    this.setState({imageFile, imageLoaded})
                                 }}/>
                             </label>
-                            <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
+                            {/* <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
                                 onClick={event => {
                                     const imageFile = event.target.form.image.files[0]
                                     const imageLoaded = imageFile && true
                                     this.setState({imageFile, imageLoaded})
                                 }}
-                            />
+                            /> */}
                             <canvas id='imageCanvas' ref={this.imageCanvas}
-                                width={1000 * this.state.aspectRatio}
-                                height={1000}
+                                width={1000}
+                                height={1000 * this.state.aspectRatio}
                                 style={{ display: 'none' }}
                             /> 
                             {(this.state.imageLoaded && (
@@ -180,7 +183,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
-                                        onLoad={() => this.setState({ 
+                                        onLoad={() => !this.state.aspectRatio && this.setState({ 
                                             aspectRatio: this.uploadedImage.current.width / this.uploadedImage.current.height 
                                         })}
                                     />
@@ -221,6 +224,7 @@ export default class UpdateArtworkForm extends React.Component {
                                             imageFile: imageBlob,
                                             aspectRatio: 1 / this.state.aspectRatio,
                                         }, () => {
+                                            console.log('aspect ratio', this.state.aspectRatio)
                                             this.setState({ imageLoaded: true, })
                                         })
                                     }, 'image/jpeg', 1.0)
