@@ -12,7 +12,8 @@ export default class UpdateArtworkForm extends React.Component {
         this.state = {
             imageFile: null,
             imageLoaded: false,
-            aspectRatio: 0,
+            imageWidth: 0,
+            imageHeight: 0,
         }
         this.imageCanvas = React.createRef()
         this.uploadedImage = React.createRef()
@@ -174,8 +175,8 @@ export default class UpdateArtworkForm extends React.Component {
                                 }}
                             /> */}
                             <canvas id='imageCanvas' ref={this.imageCanvas}
-                                width={1000}
-                                height={1000 * this.state.aspectRatio}
+                                width={this.state.imageWidth}
+                                height={this.state.imageHeight}
                                 style={{ display: 'none' }}
                             /> 
                             {(this.state.imageLoaded && (
@@ -183,8 +184,9 @@ export default class UpdateArtworkForm extends React.Component {
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
-                                        onLoad={() => !this.state.aspectRatio && this.setState({ 
-                                            aspectRatio: this.uploadedImage.current.width / this.uploadedImage.current.height 
+                                        onLoad={() => !this.state.imageWidth && this.setState({ 
+                                            imageWidth: this.uploadedImage.current.width,
+                                            imageHeight: this.uploadedImage.current.height 
                                         })}
                                     />
                                 </div>
@@ -195,40 +197,47 @@ export default class UpdateArtworkForm extends React.Component {
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
+                                    // this.setState({ 
+                                    //     imageWidth: this.state.imageHeight,
+                                    //     imageHeight: this.state.imageWidth,
+                                    // }, () => {
                                     // get canvas and image elements from page
-                                    const imageCanvasNode = this.imageCanvas.current
-                                    // const imageCanvas = document.getElementById('imageCanvas')
-                                    const uploadedImageNode = this.uploadedImage.current
-                                    // const uploadedImage = document.getElementById('uploadedImage')
-                                    const currentImageFromFileNode = this.currentImageFromFile.current
-                                    // const currentImageFromFile = document.getElementById('currentImageFromFile')
-                                    const currentImageFromSourceNode = this.currentImageFromSource.current
-                                    // const currentImageFromSource = document.getElementById('currentImageFromSource')
-                                    const canvasContext = imageCanvasNode.getContext('2d')
-                                    // get whichever element actually exists
-                                    console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
-                                    const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                    console.log(rotatingImage)
-                                    // rotate the canvas, draw the image, and rotate the canvas back
-                                    // canvasContext.rotate÷(-90)
-                                    canvasContext.save()
-                                    canvasContext.translate(imageCanvasNode.width / 2, imageCanvasNode.height / 2)
-                                    canvasContext.rotate(Math.PI / 2)
-                                    canvasContext.translate((-1 * imageCanvasNode.width / 2), (-1 * imageCanvasNode.height / 2))
-                                    // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
-                                    canvasContext.drawImage(rotatingImage, 0, 0)
-                                    canvasContext.restore()
-                                    // convert canvas contents to blob
-                                    imageCanvasNode.toBlob((imageBlob) => {
-                                        this.setState({
-                                            imageFile: imageBlob,
-                                            aspectRatio: 1 / this.state.aspectRatio,
-                                        }, () => {
-                                            console.log('aspect ratio', this.state.aspectRatio)
-                                            this.setState({ imageLoaded: true, })
-                                        })
-                                    }, 'image/jpeg', 1.0)
-                                }}
+                                        const imageCanvasNode = this.imageCanvas.current
+                                        // const imageCanvas = document.getElementById('imageCanvas')
+                                        const uploadedImageNode = this.uploadedImage.current
+                                        // const uploadedImage = document.getElementById('uploadedImage')
+                                        const currentImageFromFileNode = this.currentImageFromFile.current
+                                        // const currentImageFromFile = document.getElementById('currentImageFromFile')
+                                        const currentImageFromSourceNode = this.currentImageFromSource.current
+                                        // const currentImageFromSource = document.getElementById('currentImageFromSource')
+                                        const canvasContext = imageCanvasNode.getContext('2d')
+                                        // get whichever element actually exists
+                                        const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
+                                        // rotate the canvas, draw the image, and rotate the canvas back
+                                        // canvasContext.rotate÷(-90)
+                                        // canvasContext.save()
+                                        canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                        canvasContext.translate(
+                                            imageCanvasNode.width / 2,
+                                            imageCanvasNode.height / 2
+                                        )
+                                        canvasContext.rotate(Math.PI / 2)
+                                        canvasContext.translate(
+                                            (-1 * imageCanvasNode.height / 2),
+                                            (-1 * imageCanvasNode.width / 2) 
+                                        )
+                                        canvasContext.drawImage(rotatingImage, 0, 0)
+                                        // canvasContext.restore()
+                                        // convert canvas contents to blob
+                                        imageCanvasNode.toBlob((imageBlob) => {
+                                            this.setState({
+                                                imageFile: imageBlob,
+                                            }, () => {
+                                                this.setState({ imageLoaded: true, })
+                                            })
+                                        }, 'image/jpeg', 1.0)
+                                // })
+                            }}
                             >
                                 rotate right
                             </div>}
