@@ -21,6 +21,15 @@ export default class UpdateArtworkForm extends React.Component {
         this.currentImageFromSource = React.createRef()
     }
 
+    componentDidMount() {
+        fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
+        .then(res => res.blob())
+        .then(blob => this.setState({
+            imageFile: blob,
+            imageLoaded: true
+        }))
+    }
+
     render() {
         const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
         return (
@@ -160,20 +169,11 @@ export default class UpdateArtworkForm extends React.Component {
                         <div className='changeImage'>
                             <label>image
                                 <input type='file' name='image' accept='image/*' onChange={event => {
-                                    // const imageUploadButton = document.getElementById('imageUploadButton')
-                                    // imageUploadButton.click()
                                     const imageFile = event.target.files[0]
                                     const imageLoaded = imageFile && true
                                     this.setState({imageFile, imageLoaded})
                                 }}/>
                             </label>
-                            {/* <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
-                                onClick={event => {
-                                    const imageFile = event.target.form.image.files[0]
-                                    const imageLoaded = imageFile && true
-                                    this.setState({imageFile, imageLoaded})
-                                }}
-                            /> */}
                             <canvas id='imageCanvas' ref={this.imageCanvas}
                                 width={this.state.imageWidth}
                                 height={this.state.imageHeight}
@@ -212,12 +212,12 @@ export default class UpdateArtworkForm extends React.Component {
                                         // const currentImageFromSource = document.getElementById('currentImageFromSource')
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
-                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
+                                        // console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                        console.log(rotatingImage)
+                                        // console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
-                                        canvasContext.save()
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                        canvasContext.save()
                                         canvasContext.translate(
                                             imageCanvasNode.width / 2,
                                             imageCanvasNode.height / 2
@@ -232,6 +232,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         // imageCanvasNode.width = this.state.imageHeight
                                         // imageCanvasNode.height = this.state.imageWidth
                                         // convert canvas contents to blob
+                                        console.log(canvasContext)
                                         imageCanvasNode.toBlob((imageBlob) => {
                                             console.log(imageBlob)
                                             this.setState({
