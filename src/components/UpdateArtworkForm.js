@@ -12,12 +12,22 @@ export default class UpdateArtworkForm extends React.Component {
         this.state = {
             imageFile: null,
             imageLoaded: false,
-            aspectRatio: 0,
+            imageWidth: 0,
+            imageHeight: 0,
         }
         this.imageCanvas = React.createRef()
         this.uploadedImage = React.createRef()
         this.currentImageFromFile = React.createRef()
         this.currentImageFromSource = React.createRef()
+    }
+
+    componentDidMount() {
+        fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
+        .then(res => res.blob())
+        .then(blob => this.setState({
+            imageFile: blob,
+            imageLoaded: true
+        }))
     }
 
     render() {
@@ -56,7 +66,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 // const uploadedImage = document.getElementById('uploadedImage')
                                 const canvasContext = imageCanvasNode.getContext('2d')
                                 // draw image takes (img, x, y, w, h)
-                                canvasContext.drawImage(uploadedImageNode, 0, 0, 1000, 1000)
+                                canvasContext.drawImage(uploadedImageNode, 0, 0, this.state.imageWidth, this.state.imageHeight)
                                 imageCanvasNode.toBlob((imageBlob) => {
                                     const fr = new FileReader()
                                     fr.onload = () => {
@@ -158,21 +168,15 @@ export default class UpdateArtworkForm extends React.Component {
                         </label>
                         <div className='changeImage'>
                             <label>image
-                                <input type='file' name='image' accept='image/*' onChange={() => {
-                                    const imageUploadButton = document.getElementById('imageUploadButton')
-                                    imageUploadButton.click()
-                                }}/>
-                            </label>
-                            <input type='button' id='imageUploadButton' value='Upload' style={{ display: 'none' }}
-                                onClick={event => {
-                                    const imageFile = event.target.form.image.files[0]
+                                <input type='file' name='image' accept='image/*' onChange={event => {
+                                    const imageFile = event.target.files[0]
                                     const imageLoaded = imageFile && true
                                     this.setState({imageFile, imageLoaded})
-                                }}
-                            />
+                                }}/>
+                            </label>
                             <canvas id='imageCanvas' ref={this.imageCanvas}
-                                width={1000 * this.state.aspectRatio}
-                                height={1000}
+                                width={this.state.imageWidth}
+                                height={this.state.imageHeight}
                                 style={{ display: 'none' }}
                             /> 
                             {(this.state.imageLoaded && (
@@ -180,8 +184,9 @@ export default class UpdateArtworkForm extends React.Component {
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
-                                        onLoad={() => this.setState({ 
-                                            aspectRatio: this.uploadedImage.current.width / this.uploadedImage.current.height 
+                                        onLoad={() => !this.state.imageWidth && this.setState({ 
+                                            imageWidth: this.uploadedImage.current.width,
+                                            imageHeight: this.uploadedImage.current.height 
                                         })}
                                     />
                                 </div>
@@ -192,39 +197,52 @@ export default class UpdateArtworkForm extends React.Component {
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
+                                    this.setState({ 
+                                        imageWidth: this.state.imageHeight,
+                                        imageHeight: this.state.imageWidth,
+                                    }, () => {
                                     // get canvas and image elements from page
-                                    const imageCanvasNode = this.imageCanvas.current
-                                    // const imageCanvas = document.getElementById('imageCanvas')
-                                    const uploadedImageNode = this.uploadedImage.current
-                                    // const uploadedImage = document.getElementById('uploadedImage')
-                                    const currentImageFromFileNode = this.currentImageFromFile.current
-                                    // const currentImageFromFile = document.getElementById('currentImageFromFile')
-                                    const currentImageFromSourceNode = this.currentImageFromSource.current
-                                    // const currentImageFromSource = document.getElementById('currentImageFromSource')
-                                    const canvasContext = imageCanvasNode.getContext('2d')
-                                    // get whichever element actually exists
-                                    console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
-                                    const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                    console.log(rotatingImage)
-                                    // rotate the canvas, draw the image, and rotate the canvas back
-                                    // canvasContext.rotate÷(-90)
-                                    canvasContext.save()
-                                    canvasContext.translate(imageCanvasNode.width / 2, imageCanvasNode.height / 2)
-                                    canvasContext.rotate(Math.PI / 2)
-                                    canvasContext.translate((-1 * imageCanvasNode.width / 2), (-1 * imageCanvasNode.height / 2))
-                                    // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
-                                    canvasContext.drawImage(rotatingImage, 0, 0)
-                                    canvasContext.restore()
-                                    // convert canvas contents to blob
-                                    imageCanvasNode.toBlob((imageBlob) => {
-                                        this.setState({
-                                            imageFile: imageBlob,
-                                            aspectRatio: 1 / this.state.aspectRatio,
-                                        }, () => {
-                                            this.setState({ imageLoaded: true, })
-                                        })
-                                    }, 'image/jpeg', 1.0)
-                                }}
+                                        const imageCanvasNode = this.imageCanvas.current
+                                        // const imageCanvas = document.getElementById('imageCanvas')
+                                        const uploadedImageNode = this.uploadedImage.current
+                                        // const uploadedImage = document.getElementById('uploadedImage')
+                                        const currentImageFromFileNode = this.currentImageFromFile.current
+                                        // const currentImageFromFile = document.getElementById('currentImageFromFile')
+                                        const currentImageFromSourceNode = this.currentImageFromSource.current
+                                        // const currentImageFromSource = document.getElementById('currentImageFromSource')
+                                        const canvasContext = imageCanvasNode.getContext('2d')
+                                        // get whichever element actually exists
+                                        // console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
+                                        const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
+                                        // console.log(rotatingImage)
+                                        // rotate the canvas, draw the image, and rotate the canvas back
+                                        // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                        canvasContext.save()
+                                        canvasContext.translate(
+                                            imageCanvasNode.width / 2,
+                                            imageCanvasNode.height / 2
+                                        )
+                                        canvasContext.rotate(Math.PI / 2)
+                                        canvasContext.translate(
+                                            (-1 * imageCanvasNode.height / 2),
+                                            (-1 * imageCanvasNode.width / 2) 
+                                        )
+                                        canvasContext.drawImage(rotatingImage, 0, 0, this.state.imageHeight, this.state.imageWidth)
+                                        canvasContext.restore()
+                                        // imageCanvasNode.width = this.state.imageHeight
+                                        // imageCanvasNode.height = this.state.imageWidth
+                                        // convert canvas contents to blob
+                                        console.log(canvasContext)
+                                        imageCanvasNode.toBlob((imageBlob) => {
+                                            console.log(imageBlob)
+                                            this.setState({
+                                                imageFile: imageBlob,
+                                            }, () => {
+                                                this.setState({ imageLoaded: true, })
+                                            })
+                                        }, 'image/jpeg', 1.0)
+                                })
+                            }}
                             >
                                 rotate right
                             </div>}
@@ -333,6 +351,7 @@ const GALLERY_NAMES = gql`
 let urls = new WeakMap()
 
 let blobUrl = blob => {
+    console.log(blob)
   if (urls.has(blob)) {
       return urls.get(blob)
     } else {
