@@ -197,10 +197,10 @@ export default class UpdateArtworkForm extends React.Component {
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
-                                    // this.setState({ 
-                                    //     imageWidth: this.state.imageHeight,
-                                    //     imageHeight: this.state.imageWidth,
-                                    // }, () => {
+                                    this.setState({ 
+                                        imageWidth: this.state.imageHeight,
+                                        imageHeight: this.state.imageWidth,
+                                    }, () => {
                                     // get canvas and image elements from page
                                         const imageCanvasNode = this.imageCanvas.current
                                         // const imageCanvas = document.getElementById('imageCanvas')
@@ -237,7 +237,7 @@ export default class UpdateArtworkForm extends React.Component {
                                                 this.setState({ imageLoaded: true, })
                                             })
                                         }, 'image/jpeg', 1.0)
-                                // })
+                                })
                             }}
                             >
                                 rotate right
