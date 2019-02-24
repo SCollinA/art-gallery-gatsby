@@ -214,9 +214,8 @@ export default class UpdateArtworkForm extends React.Component {
                                         // get whichever element actually exists
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
                                         // rotate the canvas, draw the image, and rotate the canvas back
-                                        // canvasContext.rotate÷(-90)
                                         // canvasContext.save()
-                                        canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+                                        // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         canvasContext.translate(
                                             imageCanvasNode.width / 2,
                                             imageCanvasNode.height / 2
@@ -226,8 +225,10 @@ export default class UpdateArtworkForm extends React.Component {
                                             (-1 * imageCanvasNode.height / 2),
                                             (-1 * imageCanvasNode.width / 2) 
                                         )
-                                        canvasContext.drawImage(rotatingImage, 0, 0)
+                                        canvasContext.drawImage(rotatingImage, 0, 0, this.state.imageHeight, this.state.imageWidth)
                                         // canvasContext.restore()
+                                        // imageCanvasNode.width = this.state.imageHeight
+                                        // imageCanvasNode.height = this.state.imageWidth
                                         // convert canvas contents to blob
                                         imageCanvasNode.toBlob((imageBlob) => {
                                             this.setState({
