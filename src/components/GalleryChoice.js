@@ -16,7 +16,8 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                     <div id='galleryThumbs'>
                         {/* map galleries to their first artwork image */}
                         {galleries.map((gallery, index) => {
-                            const randomArtwork = randomGalleryImages[index] || { file: false, image: false }
+                            const randomArtwork = randomGalleryImages[index] || 
+                            { file: false, image: false }
                             return (
                                 <div key={index} 
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
