@@ -101,6 +101,15 @@ a {
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
+.randomArtwork {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* ============================ */
+/*          Gallery             */
+/* ============================ */
 .Gallery {
     width: 100%;
 }
@@ -113,10 +122,7 @@ a {
 
 .galleryArtwork.current {
     display: flex;
-}
-
-.galleryArtwork.current > * {
-    flex: 1;
+    justify-content: space-around;
 }
 
 .galleryArtwork.hidden {
