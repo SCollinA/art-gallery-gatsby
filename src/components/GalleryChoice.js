@@ -23,13 +23,13 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
                                     onClick={() => selectGallery(gallery)}
                                 >
+                                    <h6>{gallery.name}</h6>
                                     {(randomArtwork.file && (
                                         <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
                                     )) || (
                                     randomArtwork.image && (
                                         <img src={`data:image/jpeg;base64,${randomArtwork.image}`} alt={randomArtwork.title}/>
                                     ))}
-                                    <h6>{gallery.name}</h6>
                                 </div>
                             )
                         })}
