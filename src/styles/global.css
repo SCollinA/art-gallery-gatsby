@@ -139,10 +139,6 @@ a {
     margin: 0;
 }
 
-.galleryImage {
-    height: 50%;
-}
-
 .galleryArtwork.current {
     display: flex;
     justify-content: space-around;
