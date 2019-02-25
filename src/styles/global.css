@@ -26,6 +26,10 @@ a {
     align-items: center;
 }
 
+.pageLink:hover {
+    background: lightgrey;
+}
+
 .homeLink {
     flex: 1;
     min-width: 100px;
