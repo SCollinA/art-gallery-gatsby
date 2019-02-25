@@ -18,7 +18,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                         {galleries.map((gallery, index) => {
                             const randomArtwork = randomGalleryImages[index] || 
                             { file: false, image: false }
-                            return (
+                            return !gallery.artworks.length || (
                                 <div key={index} 
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
                                     onClick={() => selectGallery(gallery)}
