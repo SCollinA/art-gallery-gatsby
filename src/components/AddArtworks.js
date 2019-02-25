@@ -47,9 +47,12 @@ export default () => {
                             query: GALLERY_ARTWORKS,
                         }]}
                     >
-                        {(addArtwork, { data }) => (
+                        {(addArtwork, { data, loading, error }) => (
                             <div className='addArtwork'
-                                onClick={addArtwork}
+                                onClick={event => {
+                                    event.stopPropagation()
+                                    addArtwork()
+                                }}
                             >
                                 <h3> + </h3>
                             </div>

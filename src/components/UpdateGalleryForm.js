@@ -29,7 +29,7 @@ export default () => {
                                     id: updatingGallery.id,
                                     input: updatingGallery
                                 }})
-                                .then(({ gallery })=> selectGallery(updatingGallery))
+                                // .then(({ gallery })=> selectGallery(updatingGallery))
                             }}
                             onReset={() => resetGallery()}
                             onClick={event => event.stopPropagation()}

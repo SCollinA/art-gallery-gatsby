@@ -22,12 +22,13 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
-        .then(res => res.blob())
-        .then(blob => this.setState({
-            imageFile: blob,
-            imageLoaded: true
-        }))
+        this.context.updatingArtwork.image && 
+            fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
+            .then(res => res.blob())
+            .then(blob => this.setState({
+                imageFile: blob,
+                imageLoaded: true
+            }))
     }
 
     render() {
