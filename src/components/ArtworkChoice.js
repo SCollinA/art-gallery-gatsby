@@ -9,20 +9,22 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div>
         <div id='artworkThumbs'>
-            {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => (
-                <div key={index} 
-                    className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
-                    onClick={() => selectArtwork(artwork)}
-                >
-                    {(artwork.file && (
-                        <Img fluid={artwork.file.childImageSharp.fluid}/>
-                    )) || (
-                    artwork.image && (
-                        <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
-                    ))}
-                    <p>{artwork.title}</p>
-                </div>
-            ))}
+            {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => {
+                return (artwork.file || artwork.image) && (
+                    <div key={index} 
+                        className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
+                        onClick={() => selectArtwork(artwork)}
+                    >
+                        {(artwork.file && (
+                            <Img fluid={artwork.file.childImageSharp.fluid}/>
+                        )) || (
+                        artwork.image && (
+                            <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
+                        ))}
+                        <p>{artwork.title}</p>
+                    </div>
+                )
+            })}
         </div>
         <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
