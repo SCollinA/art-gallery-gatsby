@@ -40,8 +40,8 @@ export default () => (
                                         {galleries.map(({ id, name, artworks }) => (
                                             <optgroup key={id} label={name}>
                                                 {artworks.map((artwork)=> (
-                                                    <option key={artwork.id} value={artwork.name}>
-                                                        {artwork.name}
+                                                    <option key={artwork.id} value={artwork.title}>
+                                                        {artwork.title}
                                                     </option>)
                                                 )}
                                             </optgroup>
