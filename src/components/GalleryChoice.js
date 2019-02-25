@@ -7,9 +7,9 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
     const randomGalleryImages = galleries.map(gallery => gallery.artworks[Math.floor(Math.random() * gallery.artworks.length)])
     return (
         <div className='GalleryChoice'>
-            <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
+            {/* <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
                 <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
-            </div>
+            </div> */}
             {/* <h1 className='galleryArrow'>{'<'}</h1> */}
             {/* <LayoutContext.Consumer>
                 {({ artworks }) => ( */}
@@ -23,7 +23,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
                                     onClick={() => selectGallery(gallery)}
                                 >
-                                    <h6>{gallery.name}</h6>
+                                    {/* <h6>{gallery.name}</h6> */}
                                     {(randomArtwork.file && (
                                         <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
                                     )) || (
@@ -37,19 +37,19 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                 {/* )} */}
             {/* </LayoutContext.Consumer> */}
             {/* <h1 className='galleryArrow'>{'>'}</h1> */}
-            <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
+            {/* <div className='galleryArrow' onClick={() => scrollThumbs(false)}>
                 <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
-            </div>
+            </div> */}
         </div>
     )
 }
 
-function scrollThumbs(isScrollingLeft) {
-    const galleryThumbs = document.getElementById('galleryThumbs')
-    galleryThumbs.scrollTo({
-        top: 0,
-        left: galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
-        behavior: 'smooth',
-    })
-        // galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
-}
+// function scrollThumbs(isScrollingLeft) {
+//     const galleryThumbs = document.getElementById('galleryThumbs')
+//     galleryThumbs.scrollTo({
+//         top: 0,
+//         left: galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
+//         behavior: 'smooth',
+//     })
+//         // galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
+// }

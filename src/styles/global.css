@@ -156,7 +156,7 @@ a {
 /* This is the inner container */
 #galleryThumbs, #artworkThumbs {
     flex: 1;
-    padding: 2%;
+    /* padding: 2%; */
     display: flex;
     overflow: auto;
     margin: auto;
@@ -164,16 +164,16 @@ a {
     border-radius: 5px;
 }
 
-.galleryArrow {
+/* .galleryArrow {
     padding: 2%;
     text-align: center;
     border-radius: 10px;
     display: none;
-}
+} */
 
-.galleryArrow:active {
+/* .galleryArrow:active {
     background-color: lightgrey;
-}
+} */
 
 .galleryThumb, .artworkThumb {
     padding: 2%;
