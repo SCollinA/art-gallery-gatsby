@@ -3,7 +3,10 @@ import { Link } from 'gatsby'
 
 export default () => (
     <footer className='Footer'>
-        <p>© {new Date().getFullYear()}, mkcrfineart</p>
+        <span>
+            <p>© {new Date().getFullYear()},&nbsp;</p>
+            <p>mkcrfineart</p>
+        </span>
         <p>
             All images on this site are copyrighted by the artist 
             and may not be reproduced without written permission 

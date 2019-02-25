@@ -91,7 +91,7 @@ a {
 .Content > * {
     /* width: 75%; */
     margin: auto;
-    padding: 5%;
+    padding: 2%;
 }
 
 .Content > a {
@@ -326,11 +326,23 @@ a {
     border-top: solid 5px black;
     border-bottom: solid 5px black;
     border-radius: 5px;
+    white-space: nowrap;
 }
 
 .Footer > * {
     padding: 2%;
     margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.Footer > span > p {
+    margin: 0;
+}
+
+.Footer > p:nth-child(2) {
+    white-space: normal;
 }
 
 @media (max-width: 500px) {
