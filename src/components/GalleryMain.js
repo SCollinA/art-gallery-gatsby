@@ -8,20 +8,18 @@ export default ({ selectedGallery, selectedArtwork }) => (
             {({ galleries }) => {
                 console.log(galleries)
                 return selectedArtwork && (
-                    <>
-                        <h2>{selectedGallery.name}</h2>
-                        <h1>{selectedArtwork.title}</h1>
+                    <div className='selectedGallery'>
+                        <div className='galleryTitle'>
+                            <h2>{selectedGallery.name}</h2>
+                            <h1>{selectedArtwork.title}</h1>
+                        </div>
+                        <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
-                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
-                                        <Img  
-                                            // style={{
-                                            //     display: `${selectedArtworkTitle === artwork.name ? 'block' : 'none'}`
-                                            // }} 
-                                            fluid={artwork.file.childImageSharp.fluid} 
-                                        />
+                                        <Img fluid={artwork.file.childImageSharp.fluid}/>
                                     )) || (
                                     artwork.image && (
                                         <img 
@@ -31,8 +29,15 @@ export default ({ selectedGallery, selectedArtwork }) => (
                                     ))}
                                 </div>
                             )))}
-                        <p>stuff will go here</p>
-                    </>
+                        </div>
+                        <div className='galleryCaption'>
+                            <p>{selectedArtwork.medium}</p>
+                            <p>{`${selectedArtwork.price ? `$${selectedArtwork.price}` : 'no price'}`}</p>
+                            <p>{selectedArtwork.sold && 'sold'}</p>
+                            {/* this one will be a caption */}
+                            <p>{selectedArtwork.medium}</p>
+                        </div>
+                    </div>
                 )
             }}
         </LayoutContext.Consumer>

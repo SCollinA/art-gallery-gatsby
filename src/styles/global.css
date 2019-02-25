@@ -120,9 +120,19 @@ a {
     margin: auto;
 }
 
+.galleryTitle, .galleryCaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .galleryArtwork.current {
     display: flex;
     justify-content: space-around;
+}
+
+.galleryArtwork.current > * {
+    flex: 1;
 }
 
 .galleryArtwork.hidden {
