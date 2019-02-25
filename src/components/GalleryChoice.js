@@ -1,6 +1,6 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {

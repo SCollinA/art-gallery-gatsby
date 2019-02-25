@@ -82,7 +82,8 @@ a {
 /* ============================ */
 .Content {
     /* 15 px is width of ugly scroll bar */
-    width: calc(100% + 15px);
+    /* width: calc(100% + 15px); */
+    width: 100%;
     margin: 0 auto;
     padding: 0 5% 5%;
     overflow-y: auto;
@@ -112,10 +113,14 @@ a {
 /* ============================ */
 .Gallery {
     width: 100%;
+    padding: unset;
+}
+
+.Gallery > * {
+    padding: 2%;
 }
 
 .GalleryMain {
-    padding: 2%;
     max-width: 750px;
     margin: auto;
 }
@@ -126,12 +131,16 @@ a {
     align-items: center;
 }
 
-.galleryCaption {
-    padding: 2%;
+.galleryTitle, .galleryCaption {
+    padding: 1%;
 }
 
-.galleryCaption > * {
+.galleryTitle > *, .galleryCaption > * {
     margin: 0;
+}
+
+.galleryImage {
+    height: 50%;
 }
 
 .galleryArtwork.current {
@@ -151,6 +160,14 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.galleryThumb, .artworkThumb {
+    background-color: lightgrey;
+}
+
+.galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
+    background-color: white;
 }
 
 /* This is the inner container */
