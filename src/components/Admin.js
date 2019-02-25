@@ -51,7 +51,7 @@ export default class Admin extends React.Component {
     // when selecting, if one already exists, remove it
     _selectArtwork = selectedArtwork => this.setState({
         updatingGallery: {},
-        selectedGallery: {}, 
+        // selectedGallery: {}, 
         selectedArtwork,
         updatingArtwork: selectedArtwork, 
         isUpdating: true
@@ -93,7 +93,7 @@ export default class Admin extends React.Component {
         const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
         return (!isLoggedIn && (<AdminLogin adminLogin={this._login}/>)) || (
             <div className='Admin'
-                onClick={event => this.setState({
+                onClick={() => this.setState({
                     isUpdating: false,
                     selectedGallery: {},
                     updatingGallery: {},
