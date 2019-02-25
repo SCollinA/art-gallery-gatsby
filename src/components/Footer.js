@@ -3,9 +3,12 @@ import { Link } from 'gatsby'
 
 export default () => (
     <footer className='Footer'>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
+        <p>© {new Date().getFullYear()}, mkcrfineart</p>
+        <p>
+            All images on this site are copyrighted by the artist 
+            and may not be reproduced without written permission 
+            of the artist. 
+        </p>
         <Link to='/admin'>admin</Link>
     </footer>
 )

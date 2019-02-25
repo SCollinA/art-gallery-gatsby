@@ -130,6 +130,14 @@ a {
     align-items: center;
 }
 
+.galleryCaption {
+    padding: 2%;
+}
+
+.galleryCaption > * {
+    margin: 0;
+}
+
 .galleryArtwork.current {
     display: flex;
     justify-content: space-around;
@@ -315,6 +323,16 @@ a {
 .Footer {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    border-top: solid 5px black;
+    border-bottom: solid 5px black;
+    border-radius: 5px;
+}
+
+.Footer > * {
+    padding: 2%;
+    margin: 0;
 }
 
 @media (max-width: 500px) {

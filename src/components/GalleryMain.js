@@ -11,6 +11,7 @@ export default ({ selectedGallery, selectedArtwork }) => (
                     <div className='selectedGallery'>
                         <div className='galleryTitle'>
                             <h2>{selectedGallery.name}</h2>
+                            <h1> | </h1>
                             <h1>{selectedArtwork.title}</h1>
                         </div>
                         <div className='galleryImage'>
