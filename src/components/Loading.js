@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default () => {
-    const height = 500
+    const height = 650
     return (
         <div className='Loading'>
             <svg 
