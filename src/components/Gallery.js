@@ -10,7 +10,8 @@ export default class Gallery extends Component {
         this.state = { 
             selectedGallery: {},
             selectedArtwork: null,
-         }
+        }
+        this.galleryDiv = React.createRef()
     }
 
     componentDidMount() {
@@ -20,7 +21,7 @@ export default class Gallery extends Component {
                 this.context.galleries[0].artworks[0],
         })
     }
-    
+
     _selectGallery = selectedGallery => this.setState({
         selectedGallery,
         selectedArtwork: selectedGallery.artworks[0]
@@ -30,14 +31,9 @@ export default class Gallery extends Component {
         selectedArtwork
    })
 
-    render() {
+    render() {            
         return (
             <div className='Gallery'>
-                <GalleryChoice 
-                    galleries={this.context.galleries} 
-                    selectGallery={this._selectGallery}
-                    selectedGallery={this.state.selectedGallery}
-                />
                 <GalleryMain 
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
@@ -46,6 +42,11 @@ export default class Gallery extends Component {
                     selectedGallery={this.state.selectedGallery} 
                     selectArtwork={this._selectArtwork}
                     selectedArtwork={this.state.selectedArtwork}
+                />
+                <GalleryChoice 
+                    galleries={this.context.galleries} 
+                    selectGallery={this._selectGallery}
+                    selectedGallery={this.state.selectedGallery}
                 />
             </div>
         )

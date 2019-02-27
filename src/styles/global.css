@@ -26,6 +26,10 @@ a {
     align-items: center;
 }
 
+.pageLink:hover {
+    background: lightgrey;
+}
+
 .homeLink {
     flex: 1;
     min-width: 100px;
@@ -60,11 +64,7 @@ a {
 }
 
 .HamburgerLinks {
-    visibility: hidden;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: none;
 }
 
 .HamburgerLinks > svg {
@@ -82,7 +82,8 @@ a {
 /* ============================ */
 .Content {
     /* 15 px is width of ugly scroll bar */
-    width: calc(100% + 15px);
+    /* width: calc(100% + 15px); */
+    width: 100%;
     margin: 0 auto;
     padding: 0 5% 5%;
     overflow-y: auto;
@@ -91,7 +92,7 @@ a {
 .Content > * {
     /* width: 75%; */
     margin: auto;
-    padding: 5%;
+    padding: 2%;
 }
 
 .Content > a {
@@ -101,18 +102,46 @@ a {
 /* ============================ */
 /*          Gallery             */
 /* ============================ */
+.randomArtwork {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/* ============================ */
+/*          Gallery             */
+/* ============================ */
 .Gallery {
     width: 100%;
+    padding: unset;
+}
+
+.Gallery > * {
+    padding: 2%;
 }
 
 .GalleryMain {
-    padding: 2%;
     max-width: 750px;
     margin: auto;
 }
 
+.galleryTitle, .galleryCaption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.galleryTitle, .galleryCaption {
+    padding: 1%;
+}
+
+.galleryTitle > *, .galleryCaption > * {
+    margin: 0;
+}
+
 .galleryArtwork.current {
     display: flex;
+    justify-content: space-around;
 }
 
 .galleryArtwork.current > * {
@@ -129,10 +158,18 @@ a {
     align-items: center;
 }
 
+.galleryThumb, .artworkThumb {
+    background-color: lightgrey;
+}
+
+.galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
+    background-color: white;
+}
+
 /* This is the inner container */
 #galleryThumbs, #artworkThumbs {
     flex: 1;
-    padding: 2%;
+    /* padding: 2%; */
     display: flex;
     overflow: auto;
     margin: auto;
@@ -140,22 +177,24 @@ a {
     border-radius: 5px;
 }
 
-.galleryArrow {
+/* .galleryArrow {
     padding: 2%;
     text-align: center;
     border-radius: 10px;
     display: none;
-}
+} */
 
-.galleryArrow:active {
+/* .galleryArrow:active {
     background-color: lightgrey;
-}
+} */
 
 .galleryThumb, .artworkThumb {
     padding: 2%;
-    max-width: 150px;
+    /* max-width: 150px; */
     cursor: pointer;
-    flex: 1;
+    /* flex: 1; */
+    width: 15%;
+    min-width: 100px;
 }
 
 .galleryThumb > *, .artworkThumb > * {
@@ -295,13 +334,36 @@ a {
 .Footer {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    border-top: solid 5px black;
+    border-bottom: solid 5px black;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+.Footer > * {
+    padding: 2%;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.Footer > span > p {
+    margin: 0;
+}
+
+.Footer > p:nth-child(2) {
+    white-space: normal;
 }
 
 @media (max-width: 500px) {
     /* make hamburger menu visible */
     .HamburgerLinks {
-        visibility: visible;
-        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .PageLinks {
