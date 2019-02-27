@@ -5,6 +5,7 @@ import AdminContext from '../contexts/AdminContext'
 import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
 import { ALL_GALLERIES } from './AdminGalleries';
 import { DB_CONTENT } from './layout';
+import Loading from './Loading';
 
 export default () => {
     return (
@@ -21,6 +22,8 @@ export default () => {
                     }]}
                 >
                     {(updateGallery, { data, loading, error }) => (
+                        <>
+                        {loading && <Loading/>}
                         <form id='UpdateGalleryForm'
                             onSubmit={event => {
                                 event.preventDefault()
@@ -78,6 +81,7 @@ export default () => {
                                 </Mutation>
                             </div>
                         </form>
+                        </>
                     )}
                 </Mutation>
             )}

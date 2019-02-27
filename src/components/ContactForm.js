@@ -14,8 +14,9 @@ export default () => (
                     </div>
                     <Mutation mutation={CONTACT_MUTATION}>
                         {(contactArtist, { data, loading, error }) => {
-                            return (loading && 
-                            <Loading/>) || (
+                            return (
+                            <>
+                            {loading && <Loading/>}
                             <form className='contactForm' 
                                 onSubmit={event => {
                                     event.preventDefault()
@@ -53,6 +54,7 @@ export default () => (
                                 </label>
                                 <input type='submit' value='submit'/>
                             </form>
+                        </>
                         )}}
                     </Mutation>
                 </label>
