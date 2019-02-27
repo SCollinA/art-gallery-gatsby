@@ -2,6 +2,7 @@ import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import LayoutContext from '../contexts/LayoutContext'
+import Loading from './Loading';
 
 export default () => (
     <div className='Contact'>
@@ -12,7 +13,9 @@ export default () => (
                         <h1>contact</h1>
                     </div>
                     <Mutation mutation={CONTACT_MUTATION}>
-                        {(contactArtist, { data }) => (
+                        {(contactArtist, { data, loading, error }) => {
+                            return (loading && 
+                            <Loading/>) || (
                             <form className='contactForm' 
                                 onSubmit={event => {
                                     event.preventDefault()
@@ -50,7 +53,7 @@ export default () => (
                                 </label>
                                 <input type='submit' value='submit'/>
                             </form>
-                        )}
+                        )}}
                     </Mutation>
                 </label>
             )}
