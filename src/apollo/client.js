@@ -7,6 +7,7 @@ import { setContext } from 'apollo-link-context'
 import fetch from 'isomorphic-fetch';
 
 const httpLink = createHttpLink({
+  // change this to art-gallery.collinargo.com/graphql for production
   uri: 'http://localhost:4000/graphql',
 })
 
