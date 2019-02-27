@@ -7,6 +7,7 @@ import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
+import Loading from "./Loading";
 
 const Layout = ({ children }) => (
   <div className='Layout'>
@@ -54,6 +55,7 @@ const Layout = ({ children }) => (
                       }]
                     }}
                   >
+                    {loading && <Loading/>}
                     {children}
                   </LayoutContext.Provider>
                 )

@@ -14,6 +14,31 @@ a {
 /*          Layout             */
 /* ============================ */
 
+.Loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 3em;
+    letter-spacing: 31px;
+  }
+  .Loading > svg {
+    animation: loading 5s linear infinite;
+  }
+  @keyframes loading {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
 
 /* ============================ */
 /*          Header              */
@@ -144,9 +169,9 @@ a {
     justify-content: space-around;
 }
 
-.galleryArtwork.current > * {
+/* .galleryArtwork.current > * {
     flex: 1;
-}
+} */
 
 .galleryArtwork.hidden {
     display: none;

@@ -5,6 +5,7 @@ import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { DB_CONTENT } from './layout'
 import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
+import Loading from './Loading';
 
 export default class UpdateArtworkForm extends React.Component {
     constructor(props) {
@@ -57,6 +58,8 @@ export default class UpdateArtworkForm extends React.Component {
             >
                 {(updateArtwork, { data, loading, error }) => {
                     return (
+                    <>
+                    {loading && <Loading/>}
                     <form id='UpdateArtworkForm'
                         onSubmit={event => {
                             event.preventDefault()
@@ -309,6 +312,7 @@ export default class UpdateArtworkForm extends React.Component {
                             </Mutation>
                         </div>
                     </form>
+                </>
                 )}}
             </Mutation>
         )
