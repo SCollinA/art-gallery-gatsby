@@ -201,6 +201,7 @@ export default class UpdateArtworkForm extends React.Component {
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
+                                    // have to get current image height and width
                                     this.setState({ 
                                         imageWidth: this.state.imageHeight,
                                         imageHeight: this.state.imageWidth,
@@ -221,30 +222,32 @@ export default class UpdateArtworkForm extends React.Component {
                                         // console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
-                                        canvasContext.save()
-                                        canvasContext.translate(
-                                            imageCanvasNode.width / 2,
-                                            imageCanvasNode.height / 2
-                                        )
-                                        canvasContext.rotate(Math.PI / 2)
-                                        canvasContext.translate(
-                                            (-1 * imageCanvasNode.height / 2),
-                                            (-1 * imageCanvasNode.width / 2) 
-                                        )
-                                        canvasContext.drawImage(rotatingImage, 0, 0, this.state.imageHeight, this.state.imageWidth)
-                                        canvasContext.restore()
-                                        // imageCanvasNode.width = this.state.imageHeight
-                                        // imageCanvasNode.height = this.state.imageWidth
-                                        // convert canvas contents to blob
-                                        console.log(canvasContext)
-                                        imageCanvasNode.toBlob((imageBlob) => {
-                                            console.log(imageBlob)
-                                            this.setState({
-                                                imageFile: imageBlob,
-                                            }, () => {
-                                                this.setState({ imageLoaded: true, })
-                                            })
-                                        }, 'image/jpeg', 1.0)
+                                        if (rotatingImage) {
+                                            canvasContext.save()
+                                            canvasContext.translate(
+                                                imageCanvasNode.width / 2,
+                                                imageCanvasNode.height / 2
+                                            )
+                                            canvasContext.rotate(Math.PI / 2)
+                                            canvasContext.translate(
+                                                (-1 * imageCanvasNode.height / 2),
+                                                (-1 * imageCanvasNode.width / 2) 
+                                            )
+                                            canvasContext.drawImage(rotatingImage, 0, 0, this.state.imageHeight, this.state.imageWidth)
+                                            canvasContext.restore()
+                                            // imageCanvasNode.width = this.state.imageHeight
+                                            // imageCanvasNode.height = this.state.imageWidth
+                                            // convert canvas contents to blob
+                                            console.log(canvasContext)
+                                            imageCanvasNode.toBlob((imageBlob) => {
+                                                console.log(imageBlob)
+                                                this.setState({
+                                                    imageFile: imageBlob,
+                                                }, () => {
+                                                    this.setState({ imageLoaded: true, })
+                                                })
+                                            }, 'image/jpeg', 1.0)
+                                        }
                                 })
                             }}
                             >
