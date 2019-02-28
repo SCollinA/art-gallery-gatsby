@@ -23,7 +23,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
                         artwork.image && (
                             <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
                         ))}
-                        {/* <p>{artwork.title}</p> */}
+                        <p>{artwork.title}</p>
                     </div>
                 )
             })}
