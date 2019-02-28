@@ -34,19 +34,19 @@ export default class Gallery extends Component {
     render() {            
         return (
             <div className='Gallery'>
-                <ArtworkChoice
-                    selectedGallery={this.state.selectedGallery} 
-                    selectArtwork={this._selectArtwork}
-                    selectedArtwork={this.state.selectedArtwork}
+                <GalleryChoice 
+                    galleries={this.context.galleries} 
+                    selectGallery={this._selectGallery}
+                    selectedGallery={this.state.selectedGallery}
                 />
                 <GalleryMain 
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
                 />
-                <GalleryChoice 
-                    galleries={this.context.galleries} 
-                    selectGallery={this._selectGallery}
-                    selectedGallery={this.state.selectedGallery}
+                <ArtworkChoice
+                    selectedGallery={this.state.selectedGallery} 
+                    selectArtwork={this._selectArtwork}
+                    selectedArtwork={this.state.selectedArtwork}
                 />
             </div>
         )
