@@ -1,6 +1,7 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
+import Loading from './Loading';
 
 export default ({ adminLogin }) => (
     <Mutation mutation={ADMIN_LOGIN}
@@ -11,6 +12,8 @@ export default ({ adminLogin }) => (
         onError={err => window.alert(err.message)}
     >
         {(adminLogin, { data, loading, error }) => (
+            <>
+            {loading && <Loading/>}
             <form className='AdminLogin'
                 onSubmit={event => {
                     event.preventDefault()
@@ -28,6 +31,7 @@ export default ({ adminLogin }) => (
                     <input type='submit' value='proceed'/>
                 </label>
             </form>
+            </>
         )}
     </Mutation>
 )
