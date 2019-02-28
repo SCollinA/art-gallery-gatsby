@@ -13,6 +13,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
             {/* <h1 className='galleryArrow'>{'<'}</h1> */}
             {/* <LayoutContext.Consumer>
                 {({ artworks }) => ( */}
+                <h3>galleries</h3>
                     <div id='galleryThumbs'>
                         {/* map galleries to their first artwork image */}
                         {galleries.map((gallery, index) => {

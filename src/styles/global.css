@@ -29,7 +29,7 @@ a {
     letter-spacing: 31px;
   }
   .Loading > svg {
-    animation: loading 5s linear infinite;
+    animation: loading 10s linear infinite;
   }
   @keyframes loading {
     from {
@@ -177,18 +177,18 @@ a {
     display: none;
 }
 
-.GalleryChoice, .ArtworkChoice {
+/* .GalleryChoice, .ArtworkChoice {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} */
 
 .galleryThumb, .artworkThumb {
-    background-color: lightgrey;
+    background-color: white;
 }
 
 .galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
-    background-color: white;
+    background-color: lightgrey;
 }
 
 /* This is the inner container */

@@ -8,6 +8,7 @@ export default ({ selectedGallery, selectArtwork, selectedArtwork }) => (
         {/* <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
             <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
         </div> */}
+        <h3>artworks</h3>
         <div id='artworkThumbs'>
             {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => {
                 // return (artwork.file || artwork.image) && (
