@@ -4,6 +4,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
 import AdminContext from '../contexts/AdminContext';
+import Loading from './Loading';
 
 export default () => {
     return (
@@ -19,6 +20,7 @@ export default () => {
                         {({ data, loading, error }) => {
                             return (
                             <div className='currentArtworks'>
+                                {loading && <Loading/>}
                                 {(!loading && data.getArtworks) && 
                                     data.getArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
