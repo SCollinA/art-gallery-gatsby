@@ -113,7 +113,7 @@ a {
     /* width: calc(100% + 15px); */
     width: 100%;
     margin: 0 auto;
-    padding: 0 5% 5%;
+    padding: 0 5% 2%;
     overflow-y: auto;
 }
 
@@ -170,7 +170,7 @@ a {
     margin: 0;
 }
 
-.galleryArtwork {
+.galleryArtwork, .randomArtwork {
     margin: auto;
     max-width: 75%;
     width: 75%;

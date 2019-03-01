@@ -46,7 +46,7 @@ export default () => {
 
 const ADD_GALLERY = gql`
     mutation {
-        addGallery(input: { name: "new gallery" }) {
+        addGallery(input: { name: "new collection" }) {
             id
             name
         }

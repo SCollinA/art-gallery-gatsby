@@ -9,7 +9,7 @@ export default () => {
         <AdminContext.Consumer>
             {({ selectGallery, selectedGallery, updatingGallery }) => (
                 <div className='AdminGalleries'>
-                    <h1>galleries</h1>
+                    <h1>collections</h1>
                     <Query query={ALL_GALLERIES}>
                         {({ data, loading, error }) => (
                             <div className='currentGalleries'>

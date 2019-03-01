@@ -23,7 +23,7 @@ export default () => (
         </div>
         <div className='welcomeMessage'>
             <h4>Welcome!</h4>
-            <p>Welcome to the best art gallery site evar!</p>
+            <p>Feel free to browse the gallery, learn more, or reach out by using the links above!</p>
         </div>
     </div>
 )
