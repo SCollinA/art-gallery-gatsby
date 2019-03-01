@@ -19,7 +19,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                     style={{
                                         // below equals actual size of artwork
-                                        width: !artwork.width || `${96 * artwork.width}px`,
+                                        // width: !artwork.width || `${96 * artwork.width}px`,
                                         // maxHeight: `${artwork.height ? 96 * artwork.height : ''}px`,
                                     }}
                                 >
