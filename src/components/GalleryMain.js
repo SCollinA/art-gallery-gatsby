@@ -6,12 +6,13 @@ export default ({ selectedGallery, selectedArtwork }) => (
     <div className='GalleryMain'>
         <LayoutContext.Consumer>
             {({ galleries }) => {
+                console.log(galleries)
                 return selectedArtwork && (
                     <div className='selectedGallery'>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
-                                className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
                                         <Img fluid={artwork.file.childImageSharp.fluid}/>
