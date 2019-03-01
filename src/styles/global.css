@@ -172,7 +172,6 @@ a {
 
 .galleryArtwork, .randomArtwork {
     margin: auto;
-    max-width: 75%;
     width: 75%;
 }
 
