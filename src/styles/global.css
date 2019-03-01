@@ -317,7 +317,10 @@ a {
 .currentGalleries > *, .currentArtworks > * {
     margin: 2%;
     padding: 2%;
-    width: 20%;
+    /* flex: 1; */
+    /* max-width: 250px; */
+    width: 21%;
+    max-width: 300px;
     border: solid black 2px;
     border-radius: 10px;
     cursor: pointer;
@@ -449,25 +452,28 @@ a {
     }
     /* make other links hidden */
     .headerLinks > .SocialLinks, .Header > .PageLinks {
-        visibility: hidden;
-        position: fixed;
-    }
-
-    .galleryArrow {
-        visibility: hidden;
-        position: fixed;
-        top: -100px;
+        /* visibility: hidden;
+        position: fixed; */
+        display: none;
     }
 }
 
-/* @media (max-height: 750px) {
-    below is for making header scroll
-    .Layout {
-        overflow-y: auto;
+@media (min-width: 500px) and (max-width: 800px) {
+    .currentGallery, .currentArtwork {
+        width: 29%;
     }
+}
 
-    .Content {
-        overflow: visible;
+@media (max-width: 500px) {
+    .currentArtwork, .currentGallery {
+        width: 45%;
+    }
+}
+
+/* 
+@media (min-width: 1000px) {
+    .currentGallery, .currentArtwork {
+        width: 1%;
     }
 } */
 
