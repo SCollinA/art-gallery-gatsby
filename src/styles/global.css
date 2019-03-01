@@ -171,6 +171,8 @@ a {
 
 .galleryArtwork {
     margin: auto;
+    max-width: 75%;
+    width: 75%;
 }
 
 /* .galleryArtwork.current {
