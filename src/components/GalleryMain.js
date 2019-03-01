@@ -2,8 +2,8 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ galleryRef, selectedGallery, selectedArtwork }) => (
-    <div className='GalleryMain' ref={galleryRef}>
+export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
+    <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
             {({ galleries }) => {
                 console.log(galleries)

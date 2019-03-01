@@ -12,6 +12,7 @@ export default class Gallery extends Component {
             selectedArtwork: null,
         }
         this.galleryMain = React.createRef()
+        this.artworkChoice = React.createRef()
     }
 
     componentDidMount() {
@@ -33,6 +34,12 @@ export default class Gallery extends Component {
     _selectGallery = selectedGallery => this.setState({
         selectedGallery,
         selectedArtwork: selectedGallery.artworks[0]
+    }, () => {
+        const artworkChoice = this.artworkChoice.current
+        artworkChoice.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
     })
 
     _selectArtwork = selectedArtwork => this.setState({
@@ -53,11 +60,11 @@ export default class Gallery extends Component {
                     selectGallery={this._selectGallery}
                     selectedGallery={this.state.selectedGallery}
                 />
-                <GalleryMain galleryRef={this.galleryMain}
+                <GalleryMain galleryMainRef={this.galleryMain}
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
                 />
-                <ArtworkChoice
+                <ArtworkChoice artworkChoiceRef={this.artworkChoice}
                     selectedGallery={this.state.selectedGallery} 
                     selectArtwork={this._selectArtwork}
                     selectedArtwork={this.state.selectedArtwork}
