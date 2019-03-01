@@ -15,14 +15,14 @@ const Layout = ({ children }) => (
     <div className='Content'>
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
-          console.log(loading)
+          console.log('running db content query')
           const { galleries, artworks } = (!loading && data) ?
             data : 
             { galleries: [], artworks: [] }
           return (
             <StaticQuery query={ARTWORK_FILES}
               render={data => {
-                console.log(galleries, artworks)
+                console.log('running artwork files static query')
                 const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
                 return (
                   <LayoutContext.Provider 

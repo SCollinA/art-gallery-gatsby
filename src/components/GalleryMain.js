@@ -2,13 +2,17 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ selectedGallery, selectedArtwork }) => (
-    <div className='GalleryMain'>
+export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
+    <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
             {({ galleries }) => {
                 console.log(galleries)
                 return selectedArtwork && (
                     <div className='selectedGallery'>
+                        <div className='galleryTitle'>
+                            <h2>{selectedGallery.name}</h2>
+                            <h1>{selectedArtwork.title}</h1>
+                        </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
@@ -32,10 +36,6 @@ export default ({ selectedGallery, selectedArtwork }) => (
                             <p>{selectedArtwork.sold && 'sold'}</p>
                             {/* this one will be a caption */}
                             <p>{selectedArtwork.medium}</p>
-                        </div>
-                        <div className='galleryTitle'>
-                            <h2>{selectedGallery.name}</h2>
-                            <h1>{selectedArtwork.title}</h1>
                         </div>
                     </div>
                 )
