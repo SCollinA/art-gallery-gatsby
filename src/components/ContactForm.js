@@ -8,7 +8,7 @@ export default () => (
     <div className='Contact'>
         <LayoutContext.Consumer> 
             {({ galleries }) => (
-                <label>
+                <>
                     <div className='pageHeader'>
                         <h1>contact</h1>
                     </div>
@@ -57,7 +57,7 @@ export default () => (
                         </>
                         )}}
                     </Mutation>
-                </label>
+                </>
             )}
         </LayoutContext.Consumer>
     </div>
