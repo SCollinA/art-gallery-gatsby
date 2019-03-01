@@ -132,6 +132,9 @@ a {
     justify-content: space-around;
 }
 
+.randomArtwork > * {
+    flex: 1;
+}
 
 /* ============================ */
 /*          Gallery             */

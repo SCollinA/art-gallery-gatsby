@@ -10,7 +10,7 @@ export default () => (
                 {({ galleries }) => {
                     const randomGallery = galleries[Math.floor(Math.random() * galleries.length)]
                     const randomArtwork = randomGallery.artworks[Math.floor(Math.random() * randomGallery.artworks.length)]
-                    return !randomArtwork || (
+                    return (!randomArtwork && <p>whoops, no picture</p>) || (
                         (randomArtwork.file && (
                             <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
                         )) || (

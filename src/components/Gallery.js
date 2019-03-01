@@ -11,15 +11,15 @@ export default class Gallery extends Component {
             selectedGallery: {},
             selectedArtwork: null,
         }
-        this.galleryDiv = React.createRef()
+        this.galleryMain = React.createRef()
     }
 
     componentDidMount() {
-        // this.setState({
-        //     selectedGallery: this.context.galleries[0],
-        //     selectedArtwork: this.context.galleries[0] &&
-        //         this.context.galleries[0].artworks[0],
-        // })
+        this.state.selectedArtwork || this.setState({
+            selectedGallery: this.context.galleries[0],
+            selectedArtwork: this.context.galleries[0] &&
+                this.context.galleries[0].artworks[0],
+        })
     }
 
     componentDidUpdate() {
@@ -37,6 +37,12 @@ export default class Gallery extends Component {
 
     _selectArtwork = selectedArtwork => this.setState({
         selectedArtwork
+   }, () => {
+        const galleryMain = this.galleryMain.current
+        galleryMain.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
    })
 
     render() {            
@@ -47,7 +53,7 @@ export default class Gallery extends Component {
                     selectGallery={this._selectGallery}
                     selectedGallery={this.state.selectedGallery}
                 />
-                <GalleryMain 
+                <GalleryMain galleryRef={this.galleryMain}
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
                 />
