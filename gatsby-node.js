@@ -9,11 +9,14 @@ const path = require('path')
 
 const gallery = path.resolve(`./src/pages/gallery.js`)
 
-const galleryPage = createPage({
-                        // Path for this page — required
-                        path: `gallery`,
-                        component: gallery,
-                        context: {},
-                    })
 
-exports.createPages = () => galleryPage
+exports.createPages = ({ graphql, actions }) => {
+    const { createPage } = actions
+    
+    createPage({
+        // Path for this page — required
+        path: `gallery`,
+        component: gallery,
+        context: {},
+    })
+}
