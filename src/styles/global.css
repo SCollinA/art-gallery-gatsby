@@ -233,7 +233,7 @@ a {
     cursor: pointer;
     width: 21%;
     display: flex;
-    margin: auto;
+    margin: 0 auto;
     flex-direction: column;
     justify-content: flex-end;
     min-width: 100px;
