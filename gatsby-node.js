@@ -5,7 +5,9 @@
  */
 
 // You can delete this file if you're not using it
-const gallery = require('./src/pages/gallery')
+const path = require('path')
+
+const gallery = path.resolve(`./src/pages/gallery.js`)
 
 const galleryPage = createPage({
                         // Path for this page — required
