@@ -15,7 +15,7 @@ const Layout = ({ children }) => (
     <div className='Content'>
       <Query query={DB_CONTENT}>
         {({ data, loading, error }) => {
-          const { galleries, artworks } = (data && data.galleries && data.artworks) ?
+          const { galleries, artworks } = (!loading && data) ?
             data : 
             { galleries: [], artworks: [] }
           return (
