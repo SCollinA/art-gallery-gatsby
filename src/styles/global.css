@@ -198,7 +198,7 @@ a {
     flex: 1;
     /* padding: 2%; */
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     overflow: auto;
     margin: auto;
     /* border: solid 5px black; */
@@ -230,27 +230,18 @@ a {
 
 .galleryThumb, .artworkThumb {
     padding: 2%;
-    /* max-width: 150px; */
     cursor: pointer;
-    /* flex: 1; */
-    width: 15%;
-    /* height: 100%; */
-    margin: auto auto 0;
+    width: 21%;
+    display: flex;
+    margin: auto;
+    flex-direction: column;
+    justify-content: flex-end;
     min-width: 100px;
     border-radius: 5px;
 }
 
-
-/* .galleryThumb, .artworkThumb {
-    background-color: white;
-} */
-
 .galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
     background-color: lightgrey;
-}
-
-.galleryThumb > *, .artworkThumb > * {
-    margin: auto;
 }
 
 /* ============================ */
@@ -462,11 +453,19 @@ a {
     .currentGallery, .currentArtwork {
         width: 29%;
     }
+
+    .artworkThumb {
+        width: 33%
+    }
 }
 
 @media (max-width: 500px) {
     .currentArtwork, .currentGallery {
         width: 45%;
+    }
+
+    .artworkThumb {
+        width: 50%;
     }
 }
 
