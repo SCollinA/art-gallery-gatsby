@@ -309,6 +309,7 @@ a {
 
 .currentGalleries, .currentArtworks {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
 }
 
@@ -316,6 +317,7 @@ a {
 .currentGalleries > *, .currentArtworks > * {
     margin: 2%;
     padding: 2%;
+    width: 20%;
     border: solid black 2px;
     border-radius: 10px;
     cursor: pointer;
@@ -329,10 +331,10 @@ a {
     background-color: rgba(0, 0, 0, 0.25);
 }
 
-.AddGalleries, .AddArtworks {
+/* .AddGalleries, .AddArtworks {
     width: 10%;
     padding: unset;
-}
+} */
 
 .addGallery, .addArtwork {
     width: 100%;
