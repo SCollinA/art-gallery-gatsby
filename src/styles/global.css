@@ -81,6 +81,7 @@ a {
 
 .pageLink h2 {
     margin: auto;
+    padding: 2px 0;
     white-space: nowrap;
     text-align: center;
 }
@@ -143,17 +144,17 @@ a {
 /* ============================ */
 .Gallery {
     width: 100%;
-    padding: unset;
+    /* padding: unset; */
 }
 
-.Gallery > * {
+/* .Gallery > * {
     padding: 2%;
-}
+} */
 
-.GalleryMain {
+/* .GalleryMain {
     max-width: 750px;
     margin: auto;
-}
+} */
 
 .galleryTitle, .galleryCaption {
     display: flex;
@@ -169,6 +170,12 @@ a {
     margin: 0;
 }
 
+.galleryArtwork {
+    margin: auto;
+    max-width: 75%;
+    width: 75%;
+}
+
 /* .galleryArtwork.current {
     display: flex;
     justify-content: space-around;
@@ -182,18 +189,8 @@ a {
     display: none;
 }
 
-/* .GalleryChoice, .ArtworkChoice {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-} */
-
-.galleryThumb, .artworkThumb {
-    background-color: white;
-}
-
-.galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
-    background-color: lightgrey;
+.GalleryChoice > h3, .ArtworkChoice > h3 {
+    margin: 0;
 }
 
 /* This is the inner container */
@@ -204,7 +201,7 @@ a {
     justify-content: space-around;
     overflow: auto;
     margin: auto;
-    border: solid 5px black;
+    /* border: solid 5px black; */
     border-radius: 5px;
 }
 
@@ -241,6 +238,15 @@ a {
     margin: auto auto 0;
     min-width: 100px;
     border-radius: 5px;
+}
+
+
+/* .galleryThumb, .artworkThumb {
+    background-color: white;
+} */
+
+.galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
+    background-color: lightgrey;
 }
 
 .galleryThumb > *, .artworkThumb > * {

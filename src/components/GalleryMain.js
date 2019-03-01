@@ -17,6 +17,11 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                    style={{
+                                        // below equals actual size of artwork
+                                        width: !artwork.width || `${96 * artwork.width}px`,
+                                        // maxHeight: `${artwork.height ? 96 * artwork.height : ''}px`,
+                                    }}
                                 >
                                     {(artwork.file && (
                                         <Img fluid={artwork.file.childImageSharp.fluid}/>
@@ -31,9 +36,9 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                             )))}
                         </div>
                         <div className='galleryCaption'>
-                            <p>{selectedArtwork.medium}</p>
-                            <p>{`${selectedArtwork.price ? `$${selectedArtwork.price}` : 'no price'}`}</p>
-                            <p>{selectedArtwork.sold && 'sold'}</p>
+                            {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
+                            {!selectedArtwork.price || <p>{`$${selectedArtwork.price}`}</p>}
+                            {selectedArtwork.sold && <p>sold</p>}
                             {/* this one will be a caption */}
                             <p>{selectedArtwork.medium}</p>
                         </div>

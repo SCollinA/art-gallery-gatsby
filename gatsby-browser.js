@@ -15,3 +15,5 @@ export const wrapRootElement = ({ element }) => (
   <ApolloProvider client={client}>{element}</ApolloProvider>
 )
  
+window.oncontextmenu = () => false
+window.ondragstart = () => false
