@@ -43,16 +43,23 @@ export default class UpdateArtworkForm extends React.Component {
                         data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
                     })
                 }}
-                refetchQueries={() => [{
+                refetchQueries={[{
                     query: GALLERY_ARTWORKS,
-                    variables: updatingArtwork.galleryId && {
+                    variables: {
                         galleryId: updatingArtwork.galleryId
                     },
                 }, 
                 {
+                    query: GALLERY_ARTWORKS,
+                    variables: {
+                        galleryId: selectedArtwork.galleryId
+                    },
+                }, 
+
+                {
                     query: GET_GALLERY,
                     variables: {
-                        id: updatingArtwork.galleryId || selectedArtwork.galleryId || 1
+                        id: updatingArtwork.galleryId || selectedArtwork.galleryId
                     }
                 }]}
             >

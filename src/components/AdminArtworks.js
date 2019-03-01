@@ -4,7 +4,7 @@ import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
 import AdminContext from '../contexts/AdminContext';
-import Loading from './Loading';
+// import Loading from './Loading';
 
 export default () => {
     return (
@@ -13,14 +13,15 @@ export default () => {
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
                     <Query query={GALLERY_ARTWORKS}
-                        variables={selectedGallery && {
-                            galleryId: selectedGallery.id,
+                        // selectedGallery && 
+                        variables={{
+                            galleryId: selectedGallery.id || null,
                         }}
                     >
                         {({ data, loading, error }) => {
                             return (
                             <div className='currentArtworks'>
-                                {loading && <Loading/>}
+                                {/* {loading && <Loading/>} */}
                                 {(!loading && data.getArtworks) && 
                                     data.getArtworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
