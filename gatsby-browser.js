@@ -16,4 +16,4 @@ export const wrapRootElement = ({ element }) => (
 )
  
 window.oncontextmenu = () => false
-window.onmousedown = event => console.log(event)
+window.ondragstart = () => false
