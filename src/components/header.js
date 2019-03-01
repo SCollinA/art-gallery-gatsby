@@ -28,7 +28,7 @@ const Header = () => (
                 brandImage: file(relativePath: { eq: "brand.png" }) {
                   childImageSharp {
                     fluid(maxWidth: 2000) {
-                      ...GatsbyImageSharpFluid
+                      ...GatsbyImageSharpFluid_tracedSVG
                     }
                   }
                 }
