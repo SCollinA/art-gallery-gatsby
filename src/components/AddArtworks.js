@@ -11,8 +11,8 @@ export default () => {
             {({ selectArtwork, selectedGallery }) => (
                 <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
-                        variables={selectedGallery && {
-                            galleryId: selectedGallery.id,
+                        variables={{
+                            galleryId: selectedGallery.id || null,
                         }}
                         update={(cache, { data: { addArtwork } }) => {
                             // get only needed variables, i.e. no '__typename'
@@ -45,6 +45,9 @@ export default () => {
                         }}
                         refetchQueries={[{
                             query: GALLERY_ARTWORKS,
+                            variables: {
+                                galleryId: null,
+                            }
                         }]}
                     >
                         {(addArtwork, { data, loading, error }) => (

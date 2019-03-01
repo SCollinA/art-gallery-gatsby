@@ -4,7 +4,7 @@ import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { DB_CONTENT } from './layout'
-import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
+import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
 export default class UpdateArtworkForm extends React.Component {
@@ -54,13 +54,6 @@ export default class UpdateArtworkForm extends React.Component {
                     variables: {
                         galleryId: selectedArtwork.galleryId
                     },
-                }, 
-
-                {
-                    query: GET_GALLERY,
-                    variables: {
-                        id: updatingArtwork.galleryId || selectedArtwork.galleryId
-                    }
                 }]}
             >
                 {(updateArtwork, { data, loading, error }) => {
