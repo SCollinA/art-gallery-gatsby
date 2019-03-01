@@ -300,7 +300,7 @@ export default class UpdateArtworkForm extends React.Component {
                                 }}
                                 refetchQueries={[{
                                     query: GALLERY_ARTWORKS,
-                                    variables: updatingArtwork.galleryId && {
+                                    variables: {
                                         galleryId: updatingArtwork.galleryId
                                     }
                                 },{
