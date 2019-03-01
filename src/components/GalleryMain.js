@@ -31,9 +31,9 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                             )))}
                         </div>
                         <div className='galleryCaption'>
-                            <p>{selectedArtwork.medium}</p>
-                            <p>{`${selectedArtwork.price ? `$${selectedArtwork.price}` : 'no price'}`}</p>
-                            <p>{selectedArtwork.sold && 'sold'}</p>
+                            {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
+                            {!selectedArtwork.price || <p>{`$${selectedArtwork.price}`}</p>}
+                            {selectedArtwork.sold && <p>sold</p>}
                             {/* this one will be a caption */}
                             <p>{selectedArtwork.medium}</p>
                         </div>
