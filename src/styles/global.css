@@ -232,6 +232,8 @@ a {
     cursor: pointer;
     /* flex: 1; */
     /* width: 15%; */
+    height: 100%;
+    margin: auto auto 0;
     min-width: 100px;
     border-radius: 5px;
 }

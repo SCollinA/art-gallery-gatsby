@@ -25,6 +25,7 @@ const Layout = ({ children }) => (
                 return (
                   <LayoutContext.Provider 
                     value={{ 
+                      // if galleries has a gallery, add it's artworks
                       galleries: galleries.length > 0 ? galleries.map(gallery => {
                         return {
                           id: gallery.id,
@@ -115,7 +116,7 @@ const ARTWORK_FILES = graphql`
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
-      fluid(maxWidth: 1000, maxHeight: 1000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
+      fluid(maxWidth: 1000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
         ...GatsbyImageSharpFluid
       }
     }
