@@ -18,7 +18,7 @@ export default ({ artworkChoiceRef, selectedGallery, selectArtwork, selectedArtw
                         onClick={() => selectArtwork(artwork)}
                     >
                         {(artwork.file && (
-                            <Img fluid={artwork.file.childImageSharp.fluid} fadeIn={true}/>
+                            <Img fluid={artwork.file.childImageSharp.fluid} fadeIn={true} onError={console.log}/>
                         )) || (
                         artwork.image && (
                             <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>

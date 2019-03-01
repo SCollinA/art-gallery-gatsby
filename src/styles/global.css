@@ -120,7 +120,7 @@ a {
 .Content > * {
     /* width: 75%; */
     margin: auto;
-    padding: 2%;
+    padding: 2% 0;
 }
 
 .Content > a {
@@ -450,7 +450,7 @@ a {
 }
 
 @media (min-width: 500px) and (max-width: 800px) {
-    .currentGallery, .currentArtwork {
+    .currentGallery, .currentArtwork, .addArtwork, .addGallery {
         width: 29%;
     }
 
@@ -460,7 +460,7 @@ a {
 }
 
 @media (max-width: 500px) {
-    .currentArtwork, .currentGallery {
+    .currentArtwork, .currentGallery, .addArtwork, .addGallery {
         width: 45%;
     }
 
