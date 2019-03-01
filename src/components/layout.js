@@ -25,6 +25,7 @@ const Layout = ({ children }) => (
                 return (
                   <LayoutContext.Provider 
                     value={{ 
+                      // if galleries has a gallery, add it's artworks
                       galleries: galleries.length > 0 ? galleries.map(gallery => {
                         return {
                           id: gallery.id,
