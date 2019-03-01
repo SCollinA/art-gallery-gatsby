@@ -150,10 +150,10 @@ a {
     padding: 2%;
 }
 
-.GalleryMain {
+/* .GalleryMain {
     max-width: 750px;
     margin: auto;
-}
+} */
 
 .galleryTitle, .galleryCaption {
     display: flex;
@@ -167,6 +167,10 @@ a {
 
 .galleryTitle > *, .galleryCaption > * {
     margin: 0;
+}
+
+.galleryArtwork {
+    margin: auto;
 }
 
 /* .galleryArtwork.current {

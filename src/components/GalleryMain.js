@@ -17,6 +17,11 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                    style={{
+                                        // below equals actual size of artwork
+                                        maxWidth: `${artwork.width ? 96 * artwork.width : '750'}px`,
+                                        // maxHeight: `${artwork.height ? 96 * artwork.height : ''}px`,
+                                    }}
                                 >
                                     {(artwork.file && (
                                         <Img fluid={artwork.file.childImageSharp.fluid}/>
