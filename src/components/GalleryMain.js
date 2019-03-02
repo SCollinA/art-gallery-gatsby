@@ -14,13 +14,16 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                             <h1>{selectedArtwork.title}</h1>
                         </div>
                         <div className='galleryImage'>
-                            {galleries.map(({ artworks }) => artworks.map((artwork, index) => (
+                            {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
+                                console.log(artwork.file && artwork.file.childImageSharp.aspectRatio)
+                                return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                     style={{
                                         // below equals actual size of artwork
                                         // width: !artwork.width || `${96 * artwork.width}px`,
                                         // maxHeight: `${artwork.height ? 96 * artwork.height : ''}px`,
+                                        maxWidth: `${artwork && artwork.file ? artwork.file.childImageSharp.aspectRatio : 500}px`,
                                     }}
                                 >
                                     {(artwork.file && (
@@ -33,7 +36,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                                         />
                                     ))}
                                 </div>
-                            )))}
+                            )}))}
                         </div>
                         <div className='galleryCaption'>
                             {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
