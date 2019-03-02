@@ -19,9 +19,9 @@ export default ({ artworkChoiceRef, selectedGallery, selectArtwork, selectedArtw
                     >
                         {(artwork.file && (
                             <Img fluid={artwork.file.childImageSharp.fluid} fadeIn={false} 
-                                onStartLoad={(stuff) => console.log(stuff, 'the gatsby image is starting to load')}
-                                onLoad={(stuff) => console.log(stuff, 'the gatsby image did load')}
-                                onError={(stuff) => console.log(stuff, 'the gatsby image did not load')}
+                                // onStartLoad={(stuff) => console.log(stuff, 'the gatsby image is starting to load')}
+                                // onLoad={(stuff) => console.log(stuff, 'the gatsby image did load')}
+                                // onError={(stuff) => console.log(stuff, 'the gatsby image did not load')}
                             />
                         )) || (
                         artwork.image && (

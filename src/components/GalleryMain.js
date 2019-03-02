@@ -15,7 +15,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                         </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
-                                console.log(artwork.file && artwork.file.childImageSharp.aspectRatio)
+                                console.log(artwork, artwork.file && artwork.file.childImageSharp.aspectRatio)
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
