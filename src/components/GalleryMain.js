@@ -25,7 +25,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                             style={{
                                                 maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
                                                     `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                    'unset',
+                                                    '100%',
                                                 margin: 'auto',
                                             }}
                                             fluid={artwork.file.childImageSharp.fluid}
@@ -41,10 +41,8 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                                 const dbImage = artworkRef.current
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
                                                     `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
-                                                    'unset'
-                                                console.log(dbImage.style.display)
-                                                dbImage.style.display = 'inherit'
-                                                console.log(dbImage.style.display)
+                                                    '100%'
+                                                dbImage.style.display = 'initial'
                                             }}
                                         />
                                     ))}
