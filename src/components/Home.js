@@ -42,7 +42,7 @@ export default class Home extends React.Component {
                                 style={{ 
                                     maxWidth: randomArtwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
                                         `${(this.state.height * .75) * randomArtwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                        `unset`
+                                        `100%`
                                 }} 
                                 fluid={randomArtwork.file.childImageSharp.fluid}
                             />
@@ -52,12 +52,12 @@ export default class Home extends React.Component {
                                 style={{ display: 'none' }}
                                 src={`data:image/jpeg;base64,${randomArtwork.image}`} 
                                 alt={randomArtwork.title}
-                                onLoad={() => this.setState({ 
-                                    aspectRatio: this.image.current.width / this.image.current.height 
-                                }, () => {
+                                onLoad={() => {
                                     const dbImage = this.image.current
-                                    dbImage.style.maxWidth = `${(this.state.height * .75) * this.state.aspectRatio}px`
-                                    dbImage.style.display = 'inherit'
+                                    const aspectRatio = dbImage.width / dbImage.height
+                                    dbImage.style.width = `${(this.state.height * .75) * aspectRatio}px`
+                                    dbImage.style.height = `${(this.state.width * .75) * 1 / aspectRatio}px`
+                                    dbImage.style.display = 'initial'
                                 })}
                             />
                         ))
