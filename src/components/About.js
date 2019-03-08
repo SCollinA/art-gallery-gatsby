@@ -28,10 +28,10 @@ export default () => (
                 render={data => <Img className='aboutImage' fluid={data.image.childImageSharp.fluid}/>}
             />
             <p>
-                Kelly is a full-time professional artist in watercolor, oil, pastel and charcoal, creating inspired work and commissioned work. She continues to formally study art through classes and workshops to stay sharp and current in the art community. 
+                Kelly is a full-time professional artist in watercolor, oil, pastel, and charcoal, creating inspired work and commissioned work. She continues to formally study art through classes and workshops to stay sharp and current in the art community. 
             </p>
             <p>
-                For thirty years,she was a communications professional working with media relations, publications, social media, communications strategy and more. It was a fulfilling career, but she had long held the idea that when possible, she would  “retire” from the nine-to-five in order to see what kind of potential there was in her artistic side.
+                For thirty years,she was a communications professional working with media relations, publications, social media, communications strategy and more. It was a fulfilling career, but she had long held the idea that when possible, she would “retire” from the nine-to-five in order to see what kind of potential there was in her artistic side.
             </p>
             <p>
                 Since she was a little girl she has held paint brushes, pencils, pastels in her hand and created art. She learned to draw by copying comic strips from the Sunday paper and has always owned an easel since my first Mickey Mouse easel. Many books, and lots of just doing art, have helped to change and refine her style. 

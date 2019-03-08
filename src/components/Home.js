@@ -67,7 +67,7 @@ export default class Home extends React.Component {
         </div>
         <div className='welcomeMessage'>
             <h4>Welcome!</h4>
-            <p>Feel free to browse the gallery, learn more, or reach out by using the links above!</p>
+            <p>Thank you for your interest in my art. I work in oil, watercolor, and pastels creating inspired work and commissions. Browse the gallery and let me hear from you! I'm always interested in your feedback.</p>
         </div>
     </div>
     )
