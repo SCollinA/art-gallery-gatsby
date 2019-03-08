@@ -15,7 +15,6 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                         </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
-                                console.log(windowHeight, 'herro')
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
@@ -24,8 +23,8 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                         <Img 
                                             style={{
                                                 maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
-                                                `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                '100%',
+                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                    'unset',
                                                 margin: 'auto',
                                             }}
                                             fluid={artwork.file.childImageSharp.fluid}
@@ -33,15 +32,16 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                     )) || (
                                     artwork.image && (
                                         <img ref={selectedArtworkRef}
-                                            style={{ display: 'none' }}
+                                            style={{ display: 'none', margin: 'auto' }}
                                             src={`data:image/jepg;base64,${artwork.image}`} 
                                             alt={`${artwork.title}`}
                                             onLoad={() => {
                                                 console.log('adjust recently added image in gallery')
                                                 const dbImage = selectedArtworkRef.current
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
-                                                    `${(windowHeight * .75) * dbImage.width}px` :
-                                                    '100%'
+                                                    `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
+                                                    'unset'
+                                                dbImage.style.display = 'inherit'
                                             }}
                                         />
                                     ))}

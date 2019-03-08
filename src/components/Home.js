@@ -42,7 +42,7 @@ export default class Home extends React.Component {
                                 style={{ 
                                     maxWidth: randomArtwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
                                         `${(this.state.height * .75) * randomArtwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                        `100%`
+                                        `unset`
                                 }} 
                                 fluid={randomArtwork.file.childImageSharp.fluid}
                             />

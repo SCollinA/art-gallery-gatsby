@@ -48,10 +48,10 @@ const Layout = ({ children }) => (
                                   medium,
                                   price,
                                   sold,
-                                  file: artworkFiles.find(artworkFile => artworkFile.name === id),
+                                  file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
                                 }
                               }) :
-                              [{ id: 'nada', title: 'no galleries #1'}]
+                              [{ id: 'nada', title: 'no artworks'}]
                           }
                         }) : [{ 
                           id: 'none', 
