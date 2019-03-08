@@ -32,7 +32,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                     )) || (
                                     artwork.image && (
                                         <img ref={selectedArtworkRef}
-                                            style={{ display: 'none' }}
+                                            style={{ display: 'none', margin: 'auto' }}
                                             src={`data:image/jepg;base64,${artwork.image}`} 
                                             alt={`${artwork.title}`}
                                             onLoad={() => {
