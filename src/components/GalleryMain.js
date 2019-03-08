@@ -32,9 +32,17 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                         />
                                     )) || (
                                     artwork.image && (
-                                        <img
+                                        <img ref={selectedArtworkRef}
+                                            style={{ display: 'none' }}
                                             src={`data:image/jepg;base64,${artwork.image}`} 
                                             alt={`${artwork.title}`}
+                                            onLoad={() => {
+                                                console.log('adjust recently added image in gallery')
+                                                const dbImage = selectedArtworkRef.current
+                                                dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
+                                                    `${(windowHeight * .75) * dbImage.width}px` :
+                                                    '100%'
+                                            }}
                                         />
                                     ))}
                                 </div>
