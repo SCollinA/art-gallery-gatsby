@@ -57,7 +57,7 @@ export default class Home extends React.Component {
                                 }, () => {
                                     const dbImage = this.image.current
                                     dbImage.style.maxWidth = `${(this.state.height * .75) * this.state.aspectRatio}px`
-                                    dbImage.style.display = 'initial'
+                                    dbImage.style.display = 'inherit'
                                 })}
                             />
                         ))
