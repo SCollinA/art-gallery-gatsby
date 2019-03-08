@@ -1,6 +1,7 @@
 import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
+import { inherits } from 'util';
 
 export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtworkRef, windowHeight }) => {
     return (
@@ -15,7 +16,6 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                         </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
-                                console.log(windowHeight, 'herro')
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
@@ -42,6 +42,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
                                                     `${(windowHeight * .75) * dbImage.width}px` :
                                                     '100%'
+                                                dbImage.style.display = 'inherit'
                                             }}
                                         />
                                     ))}

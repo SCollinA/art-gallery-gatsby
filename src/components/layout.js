@@ -51,7 +51,7 @@ const Layout = ({ children }) => (
                                   file: artworkFiles.find(artworkFile => artworkFile.name === id),
                                 }
                               }) :
-                              [{ id: 'nada', title: 'no galleries #1'}]
+                              [{ id: 'nada', title: 'no artworks'}]
                           }
                         }) : [{ 
                           id: 'none', 
