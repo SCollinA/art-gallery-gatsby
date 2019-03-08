@@ -21,12 +21,12 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                 >
                                     {(artwork.file && (
                                         <Img 
-                                            // style={{
-                                            //     maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
-                                            //         `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                            //         'unset',
-                                            //     margin: 'auto',
-                                            // }}
+                                            style={{
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
+                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                    'unset',
+                                                margin: 'auto',
+                                            }}
                                             fluid={artwork.file.childImageSharp.fluid}
                                         />
                                     )) || (
