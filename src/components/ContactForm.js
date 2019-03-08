@@ -26,6 +26,7 @@ export default () => (
                                         message: event.target.message.value,
                                         artwork: event.target.artwork.value,
                                     }})
+                                    .then(result => result && window.alert('Thank you for contacting me!'))
                                     event.target.reset()
                                 }}
                             >
