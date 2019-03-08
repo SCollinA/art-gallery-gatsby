@@ -249,6 +249,31 @@ a {
 }
 
 /* ============================ */
+/*          About               */
+/* ============================ */
+
+.aboutContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.aboutContent > * {
+    /* padding: 0 5%; */
+    font-size: 1.5em;
+    line-height: 2em;
+}
+
+.aboutContent > *:first-child, .aboutContent > *:nth-child(2) {
+    width: 50%;
+}
+
+.aboutImage {
+    max-width: 500px;
+    margin: auto;
+}
+
+/* ============================ */
 /*          Commissions             */
 /* ============================ */
 
@@ -288,14 +313,6 @@ a {
 
 #message {
     height: 250px;
-}
-
-/* ============================ */
-/*          About               */
-/* ============================ */
-
-.aboutContent {
-    width: 100%;
 }
 
 /* ================================ */
