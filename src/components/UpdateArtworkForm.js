@@ -208,18 +208,12 @@ export default class UpdateArtworkForm extends React.Component {
                                     }, () => {
                                     // get canvas and image elements from page
                                         const imageCanvasNode = this.imageCanvas.current
-                                        // const imageCanvas = document.getElementById('imageCanvas')
                                         const uploadedImageNode = this.uploadedImage.current
-                                        // const uploadedImage = document.getElementById('uploadedImage')
                                         const currentImageFromFileNode = this.currentImageFromFile.current
-                                        // const currentImageFromFile = document.getElementById('currentImageFromFile')
                                         const currentImageFromSourceNode = this.currentImageFromSource.current
-                                        // const currentImageFromSource = document.getElementById('currentImageFromSource')
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
-                                        // console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                        // console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
