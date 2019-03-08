@@ -1,7 +1,6 @@
 import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
-import { inherits } from 'util';
 
 export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtworkRef, windowHeight }) => {
     return (
@@ -22,12 +21,12 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                 >
                                     {(artwork.file && (
                                         <Img 
-                                            style={{
-                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
-                                                `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                '100%',
-                                                margin: 'auto',
-                                            }}
+                                            // style={{
+                                            //     maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
+                                            //         `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                            //         'unset',
+                                            //     margin: 'auto',
+                                            // }}
                                             fluid={artwork.file.childImageSharp.fluid}
                                         />
                                     )) || (
@@ -40,8 +39,8 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                                 console.log('adjust recently added image in gallery')
                                                 const dbImage = selectedArtworkRef.current
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
-                                                    `${(windowHeight * .75) * dbImage.width}px` :
-                                                    '100%'
+                                                    `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
+                                                    'unset'
                                                 dbImage.style.display = 'inherit'
                                             }}
                                         />
