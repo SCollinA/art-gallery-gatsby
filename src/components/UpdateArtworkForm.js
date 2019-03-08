@@ -186,12 +186,13 @@ export default class UpdateArtworkForm extends React.Component {
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
                                     <img id='uploadedImage' ref={this.uploadedImage}
+                                        style={{ display: 'none' }}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => !this.state.imageWidth && this.setState({ 
                                             imageWidth: this.uploadedImage.current.width,
                                             imageHeight: this.uploadedImage.current.height 
-                                        })}
+                                        }, () => this.uploadedImage.current.style.display = 'inherit')}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
