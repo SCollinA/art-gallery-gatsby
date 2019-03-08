@@ -239,9 +239,13 @@ a {
     display: flex;
     margin: 0 auto;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: flex-start;
     min-width: 100px;
     border-radius: 5px;
+}
+
+.galleryThumb > *, .artworkThumb > * {
+    margin: 0;
 }
 
 .galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
@@ -258,7 +262,7 @@ a {
     flex-wrap: wrap;
 }
 
-.aboutContent > * {
+.aboutContent > *, .welcomeMessage, .commissionContent {
     /* padding: 0 5%; */
     font-size: 1em;
     line-height: 2em;
