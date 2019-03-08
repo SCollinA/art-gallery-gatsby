@@ -469,6 +469,10 @@ a {
         position: fixed; */
         display: none;
     }
+
+    .aboutContent > * {
+        width: 100% !important;
+    }
 }
 
 @media (min-width: 500px) and (max-width: 800px) {
