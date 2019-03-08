@@ -59,8 +59,13 @@ a {
 
 .homeLink {
     flex: 1;
+    /* margin: auto; */
     min-width: 100px;
     max-width: 250px;
+}
+
+.SocialLinks {
+    padding: 0 2%;
 }
 
 .PageLinks {
@@ -244,6 +249,31 @@ a {
 }
 
 /* ============================ */
+/*          About               */
+/* ============================ */
+
+.aboutContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.aboutContent > * {
+    /* padding: 0 5%; */
+    font-size: 1.5em;
+    line-height: 2em;
+}
+
+.aboutContent > *:first-child, .aboutContent > *:nth-child(2) {
+    width: 50%;
+}
+
+.aboutImage {
+    max-width: 500px;
+    margin: auto;
+}
+
+/* ============================ */
 /*          Commissions             */
 /* ============================ */
 
@@ -285,21 +315,13 @@ a {
     height: 250px;
 }
 
-/* ============================ */
-/*          About               */
-/* ============================ */
-
-.aboutContent {
-    width: 100%;
-}
-
 /* ================================ */
 /*           Admin Page             */
 /* ================================ */
 
 .currentGalleries, .currentArtworks {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
@@ -401,6 +423,7 @@ a {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    font-size: .75em;
 }
 
 .Footer > span > p {

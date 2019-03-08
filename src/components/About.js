@@ -17,11 +17,15 @@ export default () => (
                 query={graphql`
                     query {
                         image: file(relativePath: { eq: "kelly.jpg" }) {
-                            ...fluidImage
+                            childImageSharp {
+                                fluid(maxWidth: 1000, quality: 100) {
+                                    ...GatsbyImageSharpFluid_tracedSVG
+                                }
+                            }
                         }
                     }
                 `}
-                render={data => <Img fluid={data.image.childImageSharp.fluid}/>}
+                render={data => <Img className='aboutImage' fluid={data.image.childImageSharp.fluid}/>}
             />
             <p>
                 Kelly is a full-time professional artist in watercolor, oil, pastel and charcoal, creating inspired work and commissioned work. She continues to formally study art through classes and workshops to stay sharp and current in the art community. 
