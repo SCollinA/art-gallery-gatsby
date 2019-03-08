@@ -47,7 +47,18 @@ export default class Home extends React.Component {
                             />
                         )) || (
                         randomArtwork.image && (
-                            <img ref={this.image} src={`data:image/jpeg;base64,${randomArtwork.image}`} alt={randomArtwork.title}/>
+                            <img ref={this.image} 
+                                style={{ display: 'none' }}
+                                src={`data:image/jpeg;base64,${randomArtwork.image}`} 
+                                alt={randomArtwork.title}
+                                onLoad={() => this.setState({ 
+                                    aspectRatio: this.image.current.width / this.image.current.height 
+                                }, () => {
+                                    const dbImage = this.image.current
+                                    dbImage.style.maxWidth = `${(this.state.height * .75) * this.state.aspectRatio}px`
+                                    dbImage.style.display = 'initial'
+                                })}
+                            />
                         ))
                     )
                 }}
