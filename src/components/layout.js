@@ -28,34 +28,36 @@ const Layout = ({ children }) => (
                   <LayoutContext.Provider 
                     value={{ 
                       // if galleries has a gallery, add it's artworks
-                      galleries: galleries.length > 0 ? galleries.map(gallery => {
-                        return {
-                          id: gallery.id,
-                          name: gallery.name,
-                          artworks: artworks.length > 0 ? artworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
-                            // if an artwork file exist add it
-                            // will check if file is there to determine proper element for image
-                            return {
-                              id,
-                              galleryId,
-                              title,
-                              width,
-                              height,
-                              image,
-                              medium,
-                              price,
-                              sold,
-                              file: artworkFiles.find(artworkFile => artworkFile.name === id),
-                            }
-                          })
-                          .filter(artwork => artwork.galleryId === gallery.id) :
-                          [{ id: 'nada', title: 'no galleries #1'}]
-                        }
-                      }) : [{ 
-                        id: 'none', 
-                        name: 'no galleries', 
-                        artworks: [{ id: 'nada', title: 'no galleries #1'}]
-                      }]
+                      galleries: galleries.length > 0 ? 
+                        galleries.map(gallery => {
+                          const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
+                          return {
+                            id: gallery.id,
+                            name: gallery.name,
+                            artworks: galleryArtworks.length > 0 ? 
+                              galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                                // if an artwork file exist add it
+                                // will check if file is there to determine proper element for image
+                                return {
+                                  id,
+                                  galleryId,
+                                  title,
+                                  width,
+                                  height,
+                                  image,
+                                  medium,
+                                  price,
+                                  sold,
+                                  file: artworkFiles.find(artworkFile => artworkFile.name === id),
+                                }
+                              }) :
+                              [{ id: 'nada', title: 'no galleries #1'}]
+                          }
+                        }) : [{ 
+                          id: 'none', 
+                          name: 'no galleries', 
+                          artworks: [{ id: 'nada', title: 'no galleries #1'}]
+                        }]
                     }}
                   >
                     {loading && <Loading/>}
