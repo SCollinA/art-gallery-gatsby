@@ -411,6 +411,7 @@ a {
 /*              Footer              */
 /* ================================ */
 .Footer {
+    padding: unset;
     display: flex;
     justify-content: space-around;
     align-items: center;
