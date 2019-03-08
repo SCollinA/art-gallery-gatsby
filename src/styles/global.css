@@ -59,8 +59,13 @@ a {
 
 .homeLink {
     flex: 1;
+    /* margin: auto; */
     min-width: 100px;
     max-width: 250px;
+}
+
+.SocialLinks {
+    padding: 0 2%;
 }
 
 .PageLinks {
@@ -299,7 +304,7 @@ a {
 
 .currentGalleries, .currentArtworks {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
 }
 
