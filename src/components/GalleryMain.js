@@ -2,11 +2,11 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
+export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtworkRef, windowHeight }) => {
+    return (
     <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
             {({ galleries }) => {
-                console.log(galleries)
                 return selectedArtwork && (
                     <div className='selectedGallery'>
                         <div className='galleryTitle'>
@@ -15,22 +15,24 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
                         </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
-                                console.log(artwork, artwork.file && artwork.file.childImageSharp.aspectRatio)
+                                console.log(windowHeight, 'herro')
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
-                                    style={{
-                                        // below equals actual size of artwork
-                                        // width: !artwork.width || `${96 * artwork.width}px`,
-                                        // maxHeight: `${artwork.height ? 96 * artwork.height : ''}px`,
-                                        maxWidth: `${artwork && artwork.file ? artwork.file.childImageSharp.aspectRatio : 500}px`,
-                                    }}
                                 >
                                     {(artwork.file && (
-                                        <Img fluid={artwork.file.childImageSharp.fluid}/>
+                                        <Img 
+                                            style={{
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
+                                                `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                '100%',
+                                                margin: 'auto',
+                                            }}
+                                            fluid={artwork.file.childImageSharp.fluid}
+                                        />
                                     )) || (
                                     artwork.image && (
-                                        <img 
+                                        <img
                                             src={`data:image/jepg;base64,${artwork.image}`} 
                                             alt={`${artwork.title}`}
                                         />
@@ -51,3 +53,4 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }) => (
         </LayoutContext.Consumer>
     </div>
 )
+}

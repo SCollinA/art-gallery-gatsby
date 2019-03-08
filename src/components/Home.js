@@ -7,7 +7,8 @@ export default class Home extends React.Component {
         super(props)
         this.state = {
             width: 0,
-            height: 0 
+            height: 0,
+            aspectRatio: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.image = React.createRef()

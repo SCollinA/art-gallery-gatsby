@@ -10,12 +10,19 @@ export default class Gallery extends Component {
         this.state = { 
             selectedGallery: {},
             selectedArtwork: null,
+            windowHeight: 0,
+            windowWidth: 0,
+            aspectRatio: 0
         }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.galleryMain = React.createRef()
         this.artworkChoice = React.createRef()
+        this.selectedArtworkRef = React.createRef()
     }
 
     componentDidMount() {
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
         this.state.selectedArtwork || this.setState({
             selectedGallery: this.context.galleries[0],
             selectedArtwork: this.context.galleries[0] &&
@@ -29,6 +36,14 @@ export default class Gallery extends Component {
             selectedArtwork: this.context.galleries[0] &&
                 this.context.galleries[0].artworks[0],
         })
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions)
+    }
+      
+    updateWindowDimensions() {
+        this.setState({ windoWidth: window.innerWidth, windowHeight: window.innerHeight })
     }
 
     _selectGallery = selectedGallery => this.setState({
@@ -52,7 +67,8 @@ export default class Gallery extends Component {
         })
    })
 
-    render() {            
+    render() {  
+        console.log(this.state.windowHeight, 'windowHeight state')
         return (
             <div className='Gallery'>
                 <GalleryChoice 
@@ -63,6 +79,8 @@ export default class Gallery extends Component {
                 <GalleryMain galleryMainRef={this.galleryMain}
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
+                    selectedArtworkRef={this.selectedArtworkRef}
+                    windowHeight={this.state.windowHeight}
                 />
                 <ArtworkChoice artworkChoiceRef={this.artworkChoice}
                     selectedGallery={this.state.selectedGallery} 
