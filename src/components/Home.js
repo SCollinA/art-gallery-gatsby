@@ -58,7 +58,7 @@ export default class Home extends React.Component {
                                     dbImage.style.width = `${(this.state.height * .75) * aspectRatio}px`
                                     dbImage.style.height = `${(this.state.width * .75) * 1 / aspectRatio}px`
                                     dbImage.style.display = 'initial'
-                                })}
+                                }}
                             />
                         ))
                     )
