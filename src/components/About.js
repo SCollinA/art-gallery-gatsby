@@ -11,7 +11,7 @@ export default () => (
         </div>        
         <div className='aboutContent'>
             <p>
-                Kelly is an artist of many mediums.  Her work includes landscapes, still life and animals.  She  particularly enjoys doing commissioned pet portraits and they have become a regular part of her artistic exercise. “Our pets are often our best friends, and certainly they are loyal and faithful companions that deserve our careful attention. I’ll do my best.”
+                Kelly is an artist of many mediums. Her work includes landscapes, still life and animals. She enjoys doing commissioned pet portraits, which are regular in her artistic practice. “Pets are our best friends, loyal and faithful companions that deserve careful attention. I’ll do my best.”
             </p>
             <StaticQuery
                 query={graphql`
@@ -28,13 +28,13 @@ export default () => (
                 render={data => <Img className='aboutImage' fluid={data.image.childImageSharp.fluid}/>}
             />
             <p>
-                Kelly is a full-time professional artist in watercolor, oil, pastel, and charcoal, creating inspired work and commissioned work. She continues to formally study art through classes and workshops to stay sharp and current in the art community. 
+                Kelly is a full-time artist creating inspired work and commissioned work. She works in watercolor, oil, pastel, and charcoal. To stay current in the art community, she studies through classes and workshops. 
             </p>
             <p>
-                For thirty years,she was a communications professional working with media relations, publications, social media, communications strategy and more. It was a fulfilling career, but she had long held the idea that when possible, she would “retire” from the nine-to-five in order to see what kind of potential there was in her artistic side.
+                For thirty years, she worked as a communications professional. Although fulfilling, she long planned to “retire” from the nine-to-five to explore art.
             </p>
             <p>
-                Since she was a little girl she has held paint brushes, pencils, pastels in her hand and created art. She learned to draw by copying comic strips from the Sunday paper and has always owned an easel since my first Mickey Mouse easel. Many books, and lots of just doing art, have helped to change and refine her style. 
+                From the time she was a little girl she has held paint brushes, pencils, and pastels in her hand and created art. She learned to draw by copying comic strips from the Sunday paper. Since her first Mickey Mouse easel she has always owned an easel. Many books, and lots of practice, have helped to change and refine her style. 
             </p>
             <p>
                 Her love of the family pets, of all pets, translated into something she could share with others. And it makes so many people happy. It’s a joy.
