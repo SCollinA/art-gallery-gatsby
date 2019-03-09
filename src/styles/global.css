@@ -240,8 +240,8 @@ a {
     margin: 0 auto;
     flex-direction: column;
     justify-content: space-around;
-    flex: 1;
-    max-width: 200px;
+    /* flex: 1;
+    max-width: 200px; */
     min-width: 100px;
     border-radius: 5px;
 }
