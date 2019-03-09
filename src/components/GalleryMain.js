@@ -42,7 +42,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
                                                     `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
                                                     '100%'
-                                                dbImage.style.display = 'initial'
+                                                dbImage.style.display = 'inherit'
                                             }}
                                         />
                                     ))}

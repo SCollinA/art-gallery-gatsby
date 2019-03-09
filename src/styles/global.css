@@ -214,7 +214,7 @@ a {
     /* padding: 2%; */
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     /* overflow: auto; */
     margin: auto;
     border: solid 5px black;
