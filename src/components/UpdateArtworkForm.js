@@ -354,7 +354,6 @@ const GALLERY_NAMES = gql`
 let urls = new WeakMap()
 
 let blobUrl = blob => {
-    console.log(blob)
   if (urls.has(blob)) {
       return urls.get(blob)
     } else {

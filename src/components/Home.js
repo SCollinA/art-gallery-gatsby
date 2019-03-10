@@ -15,16 +15,16 @@ export default class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
     }
-      
+
     componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
+        window.removeEventListener('resize', this.updateWindowDimensions)
     }
       
     updateWindowDimensions() {
-        this.setState({ width: window.innerWidth, height: window.innerHeight });
+        this.setState({ width: window.innerWidth, height: window.innerHeight })
     }
 
     render () {
