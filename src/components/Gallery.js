@@ -17,7 +17,6 @@ export default class Gallery extends Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.galleryMain = React.createRef()
         this.artworkChoice = React.createRef()
-        this.selectedArtworkRef = React.createRef()
     }
 
     componentDidMount() {
@@ -78,7 +77,6 @@ export default class Gallery extends Component {
                 <GalleryMain galleryMainRef={this.galleryMain}
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
-                    selectedArtworkRef={this.selectedArtworkRef}
                     windowHeight={this.state.windowHeight}
                 />
                 <ArtworkChoice artworkChoiceRef={this.artworkChoice}
