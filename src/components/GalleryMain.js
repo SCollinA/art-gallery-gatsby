@@ -2,7 +2,7 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight }) => {
+export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtworkRef, windowHeight }) => {
     return (
     <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
@@ -15,12 +15,13 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                         </div>
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
+                                const artworkRef = React.createRef()
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
-                                        <Img
+                                        <Img 
                                             style={{
                                                 maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
                                                     `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
@@ -28,6 +29,20 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                                 margin: 'auto',
                                             }}
                                             fluid={artwork.file.childImageSharp.fluid}
+                                        />
+                                    )) || (
+                                    artwork.image && (
+                                        <img ref={artworkRef}
+                                            style={{ display: 'none', margin: 'auto' }}
+                                            src={`data:image/jepg;base64,${artwork.image}`} 
+                                            alt={`${artwork.title}`}
+                                            onLoad={() => {
+                                                const dbImage = artworkRef.current
+                                                dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
+                                                    `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
+                                                    '100%'
+                                                dbImage.style.display = 'inherit'
+                                            }}
                                         />
                                     ))}
                                 </div>

@@ -17,6 +17,7 @@ export default class Gallery extends Component {
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.galleryMain = React.createRef()
         this.artworkChoice = React.createRef()
+        this.selectedArtworkRef = React.createRef()
     }
 
     componentDidMount() {

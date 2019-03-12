@@ -35,7 +35,7 @@ const Layout = ({ children }) => (
                             id: gallery.id,
                             name: gallery.name,
                             artworks: galleryArtworks.length > 0 ? 
-                              galleryArtworks.map(({ id, galleryId, title, width, height, medium, price, sold }) => {
+                              galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
                                 // if an artwork file exist add it
                                 // will check if file is there to determine proper element for image
                                 return {
@@ -44,12 +44,14 @@ const Layout = ({ children }) => (
                                   title,
                                   width,
                                   height,
+                                  image,
                                   medium,
                                   price,
                                   sold,
                                   file: artworkFiles.find(artworkFile => artworkFile.name === `${id}`),
                                 }
-                              }) :
+                                // only include art that has a picture to show for the gallery
+                              }).filter(artwork => artwork.file || artwork.image) :
                               [{ id: 'nada', title: 'no artworks'}]
                           }
                         }) : [{ 
