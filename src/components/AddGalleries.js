@@ -8,7 +8,6 @@ export default () => {
     return (
         <AdminContext.Consumer>
             {({ selectGallery }) => (
-                <div className='AddGalleries'>
                     <Mutation mutation={ADD_GALLERY}
                         update={(cache, { data: { addGallery } }) => {
                             // immediately select the gallery for updating
@@ -31,14 +30,15 @@ export default () => {
                         }}
                         >
                         {(addGallery, { data }) => (
-                            <div className='addGallery'
+                            <div className='AddGalleries'
                                 onClick={addGallery}
                             >
-                                <h3> + </h3>
+                                <div className='addGallery'>
+                                    <h3> + </h3>
+                                </div>
                             </div>
                         )}
                     </Mutation>
-                </div>
             )}
         </AdminContext.Consumer>
     )
