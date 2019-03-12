@@ -20,7 +20,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
-                                        <Img 
+                                        <Img
                                             style={{
                                                 maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
                                                     `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :

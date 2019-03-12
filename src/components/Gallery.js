@@ -77,6 +77,7 @@ export default class Gallery extends Component {
                 <GalleryMain galleryMainRef={this.galleryMain}
                     selectedGallery={this.state.selectedGallery} 
                     selectedArtwork={this.state.selectedArtwork}
+                    selectedArtworkRef={this.selectedArtworkRef}
                     windowHeight={this.state.windowHeight}
                 />
                 <ArtworkChoice artworkChoiceRef={this.artworkChoice}
