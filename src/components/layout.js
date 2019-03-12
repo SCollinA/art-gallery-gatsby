@@ -48,9 +48,10 @@ const Layout = ({ children }) => (
                                   medium,
                                   price,
                                   sold,
-                                  file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
+                                  file: artworkFiles.find(artworkFile => artworkFile.name === `${id}`),
                                 }
-                              }) :
+                                // only include art that has a picture to show for the gallery
+                              }).filter(artwork => artwork.file || artwork.image) :
                               [{ id: 'nada', title: 'no artworks'}]
                           }
                         }) : [{ 
@@ -93,7 +94,6 @@ export const DB_CONTENT = gql`
       title
       width
       height
-      image
       medium
       price
       sold
