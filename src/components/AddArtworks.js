@@ -9,7 +9,6 @@ export default () => {
     return (
         <AdminContext.Consumer>
             {({ selectArtwork, selectedGallery }) => (
-                <div className='AddArtworks'>
                     <Mutation mutation={ADD_ARTWORK}
                         variables={{
                             galleryId: selectedGallery.id || null,
@@ -51,17 +50,19 @@ export default () => {
                         }]}
                     >
                         {(addArtwork, { data, loading, error }) => (
-                            <div className='addArtwork'
+                            <div className='AddArtworks'                            
                                 onClick={event => {
                                     event.stopPropagation()
                                     addArtwork()
                                 }}
                             >
-                                <h3> + </h3>
+                                <div className='addArtwork'
+                                >
+                                    <h3> + </h3>
+                                </div>
                             </div>
                         )}
                     </Mutation>
-                </div>
             )}
         </AdminContext.Consumer>
     )
