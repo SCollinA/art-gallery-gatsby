@@ -16,16 +16,18 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
+                                console.log('window height: ', windowHeight)
+                                console.log('gatsby image aspect ratio: ', artwork.file && artwork.file.childImageSharp.fluid.aspectRatio)
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
                                     {(artwork.file && (
-                                        <Img 
+                                        <Img className='galleryGatsbyImage'
                                             style={{
-                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
                                                     `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                    '100%',
+                                                    `100%`,
                                                 margin: 'auto',
                                             }}
                                             fluid={artwork.file.childImageSharp.fluid}
@@ -33,6 +35,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                     )) || (
                                     artwork.image && (
                                         <img ref={artworkRef}
+                                        // display initially none to load actual size
                                             style={{ display: 'none', margin: 'auto' }}
                                             src={`data:image/jepg;base64,${artwork.image}`} 
                                             alt={`${artwork.title}`}
