@@ -152,9 +152,9 @@ a {
     /* padding: unset; */
 }
 
-/* .Gallery > * {
-    padding: 2%;
-} */
+.Gallery > * {
+    padding: 5% 0;
+}
 
 /* .GalleryMain {
     max-width: 750px;
@@ -173,6 +173,10 @@ a {
 
 .galleryTitle > *, .galleryCaption > * {
     margin: 0;
+}
+
+.galleryImage {
+    margin: auto;
 }
 
 .galleryArtwork, .randomArtwork {
