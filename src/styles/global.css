@@ -1,7 +1,7 @@
 /* Set everything to be screen sized until you reach the app */
 html, body, #___gatsby, #___gatsby > div, .Layout {
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 a {
