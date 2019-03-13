@@ -1,10 +1,10 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import { Mutation, Query } from 'react-apollo'
+import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { DB_CONTENT } from './layout'
-import { GALLERY_ARTWORKS } from './AdminArtworks';
+// import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
 export default class UpdateArtworkForm extends React.Component {
@@ -23,6 +23,7 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     componentDidMount() {
+        // set pic to be current pic
         this.context.updatingArtwork.image && 
             fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
             .then(res => res.blob())
@@ -33,7 +34,7 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     render() {
-        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
+        const { galleries, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -43,18 +44,18 @@ export default class UpdateArtworkForm extends React.Component {
                         data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
                     })
                 }}
-                refetchQueries={[{
-                    query: GALLERY_ARTWORKS,
-                    variables: {
-                        galleryId: updatingArtwork.galleryId
-                    },
-                }, 
-                {
-                    query: GALLERY_ARTWORKS,
-                    variables: {
-                        galleryId: selectedArtwork.galleryId
-                    },
-                }]}
+                // refetchQueries={[{
+                //     query: GALLERY_ARTWORKS,
+                //     variables: {
+                //         galleryId: updatingArtwork.galleryId
+                //     },
+                // }, 
+                // {
+                //     query: GALLERY_ARTWORKS,
+                //     variables: {
+                //         galleryId: selectedArtwork.galleryId
+                //     },
+                // }]}
             >
                 {(updateArtwork, { data, loading, error }) => {
                     return (
@@ -116,8 +117,8 @@ export default class UpdateArtworkForm extends React.Component {
                         onClick={event => event.stopPropagation()}
                     >
                         <label>gallery
-                            <Query query={GALLERY_NAMES}>
-                                {({ data, loading, error }) => (
+                            {/* <Query query={GALLERY_NAMES}>
+                                {({ data, loading, error }) => ( */}
                                     <select name='galleryId'
                                         value={updatingArtwork.galleryId || ''}
                                         onChange={event => changeArtwork({
@@ -127,7 +128,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         <option name='galleryId' value={''}>
                                             -
                                         </option>
-                                        {data.getAllGalleries.map(gallery => (
+                                        {galleries.map(gallery => (
                                             <option key={gallery.id} 
                                                 value={gallery.id} 
                                                 name='galleryId'
@@ -136,8 +137,8 @@ export default class UpdateArtworkForm extends React.Component {
                                             </option>
                                         ))}
                                     </select>
-                                )}
-                            </Query>
+                                {/* )}
+                            </Query> */}
                         </label>
                         <label>title
                             <input type='text' name='title'
@@ -318,14 +319,14 @@ export default class UpdateArtworkForm extends React.Component {
                                         }
                                     })
                                 }}
-                                refetchQueries={[{
-                                    query: GALLERY_ARTWORKS,
-                                    variables: {
-                                        galleryId: updatingArtwork.galleryId
-                                    }
-                                },{
-                                    query: GALLERY_ARTWORKS,
-                                }]}
+                                // refetchQueries={[{
+                                //     query: GALLERY_ARTWORKS,
+                                //     variables: {
+                                //         galleryId: updatingArtwork.galleryId
+                                //     }
+                                // },{
+                                //     query: GALLERY_ARTWORKS,
+                                // }]}
                             >
                             {(deleteArtwork, { data, loading, error }) => (
                                 <input type='button' value='remove'
@@ -366,14 +367,14 @@ const DELETE_ARTWORK = gql`
     }
 `
 
-const GALLERY_NAMES = gql`
-    {
-        getAllGalleries {
-            id
-            name
-        }
-    }
-`
+// const GALLERY_NAMES = gql`
+//     {
+//         getAllGalleries {
+//             id
+//             name
+//         }
+//     }
+// `
 
 // For the image uploading
 let urls = new WeakMap()

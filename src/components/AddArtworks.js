@@ -2,7 +2,7 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext';
-import { GALLERY_ARTWORKS } from './AdminArtworks';
+// import { GALLERY_ARTWORKS } from './AdminArtworks';
 import { DB_CONTENT } from './layout';
 
 export default () => {
@@ -42,12 +42,12 @@ export default () => {
                                 data: { galleries, artworks: [...artworks, addArtwork] }
                             })
                         }}
-                        refetchQueries={[{
-                            query: GALLERY_ARTWORKS,
-                            variables: {
-                                galleryId: null,
-                            }
-                        }]}
+                        // refetchQueries={[{
+                        //     query: GALLERY_ARTWORKS,
+                        //     variables: {
+                        //         galleryId: null,
+                        //     }
+                        // }]}
                     >
                         {(addArtwork, { data, loading, error }) => (
                             <div className='AddArtworks'                            

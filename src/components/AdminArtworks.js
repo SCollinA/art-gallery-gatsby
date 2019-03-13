@@ -1,7 +1,7 @@
 import React from 'react'
 import { Img } from 'gatsby-image'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
+// import { Query } from 'react-apollo'
+// import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
 import AdminContext from '../contexts/AdminContext';
 // import Loading from './Loading';
@@ -9,21 +9,22 @@ import AdminContext from '../contexts/AdminContext';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectedGallery, selectArtwork, updatingArtwork }) => (
+            {({ galleries, selectedGallery, selectArtwork, updatingArtwork }) => (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
-                    <Query query={GALLERY_ARTWORKS}
+                    {/* <Query query={GALLERY_ARTWORKS}
                         // selectedGallery && 
                         variables={{
                             galleryId: selectedGallery.id || null,
                         }}
                     >
                         {({ data, loading, error }) => {
-                            return (
+                            return ( */}
                             <div className='currentArtworks'>
                                 {/* {loading && <Loading/>} */}
-                                {(!loading && data.getArtworks) && 
-                                    data.getArtworks.map(artwork => (
+                                {/* {(!loading && data.getArtworks) &&  */}
+                                    {/* data.getArtworks */}
+                                    {selectedGallery.artworks.map(artwork => (
                                         <div className='currentArtwork' key={artwork.id}
                                             onClick={event => {
                                                 event.stopPropagation()
@@ -51,19 +52,22 @@ export default () => {
                                                 updatingArtwork.galleryId) || 
                                             (updatingArtwork.id !== artwork.id &&
                                                 artwork.galleryId)) && (                                        
-                                                <Query query={GET_GALLERY}
-                                                    variables={{
-                                                        id: updatingArtwork.id === artwork.id ?
-                                                        updatingArtwork.galleryId :
-                                                        artwork.galleryId
-                                                    }}
-                                                >
-                                                    {({ data: { getGallery }, loading, error }) => (
+                                                // <Query query={GET_GALLERY}
+                                                //     variables={{
+                                                //         id: updatingArtwork.id === artwork.id ?
+                                                //         updatingArtwork.galleryId :
+                                                //         artwork.galleryId
+                                                //     }}
+                                                // >
+                                                //     {({ data: { getGallery }, loading, error }) => (
                                                         <h5>
-                                                            {getGallery ? getGallery.name : ''}
+                                                            {galleries.find(gallery => gallery.id === updatingArtwork.id === artwork.id ?
+                                                                updatingArtwork.galleryId :
+                                                                artwork.galleryId)}
+                                                            {/* {getGallery ? getGallery.name : ''} */}
                                                         </h5>
-                                                    )}
-                                                </Query>
+                                                //     )}
+                                                // </Query>
                                             )}
                                             {/* artwork image */}
                                             {(artwork.file && (
@@ -89,34 +93,33 @@ export default () => {
                                 }
                                 <AddArtworks/>
                             </div>
-                        )}}
-                    </Query>
+                        {/* )}}
+                    </Query> */}
                 </div>
             )}
         </AdminContext.Consumer>
     )
 }
 
-export const GALLERY_ARTWORKS = gql`
-    query GetArtworksForGallery($galleryId: ID) {
-        getArtworks(input: { galleryId: $galleryId }) {
-            id
-            galleryId
-            title
-            width
-            height
-            medium
-            image
-            price
-            sold
-        }
-    }
-`
+// export const GALLERY_ARTWORKS = gql`
+//     query GetArtworksForGallery($galleryId: ID) {
+//         getArtworks(input: { galleryId: $galleryId }) {
+//             id
+//             galleryId
+//             title
+//             width
+//             height
+//             medium
+//             price
+//             sold
+//         }
+//     }
+// `
 
-export const GET_GALLERY = gql`
-    query GetGallery($id: ID!) {
-        getGallery(id: $id) {
-            name
-        }
-    }
-`
+// export const GET_GALLERY = gql`
+//     query GetGallery($id: ID!) {
+//         getGallery(id: $id) {
+//             name
+//         }
+//     }
+// `

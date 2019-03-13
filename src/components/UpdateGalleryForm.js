@@ -2,8 +2,8 @@ import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
-import { ALL_GALLERIES } from './AdminGalleries';
+// import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
+// import { ALL_GALLERIES } from './AdminGalleries';
 import { DB_CONTENT } from './layout';
 import Loading from './Loading';
 
@@ -12,14 +12,14 @@ export default () => {
         <AdminContext.Consumer>
             {({ updatingGallery, changeGallery, submitGallery, resetGallery, removeGallery, selectGallery }) => (
                 <Mutation mutation={UPDATE_GALLERY}
-                    refetchQueries={[{
-                        query: GALLERY_ARTWORKS,
-                        variables: { galleryId: updatingGallery.id }
-                    },
-                    {
-                        query: GET_GALLERY,
-                        variables: { id: updatingGallery.id }
-                    }]}
+                    // refetchQueries={[{
+                    //     query: GALLERY_ARTWORKS,
+                    //     variables: { galleryId: updatingGallery.id }
+                    // },
+                    // {
+                    //     query: GET_GALLERY,
+                    //     variables: { id: updatingGallery.id }
+                    // }]}
                 >
                     {(updateGallery, { data, loading, error }) => (
                         <>
@@ -61,9 +61,9 @@ export default () => {
                                             } 
                                         })
                                     }}
-                                    refetchQueries={[{
-                                        query: ALL_GALLERIES
-                                    }]}
+                                    // refetchQueries={[{
+                                    //     query: ALL_GALLERIES
+                                    // }]}
                                 >
                                 {(deleteGallery, { data, loading, error }) => (
                                     <input type='button' value='remove'
