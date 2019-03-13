@@ -172,11 +172,34 @@ export default class UpdateArtworkForm extends React.Component {
                         </label>
                         <div className='changeImage'>
                             <label>image
-                                <input type='file' name='image' accept='image/*' onChange={event => {
-                                    const imageFile = event.target.files[0]
-                                    const imageLoaded = imageFile && true
-                                    this.setState({imageFile, imageLoaded})
-                                }}/>
+                                <input type='file' name='image' accept='image/*' 
+                                    onChange={event => {
+                                        const imageFile = event.target.files[0]
+                                        const imageLoaded = imageFile && true
+                                        this.setState({
+                                            imageFile, 
+                                            imageLoaded
+                                        }, () => !imageFile && this.setState({ 
+                                            imageHeight: 0,
+                                            imageWidth: 0
+                                        }))
+                                    }}
+                                />
+                            </label>
+                            <label>remove image
+                                <input type='button' value='remove image' 
+                                    onClick={event => {
+                                        event.target.form.image.value = ''
+                                        this.setState({ 
+                                            imageFile: null, 
+                                            imageLoaded: false,
+                                            imageHeight: 0,
+                                            imageWidth: 0,
+                                        }, () => {
+                                            changeArtwork({ ...updatingArtwork, image: null })
+                                        })
+                                    }}
+                                />
                             </label>
                             <canvas id='imageCanvas' ref={this.imageCanvas}
                                 width={this.state.imageWidth}
@@ -189,10 +212,13 @@ export default class UpdateArtworkForm extends React.Component {
                                         style={{ display: 'none' }}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
-                                        onLoad={() => !this.state.imageWidth && this.setState({ 
+                                        onLoad={() => {
+                                            console.log('img uploaded', this.state.imageWidth)
+                                            !this.state.imageWidth && this.setState({ 
                                             imageWidth: this.uploadedImage.current.width,
                                             imageHeight: this.uploadedImage.current.height 
-                                        }, () => this.uploadedImage.current.style.display = 'inherit')}
+                                        }, () => this.uploadedImage.current.style.display = 'inline')}
+                                        }
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
