@@ -72,10 +72,11 @@ class Layout extends React.Component {
                           <ApolloConsumer>
                             {cache => {
                                   // const getArtwork = 
-                                  cache.query({
+                                  artwork.id !== 'nada' &&
+                                  Promise.all([cache.query({
                                     query: ARTWORK_IMAGE,
-                                    variables: artwork.id,
-                                  })
+                                    variables: { id: artwork.id },
+                                  })])
                                   .then(data => {
                                     console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
                                     return data
@@ -84,10 +85,11 @@ class Layout extends React.Component {
                                     // this should add new artworkImages to the state
                                     cache.writeQuery({
                                       query: ARTWORK_IMAGE,
-                                      variables: artwork.id,
+                                      variables: { id: artwork.id },
                                       data
                                     })
                                   })
+                                  .catch(console.log)
                                   return <></>
                               }}
                         </ApolloConsumer>
