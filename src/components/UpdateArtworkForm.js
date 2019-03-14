@@ -46,7 +46,7 @@ export default class UpdateArtworkForm extends React.Component {
     }
     render() {
         const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
-        const { imageWidth, imageHeight, windowWidth, windowHeight } = this.state
+        // const { imageWidth, imageHeight, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -230,9 +230,11 @@ export default class UpdateArtworkForm extends React.Component {
                                             imageWidth: this.uploadedImage.current.width,
                                             imageHeight: this.uploadedImage.current.height 
                                         }, () => {
-                                            this.uploadedImage.current.style.display = 'inline'
+                                            this.uploadedImage.current.style.display = 'block'
+                                            const { imageWidth, imageHeight, windowHeight } = this.state
+                                            console.log(imageWidth, imageHeight, windowHeight)
                                             this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
-                                                '90%' : `${windowHeight * imageWidth / imageHeight}px`
+                                                '25%' : `${windowHeight * imageWidth / imageHeight}px`
                                         })}
                                         }
                                     />
