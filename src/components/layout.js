@@ -42,6 +42,7 @@ class Layout extends React.Component {
                           name: gallery.name,
                           artworks: galleryArtworks.length > 0 ? 
                             galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                              const artworkImage = this.state.artworkImages.find(artworkImage => id === artworkImage.id)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
@@ -50,7 +51,7 @@ class Layout extends React.Component {
                                 title,
                                 width,
                                 height,
-                                image: this.state.artworkImages.find(artworkImage => id === artworkImage.id).image,
+                                image: artworkImage ? artworkImage.image : '',
                                 medium,
                                 price,
                                 sold,
@@ -66,11 +67,12 @@ class Layout extends React.Component {
                       }]
                     return (
                       <>
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map(artwork => (
-                          <Query query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map((artwork, index) => (
+                          <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
                             {({ data, loading, error }) => {
                               console.log('got the image', data, artwork.title, new Date().toTimeString())
-                              this.setState({ artworkImages: [ ...this.state.artworkImages, { id: artwork.id, image: data.getArtwork.image }]})
+                              data && data.getArtwork && data.getArtwork.image && this.setState({ artworkImages: [ ...this.state.artworkImages, { id: artwork.id, image: data.getArtwork.image }]})
+                              return <></>
                             }}
                           </Query>
                         )))}

@@ -55,12 +55,14 @@ export default class UpdateArtworkForm extends React.Component {
                         query: DB_CONTENT,
                         data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
                     })
-                    const { getArtwork: { image }} = cache.readQuery({ query: ARTWORK_IMAGE })
+                    // const { getArtwork: { image }} = cache.readQuery({ query: ARTWORK_IMAGE })
                     console.log(`writing image to cache ${updatingArtwork.image}`)
                     cache.writeQuery({
                         query: ARTWORK_IMAGE,
+                        variables: { id: updatingArtwork.id },
                         data: { getArtwork: { image: updatingArtwork.image }}
                     })
+                    submitArtwork()
                 }}
                 refetchQueries={[{
                     query: GALLERY_ARTWORKS,
@@ -107,9 +109,10 @@ export default class UpdateArtworkForm extends React.Component {
                                             this.setState({
                                                 imageFile: null,
                                                 imageLoaded: false,
-                                            }, () => {
-                                                submitArtwork()
                                             })
+                                            // , () => {
+                                            //     submitArtwork()
+                                            // })
                                         })
                                         .catch(console.log)
                                     }
