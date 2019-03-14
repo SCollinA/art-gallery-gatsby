@@ -25,46 +25,53 @@ const Layout = ({ children }) => (
                 const { artworkFiles: { edges }} = data
                 console.log('running artwork files static query', edges.map(({ node: { name }}) => name))
                 const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
-                return (
-                  <LayoutContext.Provider 
-                    value={{ 
-                      // if galleries has a gallery, add it's artworks
-                      galleries: galleries.length > 0 ? 
-                        galleries.map(gallery => {
-                          const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
+                const galleriesWithFiles = galleries.length > 0 ? 
+                  galleries.map(gallery => {
+                    const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
+                    return {
+                      id: gallery.id,
+                      name: gallery.name,
+                      artworks: galleryArtworks.length > 0 ? 
+                        galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                          // if an artwork file exist add it
+                          // will check if file is there to determine proper element for image
                           return {
-                            id: gallery.id,
-                            name: gallery.name,
-                            artworks: galleryArtworks.length > 0 ? 
-                              galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
-                                // if an artwork file exist add it
-                                // will check if file is there to determine proper element for image
-                                return {
-                                  id,
-                                  galleryId,
-                                  title,
-                                  width,
-                                  height,
-                                  image,
-                                  medium,
-                                  price,
-                                  sold,
-                                  file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
-                                }
-                                // only include art that has a picture to show for the gallery
-                              }).filter(artwork => artwork.file || artwork.image) :
-                              [{ id: 'nada', title: 'no artworks'}]
+                            id,
+                            galleryId,
+                            title,
+                            width,
+                            height,
+                            image,
+                            medium,
+                            price,
+                            sold,
+                            file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
                           }
-                        }) : [{ 
-                          id: 'none', 
-                          name: 'no galleries', 
-                          artworks: [{ id: 'nada', title: 'no galleries #1'}]
-                        }]
-                    }}
-                  >
-                    {loading && <Loading/>}
-                    {children}
-                  </LayoutContext.Provider>
+                        }) :
+                        [{ id: 'nada', title: 'no artworks'}]
+                    }
+                  }) : [{ 
+                    id: 'none', 
+                    name: 'no galleries', 
+                    artworks: [{ id: 'nada', title: 'no galleries #1'}]
+                  }]
+                return (
+                  <>
+                    {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map(artwork => {
+                      <Query query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
+                        {({ data, loading, error }) => console.log('got the image', data)}
+                      </Query>
+                    }))}
+                    <LayoutContext.Provider 
+                      value={{ 
+                        // if galleries has a gallery, add it's artworks
+                        galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks.filter(artwork => (artwork.file || artwork.image))})) 
+                      }}
+                    >
+                      {loading && <Loading/>}
+                      {children}
+                    </LayoutContext.Provider>
+                  </>
                 )
               }}
             />
@@ -98,6 +105,14 @@ export const DB_CONTENT = gql`
       medium
       price
       sold
+    }
+  }
+`
+
+const ARTWORK_IMAGE = gql`
+  query GetArtworkImage($id: ID!) {
+    getArtwork(id: $id) {
+      image
     }
   }
 `
