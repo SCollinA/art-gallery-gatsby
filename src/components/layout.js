@@ -53,9 +53,13 @@ const Layout = ({ children }) => (
                                   // only include art that has a picture to show for the gallery
                                 }) :
                                 [{ id: 'nada', title: 'no artworks'}]
-                              artworksWithFiles.filter(artwork => !artwork.file).map(async filelessArtwork => {
-                                const { data: { getArtwork: { image }}} = await client.query({ query: ARTWORK_IMAGE, variables: { id: filelessArtwork.id } })
-                                return { ...filelessArtwork, image }
+                              artworksWithFiles.forEach(async artworkWithFile => {
+                                if (!artworkWithFile.file) {
+                                  artworkWithFile.image = await (async () => {
+                                    const { data: { getArtwork: { image }}} = await client.query({ query: ARTWORK_IMAGE, variables: { id: artworkWithFile.id } })
+                                    return image
+                                  })()
+                                }
                               })
                               //   (
                               //   <Query query={ARTWORK_IMAGE} variables={{ id: filelessArtwork.id }}>
