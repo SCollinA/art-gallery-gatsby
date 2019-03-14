@@ -402,7 +402,7 @@ a {
     background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
     padding: 5%;
-    /* overflow-y: auto; */
+    overflow-y: auto;
     /* border: solid black 2px; */
     /* border-radius: 10px; */
 }

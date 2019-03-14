@@ -26,7 +26,7 @@ export default ({ artworkChoiceRef, selectedGallery, selectArtwork, selectedArtw
                             />
                         )) || (
                         artwork.image && (
-                            <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
+                            <img src={`${artwork.image}`} alt={artwork.title}/>
                         ))}
                         <p>{artwork.title}</p>
                     </div>

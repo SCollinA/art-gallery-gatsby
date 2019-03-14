@@ -29,7 +29,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                         <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
                                         )) || (
                                     randomArtwork.image && (
-                                        <img src={`data:image/jpeg;base64,${randomArtwork.image}`} alt={randomArtwork.title}/>
+                                        <img src={`${randomArtwork.image}`} alt={randomArtwork.title}/>
                                     ))}
                                     <p>{gallery.name}</p>
                                 </div>

@@ -37,7 +37,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                         <img ref={artworkRef}
                                         // display initially none to load actual size
                                             style={{ display: 'none', margin: 'auto' }}
-                                            src={`data:image/jepg;base64,${artwork.image}`} 
+                                            src={`${artwork.image}`} 
                                             alt={`${artwork.title}`}
                                             onLoad={() => {
                                                 const dbImage = artworkRef.current

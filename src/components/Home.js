@@ -51,7 +51,7 @@ export default class Home extends React.Component {
                                 randomArtwork.image && (
                                     <img ref={this.image} 
                                         style={{ display: 'none' }}
-                                        src={`data:image/jpeg;base64,${randomArtwork.image}`} 
+                                        src={`${randomArtwork.image}`} 
                                         alt={randomArtwork.title}
                                         onLoad={() => {
                                             const dbImage = this.image.current

@@ -25,7 +25,7 @@ export default class UpdateArtworkForm extends React.Component {
     componentDidMount() {
         // set pic to be current pic
         this.context.updatingArtwork.image && 
-            fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
+            fetch(`${this.context.updatingArtwork.image}`)
             .then(res => res.blob())
             .then(blob => this.setState({
                 imageFile: blob,
@@ -225,7 +225,7 @@ export default class UpdateArtworkForm extends React.Component {
                             )) || (updatingArtwork.file && (
                                 <Img id='currentImageFromFile' ref={this.currentImageFromFile} fluid={updatingArtwork.file.childImageSharp.fluid}/>
                             )) || (updatingArtwork.image && (
-                                <img id='currentImageFromSource' ref={this.currentImageFromSource} src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                                <img id='currentImageFromSource' ref={this.currentImageFromSource} src={`${updatingArtwork.image}`} alt={updatingArtwork.title}/>
                             ))}
                             {<div className='rotateImage'
                                 onClick={() => {
