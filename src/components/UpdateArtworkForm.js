@@ -214,6 +214,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => {
+                                            changeArtwork({ ...updateArtwork, image: blobUrl(this.state.imageFile) })
                                             !this.state.imageWidth && this.setState({ 
                                             imageWidth: this.uploadedImage.current.width,
                                             imageHeight: this.uploadedImage.current.height 

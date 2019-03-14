@@ -82,8 +82,11 @@ export default () => {
                                             {((artwork.file && 
                                                 <Img fluid={artwork.file.childImageSharp.fluid}/>
                                              )) || (
-                                             artwork.image && (
-                                                 <img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
+                                             (artwork.image || (
+                                                 updatingArtwork.id === artwork.id &&
+                                                 updatingArtwork.image
+                                             )) && (
+                                                 <img src={`${updatingArtwork.id === artwork.id ?
                                                      updatingArtwork.image :
                                                      artwork.image}`} alt='uploaded artwork'/>
                                             ))}
