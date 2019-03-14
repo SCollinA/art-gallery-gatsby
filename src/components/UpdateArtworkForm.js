@@ -186,6 +186,9 @@ export default class UpdateArtworkForm extends React.Component {
                         <div className='changeImage'>
                             <label>image
                                 <input type='file' name='image' accept='image/*' 
+                                    onClick={event => {
+                                        event.target.value = ''
+                                    }}
                                     onChange={event => {
                                         const imageFile = event.target.files[0]
                                         const imageLoaded = imageFile && true
@@ -249,10 +252,9 @@ export default class UpdateArtworkForm extends React.Component {
                             {<div className='rotateImage'
                                 onClick={() => {
                                     // have to get current image height and width
-                                    this.setState({ 
-                                        imageWidth: this.state.imageHeight,
-                                        imageHeight: this.state.imageWidth,
-                                    }, () => {
+                                    // this.setState({ 
+                                        
+                                    // }, () => {
                                     // get canvas and image elements from page
                                         const imageCanvasNode = this.imageCanvas.current
                                         const uploadedImageNode = this.uploadedImage.current
@@ -286,13 +288,15 @@ export default class UpdateArtworkForm extends React.Component {
                                                 console.log(imageBlob)
                                                 this.setState({
                                                     imageFile: imageBlob,
+                                                    // imageWidth: this.state.imageHeight,
+                                                    // imageHeight: this.state.imageWidth,
                                                 }, () => {
                                                     this.setState({ imageLoaded: true, })
                                                 })
                                             }, 'image/jpeg', 1.0)
                                         }
-                                })
-                            }}
+                                    // })
+                                }}
                             >
                                 rotate right
                             </div>}
