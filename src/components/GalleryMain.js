@@ -16,8 +16,6 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
-                                console.log('window height: ', windowHeight)
-                                console.log('gatsby image aspect ratio: ', artwork.file && artwork.file.childImageSharp.fluid.aspectRatio)
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
