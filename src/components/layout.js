@@ -68,25 +68,31 @@ class Layout extends React.Component {
                     console.log(galleriesWithFiles)
                     return (
                       <>
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map((artwork, index) => (
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => (
                           <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
                             {({ data, loading, error }) => {
-                              console.log('got the image', data, artwork, new Date().toTimeString())
-                              data && data.getArtwork && data.getArtwork.image && this.setState({ artworkImages: [ ...this.state.artworkImages, { id: artwork.id, image: data.getArtwork.image }]})
-                              return <></>
-                            }}
-                          </Query>
-                        )))}
+                              console.log('got the image', artwork.id, data, artwork, new Date().toTimeString())
+                              // this should add new artworkImages to the layout
+                              const newDBImage = data && data.getArtwork && data.getArtwork.image
+                        return (
                         <LayoutContext.Provider 
-                          value={{ 
-                            // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks }))
-                              // .filter(artwork => (artwork.file || artwork.image))})) 
-                          }}
+                        value={{ 
+                          // if galleries has a gallery, add it's artworks
+                          galleries: galleriesWithFiles.map(galleryWithFile => ({
+                            ...galleryWithFile, 
+                            artworks: galleryWithFile.artworks.filter(galleryArtwork => galleryArtwork.id === artwork.id).concat([{
+                              ...artwork, 
+                              image: newDBImage
+                            }]) }))
+                          // .filter(artwork => (artwork.file || artwork.image))})) 
+                        }}
                         >
                           {loading && <Loading/>}
                           {children}
                         </LayoutContext.Provider>
+                        )}}
+                    </Query>
+                  )))}
                       </>
                     )
                   }}

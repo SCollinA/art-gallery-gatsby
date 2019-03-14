@@ -51,14 +51,29 @@ export default class UpdateArtworkForm extends React.Component {
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
-                    console.log('updating artwork image', updateArtwork.image)
+                    console.log('updating artwork', updateArtwork.image)
                     cache.writeQuery({
                         query: DB_CONTENT,
                         data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
                     })
-                    console.log(cache.readQuery({ query: DB_CONTENT }))
+                    // console.log(cache.readQuery({ query: DB_CONTENT }))
+                    // const dbImageData = cache.readQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     variables: { id: updateArtwork.id }
+                    // })
+                    // console.log(dbImageData)
+                    // cache.writeQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     data: dbImageData 
+                    // })
                 }}
                 refetchQueries={[{
+                    query: ARTWORK_IMAGE,
+                    variables: {
+                        id: updatingArtwork.id
+                    }
+                },
+                {
                     query: GALLERY_ARTWORKS,
                     variables: {
                         galleryId: updatingArtwork.galleryId
