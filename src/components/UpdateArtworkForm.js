@@ -140,7 +140,7 @@ export default class UpdateArtworkForm extends React.Component {
                             </Query>
                         </label>
                         <label>title
-                            <input type='text' name='title'
+                            <input autoFocus type='text' name='title'
                                 value={updatingArtwork.title}
                                 onChange={event => changeArtwork({
                                     title: event.target.value
