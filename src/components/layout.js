@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
-import { Query } from "react-apollo"
+import { Query, ApolloConsumer } from "react-apollo"
 import gql from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
@@ -69,30 +69,39 @@ class Layout extends React.Component {
                     return (
                       <>
                         {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => (
-                          <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
-                            {({ data, loading, error }) => {
-                              console.log('got the image', artwork.id, data, artwork, new Date().toTimeString())
-                              // this should add new artworkImages to the layout
-                              const newDBImage = data && data.getArtwork && data.getArtwork.image
-                        return (
+                          <ApolloConsumer>
+                            {cache => {
+                                  // const getArtwork = 
+                                  cache.query({
+                                    query: ARTWORK_IMAGE,
+                                    variables: artwork.id,
+                                  })
+                                  .then(data => {
+                                    console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
+                                    return data
+                                  })
+                                  .then(data => {
+                                    // this should add new artworkImages to the state
+                                    cache.writeQuery({
+                                      query: ARTWORK_IMAGE,
+                                      variables: artwork.id,
+                                      data
+                                    })
+                                  })
+                                  return <></>
+                              }}
+                        </ApolloConsumer>
+                        )))}
                         <LayoutContext.Provider 
-                        value={{ 
-                          // if galleries has a gallery, add it's artworks
-                          galleries: galleriesWithFiles.map(galleryWithFile => ({
-                            ...galleryWithFile, 
-                            artworks: galleryWithFile.artworks.filter(galleryArtwork => galleryArtwork.id === artwork.id).concat([{
-                              ...artwork, 
-                              image: newDBImage
-                            }]) }))
-                          // .filter(artwork => (artwork.file || artwork.image))})) 
-                        }}
+                          value={{ 
+                            // if galleries has a gallery, add it's artworks
+                            galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks }))
+                              // .filter(artwork => (artwork.file || artwork.image))})) 
+                          }}
                         >
                           {loading && <Loading/>}
                           {children}
                         </LayoutContext.Provider>
-                        )}}
-                    </Query>
-                  )))}
                       </>
                     )
                   }}
