@@ -62,7 +62,7 @@ const Layout = ({ children }) => (
                       unsortedArtworks: artworks.filter(artwork => !artwork.galleryId)
                         .map(artwork => ({ 
                           ...artwork, 
-                          image: `data:image/jpeg;base64,${artwork.image}`,
+                          image: artwork.image ? `data:image/jpeg;base64,${artwork.image}` : '',
                           file: artworkFiles.find(artworkFile => artworkFile.name === `${artwork.id}-${artwork.title}`)
                         }))
                     }}
