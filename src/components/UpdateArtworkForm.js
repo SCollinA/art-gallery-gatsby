@@ -15,7 +15,10 @@ export default class UpdateArtworkForm extends React.Component {
             imageLoaded: false,
             imageWidth: 0,
             imageHeight: 0,
+            windowHeight: 0,
+            windowWidth: 0,
         }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.imageCanvas = React.createRef()
         this.uploadedImage = React.createRef()
         this.currentImageFromFile = React.createRef()
@@ -23,6 +26,8 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     componentDidMount() {
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
         this.context.updatingArtwork.image && 
             fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
             .then(res => res.blob())
@@ -32,8 +37,16 @@ export default class UpdateArtworkForm extends React.Component {
             }))
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions)
+    }
+      
+    updateWindowDimensions() {
+        this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
+    }
     render() {
         const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
+        // const { imageWidth, imageHeight, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -173,16 +186,25 @@ export default class UpdateArtworkForm extends React.Component {
                         <div className='changeImage'>
                             <label>image
                                 <input type='file' name='image' accept='image/*' 
+                                    onClick={event => {
+                                        event.target.value = ''
+                                    }}
                                     onChange={event => {
                                         const imageFile = event.target.files[0]
                                         const imageLoaded = imageFile && true
                                         this.setState({
-                                            imageFile, 
+                                            imageHeight: 0,
+                                            imageWidth: 0,
+                                            imageLoaded: false
+                                        }, () => this.setState({
+                                            imageFile,
+                                            // imageLoaded: false, 
+                                        }, () => this.setState({
                                             imageLoaded
                                         }, () => !imageFile && this.setState({ 
                                             imageHeight: 0,
-                                            imageWidth: 0
-                                        }))
+                                            imageWidth: 0,
+                                        }))))
                                     }}
                                 />
                             </label>
@@ -209,14 +231,19 @@ export default class UpdateArtworkForm extends React.Component {
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
                                     <img id='uploadedImage' ref={this.uploadedImage}
-                                        style={{ display: 'none' }}
+                                        style={{ display: 'none'}}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => {
                                             !this.state.imageWidth && this.setState({ 
-                                            imageWidth: this.uploadedImage.current.width,
-                                            imageHeight: this.uploadedImage.current.height 
-                                        }, () => this.uploadedImage.current.style.display = 'inline')}
+                                                imageWidth: this.uploadedImage.current.width,
+                                                imageHeight: this.uploadedImage.current.height 
+                                            }, () => {
+                                                this.uploadedImage.current.style.display = 'block'
+                                                const { imageWidth, imageHeight, windowHeight } = this.state
+                                                this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
+                                                    '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
+                                            })}
                                         }
                                     />
                                 </div>
@@ -230,7 +257,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     // have to get current image height and width
                                     this.setState({ 
                                         imageWidth: this.state.imageHeight,
-                                        imageHeight: this.state.imageWidth,
+                                        imageHeight: this.state.imageWidth
                                     }, () => {
                                     // get canvas and image elements from page
                                         const imageCanvasNode = this.imageCanvas.current
@@ -239,7 +266,9 @@ export default class UpdateArtworkForm extends React.Component {
                                         const currentImageFromSourceNode = this.currentImageFromSource.current
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
+                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
+                                        console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
@@ -263,13 +292,11 @@ export default class UpdateArtworkForm extends React.Component {
                                                 console.log(imageBlob)
                                                 this.setState({
                                                     imageFile: imageBlob,
-                                                }, () => {
-                                                    this.setState({ imageLoaded: true, })
                                                 })
                                             }, 'image/jpeg', 1.0)
                                         }
-                                })
-                            }}
+                                    })
+                                }}
                             >
                                 rotate right
                             </div>}

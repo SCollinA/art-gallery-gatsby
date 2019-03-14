@@ -43,7 +43,7 @@ export default class Gallery extends Component {
     }
       
     updateWindowDimensions() {
-        this.setState({ windoWidth: window.innerWidth, windowHeight: window.innerHeight })
+        this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
     }
 
     _selectGallery = selectedGallery => this.setState({
