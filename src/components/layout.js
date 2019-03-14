@@ -65,12 +65,13 @@ class Layout extends React.Component {
                         name: 'no galleries', 
                         artworks: [{ id: 'nada', title: 'no galleries #1'}]
                       }]
+                    console.log(galleriesWithFiles)
                     return (
                       <>
                         {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map((artwork, index) => (
                           <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
                             {({ data, loading, error }) => {
-                              console.log('got the image', data, artwork.title, new Date().toTimeString())
+                              console.log('got the image', data, artwork, new Date().toTimeString())
                               data && data.getArtwork && data.getArtwork.image && this.setState({ artworkImages: [ ...this.state.artworkImages, { id: artwork.id, image: data.getArtwork.image }]})
                               return <></>
                             }}

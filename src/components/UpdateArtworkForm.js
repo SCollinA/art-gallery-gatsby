@@ -51,18 +51,12 @@ export default class UpdateArtworkForm extends React.Component {
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                    console.log('updating artwork image', updateArtwork.image)
                     cache.writeQuery({
                         query: DB_CONTENT,
-                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([{ ...updateArtwork, image: updatingArtwork.image}]) },
+                        data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
                     })
-                    // const { getArtwork } = cache.readQuery({ query: ARTWORK_IMAGE })
-                    // console.log(`writing image to cache ${updatingArtwork.image}`)
-                    // cache.writeQuery({
-                    //     query: ARTWORK_IMAGE,
-                    //     variables: { id: updatingArtwork.id },
-                    //     data: { ...getArtwork, image: updatingArtwork.image }
-                    // })
-                    submitArtwork()
+                    console.log(cache.readQuery({ query: DB_CONTENT }))
                 }}
                 refetchQueries={[{
                     query: GALLERY_ARTWORKS,
@@ -109,10 +103,9 @@ export default class UpdateArtworkForm extends React.Component {
                                             this.setState({
                                                 imageFile: null,
                                                 imageLoaded: false,
+                                            }, () => {
+                                                submitArtwork()
                                             })
-                                            // , () => {
-                                            //     submitArtwork()
-                                            // })
                                         })
                                         .catch(console.log)
                                     }
