@@ -389,19 +389,22 @@ a {
 }
 
 #UpdateGalleryForm, #UpdateArtworkForm {
-    position: fixed;
-    width: 75%;
-    height: 50%;
-    top: 25%;
-    left: 12.5%;
+    /* position: fixed; */
+    /* width: 75%; */
+    /* height: 50%; */
+    /* top: 25%; */
+    /* left: 12.5%; */
+    margin: 0;
+    height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
     background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
     padding: 5%;
-    overflow-y: auto;
-    border: solid black 2px;
-    border-radius: 10px;
+    /* overflow-y: auto; */
+    /* border: solid black 2px; */
+    /* border-radius: 10px; */
 }
 
 #UpdateGalleryForm > *, #UpdateArtworkForm > * {

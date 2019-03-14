@@ -37,7 +37,7 @@ export default () => {
                             onReset={() => resetGallery()}
                             onClick={event => event.stopPropagation()}
                         >
-                            <input type='text' name='name'
+                            <input autoFocus type='text' name='name'
                                 value={updatingGallery.name}
                                 onChange={event => changeGallery({
                                     ...updatingGallery,
