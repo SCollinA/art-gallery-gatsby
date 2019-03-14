@@ -30,7 +30,7 @@ export default () => {
                                         </div>
                                     ))
                                 }
-                                <AddGalleries/>
+                                <AddGalleries selectGallery={selectGallery}/>
                             </div>
                         {/* )}
                     </Query> */}

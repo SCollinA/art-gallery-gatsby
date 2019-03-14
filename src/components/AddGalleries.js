@@ -9,37 +9,37 @@ export default () => {
     return (
         <AdminContext.Consumer>
             {({ selectGallery }) => (
-                    <Mutation mutation={ADD_GALLERY}
-                        update={(cache, { data: { addGallery } }) => {
-                            // immediately select the gallery for updating
-                            const { id, name } = addGallery
-                            // select once to get artwork
-                            selectGallery({
-                                id,
-                                name
-                            })
-                            // select again to make available for editing
-                            selectGallery({
-                                id,
-                                name
-                            })
-                            const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
-                            cache.writeQuery({
-                                query: DB_CONTENT,
-                                data: { galleries: galleries.concat([addGallery]), artworks },
-                            })
-                        }}
+                <Mutation mutation={ADD_GALLERY}
+                    update={(cache, { data: { addGallery } }) => {
+                        // immediately select the gallery for updating
+                        const { id, name } = addGallery
+                        // select once to get artwork
+                        selectGallery({
+                            id,
+                            name
+                        })
+                        // select again to make available for editing
+                        selectGallery({
+                            id,
+                            name
+                        })
+                        const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                        cache.writeQuery({
+                            query: DB_CONTENT,
+                            data: { galleries: galleries.concat([addGallery]), artworks },
+                        })
+                    }}
+                    >
+                    {(addGallery, { data }) => (
+                        <div className='AddGalleries'
+                            onClick={addGallery}
                         >
-                        {(addGallery, { data }) => (
-                            <div className='AddGalleries'
-                                onClick={addGallery}
-                            >
-                                <div className='addGallery'>
-                                    <h3> + </h3>
-                                </div>
+                            <div className='addGallery'>
+                                <h3> + </h3>
                             </div>
-                        )}
-                    </Mutation>
+                        </div>
+                    )}
+                </Mutation>
             )}
         </AdminContext.Consumer>
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Img } from 'gatsby-image'
+import Img from 'gatsby-image'
 // import { Query } from 'react-apollo'
 // import gql from 'graphql-tag'
 import AddArtworks from './AddArtworks';
@@ -9,7 +9,12 @@ import AdminContext from '../contexts/AdminContext';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ galleries, selectedGallery, selectArtwork, updatingArtwork }) => (
+            {({ galleries, unsortedArtworks, selectedGallery, selectArtwork, updatingArtwork }) => {
+                const galleryWithArt = galleries.find(gallery => gallery.id === selectedGallery.id)
+                const artworks = selectedGallery.id ? 
+                    galleryWithArt.artworks : unsortedArtworks
+                console.log(artworks, galleryWithArt)
+                return (
                 <div className='AdminArtworks'>
                     <h1>artworks</h1>
                     {/* <Query query={GALLERY_ARTWORKS}
@@ -24,8 +29,9 @@ export default () => {
                                 {/* {loading && <Loading/>} */}
                                 {/* {(!loading && data.getArtworks) &&  */}
                                     {/* data.getArtworks */}
-                                    {selectedGallery.artworks.map(artwork => (
-                                        <div className='currentArtwork' key={artwork.id}
+                                    {artworks && artworks.map(artwork => (
+                                        <div className='currentArtwork' 
+                                            key={artwork.id}
                                             onClick={event => {
                                                 event.stopPropagation()
                                                 selectArtwork({
@@ -39,7 +45,7 @@ export default () => {
                                                     price: artwork.price,
                                                     sold: artwork.sold
                                                 })
-                                        }}
+                                            }}
                                         >
                                             {/* artwork title */}
                                             <h3>
@@ -61,22 +67,25 @@ export default () => {
                                                 // >
                                                 //     {({ data: { getGallery }, loading, error }) => (
                                                         <h5>
-                                                            {galleries.find(gallery => gallery.id === updatingArtwork.id === artwork.id ?
-                                                                updatingArtwork.galleryId :
-                                                                artwork.galleryId)}
+                                                            {`${galleries.find(gallery => {
+                                                                const galleryId = updatingArtwork.id === artwork.id ?
+                                                                    updatingArtwork.galleryId :
+                                                                    artwork.galleryId
+                                                                return gallery.id === galleryId
+                                                            }).name}`}
                                                             {/* {getGallery ? getGallery.name : ''} */}
                                                         </h5>
                                                 //     )}
                                                 // </Query>
                                             )}
                                             {/* artwork image */}
-                                            {(artwork.file && (
+                                            {((artwork.file && 
                                                 <Img fluid={artwork.file.childImageSharp.fluid}/>
-                                            )) || (
-                                            artwork.image && (
-                                                <img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
-                                                    updatingArtwork.image :
-                                                    artwork.image}`} alt='uploaded artwork'/>
+                                             )) || (
+                                             artwork.image && (
+                                                 <img src={`data:image/jpeg;base64,${updatingArtwork.id === artwork.id ?
+                                                     updatingArtwork.image :
+                                                     artwork.image}`} alt='uploaded artwork'/>
                                             ))}
                                             <h5>
                                                 {`$${updatingArtwork.id === artwork.id ?
@@ -91,12 +100,12 @@ export default () => {
                                         </div>
                                     ))
                                 }
-                                <AddArtworks/>
+                                <AddArtworks selectArtwork={selectArtwork} selectedGallery={selectedGallery}/>
                             </div>
                         {/* )}}
                     </Query> */}
                 </div>
-            )}
+            )}}
         </AdminContext.Consumer>
     )
 }
