@@ -231,7 +231,7 @@ export default class UpdateArtworkForm extends React.Component {
                             {(this.state.imageLoaded && (
                                 <div className='uploadedImage'>
                                     <img id='uploadedImage' ref={this.uploadedImage}
-                                        style={{ display: this.state.imageLoaded ? 'none' : 'block' }}
+                                        style={{ display: 'none'}}
                                         src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => {
@@ -241,7 +241,6 @@ export default class UpdateArtworkForm extends React.Component {
                                             }, () => {
                                                 this.uploadedImage.current.style.display = 'block'
                                                 const { imageWidth, imageHeight, windowHeight } = this.state
-                                                console.log(imageWidth, imageHeight, windowHeight)
                                                 this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
                                                     '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
                                             })}
