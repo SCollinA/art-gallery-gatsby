@@ -15,7 +15,10 @@ export default class UpdateArtworkForm extends React.Component {
             imageLoaded: false,
             imageWidth: 0,
             imageHeight: 0,
+            windowHeight: 0,
+            windowWidth: 0,
         }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
         this.imageCanvas = React.createRef()
         this.uploadedImage = React.createRef()
         this.currentImageFromFile = React.createRef()
@@ -23,6 +26,8 @@ export default class UpdateArtworkForm extends React.Component {
     }
 
     componentDidMount() {
+        this.updateWindowDimensions()
+        window.addEventListener('resize', this.updateWindowDimensions)
         this.context.updatingArtwork.image && 
             fetch(`data:image/jpeg;base64,${this.context.updatingArtwork.image}`)
             .then(res => res.blob())
@@ -32,8 +37,16 @@ export default class UpdateArtworkForm extends React.Component {
             }))
     }
 
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions)
+    }
+      
+    updateWindowDimensions() {
+        this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
+    }
     render() {
         const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
+        const { imageWidth, imageHeight, windowWidth, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
@@ -216,7 +229,11 @@ export default class UpdateArtworkForm extends React.Component {
                                             !this.state.imageWidth && this.setState({ 
                                             imageWidth: this.uploadedImage.current.width,
                                             imageHeight: this.uploadedImage.current.height 
-                                        }, () => this.uploadedImage.current.style.display = 'inline')}
+                                        }, () => {
+                                            this.uploadedImage.current.style.display = 'inline'
+                                            this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
+                                                '90%' : `${windowHeight * imageWidth / imageHeight}px`
+                                        })}
                                         }
                                     />
                                 </div>
