@@ -190,12 +190,14 @@ export default class UpdateArtworkForm extends React.Component {
                                         const imageFile = event.target.files[0]
                                         const imageLoaded = imageFile && true
                                         this.setState({
-                                            imageFile, 
+                                            imageFile,
+                                            // imageLoaded: false, 
+                                        }, () => this.setState({
                                             imageLoaded
                                         }, () => !imageFile && this.setState({ 
                                             imageHeight: 0,
-                                            imageWidth: 0
-                                        }))
+                                            imageWidth: 0,
+                                        })))
                                     }}
                                 />
                             </label>
@@ -227,15 +229,15 @@ export default class UpdateArtworkForm extends React.Component {
                                         alt='uploaded profile' 
                                         onLoad={() => {
                                             !this.state.imageWidth && this.setState({ 
-                                            imageWidth: this.uploadedImage.current.width,
-                                            imageHeight: this.uploadedImage.current.height 
-                                        }, () => {
-                                            this.uploadedImage.current.style.display = 'block'
-                                            const { imageWidth, imageHeight, windowHeight } = this.state
-                                            console.log(imageWidth, imageHeight, windowHeight)
-                                            this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
-                                                '25%' : `${windowHeight * imageWidth / imageHeight}px`
-                                        })}
+                                                imageWidth: this.uploadedImage.current.width,
+                                                imageHeight: this.uploadedImage.current.height 
+                                            }, () => {
+                                                this.uploadedImage.current.style.display = 'block'
+                                                const { imageWidth, imageHeight, windowHeight } = this.state
+                                                console.log(imageWidth, imageHeight, windowHeight)
+                                                this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
+                                                    '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
+                                            })}
                                         }
                                     />
                                 </div>
@@ -258,7 +260,9 @@ export default class UpdateArtworkForm extends React.Component {
                                         const currentImageFromSourceNode = this.currentImageFromSource.current
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
+                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
+                                        console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
