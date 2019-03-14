@@ -4,7 +4,7 @@ import Img from 'gatsby-image'
 // import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {
-    const randomGalleryImages = galleries.length && galleries.map(gallery => gallery.artworks[0])
+    const randomGalleryImages = galleries.map(gallery => gallery.artworks[0])
         // Math.floor(Math.random() * gallery.artworks.length)])
     return (
         <div className='GalleryChoice'>

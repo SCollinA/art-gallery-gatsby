@@ -27,61 +27,60 @@ const Layout = ({ children }) => (
                 const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
                 return (
                   <ApolloConsumer>
-                    {client => (
-                      <LayoutContext.Provider 
-                        value={{ 
-                          // if galleries has a gallery, add it's artworks
-                          galleries: galleries.length > 0 ? 
-                            galleries.map(gallery => {
-                              const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
-                              const artworksWithFiles = galleryArtworks.length > 0 ? 
-                                galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
-                                  // if an artwork file exist add it
-                                  // will check if file is there to determine proper element for image
-                                  return {
-                                    id,
-                                    galleryId,
-                                    title,
-                                    width,
-                                    height,
-                                    image,
-                                    medium,
-                                    price,
-                                    sold,
-                                    file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
-                                  }
-                                  // only include art that has a picture to show for the gallery
-                                }) :
-                                [{ id: 'nada', title: 'no artworks'}]
-                              artworksWithFiles.forEach(async artworkWithFile => {
-                                if (!artworkWithFile.file) {
-                                  artworkWithFile.image = await (async () => {
-                                    const { data: { getArtwork: { image }}} = await client.query({ query: ARTWORK_IMAGE, variables: { id: artworkWithFile.id } })
-                                    return image
-                                  })()
+                    {client => {
+                      artworksWithFiles.forEach(async artworkWithFile => {
+                        if (!(artworkWithFile.file || artworkWithFile.image)) {
+                          const { data: { getArtwork: { image }}} = await client.query({ query: ARTWORK_IMAGE, variables: { id: artworkWithFile.id } })
+                          const { galleries, artworks } = client.readQuery({ query: DB_CONTENT })
+                          client.writeQuery({
+                              query: DB_CONTENT,
+                              data: { galleries, artworks: artworks.map(artwork => ({ ...artwork, image }))},
+                          })
+                          console.log('heres the image', image)
+                        }
+                      })
+                      return (
+                        <LayoutContext.Provider 
+                          value={{ 
+                            // if galleries has a gallery, add it's artworks
+                            galleries: galleries.length > 0 ? 
+                              galleries.map(gallery => {
+                                const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
+                                const artworksWithFiles = galleryArtworks.length > 0 ? 
+                                  galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                                    // if an artwork file exist add it
+                                    // will check if file is there to determine proper element for image
+                                    return {
+                                      id,
+                                      galleryId,
+                                      title,
+                                      width,
+                                      height,
+                                      image,
+                                      medium,
+                                      price,
+                                      sold,
+                                      file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
+                                    }
+                                    // only include art that has a picture to show for the gallery
+                                  }) :
+                                  [{ id: 'nada', title: 'no artworks'}]
+                                return {
+                                  id: gallery.id,
+                                  name: gallery.name,
+                                  artworks: artworksWithFiles,
                                 }
-                              })
-                              //   (
-                              //   <Query query={ARTWORK_IMAGE} variables={{ id: filelessArtwork.id }}>
-                              //     {({ data: { artworkImage: { image }}, loading, error }) => filelessArtwork.image = image }}
-                              //   </Query>
-                              // ))
-                              return {
-                                id: gallery.id,
-                                name: gallery.name,
-                                artworks: artworksWithFiles,
-                              }
-                            }) : [{ 
-                              id: 'none', 
-                              name: 'no galleries', 
-                              artworks: [{ id: 'nada', title: 'no galleries #1'}]
-                            }],
-                        }}
-                      >
-                        {loading && <Loading/>}
-                        {children}
-                      </LayoutContext.Provider>  
-                    )}
+                              }) : [{ 
+                                id: 'none', 
+                                name: 'no galleries', 
+                                artworks: [{ id: 'nada', title: 'no galleries #1'}]
+                              }],
+                          }}
+                        >
+                          {loading && <Loading/>}
+                          {children}
+                        </LayoutContext.Provider>  
+                      )}}
                   </ApolloConsumer>
                 )
               }}
