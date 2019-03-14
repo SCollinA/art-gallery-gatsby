@@ -53,15 +53,15 @@ export default class UpdateArtworkForm extends React.Component {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
                     cache.writeQuery({
                         query: DB_CONTENT,
-                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
+                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([{ ...updateArtwork, image: updatingArtwork.image}]) },
                     })
-                    // const { getArtwork: { image }} = cache.readQuery({ query: ARTWORK_IMAGE })
-                    console.log(`writing image to cache ${updatingArtwork.image}`)
-                    cache.writeQuery({
-                        query: ARTWORK_IMAGE,
-                        variables: { id: updatingArtwork.id },
-                        data: { getArtwork: { image: updatingArtwork.image }}
-                    })
+                    // const { getArtwork } = cache.readQuery({ query: ARTWORK_IMAGE })
+                    // console.log(`writing image to cache ${updatingArtwork.image}`)
+                    // cache.writeQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     variables: { id: updatingArtwork.id },
+                    //     data: { ...getArtwork, image: updatingArtwork.image }
+                    // })
                     submitArtwork()
                 }}
                 refetchQueries={[{

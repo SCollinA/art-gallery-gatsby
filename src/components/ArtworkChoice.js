@@ -11,6 +11,7 @@ export default ({ artworkChoiceRef, selectedGallery, selectArtwork, selectedArtw
         <h3>artworks</h3>
         <div id='artworkThumbs'>
             {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => {
+                console.log(artwork)
                 // return (artwork.file || artwork.image) && (
                 return (
                     <div key={index} 
