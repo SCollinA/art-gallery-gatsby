@@ -90,7 +90,7 @@ class Layout extends React.Component {
                     return (
                       <>
                       {/* the below just updates the apollo cache, it does not insert images into anything */}
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !artwork.file && artwork.id !== 'nada').map((artwork, index) => {
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => this._artworkImages.find(artworkImage => artwork.id === artworkImage.id)).map((artwork, index) => {
                           console.log(artwork)
                           // reset artworkImages in order to get most up to date images
                           this._artworkImages = []
