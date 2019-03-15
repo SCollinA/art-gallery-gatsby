@@ -90,7 +90,7 @@ class Layout extends React.Component {
                     return (
                       <>
                       {/* the below just updates the apollo cache, it does not insert images into anything */}
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !artwork.file && artwork.id !== 'nada').map((artwork, index) => {
                           console.log(artwork)
                           // reset artworkImages in order to get most up to date images
                           this._artworkImages = []
@@ -98,7 +98,7 @@ class Layout extends React.Component {
                             <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }} fetchPolicy={'cache-first'}>
                               {({ data, loading, error }) => {
                                 console.log(data)
-                                // !loading && this._artworkImages.push(getArtwork)
+                                // !loading && data && this._artworkImages.push(data.getArtwork)
                                 return null
                               }}
                             </Query>
@@ -202,7 +202,7 @@ export const DB_CONTENT = gql`
   `
 
 export const ARTWORK_IMAGE = gql`
-  query GetArtworkImage($id: ID!) {
+  query GetArtworkImage($id: ID) {
     getArtwork(id: $id) {
       id
       image
