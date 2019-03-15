@@ -19,12 +19,12 @@ import { client } from "../apollo/client";
 const artworkImages = []
 
 class Layout extends React.Component {
-  // constructor(props) {
-  //   super(props)
-  //   this.state = {
-  //     artworkImages: []
-  //   }
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+      artworkImages: []
+    }
+  }
 
   componentDidUpdate() {
     console.log('component did update')
@@ -44,7 +44,11 @@ class Layout extends React.Component {
 
   _updateDbImage = (id) => {
     'updating artwork images'
-    !artworkImages.find(artworkImages => artworkImages.id === id) && artworkImages.push({ id })
+    !artworkImages.find(artworkImages => artworkImages.id === id) && (
+      artworkImages.push({ id }) &&
+        this.setState({
+          artworkImages: artworkImages
+        }))
   }
 
   // _updateDbImage = (id) => {
