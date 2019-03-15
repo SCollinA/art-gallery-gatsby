@@ -16,6 +16,8 @@ import { client } from "../apollo/client";
 // import Loading from "./Loading";
 // import { client } from "../apollo/client";
 
+const artworkImages = []
+
 class Layout extends React.Component {
   // constructor(props) {
   //   super(props)
@@ -23,11 +25,10 @@ class Layout extends React.Component {
   //     artworkImages: []
   //   }
   // }
-  _artworkImages = []
 
   componentDidUpdate() {
     console.log('component did update')
-    this._artworkImages.forEach(artworkImage => {
+    artworkImages.forEach(artworkImage => {
       console.log('each artwork image')
       const data = client.readQuery({
         fetchPolicy: 'cache-first',
@@ -42,7 +43,8 @@ class Layout extends React.Component {
   }
 
   _updateDbImage = (id) => {
-    this._artworkImages.push({ id })
+    'updating artwork images'
+    !artworkImages.find(artworkImages => artworkImages.id === id) && artworkImages.push({ id })
   }
 
   // _updateDbImage = (id) => {
@@ -85,8 +87,8 @@ class Layout extends React.Component {
                           name: gallery.name,
                           artworks: galleryArtworks.length > 0 ? 
                             galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
-                              const artworkImage = this._artworkImages.find(artworkImage => id === artworkImage.id)
-                              console.log('found artwork image', artworkImage)
+                              const artworkImage = artworkImages.find(artworkImage => id === artworkImage.id)
+                              console.log('found artwork image', artworkImage, artworkImages)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
