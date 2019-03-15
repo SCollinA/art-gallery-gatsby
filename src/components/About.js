@@ -11,14 +11,15 @@ export default () => (
             const galleryArtworks = []
             galleries.forEach(({ artworks }) => {
                 Array.prototype.push.apply(galleryArtworks, artworks)
-                // return galleries.push(...artworks).apply([], galleries)
             })
-            // const allArtworks = []
-            // galleryArtworks.push.apply(this, galleryArtworks)
-            console.log(galleryArtworks)
-            const randomArtworks = [{}, {}]
-            randomArtworks.length < 4 &&
-                randomArtworks.push({}, {})
+            const randomArtworks = []
+            do {
+                if (!galleryArtworks.length) break
+                const randomIndex = Math.floor(Math.random() * galleryArtworks.length)
+                randomArtworks.push(galleryArtworks[randomIndex])
+                galleryArtworks.splice(randomIndex, 1)
+            } while (randomArtworks.length < 4)
+            if (randomArtworks.length < 4) randomArtworks.push({}, {})
             console.log(randomArtworks)
             return (
                 <div className='About'>
