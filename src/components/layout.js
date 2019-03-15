@@ -1,14 +1,18 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
-import { Query, Subscription } from "react-apollo"
+import { 
+  Query, 
+  // Subscription 
+} from "react-apollo"
 // import { client } from '../apollo/client'
 import gql from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
-import Loading from "./Loading";
+// import Loading from "./Loading";
+// import { client } from "../apollo/client";
 
 class Layout extends React.Component {
   constructor(props) {
@@ -115,22 +119,23 @@ class Layout extends React.Component {
                               }}
                         </ApolloConsumer>
                         )}))} */}
-                        <Subscription subscription={GET_ARTWORK_IMAGES}>
+                        {/* <Subscription subscription={GET_ARTWORK_IMAGES}>
                         {({ data, loading, error }) => {
                           console.log(data)
-                          return (
+                          return ( */}
                           <LayoutContext.Provider 
                             value={{ 
                               // if galleries has a gallery, add it's artworks
-                              galleries: galleriesWithFiles.map(galleryWithFile => ({
-                                ...galleryWithFile,
-                                artworks: galleryWithFile.artworks.map(galleryArtwork => ({
-                                  ...galleryArtwork,
-                                  image: !loading && galleryArtwork.id === data.artworkImageChanged.id ? 
-                                    data.artworkImageChanged.image :
-                                    galleryArtwork.image
-                                }))
-                              })),
+                              galleries: galleriesWithFiles
+                              // .map(galleryWithFile => ({
+                              //   ...galleryWithFile,
+                              //   artworks: galleryWithFile.artworks.map(galleryArtwork => ({
+                              //     ...galleryArtwork,
+                              //     image: !loading && galleryArtwork.id === data.artworkImageChanged.id ? 
+                              //       data.artworkImageChanged.image :
+                              //       galleryArtwork.image
+                              //   }))
+                              // })),
                               // updateDbImage: this._updateDbImage
                               // .filter(artwork => (artwork.file || artwork.image))})) 
                             }}
@@ -138,8 +143,8 @@ class Layout extends React.Component {
                             {/* {loading && <Loading/>} */}
                             {children}
                           </LayoutContext.Provider>
-                        )}}
-                        </Subscription>
+                        {/* )}}
+                        </Subscription> */}
                       </>
                     )
                   }}
