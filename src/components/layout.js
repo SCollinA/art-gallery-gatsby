@@ -12,6 +12,7 @@ import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
+import { client } from "../apollo/client";
 // import Loading from "./Loading";
 // import { client } from "../apollo/client";
 
@@ -22,8 +23,21 @@ class Layout extends React.Component {
   //     artworkImages: []
   //   }
   // }
-
   _artworkImages = []
+
+  componentDidUpdate() {
+    this._artworkImages.forEach(artworkImage => {
+      const data = client.readQuery({
+        fetchPolicy: 'cache-first',
+        query: ARTWORK_IMAGE,
+        variables: {
+          id: artworkImage.id
+        }
+      })
+      artworkImage.image = data.getArtwork.image
+    })
+  }
+
   // _updateDbImage = (id) => {
   //   const { getArtwork } = client.readQuery({
   //     query: DB_CONTENT,
@@ -90,48 +104,52 @@ class Layout extends React.Component {
                     return (
                       <>
                       {/* the below just updates the apollo cache, it does not insert images into anything */}
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => this._artworkImages.find(artworkImage => artwork.id === artworkImage.id)).map((artwork, index) => {
-                          console.log(artwork)
-                          // reset artworkImages in order to get most up to date images
-                          this._artworkImages = []
-                          return (
-                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }} fetchPolicy={'cache-first'}>
-                              {({ data, loading, error }) => {
-                                console.log(data)
-                                // !loading && data && this._artworkImages.push(data.getArtwork)
-                                return null
-                              }}
-                            </Query>
-                        //   <ApolloConsumer key={index}>
-                        //     {cache => {
-                        //         console.log(cache)
-                        //           // const getArtwork = 
-                        //           if (artwork.id !== 'nada') {
-                        //             // const data = 
-                        //             // const { getArtwork } = cache.readQuery({
-                        //             //   query: ARTWORK_IMAGE,
-                        //             //   variables: { id: artwork.id },
-                        //             // })
-                        //             // .then(data => {
-                        //             // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
-                        //             //   return data
-                        //             // })
-                        //             // .then(data => {
-                        //               // this should add new artworkImages to the state
-                        //             // cache.writeQuery({
-                        //             //   query: ARTWORK_IMAGE,
-                        //             //   variables: { id: artwork.id },
-                        //             //   data: getArtwork
-                        //             // })
+                        {/* {galleriesWithFiles.map(({ id, name, artworks }) => ({
+                            id,
+                            name,
+                            artworks: [
+                              ...artworks.filter(artwork => this._artworkImages.find(artworkImage => artwork.id === artworkImage.id)).map((artwork, index) => {
+                                console.log(artwork)
+                                // reset artworkImages in order to get most up to date images
+                                this._artworkImages = []
+                                return (
+                                  <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }} fetchPolicy={'cache-first'}>
+                                    {({ data, loading, error }) => {
+                                      console.log(data)
+                                      // !loading && data && this._artworkImages.push(data.getArtwork)
+                                      return null
+                                    }}
+                                  </Query>
+                              //   <ApolloConsumer key={index}>
+                              //     {cache => {
+                              //         console.log(cache)
+                              //           // const getArtwork = 
+                              //           if (artwork.id !== 'nada') {
+                              //             // const data = 
+                              //             // const { getArtwork } = cache.readQuery({
+                              //             //   query: ARTWORK_IMAGE,
+                              //             //   variables: { id: artwork.id },
+                              //             // })
+                              //             // .then(data => {
+                              //             // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
+                              //             //   return data
+                              //             // })
+                              //             // .then(data => {
+                              //               // this should add new artworkImages to the state
+                              //             // cache.writeQuery({
+                              //             //   query: ARTWORK_IMAGE,
+                              //             //   variables: { id: artwork.id },
+                              //             //   data: getArtwork
+                              //             // })
 
-                        //             this._artworkImages.push('hello')
-                        //           }
-                        //           // })
-                        //           // .catch(console.log)
-                        //           return <></>
-                        //       }}
-                        // </ApolloConsumer>
-                        )}))}
+                              //             this._artworkImages.push('hello')
+                              //           }
+                              //           // })
+                              //           // .catch(console.log)
+                              //           return <></>
+                              //       }}
+                              // </ApolloConsumer>
+                        )}))} */}
                         {/* <Subscription subscription={GET_ARTWORK_IMAGES}>
                         {({ data, loading, error }) => {
                           console.log(data)
