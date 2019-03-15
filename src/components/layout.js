@@ -99,6 +99,7 @@ class Layout extends React.Component {
                             <Query query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
                               {({ data: { getArtwork }, loading, error }) => {
                                 this._artworkImages.push(getArtwork)
+                                return <></>
                               }}
                             </Query>
                         //   <ApolloConsumer key={index}>
