@@ -18,8 +18,8 @@ export default () => (
                 const randomIndex = Math.floor(Math.random() * galleryArtworks.length)
                 randomArtworks.push(galleryArtworks[randomIndex])
                 galleryArtworks.splice(randomIndex, 1)
-            } while (randomArtworks.length < 4)
-            if (randomArtworks.length < 4) randomArtworks.push({}, {})
+            } while (randomArtworks.length < 3)
+            while (randomArtworks.length < 3) randomArtworks.push({})
             console.log(randomArtworks)
             return (
                 <div className='About'>

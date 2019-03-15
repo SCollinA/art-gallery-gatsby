@@ -498,7 +498,7 @@ a {
 
     .aboutContent > * {
         width: 100% !important;
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 }
 
