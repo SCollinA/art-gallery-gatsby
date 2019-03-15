@@ -92,7 +92,7 @@ class Layout extends React.Component {
                     !artworkImages.length &&
                       galleriesWithFiles.forEach(galleryWithFile => {
                         galleryWithFile.artworks.forEach(galleryArtwork => {
-                          if (!galleryArtwork.file) {
+                          if (!galleryArtwork.file && galleryArtwork.id !== 'nada') {
                             artworkImages.push({
                               id: galleryArtwork.id,
                             })
