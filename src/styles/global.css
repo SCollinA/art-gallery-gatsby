@@ -81,12 +81,13 @@ a {
 }
 
 .pageLink {
-    flex: 1;
+    /* flex: 1; */
+    margin: auto;
 }
 
 .pageLink h2 {
     margin: auto;
-    padding: 2px 0;
+    padding: 2px 20px;
     white-space: nowrap;
     text-align: center;
 }
@@ -94,6 +95,9 @@ a {
 .activeLink {
     display: block;
     background-color: lightgrey;
+    /* margin: auto;
+    padding: 0 15%;
+    border-radius: 12px; */
 }
 
 .HamburgerLinks {
