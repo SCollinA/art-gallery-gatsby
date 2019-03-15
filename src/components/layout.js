@@ -18,13 +18,12 @@ class Layout extends React.Component {
     }
   }
 
-  componentDidMount() {
+  _updateDbImage = (id) => {
     console.log(client.query({
       query: ARTWORK_IMAGE,
-      variables: { id: artwork.id },
+      variables: { id },
     }))
   }
-
   render() {
     const { children } = this.props
     return (
@@ -110,7 +109,8 @@ class Layout extends React.Component {
                         <LayoutContext.Provider 
                           value={{ 
                             // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks }))
+                            galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks })),
+                            updateDbImage: this._updateDbImage
                               // .filter(artwork => (artwork.file || artwork.image))})) 
                           }}
                         >
