@@ -19,12 +19,6 @@ import { client } from "../apollo/client";
 const artworkImages = []
 
 class Layout extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      artworkImages: []
-    }
-  }
 
   componentDidUpdate() {
     console.log('component did update')
@@ -44,39 +38,10 @@ class Layout extends React.Component {
 
   _updateDbImage = ({ id, image }) => {
     'updating artwork images'
-    !artworkImages.find(artworkImages => artworkImages.id === id) && (
-      artworkImages.push({ id }) &&
-        this.setState({
-          artworkImages: artworkImages
-        }))
-    client.writeQuery({
-      query: ARTWORK_IMAGE,
-      variables: {
-        id,
-      },
-      data: {
-        __typename: 'Artwork',
-        id,
-        image,
-      }
-    })
+    !artworkImages.find(artworkImages => artworkImages.id === id) &&
+      artworkImages.push({ id })
   }
 
-  // _updateDbImage = (id) => {
-  //   const { getArtwork } = client.readQuery({
-  //     query: DB_CONTENT,
-  //     variables: { id },
-  //   })
-  //   console.log(getArtwork)
-  //   if (!this.state.artworkImages.find(artworkImage => artworkImage.id === id)) {
-  //     this.setState({
-  //       artworkImages: [
-  //         ...this.state.artworkImages, 
-  //         getArtwork
-  //       ]
-  //     })
-  //   }
-  // }
   render() {
     const { children } = this.props
     return (
@@ -128,80 +93,16 @@ class Layout extends React.Component {
                       }]
                     return (
                       <>
-                      {/* the below just updates the apollo cache, it does not insert images into anything */}
-                        {/* {galleriesWithFiles.map(({ id, name, artworks }) => ({
-                            id,
-                            name,
-                            artworks: [
-                              ...artworks.filter(artwork => this._artworkImages.find(artworkImage => artwork.id === artworkImage.id)).map((artwork, index) => {
-                                console.log(artwork)
-                                // reset artworkImages in order to get most up to date images
-                                this._artworkImages = []
-                                return (
-                                  <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }} fetchPolicy={'cache-first'}>
-                                    {({ data, loading, error }) => {
-                                      console.log(data)
-                                      // !loading && data && this._artworkImages.push(data.getArtwork)
-                                      return null
-                                    }}
-                                  </Query>
-                              //   <ApolloConsumer key={index}>
-                              //     {cache => {
-                              //         console.log(cache)
-                              //           // const getArtwork = 
-                              //           if (artwork.id !== 'nada') {
-                              //             // const data = 
-                              //             // const { getArtwork } = cache.readQuery({
-                              //             //   query: ARTWORK_IMAGE,
-                              //             //   variables: { id: artwork.id },
-                              //             // })
-                              //             // .then(data => {
-                              //             // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
-                              //             //   return data
-                              //             // })
-                              //             // .then(data => {
-                              //               // this should add new artworkImages to the state
-                              //             // cache.writeQuery({
-                              //             //   query: ARTWORK_IMAGE,
-                              //             //   variables: { id: artwork.id },
-                              //             //   data: getArtwork
-                              //             // })
-
-                              //             this._artworkImages.push('hello')
-                              //           }
-                              //           // })
-                              //           // .catch(console.log)
-                              //           return <></>
-                              //       }}
-                              // </ApolloConsumer>
-                        )}))} */}
-                        {/* <Subscription subscription={GET_ARTWORK_IMAGES}>
-                        {({ data, loading, error }) => {
-                          console.log(data)
-                          return ( */}
-                          
-                          <LayoutContext.Provider 
-                            value={{ 
-                              // if galleries has a gallery, add it's artworks
-                              galleries: galleriesWithFiles,
-                              // .map(galleryWithFile => ({
-                              //   ...galleryWithFile,
-                              //   artworks: galleryWithFile.artworks.map(galleryArtwork => ({
-                              //     ...galleryArtwork,
-                              //     image: !loading && galleryArtwork.id === data.artworkImageChanged.id ? 
-                              //       data.artworkImageChanged.image :
-                              //       galleryArtwork.image
-                              //   }))
-                              // })),
-                              updateDbImage: this._updateDbImage
-                              // .filter(artwork => (artwork.file || artwork.image))})) 
-                            }}
-                          >
-                            {/* {loading && <Loading/>} */}
-                            {children}
-                          </LayoutContext.Provider>
-                        {/* )}}
-                        </Subscription> */}
+                        <LayoutContext.Provider 
+                          value={{ 
+                            // if galleries has a gallery, add it's artworks
+                            galleries: galleriesWithFiles,
+                            updateDbImage: this._updateDbImage
+                          }}
+                        >
+                          {/* {loading && <Loading/>} */}
+                          {children}
+                        </LayoutContext.Provider>
                       </>
                     )
                   }}
