@@ -101,26 +101,39 @@ class Layout extends React.Component {
                       })
                     return (
                       <>
+                        {artworkImages.map((artworkImage, index) => {
+                          console.log('component did update')
+                          console.log('each artwork image')
+                          return (
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
+                              {({ data, loading, error }) => {
+                                console.log('apollo data', data)
+                                artworkImage.image = data.getArtwork.image
+                                return null
+                              }}
+                            </Query>
+                          )
+                        })}
                         <LayoutContext.Provider 
                           value={{ 
                             // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles,
+                            galleries: galleriesWithFiles.map(galleryWithFile => {
+                              return {
+                                ...galleryWithFile,
+                                artworks: galleryWithFile.artworks.map(galleryArtwork => {
+                                  const artworkImage = artworkImages.find(artworkImage => artworkImage.id === galleryArtwork.id)
+                                  return {
+                                    ...galleryArtwork,
+                                    image: artworkImage ?
+                                    artworkImage.image :
+                                    galleryArtwork.image
+                                  }
+                                })
+                              }
+                            }),
                             updateDbImage: this._updateDbImage
                           }}
                         >
-                          {artworkImages.map((artworkImage, index) => {
-                            console.log('component did update')
-                            console.log('each artwork image')
-                            return (
-                              <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
-                                {({ data, loading, error }) => {
-                                  console.log('apollo data', data)
-                                  artworkImage.image = data.getArtwork.image
-                                  return null
-                                }}
-                              </Query>
-                            )
-                          })}
                           {/* {loading && <Loading/>} */}
                           {children}
                         </LayoutContext.Provider>
