@@ -69,27 +69,28 @@ class Layout extends React.Component {
                     return (
                       <>
                         {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => (
-                          <ApolloConsumer>
+                          <ApolloConsumer key={index}>
                             {cache => {
                                   // const getArtwork = 
-                                  artwork.id !== 'nada' &&
-                                  Promise.all([cache.query({
+                                  if (artwork.id !== 'nada') {
+                                  const data = cache.query({
                                     query: ARTWORK_IMAGE,
                                     variables: { id: artwork.id },
-                                  })])
-                                  .then(data => {
-                                    console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
-                                    return data
                                   })
-                                  .then(data => {
+                                  // .then(data => {
+                                  console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
+                                  //   return data
+                                  // })
+                                  // .then(data => {
                                     // this should add new artworkImages to the state
-                                    cache.writeQuery({
-                                      query: ARTWORK_IMAGE,
-                                      variables: { id: artwork.id },
-                                      data
-                                    })
-                                  })
-                                  .catch(console.log)
+                                    // cache.writeQuery({
+                                    //   query: ARTWORK_IMAGE,
+                                    //   variables: { id: artwork.id },
+                                    //   data: getArtwork
+                                    // })
+                                  }
+                                  // })
+                                  // .catch(console.log)
                                   return <></>
                               }}
                         </ApolloConsumer>
