@@ -42,13 +42,24 @@ class Layout extends React.Component {
     })
   }
 
-  _updateDbImage = (id) => {
+  _updateDbImage = ({ id, image }) => {
     'updating artwork images'
     !artworkImages.find(artworkImages => artworkImages.id === id) && (
       artworkImages.push({ id }) &&
         this.setState({
           artworkImages: artworkImages
         }))
+    client.writeQuery({
+      query: ARTWORK_IMAGE,
+      variables: {
+        id,
+      },
+      data: {
+        __typename: 'Artwork',
+        id,
+        image,
+      }
+    })
   }
 
   // _updateDbImage = (id) => {
