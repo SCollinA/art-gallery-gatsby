@@ -95,7 +95,7 @@ class Layout extends React.Component {
                           // reset artworkImages in order to get most up to date images
                           this._artworkImages = []
                           return (
-                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }} fetchPolicy={'cache-first'}>
                               {({ data, loading, error }) => {
                                 console.log(data)
                                 // !loading && this._artworkImages.push(getArtwork)
