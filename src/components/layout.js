@@ -122,12 +122,20 @@ class Layout extends React.Component {
                           <LayoutContext.Provider 
                             value={{ 
                               // if galleries has a gallery, add it's artworks
-                              galleries: galleriesWithFiles,
+                              galleries: galleriesWithFiles.map(galleryWithFile => ({
+                                ...galleryWithFile,
+                                artworks: galleryWithFile.artworks.map(galleryArtwork => ({
+                                  ...galleryArtwork,
+                                  image: !loading && galleryArtwork.id === data.artworkImageChanged.id ? 
+                                    data.artworkImageChanged.image :
+                                    galleryArtwork.image
+                                }))
+                              })),
                               // updateDbImage: this._updateDbImage
                               // .filter(artwork => (artwork.file || artwork.image))})) 
                             }}
                           >
-                            {loading && <Loading/>}
+                            {/* {loading && <Loading/>} */}
                             {children}
                           </LayoutContext.Provider>
                         )}}

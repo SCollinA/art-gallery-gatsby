@@ -1,6 +1,6 @@
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { HttpLink } from 'apollo-link-http'
+import { createHttpLink } from 'apollo-link-http'
 // import { onError } from 'apollo-link-error'
 // import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
@@ -17,19 +17,19 @@ const wsLink = new WebSocketLink({
   }
 });
 
-const httpLink = new HttpLink({
-  // change this to art-gallery.collinargo.com/graphql for production
-  uri: 'http://localhost:4000/graphql',
-  link: setContext((_, { headers }) =>{
+const httpLink = setContext((_, { headers }) =>{ 
     const token = localStorage.getItem('auth-token')
+    console.log(token)
     return {
       headers: {
         ...headers,
         authorization: token ? `Bearer ${token}` : ''
       }
     }
-  }),
-})
+  }).concat(new createHttpLink({
+  // change this to art-gallery.collinargo.com/graphql for production
+  uri: 'http://localhost:4000/graphql',
+}))
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
@@ -41,7 +41,7 @@ const link = split(
   },
   wsLink,
   httpLink,
-);
+)
 
 export const client = new ApolloClient({
   fetch,
