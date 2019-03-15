@@ -64,18 +64,26 @@ export default class UpdateArtworkForm extends React.Component {
                     //     query: ARTWORK_IMAGE,
                     //     variables: { id: updateArtwork.id }
                     // })
-                    // console.log('updating dbImage in cache', dbImageData)
+                    console.log('updating dbImage in cache', updateArtwork.id)
                     cache.writeQuery({
                         query: ARTWORK_IMAGE,
-                        variables: {id: updateArtwork.id },
+                        variables: {
+                            id: updateArtwork.id 
+                        },
                         data: { 
-                            getArtwork: { 
+                            getArtwork: {
                                 __typename: 'Artwork',
                                 id: updateArtwork.id, 
                                 image: updateArtwork.image, 
                             } 
                         } 
                     })
+                    console.log(cache.readQuery({
+                        query: ARTWORK_IMAGE,
+                        variables: {
+                            id: updateArtwork.id
+                        }
+                    }))
                 }}
                 refetchQueries={[
                 //     {
@@ -295,9 +303,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         const currentImageFromSourceNode = this.currentImageFromSource.current
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
-                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                        console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
@@ -316,9 +322,7 @@ export default class UpdateArtworkForm extends React.Component {
                                             // imageCanvasNode.width = this.state.imageHeight
                                             // imageCanvasNode.height = this.state.imageWidth
                                             // convert canvas contents to blob
-                                            console.log(canvasContext)
                                             imageCanvasNode.toBlob((imageBlob) => {
-                                                console.log(imageBlob)
                                                 this.setState({
                                                     imageFile: imageBlob,
                                                 })

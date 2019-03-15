@@ -66,7 +66,6 @@ class Layout extends React.Component {
                           artworks: galleryArtworks.length > 0 ? 
                             galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
                               const artworkImage = artworkImages.find(artworkImage => id === artworkImage.id)
-                              console.log('found artwork image', artworkImage, artworkImages)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
