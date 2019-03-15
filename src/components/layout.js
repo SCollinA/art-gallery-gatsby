@@ -26,7 +26,9 @@ class Layout extends React.Component {
   _artworkImages = []
 
   componentDidUpdate() {
+    console.log('component did update')
     this._artworkImages.forEach(artworkImage => {
+      console.log('each artwork image')
       const data = client.readQuery({
         fetchPolicy: 'cache-first',
         query: ARTWORK_IMAGE,
@@ -34,8 +36,13 @@ class Layout extends React.Component {
           id: artworkImage.id
         }
       })
+      console.log('apollo data', data)
       artworkImage.image = data.getArtwork.image
     })
+  }
+
+  _updateDbImage = (id) => {
+    this._artworkImages.push({ id })
   }
 
   // _updateDbImage = (id) => {
@@ -79,6 +86,7 @@ class Layout extends React.Component {
                           artworks: galleryArtworks.length > 0 ? 
                             galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
                               const artworkImage = this._artworkImages.find(artworkImage => id === artworkImage.id)
+                              console.log('found artwork image', artworkImage)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
@@ -168,7 +176,7 @@ class Layout extends React.Component {
                               //       galleryArtwork.image
                               //   }))
                               // })),
-                              // updateDbImage: this._updateDbImage
+                              updateDbImage: this._updateDbImage
                               // .filter(artwork => (artwork.file || artwork.image))})) 
                             }}
                           >
