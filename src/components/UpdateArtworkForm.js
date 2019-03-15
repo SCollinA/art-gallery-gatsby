@@ -57,15 +57,16 @@ export default class UpdateArtworkForm extends React.Component {
                         data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
                     })
                     // console.log(cache.readQuery({ query: DB_CONTENT }))
-                    // const dbImageData = cache.readQuery({
-                    //     query: ARTWORK_IMAGE,
-                    //     variables: { id: updateArtwork.id }
-                    // })
-                    // console.log(dbImageData)
-                    // cache.writeQuery({
-                    //     query: ARTWORK_IMAGE,
-                    //     data: dbImageData 
-                    // })
+                    const dbImageData = cache.readQuery({
+                        query: ARTWORK_IMAGE,
+                        variables: { id: updateArtwork.id }
+                    })
+                    console.log('updating dbImage', dbImageData)
+                    cache.writeQuery({
+                        query: ARTWORK_IMAGE,
+                        variables: { id: updateArtwork.id },
+                        data: dbImageData 
+                    })
                 }}
                 refetchQueries={[
                 //     {
