@@ -78,12 +78,6 @@ export default class UpdateArtworkForm extends React.Component {
                             } 
                         } 
                     })
-                    console.log(cache.readQuery({
-                        query: ARTWORK_IMAGE,
-                        variables: {
-                            id: updateArtwork.id
-                        }
-                    }))
                 }}
                 refetchQueries={[
                 //     {
