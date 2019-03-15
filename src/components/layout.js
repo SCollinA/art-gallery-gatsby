@@ -3,7 +3,8 @@ import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
 import { 
   Query, 
-  // Subscription 
+  // Subscription ,
+  ApolloConsumer,
 } from "react-apollo"
 // import { client } from '../apollo/client'
 import gql from 'graphql-tag'
@@ -22,6 +23,7 @@ class Layout extends React.Component {
   //   }
   // }
 
+  _artworkImages = []
   // _updateDbImage = (id) => {
   //   const { getArtwork } = client.readQuery({
   //     query: DB_CONTENT,
@@ -62,7 +64,7 @@ class Layout extends React.Component {
                           name: gallery.name,
                           artworks: galleryArtworks.length > 0 ? 
                             galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
-                              const artworkImage = this.state.artworkImages.find(artworkImage => id === artworkImage.id)
+                              const artworkImage = this._artworkImages.find(artworkImage => id === artworkImage.id)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
@@ -88,7 +90,8 @@ class Layout extends React.Component {
                     console.log(galleriesWithFiles)
                     return (
                       <>
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
+                      {/* the below just updates the apollo cache, it does not insert images into anything */}
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map((artwork, index) => {
                           console.log(artwork)
                           return (
                           <ApolloConsumer key={index}>
@@ -97,21 +100,23 @@ class Layout extends React.Component {
                                   // const getArtwork = 
                                   if (artwork.id !== 'nada') {
                                     // const data = 
-                                    cache.readQuery({
-                                      query: ARTWORK_IMAGE,
-                                      variables: { id: artwork.id },
-                                    })
+                                    // const { getArtwork } = cache.readQuery({
+                                    //   query: ARTWORK_IMAGE,
+                                    //   variables: { id: artwork.id },
+                                    // })
                                     // .then(data => {
-                                    console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
+                                    // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
                                     //   return data
                                     // })
                                     // .then(data => {
                                       // this should add new artworkImages to the state
-                                    cache.writeQuery({
-                                      query: ARTWORK_IMAGE,
-                                      variables: { id: artwork.id },
-                                      data: getArtwork
-                                    })
+                                    // cache.writeQuery({
+                                    //   query: ARTWORK_IMAGE,
+                                    //   variables: { id: artwork.id },
+                                    //   data: getArtwork
+                                    // })
+
+                                    this._artworkImages.push('hello')
                                   }
                                   // })
                                   // .catch(console.log)
