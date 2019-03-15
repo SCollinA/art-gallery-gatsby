@@ -87,7 +87,6 @@ class Layout extends React.Component {
                         name: 'no galleries', 
                         artworks: [{ id: 'nada', title: 'no galleries #1'}]
                       }]
-                    console.log(galleriesWithFiles)
                     return (
                       <>
                       {/* the below just updates the apollo cache, it does not insert images into anything */}
