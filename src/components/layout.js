@@ -15,12 +15,12 @@ import "./layout.css"
 // import { client } from "../apollo/client";
 
 class Layout extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      artworkImages: []
-    }
-  }
+  // constructor(props) {
+  //   super(props)
+  //   this.state = {
+  //     artworkImages: []
+  //   }
+  // }
 
   // _updateDbImage = (id) => {
   //   const { getArtwork } = client.readQuery({
@@ -88,7 +88,7 @@ class Layout extends React.Component {
                     console.log(galleriesWithFiles)
                     return (
                       <>
-                        {/* {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
                           console.log(artwork)
                           return (
                           <ApolloConsumer key={index}>
@@ -96,33 +96,34 @@ class Layout extends React.Component {
                                 console.log(artwork)
                                   // const getArtwork = 
                                   if (artwork.id !== 'nada') {
-                                  // const data = 
-                                  console.log(cache.query({
-                                    query: ARTWORK_IMAGE,
-                                    variables: { id: artwork.id },
-                                  }))
-                                  // .then(data => {
-                                  // console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
-                                  //   return data
-                                  // })
-                                  // .then(data => {
-                                    // this should add new artworkImages to the state
-                                    // cache.writeQuery({
-                                    //   query: ARTWORK_IMAGE,
-                                    //   variables: { id: artwork.id },
-                                    //   data: getArtwork
+                                    // const data = 
+                                    cache.readQuery({
+                                      query: ARTWORK_IMAGE,
+                                      variables: { id: artwork.id },
+                                    })
+                                    // .then(data => {
+                                    console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
+                                    //   return data
                                     // })
+                                    // .then(data => {
+                                      // this should add new artworkImages to the state
+                                    cache.writeQuery({
+                                      query: ARTWORK_IMAGE,
+                                      variables: { id: artwork.id },
+                                      data: getArtwork
+                                    })
                                   }
                                   // })
                                   // .catch(console.log)
                                   return <></>
                               }}
                         </ApolloConsumer>
-                        )}))} */}
+                        )}))}
                         {/* <Subscription subscription={GET_ARTWORK_IMAGES}>
                         {({ data, loading, error }) => {
                           console.log(data)
                           return ( */}
+                          
                           <LayoutContext.Provider 
                             value={{ 
                               // if galleries has a gallery, add it's artworks
@@ -186,6 +187,16 @@ export const DB_CONTENT = gql`
   }
   
   `
+
+export const ARTWORK_IMAGE = gql`
+  query GetArtworkImage($id: ID!) {
+    getArtwork(id: $id) {
+      id
+      image
+    }
+  }
+`
+
 export const GET_ARTWORK_IMAGES = gql`  
 subscription GetArtworkImages {
   artworkImageChanged {

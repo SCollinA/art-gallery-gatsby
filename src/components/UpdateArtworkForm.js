@@ -3,7 +3,7 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { DB_CONTENT } from './layout'
+import { DB_CONTENT, ARTWORK_IMAGE } from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
