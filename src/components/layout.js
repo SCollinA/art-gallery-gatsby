@@ -108,7 +108,7 @@ class Layout extends React.Component {
                             <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
                               {({ data, loading, error }) => {
                                 console.log('apollo data', data)
-                                artworkImage.image = data.getArtwork.image
+                                artworkImages.find(dbImage => dbImage.id === artworkImage.id).image = data.getArtwork && data.getArtwork.image
                                 return null
                               }}
                             </Query>
