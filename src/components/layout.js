@@ -105,7 +105,7 @@ class Layout extends React.Component {
                           console.log('component did update')
                           console.log('each artwork image')
                           return (
-                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-only'}>
                               {({ data, loading, error }) => {
                                 console.log('apollo data', data)
                                 artworkImages.find(dbImage => dbImage.id === artworkImage.id).image = data.getArtwork && data.getArtwork.image
