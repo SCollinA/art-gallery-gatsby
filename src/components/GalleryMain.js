@@ -16,7 +16,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
-                                console.log('gallery artwork', artwork)
+                                // console.log('gallery artwork', artwork)
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}

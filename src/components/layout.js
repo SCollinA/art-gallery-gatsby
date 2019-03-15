@@ -140,7 +140,7 @@ class Layout extends React.Component {
                           <LayoutContext.Provider 
                             value={{ 
                               // if galleries has a gallery, add it's artworks
-                              galleries: galleriesWithFiles
+                              galleries: galleriesWithFiles,
                               // .map(galleryWithFile => ({
                               //   ...galleryWithFile,
                               //   artworks: galleryWithFile.artworks.map(galleryArtwork => ({

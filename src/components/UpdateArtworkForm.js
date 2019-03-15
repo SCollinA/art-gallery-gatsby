@@ -5,7 +5,7 @@ import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
 import { 
     DB_CONTENT, 
-    // ARTWORK_IMAGE 
+    ARTWORK_IMAGE 
 } from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
@@ -54,7 +54,7 @@ export default class UpdateArtworkForm extends React.Component {
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
-                    console.log('updating artwork in cache', updateArtwork.image)
+                    // console.log('updating artwork in cache')
                     cache.writeQuery({
                         query: DB_CONTENT,
                         data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
@@ -65,11 +65,11 @@ export default class UpdateArtworkForm extends React.Component {
                     //     variables: { id: updateArtwork.id }
                     // })
                     // console.log('updating dbImage in cache', dbImageData)
-                    // cache.writeQuery({
-                    //     query: ARTWORK_IMAGE,
-                    //     variables: { id: updateArtwork.id },
-                    //     data: dbImageData 
-                    // })
+                    cache.writeQuery({
+                        query: ARTWORK_IMAGE,
+                        variables: {id: updateArtwork.id },
+                        data: { id: updateArtwork.id, image: updateArtwork.image } 
+                    })
                 }}
                 refetchQueries={[
                 //     {
