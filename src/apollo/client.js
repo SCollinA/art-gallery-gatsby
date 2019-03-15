@@ -19,7 +19,6 @@ const wsLink = process.browser ? new WebSocketLink({
 
 const httpLink = setContext((_, { headers }) =>{ 
     const token = localStorage.getItem('auth-token')
-    console.log(token)
     return {
       headers: {
         ...headers,

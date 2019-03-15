@@ -96,10 +96,11 @@ class Layout extends React.Component {
                           // reset artworkImages in order to get most up to date images
                           this._artworkImages = []
                           return (
-                            <Query query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
-                              {({ data: { getArtwork }, loading, error }) => {
-                                this._artworkImages.push(getArtwork)
-                                return <></>
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
+                              {({ data, loading, error }) => {
+                                console.log(data)
+                                // !loading && this._artworkImages.push(getArtwork)
+                                return null
                               }}
                             </Query>
                         //   <ApolloConsumer key={index}>
