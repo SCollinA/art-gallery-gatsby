@@ -3,7 +3,10 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { DB_CONTENT, ARTWORK_IMAGE } from './layout'
+import { 
+    DB_CONTENT, 
+    // ARTWORK_IMAGE 
+} from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
@@ -56,17 +59,17 @@ export default class UpdateArtworkForm extends React.Component {
                         query: DB_CONTENT,
                         data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
                     })
-                    // console.log(cache.readQuery({ query: DB_CONTENT }))
-                    const dbImageData = cache.readQuery({
-                        query: ARTWORK_IMAGE,
-                        variables: { id: updateArtwork.id }
-                    })
-                    console.log('updating dbImage in cache', dbImageData)
-                    cache.writeQuery({
-                        query: ARTWORK_IMAGE,
-                        variables: { id: updateArtwork.id },
-                        data: dbImageData 
-                    })
+                    // // console.log(cache.readQuery({ query: DB_CONTENT }))
+                    // const dbImageData = cache.readQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     variables: { id: updateArtwork.id }
+                    // })
+                    // console.log('updating dbImage in cache', dbImageData)
+                    // cache.writeQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     variables: { id: updateArtwork.id },
+                    //     data: dbImageData 
+                    // })
                 }}
                 refetchQueries={[
                 //     {
