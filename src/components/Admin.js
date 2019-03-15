@@ -5,7 +5,7 @@ import UpdateGalleryForm from '../components/UpdateGalleryForm'
 import UpdateArtworkForm from '../components/UpdateArtworkForm'
 import AdminContext from '../contexts/AdminContext'
 import AdminLogin from './AdminLogin';
-// import LayoutContext from '../contexts/LayoutContext';
+import LayoutContext from '../contexts/LayoutContext';
 
 export default class Admin extends React.Component {
     constructor(props) {
