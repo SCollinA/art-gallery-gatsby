@@ -34,7 +34,7 @@ class Layout extends React.Component {
   //   })
   // }
 
-  _updateDbImage = ({ id, image }) => {
+  _updateDbImage = ( id ) => {
     'updating artwork images'
     !artworkImages.find(artworkImages => artworkImages.id === id) &&
       artworkImages.push({ id })
@@ -116,6 +116,7 @@ class Layout extends React.Component {
                                 {({ data, loading, error }) => {
                                   console.log('apollo data', data)
                                   artworkImage.image = data.getArtwork.image
+                                  return null
                                 }}
                               </Query>
                             )
