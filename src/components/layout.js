@@ -96,7 +96,7 @@ class Layout extends React.Component {
                           return (
                           <ApolloConsumer key={index}>
                             {cache => {
-                                console.log(artwork)
+                                console.log(cache)
                                   // const getArtwork = 
                                   if (artwork.id !== 'nada') {
                                     // const data = 
