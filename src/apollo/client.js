@@ -10,12 +10,12 @@ import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
 // Create a WebSocket link:
-const wsLink = new WebSocketLink({
+const wsLink = process.browser ? new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true
-  }
-});
+  },
+}) : null
 
 const httpLink = setContext((_, { headers }) =>{ 
     const token = localStorage.getItem('auth-token')
@@ -33,7 +33,7 @@ const httpLink = setContext((_, { headers }) =>{
 
 // using the ability to split links, you can send data to each link
 // depending on what kind of operation is being sent
-const link = split(
+const link = process.browser ? split(
   // split based on operation type
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query);
@@ -41,7 +41,7 @@ const link = split(
   },
   wsLink,
   httpLink,
-)
+) : httpLink
 
 export const client = new ApolloClient({
   fetch,
