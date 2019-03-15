@@ -76,16 +76,16 @@ export default class UpdateArtworkForm extends React.Component {
                                 id: updateArtwork.id, 
                                 image: updateArtwork.image, 
                             } 
-                        } 
+                        },
                     })
                 }}
                 refetchQueries={[
-                //     {
-                //     query: ARTWORK_IMAGE,
-                //     variables: {
-                //         id: updatingArtwork.id
-                //     }
-                // },
+                    {
+                    query: ARTWORK_IMAGE,
+                    variables: {
+                        id: updatingArtwork.id
+                    },
+                },
                 {
                     query: GALLERY_ARTWORKS,
                     variables: {
