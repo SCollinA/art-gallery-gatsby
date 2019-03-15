@@ -275,9 +275,17 @@ a {
 }
 
 .aboutContent > * {
-    width: 45%;
-    max-width: 500px;
+    width: 100%;
+    /* max-width: 500px; */
     margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.aboutContent > * > * {
+    flex: 1;
+    padding: 2%;
+    margin: 2%;
 }
 
 .aboutContent > p {
