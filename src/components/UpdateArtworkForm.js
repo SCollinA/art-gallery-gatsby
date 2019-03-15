@@ -68,7 +68,13 @@ export default class UpdateArtworkForm extends React.Component {
                     cache.writeQuery({
                         query: ARTWORK_IMAGE,
                         variables: {id: updateArtwork.id },
-                        data: { id: updateArtwork.id, image: updateArtwork.image } 
+                        data: { 
+                            getArtwork: { 
+                                __typename: 'Artwork',
+                                id: updateArtwork.id, 
+                                image: updateArtwork.image, 
+                            } 
+                        } 
                     })
                 }}
                 refetchQueries={[
