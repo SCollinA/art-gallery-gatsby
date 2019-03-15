@@ -3,7 +3,7 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { DB_CONTENT, ARTWORK_IMAGE } from './layout'
+import { DB_CONTENT } from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
@@ -45,7 +45,7 @@ export default class UpdateArtworkForm extends React.Component {
         this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
     }
     render() {
-        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, updateDbImage, resetArtwork, removeArtwork } = this.context
+        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
         // const { imageWidth, imageHeight, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
@@ -67,12 +67,13 @@ export default class UpdateArtworkForm extends React.Component {
                     //     data: dbImageData 
                     // })
                 }}
-                refetchQueries={[{
-                    query: ARTWORK_IMAGE,
-                    variables: {
-                        id: updatingArtwork.id
-                    }
-                },
+                refetchQueries={[
+                //     {
+                //     query: ARTWORK_IMAGE,
+                //     variables: {
+                //         id: updatingArtwork.id
+                //     }
+                // },
                 {
                     query: GALLERY_ARTWORKS,
                     variables: {
@@ -120,7 +121,7 @@ export default class UpdateArtworkForm extends React.Component {
                                                 imageLoaded: false,
                                             }, () => {
                                                 submitArtwork()
-                                                updateDbImage(updatingArtwork.id)
+                                                // updateDbImage(updatingArtwork.id)
                                             })
                                         })
                                         .catch(console.log)

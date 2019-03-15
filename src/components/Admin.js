@@ -5,7 +5,7 @@ import UpdateGalleryForm from '../components/UpdateGalleryForm'
 import UpdateArtworkForm from '../components/UpdateArtworkForm'
 import AdminContext from '../contexts/AdminContext'
 import AdminLogin from './AdminLogin';
-import LayoutContext from '../contexts/LayoutContext';
+// import LayoutContext from '../contexts/LayoutContext';
 
 export default class Admin extends React.Component {
     constructor(props) {
@@ -92,7 +92,7 @@ export default class Admin extends React.Component {
 
     render() {
         const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
-        const { updateDbImage } = this.context
+        // const { updateDbImage } = this.context
         return (!isLoggedIn && (<AdminLogin adminLogin={this._login}/>)) || (
             <div className='Admin'
                 onClick={() => this.setState({
@@ -122,7 +122,7 @@ export default class Admin extends React.Component {
                         selectedArtwork: this.state.selectedArtwork,
                         changeArtwork: this._handleArtworkChange,
                         submitArtwork: this._submitArtworkChange,
-                        updateDbImage,
+                        // updateDbImage,
                         resetArtwork: this._resetArtwork,
                         removeArtwork: this._removeArtwork,
                     }}
@@ -151,4 +151,4 @@ export default class Admin extends React.Component {
     }
 }
 
-Admin.contextType = LayoutContext
+// Admin.contextType = LayoutContext

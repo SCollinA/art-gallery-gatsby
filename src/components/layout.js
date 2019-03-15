@@ -1,8 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
-import { Query } from "react-apollo"
-import { client } from '../apollo/client'
+import { Query, Subscription } from "react-apollo"
+// import { client } from '../apollo/client'
 import gql from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
@@ -18,12 +18,21 @@ class Layout extends React.Component {
     }
   }
 
-  _updateDbImage = (id) => {
-    console.log(client.query({
-      query: ARTWORK_IMAGE,
-      variables: { id },
-    }))
-  }
+  // _updateDbImage = (id) => {
+  //   const { getArtwork } = client.readQuery({
+  //     query: DB_CONTENT,
+  //     variables: { id },
+  //   })
+  //   console.log(getArtwork)
+  //   if (!this.state.artworkImages.find(artworkImage => artworkImage.id === id)) {
+  //     this.setState({
+  //       artworkImages: [
+  //         ...this.state.artworkImages, 
+  //         getArtwork
+  //       ]
+  //     })
+  //   }
+  // }
   render() {
     const { children } = this.props
     return (
@@ -106,17 +115,23 @@ class Layout extends React.Component {
                               }}
                         </ApolloConsumer>
                         )}))} */}
-                        <LayoutContext.Provider 
-                          value={{ 
-                            // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles.map(galleryWithFile => ({...galleryWithFile, artworks: galleryWithFile.artworks })),
-                            updateDbImage: this._updateDbImage
+                        <Subscription subscription={GET_ARTWORK_IMAGES}>
+                        {({ data, loading, error }) => {
+                          console.log(data)
+                          return (
+                          <LayoutContext.Provider 
+                            value={{ 
+                              // if galleries has a gallery, add it's artworks
+                              galleries: galleriesWithFiles,
+                              // updateDbImage: this._updateDbImage
                               // .filter(artwork => (artwork.file || artwork.image))})) 
-                          }}
-                        >
-                          {loading && <Loading/>}
-                          {children}
-                        </LayoutContext.Provider>
+                            }}
+                          >
+                            {loading && <Loading/>}
+                            {children}
+                          </LayoutContext.Provider>
+                        )}}
+                        </Subscription>
                       </>
                     )
                   }}
@@ -156,17 +171,18 @@ export const DB_CONTENT = gql`
       sold
     }
   }
-`
-
-export const ARTWORK_IMAGE = gql`
-  query GetArtworkImage($id: ID!) {
-    getArtwork(id: $id) {
-      image
-    }
+  
+  `
+export const GET_ARTWORK_IMAGES = gql`  
+subscription GetArtworkImages {
+  artworkImageChanged {
+    id
+    image
   }
+}
 `
-
-const ARTWORK_FILES = graphql`
+  
+  const ARTWORK_FILES = graphql`
   {
     artworkFiles: allFile(filter: { 
         relativeDirectory: { eq: "artworks" },
