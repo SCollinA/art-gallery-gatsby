@@ -36,7 +36,6 @@ export default () => {
                         }}
                         >
                         {(addGallery, { data, loading, error }) => {
-                            console.log(error)
                             return (
                             <div className='AddGalleries'
                                 onClick={addGallery}
