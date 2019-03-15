@@ -25,7 +25,7 @@ export default ({ adminLogin }) => (
                 }}
             >
                 <label>admin password
-                    <input autoFocus type='password' placeholder="not 'password1'" name='adminPassword'/>
+                    <input autoFocus autoComplete={'current-password'} type='password' placeholder="not 'password1'" name='adminPassword'/>
                 </label>
                 <label>submit
                     <input type='submit' value='proceed'/>
