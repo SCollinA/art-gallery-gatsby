@@ -21,18 +21,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
-                                    {(artwork.file && (
-                                        <Img className='galleryGatsbyImage'
-                                            style={{
-                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
-                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                    `100%`,
-                                                margin: 'auto',
-                                            }}
-                                            fluid={artwork.file.childImageSharp.fluid}
-                                        />
-                                    )) || (
-                                    artwork.image && (
+                                    {(artwork.image && (
                                         <img ref={artworkRef}
                                         // display initially none to load actual size
                                             style={{ display: 'none', margin: 'auto' }}
@@ -45,6 +34,16 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                                     '100%'
                                                 dbImage.style.display = 'inherit'
                                             }}
+                                        />
+                                    )) || (artwork.file && (
+                                        <Img className='galleryGatsbyImage'
+                                            style={{
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
+                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                    `100%`,
+                                                margin: 'auto',
+                                            }}
+                                            fluid={artwork.file.childImageSharp.fluid}
                                         />
                                     ))}
                                 </div>
