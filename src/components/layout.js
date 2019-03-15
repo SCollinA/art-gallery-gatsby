@@ -4,7 +4,7 @@ import { graphql, StaticQuery } from "gatsby"
 import { 
   Query, 
   // Subscription ,
-  ApolloConsumer,
+  // ApolloConsumer,
 } from "react-apollo"
 // import { client } from '../apollo/client'
 import gql from 'graphql-tag'
@@ -91,38 +91,45 @@ class Layout extends React.Component {
                     return (
                       <>
                       {/* the below just updates the apollo cache, it does not insert images into anything */}
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file || artwork.image)).map((artwork, index) => {
+                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
                           console.log(artwork)
+                          // reset artworkImages in order to get most up to date images
+                          this._artworkImages = []
                           return (
-                          <ApolloConsumer key={index}>
-                            {cache => {
-                                console.log(cache)
-                                  // const getArtwork = 
-                                  if (artwork.id !== 'nada') {
-                                    // const data = 
-                                    // const { getArtwork } = cache.readQuery({
-                                    //   query: ARTWORK_IMAGE,
-                                    //   variables: { id: artwork.id },
-                                    // })
-                                    // .then(data => {
-                                    // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
-                                    //   return data
-                                    // })
-                                    // .then(data => {
-                                      // this should add new artworkImages to the state
-                                    // cache.writeQuery({
-                                    //   query: ARTWORK_IMAGE,
-                                    //   variables: { id: artwork.id },
-                                    //   data: getArtwork
-                                    // })
-
-                                    this._artworkImages.push('hello')
-                                  }
-                                  // })
-                                  // .catch(console.log)
-                                  return <></>
+                            <Query query={ARTWORK_IMAGE} variables={{ id: artwork.id }}>
+                              {({ data: { getArtwork }, loading, error }) => {
+                                this._artworkImages.push(getArtwork)
                               }}
-                        </ApolloConsumer>
+                            </Query>
+                        //   <ApolloConsumer key={index}>
+                        //     {cache => {
+                        //         console.log(cache)
+                        //           // const getArtwork = 
+                        //           if (artwork.id !== 'nada') {
+                        //             // const data = 
+                        //             // const { getArtwork } = cache.readQuery({
+                        //             //   query: ARTWORK_IMAGE,
+                        //             //   variables: { id: artwork.id },
+                        //             // })
+                        //             // .then(data => {
+                        //             // console.log('got the image', artwork.title, getArtwork, artwork, new Date().toTimeString())
+                        //             //   return data
+                        //             // })
+                        //             // .then(data => {
+                        //               // this should add new artworkImages to the state
+                        //             // cache.writeQuery({
+                        //             //   query: ARTWORK_IMAGE,
+                        //             //   variables: { id: artwork.id },
+                        //             //   data: getArtwork
+                        //             // })
+
+                        //             this._artworkImages.push('hello')
+                        //           }
+                        //           // })
+                        //           // .catch(console.log)
+                        //           return <></>
+                        //       }}
+                        // </ApolloConsumer>
                         )}))}
                         {/* <Subscription subscription={GET_ARTWORK_IMAGES}>
                         {({ data, loading, error }) => {
