@@ -251,7 +251,6 @@ export default class UpdateArtworkForm extends React.Component {
                                 <div className='uploadedImage'>
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         style={{ display: 'none'}}
-                                        src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => {
                                             !this.state.imageWidth && this.setState({ 
@@ -261,9 +260,10 @@ export default class UpdateArtworkForm extends React.Component {
                                                 this.uploadedImage.current.style.display = 'block'
                                                 const { imageWidth, imageHeight, windowHeight } = this.state
                                                 this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
-                                                    '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
+                                                '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
                                             })}
                                         }
+                                        src={blobUrl(this.state.imageFile)}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
