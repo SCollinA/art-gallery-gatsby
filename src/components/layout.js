@@ -1,7 +1,8 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { graphql, StaticQuery } from "gatsby"
-import { Query, ApolloConsumer } from "react-apollo"
+import { Query } from "react-apollo"
+import { client } from '../apollo/client'
 import gql from 'graphql-tag'
 import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
@@ -15,6 +16,13 @@ class Layout extends React.Component {
     this.state = {
       artworkImages: []
     }
+  }
+
+  componentDidMount() {
+    console.log(client.query({
+      query: ARTWORK_IMAGE,
+      variables: { id: artwork.id },
+    }))
   }
 
   render() {
@@ -68,17 +76,21 @@ class Layout extends React.Component {
                     console.log(galleriesWithFiles)
                     return (
                       <>
-                        {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => (
+                        {/* {galleriesWithFiles.map(({ artworks }) => artworks.filter(artwork => !(artwork.file)).map((artwork, index) => {
+                          console.log(artwork)
+                          return (
                           <ApolloConsumer key={index}>
                             {cache => {
+                                console.log(artwork)
                                   // const getArtwork = 
                                   if (artwork.id !== 'nada') {
-                                  const data = cache.query({
+                                  // const data = 
+                                  console.log(cache.query({
                                     query: ARTWORK_IMAGE,
                                     variables: { id: artwork.id },
-                                  })
+                                  }))
                                   // .then(data => {
-                                  console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
+                                  // console.log('got the image', artwork.title, data, artwork, new Date().toTimeString())
                                   //   return data
                                   // })
                                   // .then(data => {
@@ -94,7 +106,7 @@ class Layout extends React.Component {
                                   return <></>
                               }}
                         </ApolloConsumer>
-                        )))}
+                        )}))} */}
                         <LayoutContext.Provider 
                           value={{ 
                             // if galleries has a gallery, add it's artworks
