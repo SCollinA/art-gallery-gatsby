@@ -12,29 +12,27 @@ import LayoutContext from '../contexts/LayoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"
-import { client } from "../apollo/client";
 // import Loading from "./Loading";
-// import { client } from "../apollo/client";
 
 const artworkImages = []
 
 class Layout extends React.Component {
 
-  componentDidUpdate() {
-    console.log('component did update')
-    artworkImages.forEach(artworkImage => {
-      console.log('each artwork image')
-      const data = client.readQuery({
-        fetchPolicy: 'cache-first',
-        query: ARTWORK_IMAGE,
-        variables: {
-          id: artworkImage.id
-        }
-      })
-      console.log('apollo data', data)
-      artworkImage.image = data.getArtwork.image
-    })
-  }
+  // componentDidUpdate() {
+  //   console.log('component did update')
+  //   artworkImages.forEach(artworkImage => {
+  //     console.log('each artwork image')
+  //     const data = client.readQuery({
+  //       fetchPolicy: 'cache-first',
+  //       query: ARTWORK_IMAGE,
+  //       variables: {
+  //         id: artworkImage.id
+  //       }
+  //     })
+  //     console.log('apollo data', data)
+  //     artworkImage.image = data.getArtwork.image
+  //   })
+  // }
 
   _updateDbImage = ({ id, image }) => {
     'updating artwork images'
@@ -91,6 +89,16 @@ class Layout extends React.Component {
                         name: 'no galleries', 
                         artworks: [{ id: 'nada', title: 'no galleries #1'}]
                       }]
+                    !artworkImages.length &&
+                      galleriesWithFiles.forEach(galleryWithFile => {
+                        galleryWithFile.artworks.forEach(galleryArtwork => {
+                          if (!galleryArtwork.file) {
+                            artworkImages.push({
+                              id: galleryArtwork.id,
+                            })
+                          }
+                        })
+                      })
                     return (
                       <>
                         <LayoutContext.Provider 
@@ -100,6 +108,18 @@ class Layout extends React.Component {
                             updateDbImage: this._updateDbImage
                           }}
                         >
+                          {artworkImages.map((artworkImage, index) => {
+                            console.log('component did update')
+                            console.log('each artwork image')
+                            return (
+                              <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
+                                {({ data, loading, error }) => {
+                                  console.log('apollo data', data)
+                                  artworkImage.image = data.getArtwork.image
+                                }}
+                              </Query>
+                            )
+                          })}
                           {/* {loading && <Loading/>} */}
                           {children}
                         </LayoutContext.Provider>
