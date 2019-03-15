@@ -29,31 +29,31 @@ export default () => (
                     </div>        
                     <div className='aboutContent'>
                         <div>
+                            {(randomArtworks[0].file && 
+                                <Img className={'aboutImg'} fluid={randomArtworks[0].file.childImageSharp.fluid}/>) ||
+                            (randomArtworks[0].image &&
+                                <img className={'aboutImg'} src={randomArtworks[0].image} alt='a random selection from artworks'/>)}
                             <p>
                                 Kelly is an artist of many mediums. Her work includes landscapes, still life and animals. She enjoys doing commissioned pet portraits, which are regular in her artistic practice. “Pets are our best friends, loyal and faithful companions that deserve careful attention. I’ll do my best.”
                             </p>
-                            {(randomArtworks[0].file && 
-                                <Img fluid={randomArtworks[0].file.childImageSharp.fluid}/>) ||
-                            (randomArtworks[0].image &&
-                                <img src={randomArtworks[0].image} alt='a random selection from artworks'/>)}
                         </div>
                         <div>
                             <p>
                                 Kelly is a full-time artist creating inspired work and commissioned work. She works in watercolor, oil, pastel, and charcoal. To stay current in the art community, she studies through classes and workshops. 
                             </p>
                             {(randomArtworks[1].file && 
-                                <Img fluid={randomArtworks[1].file.childImageSharp.fluid}/>) ||
+                                <Img className={'aboutImg'} fluid={randomArtworks[1].file.childImageSharp.fluid}/>) ||
                             (randomArtworks[1].image &&
-                                <img src={randomArtworks[1].image} alt='a random selection from artworks'/>)}
+                                <img className={'aboutImg'} src={randomArtworks[1].image} alt='a random selection from artworks'/>)}
                         </div>
                         <div>
+                            {(randomArtworks[2].file && 
+                                <Img className={'aboutImg'} fluid={randomArtworks[2].file.childImageSharp.fluid}/>) ||
+                            (randomArtworks[2].image &&
+                                <img className={'aboutImg'} src={randomArtworks[2].image} alt='a random selection from artworks'/>)}
                             <p>
                                 For thirty years, she worked as a communications professional. Although fulfilling, she long planned to “retire” from the nine-to-five to explore art.
                             </p>
-                            {(randomArtworks[2].file && 
-                                <Img fluid={randomArtworks[2].file.childImageSharp.fluid}/>) ||
-                            (randomArtworks[2].image &&
-                                <img src={randomArtworks[2].image} alt='a random selection from artworks'/>)}
                         </div>
                         <div>
                             <p>
@@ -71,7 +71,7 @@ export default () => (
                                     }
                                 }
                                 `}
-                                render={data => <Img className='aboutImage' fluid={data.image.childImageSharp.fluid}/>}
+                                render={data => <Img className='aboutImg' fluid={data.image.childImageSharp.fluid}/>}
                             />
                         </div>
                         <p>

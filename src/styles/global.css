@@ -138,6 +138,7 @@ a {
 .randomArtwork {
     display: flex;
     justify-content: space-around;
+    padding: 2%;
 }
 
 .randomArtwork > * {
@@ -291,9 +292,18 @@ a {
 .aboutContent > p {
     padding: 2%;
 }
+
+.aboutImg {
+    max-width: 250px;
+}
 /* ============================ */
 /*          Commissions             */
 /* ============================ */
+
+.commissionImg {
+    max-width: 500px;
+    margin: auto;
+}
 
 /* ============================ */
 /*          Contact             */
@@ -307,6 +317,8 @@ a {
 .contactForm {
     display: flex;
     flex-direction: column;
+    max-width: 500px;
+    margin: auto;
 }
 
 #contactFormHeader > *, #aboutHeader > * {
