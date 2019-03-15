@@ -117,11 +117,12 @@ class Layout extends React.Component {
                           value={{ 
                             // if galleries has a gallery, add it's artworks
                             galleries: galleriesWithFiles.map(galleryWithFile => {
-                              console.log(artworkImages)
+                              console.log('artworkImages', artworkImages)
                               return {
                                 ...galleryWithFile,
                                 artworks: galleryWithFile.artworks.map(galleryArtwork => {
                                   const artworkImage = artworkImages.find(artworkImage => artworkImage.id === galleryArtwork.id)
+                                  console.log('artworkImage', artworkImage)
                                   return {
                                     ...galleryArtwork,
                                     image: artworkImage ?
