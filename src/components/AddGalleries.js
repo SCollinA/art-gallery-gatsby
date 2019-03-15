@@ -35,7 +35,8 @@ export default () => {
                             // })
                         }}
                         >
-                        {(addGallery, { data }) => (
+                        {(addGallery, { data, loading, error }) => {
+                            return (
                             <div className='AddGalleries'
                                 onClick={addGallery}
                             >
@@ -43,7 +44,7 @@ export default () => {
                                     <h3> + </h3>
                                 </div>
                             </div>
-                        )}
+                        )}}
                     </Mutation>
             )}
         </AdminContext.Consumer>

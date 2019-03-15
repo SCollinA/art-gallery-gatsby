@@ -3,7 +3,10 @@ import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { DB_CONTENT } from './layout'
+import { 
+    DB_CONTENT, 
+    ARTWORK_IMAGE 
+} from './layout'
 import { GALLERY_ARTWORKS } from './AdminArtworks';
 import Loading from './Loading';
 
@@ -45,18 +48,45 @@ export default class UpdateArtworkForm extends React.Component {
         this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
     }
     render() {
-        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, resetArtwork, removeArtwork } = this.context
+        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, updateDbImage, resetArtwork, removeArtwork } = this.context
         // const { imageWidth, imageHeight, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
                 update={(cache, { data: { updateArtwork }, loading, error }) => {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                    // console.log('updating artwork in cache')
                     cache.writeQuery({
                         query: DB_CONTENT,
-                        data: { galleries, artworks: artworks.filter(artwork => artwork.id !== updateArtwork.id).concat([updateArtwork]) },
+                        data: { galleries, artworks: [ ...artworks.filter(artwork => artwork.id !== updateArtwork.id), updateArtwork] },
+                    })
+                    // // console.log(cache.readQuery({ query: DB_CONTENT }))
+                    // const dbImageData = cache.readQuery({
+                    //     query: ARTWORK_IMAGE,
+                    //     variables: { id: updateArtwork.id }
+                    // })
+                    console.log('updating dbImage in cache', updateArtwork.id)
+                    cache.writeQuery({
+                        query: ARTWORK_IMAGE,
+                        variables: {
+                            id: updateArtwork.id 
+                        },
+                        data: { 
+                            getArtwork: {
+                                __typename: 'Artwork',
+                                id: updateArtwork.id, 
+                                image: updateArtwork.image, 
+                            } 
+                        },
                     })
                 }}
-                refetchQueries={[{
+                refetchQueries={[
+                    {
+                    query: ARTWORK_IMAGE,
+                    variables: {
+                        id: updatingArtwork.id
+                    },
+                },
+                {
                     query: GALLERY_ARTWORKS,
                     variables: {
                         galleryId: updatingArtwork.galleryId
@@ -103,6 +133,7 @@ export default class UpdateArtworkForm extends React.Component {
                                                 imageLoaded: false,
                                             }, () => {
                                                 submitArtwork()
+                                                updateDbImage(updatingArtwork.id)
                                             })
                                         })
                                         .catch(console.log)
@@ -232,7 +263,6 @@ export default class UpdateArtworkForm extends React.Component {
                                 <div className='uploadedImage'>
                                     <img id='uploadedImage' ref={this.uploadedImage}
                                         style={{ display: 'none'}}
-                                        src={blobUrl(this.state.imageFile)}
                                         alt='uploaded profile' 
                                         onLoad={() => {
                                             !this.state.imageWidth && this.setState({ 
@@ -242,9 +272,10 @@ export default class UpdateArtworkForm extends React.Component {
                                                 this.uploadedImage.current.style.display = 'block'
                                                 const { imageWidth, imageHeight, windowHeight } = this.state
                                                 this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall? 
-                                                    '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
+                                                '25%' : `${(windowHeight * .25) * imageWidth / imageHeight}px`
                                             })}
                                         }
+                                        src={blobUrl(this.state.imageFile)}
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
@@ -266,9 +297,7 @@ export default class UpdateArtworkForm extends React.Component {
                                         const currentImageFromSourceNode = this.currentImageFromSource.current
                                         const canvasContext = imageCanvasNode.getContext('2d')
                                         // get whichever element actually exists
-                                        console.log(uploadedImageNode, currentImageFromFileNode, currentImageFromSourceNode)
                                         const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode
-                                        console.log(rotatingImage)
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
@@ -287,9 +316,7 @@ export default class UpdateArtworkForm extends React.Component {
                                             // imageCanvasNode.width = this.state.imageHeight
                                             // imageCanvasNode.height = this.state.imageWidth
                                             // convert canvas contents to blob
-                                            console.log(canvasContext)
                                             imageCanvasNode.toBlob((imageBlob) => {
-                                                console.log(imageBlob)
                                                 this.setState({
                                                     imageFile: imageBlob,
                                                 })
