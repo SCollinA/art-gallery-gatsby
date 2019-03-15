@@ -274,15 +274,15 @@ a {
     line-height: 2em;
 }
 
-.aboutContent > p:nth-child(4), .aboutContent > *:nth-child(5) {
-    width: 50%;
-}
-
-.aboutImage {
+.aboutContent > * {
+    width: 45%;
     max-width: 500px;
     margin: auto;
 }
 
+.aboutContent > p {
+    padding: 2% 0;
+}
 /* ============================ */
 /*          Commissions             */
 /* ============================ */
