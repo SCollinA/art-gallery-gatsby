@@ -25,7 +25,7 @@ export default ({ adminLogin }) => (
                 }}
             >
                 <label style={{ display: 'none' }}>admin password
-                    <input type='text' name='adminPassword'/>
+                    <input autoComplete={'username'} type='text' name='adminPassword'/>
                 </label>
                 <label>admin password
                     <input autoFocus autoComplete={'current-password'} type='password' placeholder="not 'password1'" name='adminPassword'/>
