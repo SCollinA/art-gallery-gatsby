@@ -2,7 +2,8 @@ import React from 'react'
 import {  Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import AdminContext from '../contexts/AdminContext'
-import { ALL_GALLERIES } from './AdminGalleries'
+// import { ALL_GALLERIES } from './AdminGalleries'
+import { DB_CONTENT } from './layout';
 
 export default () => {
     return (
@@ -22,14 +23,20 @@ export default () => {
                                 id,
                                 name
                             })
-                            const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
+                            const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
                             cache.writeQuery({
-                                query: ALL_GALLERIES,
-                                data: { getAllGalleries: getAllGalleries.concat([addGallery]) },
+                                query: DB_CONTENT,
+                                data: { artworks, galleries: galleries.concat([addGallery]) }
                             })
+                            // const { getAllGalleries } = cache.readQuery({ query: ALL_GALLERIES })
+                            // cache.writeQuery({
+                            //     query: ALL_GALLERIES,
+                            //     data: { getAllGalleries: getAllGalleries.concat([addGallery]) },
+                            // })
                         }}
                         >
-                        {(addGallery, { data }) => (
+                        {(addGallery, { data, loading, error }) => {
+                            return (
                             <div className='AddGalleries'
                                 onClick={addGallery}
                             >
@@ -37,7 +44,7 @@ export default () => {
                                     <h3> + </h3>
                                 </div>
                             </div>
-                        )}
+                        )}}
                     </Mutation>
             )}
         </AdminContext.Consumer>

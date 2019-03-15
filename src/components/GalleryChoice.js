@@ -25,12 +25,12 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                     className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
                                     onClick={() => selectGallery(gallery)}
                                 >
-                                    {(randomArtwork.file && (
-                                        <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
-                                        )) || (
+                                    {(
                                     randomArtwork.image && (
                                         <img src={`data:image/jpeg;base64,${randomArtwork.image}`} alt={randomArtwork.title}/>
-                                    ))}
+                                    )) || (randomArtwork.file && (
+                                        <Img fluid={randomArtwork.file.childImageSharp.fluid}/>
+                                        ))}
                                     <p>{gallery.name}</p>
                                 </div>
                             )

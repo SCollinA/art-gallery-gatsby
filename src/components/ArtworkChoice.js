@@ -11,22 +11,23 @@ export default ({ artworkChoiceRef, selectedGallery, selectArtwork, selectedArtw
         <h3>artworks</h3>
         <div id='artworkThumbs'>
             {selectedGallery.artworks && selectedGallery.artworks.map((artwork, index) => {
+                // console.log('artwork thumbs artwork', artwork)
                 // return (artwork.file || artwork.image) && (
                 return (
                     <div key={index} 
                         className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? ' selectedArtwork' : ''}`}
                         onClick={() => selectArtwork(artwork)}
                     >
-                        {(artwork.file && (
+                        {(
+                        artwork.image && (
+                            <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
+                        )) || (artwork.file && (
                             <Img fluid={artwork.file.childImageSharp.fluid} 
                                 fadeIn={false} 
                                 // onStartLoad={(stuff) => console.log(stuff, 'the gatsby image is starting to load')}
                                 // onLoad={(stuff) => console.log(stuff, 'the gatsby image did load')}
                                 // onError={(stuff) => console.log(stuff, 'the gatsby image did not load')}
                             />
-                        )) || (
-                        artwork.image && (
-                            <img src={`data:image/jpeg;base64,${artwork.image}`} alt={artwork.title}/>
                         ))}
                         <p>{artwork.title}</p>
                     </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import Img from 'gatsby-image'
 import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtworkRef, windowHeight }) => {
+export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight }) => {
     return (
     <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
@@ -16,24 +16,12 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                         <div className='galleryImage'>
                             {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
-                                console.log('window height: ', windowHeight)
-                                console.log('gatsby image aspect ratio: ', artwork.file && artwork.file.childImageSharp.fluid.aspectRatio)
+                                // console.log('gallery artwork', artwork)
                                 return (
                                 <div key={index} 
                                     className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
-                                    {(artwork.file && (
-                                        <Img className='galleryGatsbyImage'
-                                            style={{
-                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
-                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
-                                                    `100%`,
-                                                margin: 'auto',
-                                            }}
-                                            fluid={artwork.file.childImageSharp.fluid}
-                                        />
-                                    )) || (
-                                    artwork.image && (
+                                    {(artwork.image && (
                                         <img ref={artworkRef}
                                         // display initially none to load actual size
                                             style={{ display: 'none', margin: 'auto' }}
@@ -46,6 +34,16 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, selectedArtw
                                                     '100%'
                                                 dbImage.style.display = 'inherit'
                                             }}
+                                        />
+                                    )) || (artwork.file && (
+                                        <Img className='galleryGatsbyImage'
+                                            style={{
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
+                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                    `100%`,
+                                                margin: 'auto',
+                                            }}
+                                            fluid={artwork.file.childImageSharp.fluid}
                                         />
                                     ))}
                                 </div>

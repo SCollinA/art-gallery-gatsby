@@ -81,12 +81,13 @@ a {
 }
 
 .pageLink {
-    flex: 1;
+    /* flex: 1; */
+    margin: auto;
 }
 
 .pageLink h2 {
     margin: auto;
-    padding: 2px 0;
+    padding: 2px 20px;
     white-space: nowrap;
     text-align: center;
 }
@@ -94,6 +95,9 @@ a {
 .activeLink {
     display: block;
     background-color: lightgrey;
+    /* margin: auto;
+    padding: 0 15%;
+    border-radius: 12px; */
 }
 
 .HamburgerLinks {
@@ -138,6 +142,7 @@ a {
 .randomArtwork {
     display: flex;
     justify-content: space-around;
+    padding: 2%;
 }
 
 .randomArtwork > * {
@@ -274,18 +279,35 @@ a {
     line-height: 2em;
 }
 
-.aboutContent > p:nth-child(4), .aboutContent > *:nth-child(5) {
-    width: 50%;
-}
-
-.aboutImage {
-    max-width: 500px;
+.aboutContent > * {
+    width: 100%;
+    /* max-width: 500px; */
     margin: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
+.aboutContent > * > * {
+    flex: 1;
+    padding: 2%;
+    margin: 2%;
+}
+
+.aboutContent > p {
+    padding: 2%;
+}
+
+.aboutImg {
+    max-width: 250px;
+}
 /* ============================ */
 /*          Commissions             */
 /* ============================ */
+
+.commissionImg {
+    max-width: 500px;
+    margin: auto;
+}
 
 /* ============================ */
 /*          Contact             */
@@ -299,6 +321,8 @@ a {
 .contactForm {
     display: flex;
     flex-direction: column;
+    max-width: 500px;
+    margin: auto;
 }
 
 #contactFormHeader > *, #aboutHeader > * {
@@ -389,19 +413,22 @@ a {
 }
 
 #UpdateGalleryForm, #UpdateArtworkForm {
-    position: fixed;
-    width: 75%;
-    height: 50%;
-    top: 25%;
-    left: 12.5%;
+    /* position: fixed; */
+    /* width: 75%; */
+    /* height: 50%; */
+    /* top: 25%; */
+    /* left: 12.5%; */
+    margin: 0;
+    height: 100%;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    /* flex-direction: column; */
     background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
     padding: 5%;
     overflow-y: auto;
-    border: solid black 2px;
-    border-radius: 10px;
+    /* border: solid black 2px; */
+    /* border-radius: 10px; */
 }
 
 #UpdateGalleryForm > *, #UpdateArtworkForm > * {
@@ -411,6 +438,10 @@ a {
 
 .rotateImage {
     cursor: pointer;
+}
+
+#uploadedImage {
+    margin: auto;
 }
 
 /* ================================ */
@@ -483,6 +514,7 @@ a {
 
     .aboutContent > * {
         width: 100% !important;
+        flex-direction: column;
     }
 }
 

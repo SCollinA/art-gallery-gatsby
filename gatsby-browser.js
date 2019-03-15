@@ -17,3 +17,4 @@ export const wrapRootElement = ({ element }) => (
 
 window.oncontextmenu = () => false
 window.ondragstart = () => false
+window.onauxclick = () => false
