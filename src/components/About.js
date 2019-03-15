@@ -38,13 +38,13 @@ export default () => (
                                 <img src={randomArtworks[0].image} alt='a random selection from artworks'/>)}
                         </div>
                         <div>
+                            <p>
+                                Kelly is a full-time artist creating inspired work and commissioned work. She works in watercolor, oil, pastel, and charcoal. To stay current in the art community, she studies through classes and workshops. 
+                            </p>
                             {(randomArtworks[1].file && 
                                 <Img fluid={randomArtworks[1].file.childImageSharp.fluid}/>) ||
                             (randomArtworks[1].image &&
                                 <img src={randomArtworks[1].image} alt='a random selection from artworks'/>)}
-                            <p>
-                                Kelly is a full-time artist creating inspired work and commissioned work. She works in watercolor, oil, pastel, and charcoal. To stay current in the art community, she studies through classes and workshops. 
-                            </p>
                         </div>
                         <div>
                             <p>
@@ -56,6 +56,9 @@ export default () => (
                                 <img src={randomArtworks[2].image} alt='a random selection from artworks'/>)}
                         </div>
                         <div>
+                            <p>
+                                From the time she was a little girl she has held paint brushes, pencils, and pastels in her hand and created art. She learned to draw by copying comic strips from the Sunday paper. Since her first Mickey Mouse easel she has always owned an easel. Many books, and lots of practice, have helped to change and refine her style. 
+                            </p>
                             <StaticQuery
                                 query={graphql`
                                 query {
@@ -69,10 +72,7 @@ export default () => (
                                 }
                                 `}
                                 render={data => <Img className='aboutImage' fluid={data.image.childImageSharp.fluid}/>}
-                                />
-                            <p>
-                                From the time she was a little girl she has held paint brushes, pencils, and pastels in her hand and created art. She learned to draw by copying comic strips from the Sunday paper. Since her first Mickey Mouse easel she has always owned an easel. Many books, and lots of practice, have helped to change and refine her style. 
-                            </p>
+                            />
                         </div>
                         <p>
                             Her love of the family pets, of all pets, translated into something she could share with others. And it makes so many people happy. It’s a joy.

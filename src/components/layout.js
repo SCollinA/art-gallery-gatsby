@@ -217,7 +217,7 @@ subscription GetArtworkImages {
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
-      fluid(maxWidth: 1000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
+      fluid(maxWidth: 3000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
         ...GatsbyImageSharpFluid
       }
     }
@@ -227,7 +227,7 @@ export const fluidImage = graphql`
 export const fixedImage = graphql`
   fragment fixedImage on File {
     childImageSharp {
-      fixed(width: 1000, quality: 100) {
+      fixed(width: 3000, quality: 100) {
         ...GatsbyImageSharpFixed
       }
     }

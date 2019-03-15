@@ -289,7 +289,7 @@ a {
 }
 
 .aboutContent > p {
-    padding: 2% 0;
+    padding: 2%;
 }
 /* ============================ */
 /*          Commissions             */
@@ -498,6 +498,7 @@ a {
 
     .aboutContent > * {
         width: 100% !important;
+        flex-direction: column-reverse;
     }
 }
 
