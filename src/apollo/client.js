@@ -15,9 +15,10 @@ const wsLink = process.browser ? new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
-    connectionParams: {
-      authToken: localStorage.getItem('auth-token')
-    }
+    // the below would be used to have authenticated subscriptions
+    // connectionParams: {
+    //   authToken: localStorage.getItem('auth-token')
+    // }
   },
 }) : null
 
