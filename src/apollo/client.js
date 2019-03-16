@@ -1,14 +1,11 @@
 import ApolloClient from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { createHttpLink } from 'apollo-link-http'
-// import { onError } from 'apollo-link-error'
-// import { ApolloLink } from 'apollo-link'
 import { setContext } from 'apollo-link-context'
 import fetch from 'isomorphic-fetch'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
-import { userInfo } from 'os';
 
 // Create a WebSocket link:
 const wsLink = process.browser ? new WebSocketLink({
