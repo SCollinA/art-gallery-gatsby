@@ -8,12 +8,16 @@ import fetch from 'isomorphic-fetch'
 import { split } from 'apollo-link'
 import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
+import { userInfo } from 'os';
 
 // Create a WebSocket link:
 const wsLink = process.browser ? new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
   options: {
-    reconnect: true
+    reconnect: true,
+    connectionParams: {
+      authToken: localStorage.getItem('auth-token')
+    }
   },
 }) : null
 
