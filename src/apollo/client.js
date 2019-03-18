@@ -47,6 +47,6 @@ const httpLink = setContext((_, { headers }) =>{
 export const client = new ApolloClient({
   fetch,
   // link,
-  httpLink,
+  link: httpLink,
   cache: new InMemoryCache(),
 })
