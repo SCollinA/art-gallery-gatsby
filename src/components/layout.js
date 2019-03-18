@@ -189,14 +189,14 @@ export const ARTWORK_IMAGE = gql`
   }
 `
 
-export const GET_ARTWORK_IMAGES = gql`  
-subscription GetArtworkImages {
-  artworkImageChanged {
-    id
-    image
-  }
-}
-`
+// export const GET_ARTWORK_IMAGES = gql`  
+// subscription GetArtworkImages {
+//   artworkImageChanged {
+//     id
+//     image
+//   }
+// }
+// `
   
   const ARTWORK_FILES = graphql`
   {
