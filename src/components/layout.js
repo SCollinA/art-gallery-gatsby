@@ -18,22 +18,8 @@ const artworkImages = []
 
 class Layout extends React.Component {
 
-  // componentDidUpdate() {
-  //   console.log('component did update')
-  //   artworkImages.forEach(artworkImage => {
-  //     console.log('each artwork image')
-  //     const data = client.readQuery({
-  //       fetchPolicy: 'cache-first',
-  //       query: ARTWORK_IMAGE,
-  //       variables: {
-  //         id: artworkImage.id
-  //       }
-  //     })
-  //     console.log('apollo data', data)
-  //     artworkImage.image = data.getArtwork.image
-  //   })
-  // }
-
+  // this function checks if artwork id is in array
+  // if not it adds it to array
   _updateDbImage = ( id ) => {
     'updating artwork images'
     !artworkImages.find(artworkImages => artworkImages.id === id) &&
@@ -101,10 +87,9 @@ class Layout extends React.Component {
                     return (
                       <>
                         {artworkImages.map((artworkImage, index) => {
-                          console.log('component did update')
-                          console.log('each artwork image')
+                          console.log('each artwork image', artworkImage)
                           return (
-                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-only'}>
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
                               {({ data, loading, error }) => {
                                 console.log('apollo data', data)
                                 artworkImages.find(dbImage => dbImage.id === artworkImage.id).image = data.getArtwork && data.getArtwork.image
