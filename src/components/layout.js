@@ -203,7 +203,7 @@ export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
       fluid(maxWidth: 3000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
-        ...GatsbyImageSharpFluid_withWebp_noBase64
+        ...GatsbyImageSharpFluid_noBase64
       }
     }
   }
@@ -213,7 +213,7 @@ export const fixedImage = graphql`
   fragment fixedImage on File {
     childImageSharp {
       fixed(width: 3000, quality: 100) {
-        ...GatsbyImageSharpFixed_withWebP_noBase64
+        ...GatsbyImageSharpFixed_noBase64
       }
     }
   }
