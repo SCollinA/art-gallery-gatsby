@@ -65,7 +65,7 @@ export default () => (
                                     image: file(relativePath: { eq: "kelly.jpg" }) {
                                         childImageSharp {
                                             fluid(maxWidth: 1000, quality: 100) {
-                                                ...GatsbyImageSharpFluid_tracedSVG
+                                                ...GatsbyImageSharpFluid_withWebp_tracedSVG
                                             }
                                         }
                                     }
