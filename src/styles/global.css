@@ -120,7 +120,6 @@ a {
 .Content {
     /* 15 px is width of ugly scroll bar */
     /* width: calc(100% + 15px); */
-    max-width: 1000px;
     width: 100%;
     margin: 0 auto;
     padding: 0 5% 2%;
