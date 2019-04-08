@@ -191,29 +191,6 @@ export default class UpdateArtworkForm extends React.Component {
                                 })}
                             />
                         </label>
-                        <label>width
-                            <input type='number' name='width'
-                                value={updatingArtwork.width || ''}
-                                onChange={event => changeArtwork({
-                                    width: parseInt(event.target.value)
-                                })}
-                            />
-                        </label>
-                        <label>height
-                            <input type='number' name='height'
-                                value={updatingArtwork.height || ''}
-                                onChange={event => changeArtwork({
-                                    height: parseInt(event.target.value)
-                                })}/>
-                        </label>
-                        <label>medium
-                            <input type='text' name='medium'
-                                value={updatingArtwork.medium || ''}
-                                onChange={event => changeArtwork({
-                                    medium: event.target.value
-                                })}
-                            />
-                        </label>
                         <div className='changeImage'>
                             <label>image
                                 <input type='file' name='image' accept='image/*' 
@@ -328,6 +305,49 @@ export default class UpdateArtworkForm extends React.Component {
                                 rotate right
                             </div>}
                         </div>
+                        <label>width
+                            <input type='number' name='width'
+                                value={updatingArtwork.width || ''}
+                                onChange={event => changeArtwork({
+                                    width: parseInt(event.target.value)
+                                })}
+                            />
+                        </label>
+                        <label>height
+                            <input type='number' name='height'
+                                value={updatingArtwork.height || ''}
+                                onChange={event => changeArtwork({
+                                    height: parseInt(event.target.value)
+                                })}/>
+                        </label>
+                        <label>medium
+                            <input type='text' name='medium'
+                                value={updatingArtwork.medium || ''}
+                                onChange={event => changeArtwork({
+                                    medium: event.target.value
+                                })}
+                            />
+                        </label>
+                        <div className='artworkFramedButtons'>
+                            <label>framed
+                                <input type='radio' name='framed'
+                                    value='framed'
+                                    checked={updatingArtwork.framed}
+                                    onChange={event => changeArtwork({
+                                        framed: event.target.checked
+                                    })}
+                                />
+                            </label>
+                            <label>unframed
+                                <input type='radio' name='framed'
+                                    value='unframed'
+                                    checked={!updatingArtwork.framed}
+                                    onChange={event => changeArtwork({
+                                        framed: !event.target.checked
+                                    })}
+                                />
+                            </label>
+                        </div>
                         <label>price
                             <input type='number' name='price'
                                 value={updatingArtwork.price || ''}
@@ -335,7 +355,7 @@ export default class UpdateArtworkForm extends React.Component {
                                     price: parseInt(event.target.value)
                                 })}/>
                         </label>
-                        <div className='artworkRadioButtons'>
+                        <div className='artworkSoldButtons'>
                             <label>sold
                                 <input type='radio' name='sold'
                                     value='sold'
@@ -410,6 +430,7 @@ const UPDATE_ARTWORK = gql`
             image
             price
             sold
+            framed
         }
     }
 `

@@ -51,10 +51,11 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                         </div>
                         <div className='galleryCaption'>
                             {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
+                            <p>{selectedArtwork.medium}</p>
+                            {selectedArtwork.framed && <p>framed</p>}
                             {!selectedArtwork.price || <p>{`$${selectedArtwork.price}`}</p>}
                             {selectedArtwork.sold && <p>sold</p>}
                             {/* this one will be a caption */}
-                            <p>{selectedArtwork.medium}</p>
                         </div>
                     </div>
                 )

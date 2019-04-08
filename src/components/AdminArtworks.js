@@ -36,7 +36,8 @@ export default () => {
                                                     medium: artwork.medium,
                                                     image: artwork.image,
                                                     price: artwork.price,
-                                                    sold: artwork.sold
+                                                    sold: artwork.sold,
+                                                    framed: artwork.framed,
                                                 })
                                         }}
                                         >
@@ -109,6 +110,7 @@ export const GALLERY_ARTWORKS = gql`
             image
             price
             sold
+            framed
         }
     }
 `
