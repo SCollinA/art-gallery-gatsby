@@ -50,7 +50,7 @@ class Layout extends React.Component {
                           id: gallery.id,
                           name: gallery.name,
                           artworks: galleryArtworks.length > 0 ? 
-                            galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold }) => {
+                            galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold, framed }) => {
                               const artworkImage = artworkImages.find(artworkImage => id === artworkImage.id)
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
@@ -64,6 +64,7 @@ class Layout extends React.Component {
                                 medium,
                                 price,
                                 sold,
+                                framed,
                                 file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
                               }
                             }) :
@@ -160,6 +161,7 @@ export const DB_CONTENT = gql`
       medium
       price
       sold
+      framed
     }
   }
   
@@ -203,7 +205,7 @@ export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
       fluid(maxWidth: 3000, quality: 100, srcSetBreakpoints: [200, 340, 520, 890]) {
-        ...GatsbyImageSharpFluid_withWebp_noBase64
+        ...GatsbyImageSharpFluid_tracedSVG
       }
     }
   }
@@ -213,7 +215,7 @@ export const fixedImage = graphql`
   fragment fixedImage on File {
     childImageSharp {
       fixed(width: 3000, quality: 100) {
-        ...GatsbyImageSharpFixed_withWebP_noBase64
+        ...GatsbyImageSharpFixed_tracedSVG
       }
     }
   }
