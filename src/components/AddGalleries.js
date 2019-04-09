@@ -24,6 +24,7 @@ export default () => {
                                 name
                             })
                             const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
+                            console.log(galleries)
                             cache.writeQuery({
                                 query: DB_CONTENT,
                                 data: { artworks, galleries: galleries.concat([addGallery]) }

@@ -34,14 +34,14 @@ class Layout extends React.Component {
         <div className='Content'>
           <Query query={DB_CONTENT}>
             {({ data, loading, error }) => {
-              console.log('running db content query', data)
+              // console.log('running db content query', data)
               const { galleries, artworks } = (!loading && data) ?
                 data : 
                 { galleries: [], artworks: [] }
               return (
                 <StaticQuery query={ARTWORK_FILES}
                   render={data => {
-                    console.log('running artwork files static query')
+                    // console.log('running artwork files static query')
                     const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
                     const galleriesWithFiles = galleries.length > 0 ? 
                       galleries.map(gallery => {
@@ -88,11 +88,11 @@ class Layout extends React.Component {
                     return (
                       <>
                         {artworkImages.map((artworkImage, index) => {
-                          console.log('each artwork image', artworkImage)
+                          // console.log('each artwork image', artworkImage)
                           return (
                             <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
                               {({ data, loading, error }) => {
-                                console.log('apollo data', data)
+                                // console.log('apollo data', data)
                                 artworkImages.find(dbImage => dbImage.id === artworkImage.id).image = data.getArtwork && data.getArtwork.image
                                 return null
                               }}
@@ -103,12 +103,12 @@ class Layout extends React.Component {
                           value={{ 
                             // if galleries has a gallery, add it's artworks
                             galleries: galleriesWithFiles.map(galleryWithFile => {
-                              console.log('artworkImages', artworkImages)
+                              // console.log('artworkImages', artworkImages)
                               return {
                                 ...galleryWithFile,
                                 artworks: galleryWithFile.artworks.map(galleryArtwork => {
                                   const artworkImage = artworkImages.find(artworkImage => artworkImage.id === galleryArtwork.id)
-                                  console.log('artworkImage', artworkImage)
+                                  // console.log('artworkImage', artworkImage)
                                   return {
                                     ...galleryArtwork,
                                     image: artworkImage ?
