@@ -18,7 +18,7 @@
     "apollo-link-error": "^1.1.7",
     "apollo-link-http": "^1.5.11",
     "apollo-link-ws": "^1.0.17",
-    "gatsby": "^2.3.19",
+    "gatsby": "^2.3.25",
     "gatsby-image": "^2.0.20",
     "gatsby-plugin-manifest": "^2.0.15",
     "gatsby-plugin-offline": "^2.0.24",
@@ -26,14 +26,15 @@
     "gatsby-plugin-sharp": "^2.0.34",
     "gatsby-source-filesystem": "^2.0.23",
     "gatsby-transformer-sharp": "^2.1.13",
-    "graphql": "^0.13.2",
+    "graphql": "^14.2.1",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.6.3",
     "react-helmet": "^5.2.0",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "typescript": "^3.4.4"
   },
   "keywords": [
     "gatsby"
