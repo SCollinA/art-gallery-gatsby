@@ -19,17 +19,16 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                 const artworkRef = React.createRef()
                                 // console.log('gallery artwork', artwork)
                                 return (
-                                <div 
-                                    key={index} 
-                                    className={`galleryArtwork current`}
+                                <div key={index} 
+                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
                                 >
-                                    {(selectedArtwork.image && (
+                                    {(artwork.image && (
                                         <img ref={artworkRef}
                                         // display initially none to load actual size
                                         // in order to find aspect ratio and adjust size
                                             style={{ display: 'none', margin: 'auto' }}
-                                            src={`data:image/jepg;base64,${selectedArtwork.image}`} 
-                                            alt={`${selectedArtwork.title}`}
+                                            src={`data:image/jepg;base64,${artwork.image}`} 
+                                            alt={`${artwork.title}`}
                                             onLoad={() => {
                                                 const dbImage = artworkRef.current
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
@@ -38,15 +37,15 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                                 dbImage.style.display = 'inherit'
                                             }}
                                         />
-                                    )) || (selectedArtwork.file && (
+                                    )) || (artwork.file && (
                                         <Img className='galleryGatsbyImage'
                                             style={{
-                                                maxWidth: selectedArtwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
-                                                    `${(windowHeight * .75) * selectedArtwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
+                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
                                                     `100%`,
                                                 margin: 'auto',
                                             }}
-                                            fluid={selectedArtwork.file.childImageSharp.fluid}
+                                            fluid={artwork.file.childImageSharp.fluid}
                                         />
                                     ))}
                                 </div>
