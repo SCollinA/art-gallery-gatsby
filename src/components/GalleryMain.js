@@ -7,6 +7,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
     <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
             {({ galleries }) => {
+                const artworkRef = React.createRef()
                 return selectedArtwork && (
                     <div className='selectedGallery'>
                         <div className='galleryTitle'>
@@ -14,19 +15,21 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                             <h1>{selectedArtwork.title}</h1>
                         </div>
                         <div className='galleryImage'>
-                            {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
+                            {/* {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
                                 // console.log('gallery artwork', artwork)
-                                return (
-                                <div key={index} 
-                                    className={`galleryArtwork${selectedArtwork.id === artwork.id ? ' current' : ' hidden'}`}
+                                return ( */}
+                                <div 
+                                // key={index} 
+                                    className={`galleryArtwork current`}
                                 >
-                                    {(artwork.image && (
+                                    {(selectedArtwork.image && (
                                         <img ref={artworkRef}
                                         // display initially none to load actual size
+                                        // in order to find aspect ratio and adjust size
                                             style={{ display: 'none', margin: 'auto' }}
-                                            src={`data:image/jepg;base64,${artwork.image}`} 
-                                            alt={`${artwork.title}`}
+                                            src={`data:image/jepg;base64,${selectedArtwork.image}`} 
+                                            alt={`${selectedArtwork.title}`}
                                             onLoad={() => {
                                                 const dbImage = artworkRef.current
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
@@ -35,19 +38,19 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                                 dbImage.style.display = 'inherit'
                                             }}
                                         />
-                                    )) || (artwork.file && (
+                                    )) || (selectedArtwork.file && (
                                         <Img className='galleryGatsbyImage'
                                             style={{
-                                                maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
-                                                    `${(windowHeight * .75) * artwork.file.childImageSharp.fluid.aspectRatio}px` :
+                                                maxWidth: selectedArtwork.file.childImageSharp.fluid.aspectRatio <= 2 ?
+                                                    `${(windowHeight * .75) * selectedArtwork.file.childImageSharp.fluid.aspectRatio}px` :
                                                     `100%`,
                                                 margin: 'auto',
                                             }}
-                                            fluid={artwork.file.childImageSharp.fluid}
+                                            fluid={selectedArtwork.file.childImageSharp.fluid}
                                         />
                                     ))}
                                 </div>
-                            )}))}
+                            {/* )}))} */}
                         </div>
                         <div className='galleryCaption'>
                             {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
