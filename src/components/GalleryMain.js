@@ -7,7 +7,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
     <div className='GalleryMain' ref={galleryMainRef}>
         <LayoutContext.Consumer>
             {({ galleries }) => {
-                const artworkRef = React.createRef()
+                // const artworkRef = React.createRef()
                 return selectedArtwork && (
                     <div className='selectedGallery'>
                         <div className='galleryTitle'>
@@ -15,12 +15,12 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                             <h1>{selectedArtwork.title}</h1>
                         </div>
                         <div className='galleryImage'>
-                            {/* {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
+                            {galleries.map(({ artworks }) => artworks.map((artwork, index) => {
                                 const artworkRef = React.createRef()
                                 // console.log('gallery artwork', artwork)
-                                return ( */}
+                                return (
                                 <div 
-                                // key={index} 
+                                    key={index} 
                                     className={`galleryArtwork current`}
                                 >
                                     {(selectedArtwork.image && (
@@ -50,7 +50,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                         />
                                     ))}
                                 </div>
-                            {/* )}))} */}
+                            )}))}
                         </div>
                         <div className='galleryCaption'>
                             {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
