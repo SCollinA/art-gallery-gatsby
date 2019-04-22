@@ -9,9 +9,11 @@ export default () => (
         {({ galleries }) => {
             // get random art from galleries
             const galleryArtworks = []
+            // combine all the artworks
             galleries.forEach(({ artworks }) => {
                 Array.prototype.push.apply(galleryArtworks, artworks)
             })
+            // get some random artworks
             const randomArtworks = []
             do {
                 if (!galleryArtworks.length) break
@@ -19,8 +21,8 @@ export default () => (
                 randomArtworks.push(galleryArtworks[randomIndex])
                 galleryArtworks.splice(randomIndex, 1)
             } while (randomArtworks.length < 3)
+            // push empty objects to make length 3
             while (randomArtworks.length < 3) randomArtworks.push({})
-            console.log(randomArtworks)
             return (
                 <div className='About'>
                     <div className='pageHeader'>
