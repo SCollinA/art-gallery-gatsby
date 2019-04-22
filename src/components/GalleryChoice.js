@@ -4,8 +4,10 @@ import Img from 'gatsby-image'
 // import LayoutContext from '../contexts/LayoutContext'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {
-    const randomGalleryImages = galleries.map(gallery => gallery.artworks[0])
-        // Math.floor(Math.random() * gallery.artworks.length)])
+    const randomGalleryImages = galleries.map(gallery => {
+        const randomIndex = Math.floor(Math.random() * gallery.artworks.length)
+        return gallery.artworks[randomIndex]
+    })
     return (
         <div className='GalleryChoice'>
             {/* <div className='galleryArrow' onClick={() => scrollThumbs(true)}>

@@ -23,7 +23,8 @@ export default () => {
                                 height, 
                                 image, 
                                 medium, 
-                                price, 
+                                price,
+                                framed, 
                                 sold } = addArtwork
                             selectArtwork({
                                 id, 
@@ -35,6 +36,7 @@ export default () => {
                                 medium,
                                 price,
                                 sold,
+                                framed,
                             })
                             const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT })
                             cache.writeQuery({
@@ -80,6 +82,7 @@ const ADD_ARTWORK = gql`
             medium
             price
             sold
+            framed
         }
     }
 `
