@@ -5,8 +5,8 @@ import Img from 'gatsby-image'
 
 export default ({ galleries, selectGallery, selectedGallery }) => {
     const randomGalleryImages = galleries.map(gallery => {
-        const randomIndex = Math.floor(Math.random() * gallery.artworks.length)
-        return gallery.artworks[randomIndex]
+        // const randomIndex = Math.floor(Math.random() * gallery.artworks.length)
+        return gallery.artworks[0]
     })
     return (
         <div className='GalleryChoice'>

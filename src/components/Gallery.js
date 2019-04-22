@@ -68,7 +68,6 @@ export default class Gallery extends Component {
    })
 
     render() {  
-        console.log(this.context)
         return (
             <div className='Gallery'>
                 <GalleryChoice 
