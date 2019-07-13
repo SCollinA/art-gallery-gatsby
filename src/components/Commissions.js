@@ -24,12 +24,16 @@ export default () => (
         return (
             <div className='Commissions'>
                 <div className='pageHeader'>
-                    {/* <FontAwesomeIcon icon={['far', 'money-bill-alt']} size='2x'/> */}
                     <h1>commissions</h1>
                 </div>
                 <div className='commissionContent'>
                     <div>
-                        <h4>Pet portrait pricing and details (as of January 2019)</h4>
+                        <h4>Pet portrait pricing and details (as of June 2019)</h4>
+                        <ul>
+                            <li>Watercolor, 9x12  $125</li>
+                            <li>Watercolor, 12x16  $150</li>
+                            <li>Oil, 6x6 on linen canvas, $150</li>
+                        </ul>
                         <p>Thank you for your interest in a commissioned pet portrait. I do my best to create an accurate artistic representation of your loved pet. I hope that it is a treasured piece of art for years and years. To do my best work for you, I have a few guidelines that will help. If you have any questions or concerns, please let’s discuss.</p>
                         {(randomArtworks[0].file && 
                             <Img className={'commissionImg'} fluid={randomArtworks[0].file.childImageSharp.fluid}/>) ||
