@@ -304,8 +304,16 @@ a {
 /*          Commissions             */
 /* ============================ */
 
+.description {
+    display: flex;
+}
+
+.description > * {
+    flex: 1;
+}
+
 .commissionImg {
-    max-width: 500px;
+    max-width: 200px;
     margin: auto;
 }
 
