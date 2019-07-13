@@ -207,7 +207,7 @@ export const ARTWORK_IMAGE = gql`
 // }
 // `
   
-  const ARTWORK_FILES = graphql`
+const ARTWORK_FILES = graphql`
   {
     artworkFiles: allFile(filter: { 
         relativeDirectory: { eq: "artworks" },
