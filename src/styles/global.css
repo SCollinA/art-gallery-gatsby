@@ -304,9 +304,17 @@ a {
 /*          Commissions             */
 /* ============================ */
 
+.description {
+    display: flex;
+}
+
+.description > * {
+    flex: 1;
+}
+
 .commissionImg {
-    max-width: 500px;
-    margin: auto;
+    max-width: 300px;
+    margin: 0 5%;
 }
 
 /* ============================ */
@@ -338,9 +346,9 @@ a {
 }
 
 .contactForm > input:last-child {
-    padding: unset;
+    /* padding: unset; */
     margin: auto;
-    height: fit-content;
+    /* height: fit-content; */
     align-self: baseline;
 }
 
