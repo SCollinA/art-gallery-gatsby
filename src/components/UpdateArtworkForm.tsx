@@ -2,12 +2,14 @@ import Img from "gatsby-image";
 import gql from "graphql-tag";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
+
 import AdminContext from "../contexts/adminContext";
-import { GALLERY_ARTWORKS } from "./AdminArtworks";
 import {
     ARTWORK_IMAGE,
     DB_CONTENT,
-} from "./layout";
+} from "../graphql/graphql";
+
+import { GALLERY_ARTWORKS } from "./AdminArtworks";
 import Loading from "./Loading";
 
 export default class UpdateArtworkForm extends React.Component<any, any, any> {

@@ -30,7 +30,8 @@
                 "allow-leading-underscore",
                 "ban-keywords",
                 "require-const-for-all-caps",
-                "check-format"
+                "check-format",
+                "allow-pascal-case"
             ]
         }
     },

@@ -1,10 +1,12 @@
 import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
+
 import AdminContext from "../contexts/adminContext";
+import { DB_CONTENT } from "../graphql/graphql";
+
 import { GALLERY_ARTWORKS, GET_GALLERY } from "./AdminArtworks";
 import { ALL_GALLERIES } from "./AdminGalleries";
-import { DB_CONTENT } from "./layout";
 import Loading from "./Loading";
 
 export default () => {
