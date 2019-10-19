@@ -5,7 +5,9 @@
     ],
     "rulesDirectory": [],
     "rules": {
-        "max-line-length": false,
+        "max-line-length": {
+            "options": [120]
+        },
         "new-parens": true,
         "no-arg": true,
         "no-bitwise": true,

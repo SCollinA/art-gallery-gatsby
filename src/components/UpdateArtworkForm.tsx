@@ -53,7 +53,15 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
         this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
     }
     public render() {
-        const { selectedArtwork, updatingArtwork, changeArtwork, submitArtwork, updateDbImage, resetArtwork, removeArtwork } = this.context;
+        const {
+            selectedArtwork,
+            updatingArtwork,
+            changeArtwork,
+            submitArtwork,
+            updateDbImage,
+            resetArtwork,
+            removeArtwork,
+        } = this.context;
         // const { imageWidth, imageHeight, windowHeight } = this.state
         return (
             <Mutation mutation={UPDATE_ARTWORK}
@@ -61,7 +69,14 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
                     // console.log('updating artwork in cache')
                     cache.writeQuery({
-                        data: { galleries, artworks: [ ...artworks.filter((artwork: any) => artwork.id !== updateArtwork.id), updateArtwork] },
+                        data: {
+                            artworks: [
+                                ...artworks.filter((artwork: any) =>
+                                    artwork.id !== updateArtwork.id),
+                                updateArtwork,
+                            ],
+                            galleries,
+                        },
                         query: DB_CONTENT,
                     });
                     // // console.log(cache.readQuery({ query: DB_CONTENT }))
@@ -254,7 +269,8 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                                                 }, () => {
                                                     this.uploadedImage.current.style.display = "block";
                                                     const { imageWidth, imageHeight, windowHeight } = this.state;
-                                                    this.uploadedImage.current.style.maxWidth = imageWidth / imageHeight >= 1 ? // is it wider than tall?
+                                                    this.uploadedImage.current.style.maxWidth =
+                                                        imageWidth / imageHeight >= 1 ? // is it wider than tall?
                                                     "25%" : `${(windowHeight * .25) * imageWidth / imageHeight}px`;
                                                 });
                                             }
@@ -263,9 +279,14 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                                     />
                                 </div>
                             )) || (updatingArtwork.file && (
-                                <Img ref={this.currentImageFromFile} fluid={updatingArtwork.file.childImageSharp.fluid}/>
+                                <Img ref={this.currentImageFromFile}
+                                    fluid={updatingArtwork.file.childImageSharp.fluid}
+                                />
                             )) || (updatingArtwork.image && (
-                                <img ref={this.currentImageFromSource} src={`data:image/jpeg;base64,${updatingArtwork.image}`} alt={updatingArtwork.title}/>
+                                <img ref={this.currentImageFromSource}
+                                    src={`data:image/jpeg;base64,${updatingArtwork.image}`}
+                                    alt={updatingArtwork.title}
+                                />
                             ))}
                             {<div className="rotateImage"
                                 onClick={() => {
@@ -281,7 +302,9 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                                         const currentImageFromSourceNode = this.currentImageFromSource.current;
                                         const canvasContext = imageCanvasNode.getContext("2d");
                                         // get whichever element actually exists
-                                        const rotatingImage = uploadedImageNode || currentImageFromFileNode || currentImageFromSourceNode;
+                                        const rotatingImage = uploadedImageNode ||
+                                            currentImageFromFileNode ||
+                                            currentImageFromSourceNode;
                                         // rotate the canvas, draw the image, and rotate the canvas back
                                         // canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
                                         if (rotatingImage) {
@@ -295,7 +318,13 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                                                 (-1 * imageCanvasNode.height / 2),
                                                 (-1 * imageCanvasNode.width / 2),
                                             );
-                                            canvasContext.drawImage(rotatingImage, 0, 0, this.state.imageHeight, this.state.imageWidth);
+                                            canvasContext.drawImage(
+                                                rotatingImage,
+                                                0,
+                                                0,
+                                                this.state.imageHeight,
+                                                this.state.imageWidth,
+                                            );
                                             canvasContext.restore();
                                             // imageCanvasNode.width = this.state.imageHeight
                                             // imageCanvasNode.height = this.state.imageWidth
@@ -393,7 +422,8 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                                     const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
                                     cache.writeQuery({
                                         data: {
-                                            artworks: artworks.filter((artwork: any) => artwork.id !== updatingArtwork.id),
+                                            artworks: artworks.filter((artwork: any) =>
+                                                artwork.id !== updatingArtwork.id),
                                             galleries,
                                         },
                                         query: DB_CONTENT,
@@ -410,7 +440,11 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
                             >
                             {(deleteArtwork: any) => (
                                 <input type="button" value="remove"
-                                    onClick={() => window.confirm("are you sure you want to remove this artwork?") && deleteArtwork({ variables: { id: updatingArtwork.id } }).then(() => removeArtwork())}
+                                    onClick={() =>
+                                        window.confirm("are you sure you want to remove this artwork?") &&
+                                            deleteArtwork(
+                                                { variables: { id: updatingArtwork.id } },
+                                            ).then(() => removeArtwork())}
                                 />
                             )}
                             </Mutation>

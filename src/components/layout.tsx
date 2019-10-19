@@ -9,12 +9,13 @@ import {
 } from "react-apollo";
 import { Helmet } from "react-helmet";
 // import { client } from '../apollo/client'
+
 import LayoutContext from "../contexts/layoutContext";
 import { IArtworkImage } from "../models/artworkImage.model";
 
 import Footer from "./Footer";
+import GalleryHeader from "./header";
 import "./layout.css";
-import { isNullOrUndefined } from "util";
 // import Loading from "./Loading";
 
 const artworkImages: IArtworkImage[] = [];
@@ -63,7 +64,7 @@ class Layout extends React.Component<any, any, any> {
             `}
           </script>
         </Helmet>
-        <header/>
+        <GalleryHeader/>
         <div className="Content">
           <Query query={DB_CONTENT}>
             {({ data, loading }: any) => {
@@ -131,7 +132,7 @@ class Layout extends React.Component<any, any, any> {
                               {({ data: artworkData }: any) => {
                                 // console.log('apollo data', data)
                                 const foundImage = this.artworkImages.find((dbImage) => dbImage.id === artworkImage.id);
-                                if (!isNullOrUndefined(foundImage)) {
+                                if (!!foundImage) {
                                   // tslint:disable-next-line: max-line-length
                                   foundImage.image = artworkData.getArtwork && artworkData.getArtwork.image;
                                 }

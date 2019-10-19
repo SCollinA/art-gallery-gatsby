@@ -56,7 +56,8 @@ export default () => {
                                         cache.writeQuery({
                                             data: {
                                                 artworks,
-                                                galleries: galleries.filter((gallery: any) => gallery.id !== updatingGallery.id),
+                                                galleries: galleries.filter((gallery: any) =>
+                                                    gallery.id !== updatingGallery.id),
                                             },
                                             query: DB_CONTENT,
                                         });
