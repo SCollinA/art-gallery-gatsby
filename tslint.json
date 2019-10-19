@@ -5,6 +5,9 @@
     ],
     "rulesDirectory": [],
     "rules": {
+        "indent": {
+            "options": ["tabs"]
+        },
         "max-line-length": {
             "options": [120]
         },
