@@ -6,6 +6,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
+    `gatsby-plugin-typescript`,
     // module below converts postgres db to graphql with postgraphile
     // {
     //   resolve: "gatsby-source-pg",
@@ -33,7 +34,7 @@ module.exports = {
     },
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    {
+    { // this is the website manifest (icon, title, etc)
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `art-gallery`,
