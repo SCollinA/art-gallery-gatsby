@@ -22,22 +22,18 @@ const artworkImages: IArtworkImage[] = [];
 
 class Layout extends React.Component<any, any, any> {
 
+  public static propTypes: {
+    children: PropTypes.Validator<
+      string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray
+    >;
+  };
+
   private artworkImages: IArtworkImage[] = [];
 
   constructor(props: any) {
     super(props);
     this.artworkImages = artworkImages;
   }
-  // this function checks if artwork id is in array
-  // if not it adds it to array
-  private _updateDbImage = ( id: string ) => {
-    // console.log("updating artwork images");
-    if (!artworkImages.find((artworkImage) => artworkImage.id === id)) {
-      artworkImages.push({ id });
-    }
-  }
-  // tslint:disable-next-line: max-line-length
-  public static propTypes: { children: PropTypes.Validator<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>; };
 
   public render() {
     const { children } = this.props;
@@ -178,6 +174,15 @@ class Layout extends React.Component<any, any, any> {
         </div>
       </div>
     );
+  }
+
+  // this function checks if artwork id is in array
+  // if not it adds it to array
+  private _updateDbImage = ( id: string ) => {
+    // console.log("updating artwork images");
+    if (!artworkImages.find((artworkImage) => artworkImage.id === id)) {
+      artworkImages.push({ id });
+    }
   }
 }
 

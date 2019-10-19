@@ -1,11 +1,11 @@
-import React from 'react'
-import AdminArtworks from "./AdminArtworks"
-import AdminGalleries from "./AdminGalleries"
-import UpdateGalleryForm from './UpdateGalleryForm'
-import UpdateArtworkForm from './UpdateArtworkForm'
-import AdminContext from '../contexts/adminContext'
-import AdminLogin from './AdminLogin';
-import LayoutContext from '../contexts/layoutContext';
+import React from "react";
+import AdminContext from "../contexts/adminContext";
+import LayoutContext from "../contexts/layoutContext";
+import AdminArtworks from "./AdminArtworks";
+import AdminGalleries from "./AdminGalleries";
+import AdminLogin from "./AdminLogin";
+import UpdateArtworkForm from "./UpdateArtworkForm";
+import UpdateGalleryForm from "./UpdateGalleryForm";
 
 export default class Admin extends React.Component<any, any, any> {
     constructor(props: any) {
@@ -20,135 +20,138 @@ export default class Admin extends React.Component<any, any, any> {
         };
     }
 
-    componentDidMount() {
-        localStorage.getItem('auth-token') && this.setState({ isLoggedIn: true })
-    }
-    
-    _login = (isLoggedIn: any) => {
-        this.setState({ isLoggedIn })
-        if (isLoggedIn) {
-            window.onbeforeunload = () => 'are you sure you want to log out?'
-            window.onunload = () => localStorage.removeItem('auth-token')
+    public componentDidMount() {
+        if (localStorage.getItem("auth-token")) {
+            this.setState({ isLoggedIn: true });
         }
     }
 
-    _logout = () => {
-        window.onbeforeunload = null
-        localStorage.removeItem('auth-token')
-        this.setState({ isLoggedIn: false })
+    public _login = (isLoggedIn: any) => {
+        this.setState({ isLoggedIn });
+        if (isLoggedIn) {
+            window.onbeforeunload = () => "are you sure you want to log out?";
+            window.onunload = () => localStorage.removeItem("auth-token");
+        }
+    }
+
+    public _logout = () => {
+        window.onbeforeunload = null;
+        localStorage.removeItem("auth-token");
+        this.setState({ isLoggedIn: false });
     }
 
     // select a gallery to update
     // when selecting, if one already exists, remove it
-    _selectGallery = (selectedGallery: any) => this.setState({
-        updatingArtwork: {},
+    public _selectGallery = (selectedGallery: any) => this.setState({
+        isUpdating: this.state.selectedGallery.id === selectedGallery.id && true,
         selectedArtwork: {},
         selectedGallery,
+        updatingArtwork: {},
         updatingGallery: this.state.selectedGallery.id === selectedGallery.id && selectedGallery,
-        isUpdating: this.state.selectedGallery.id === selectedGallery.id && true 
     })
-    
+
     // select an artwork to update
     // when selecting, if one already exists, remove it
-    _selectArtwork = (selectedArtwork: any) => this.setState({
-        updatingGallery: {},
-        // selectedGallery: {}, 
+    public _selectArtwork = (selectedArtwork: any) => this.setState({
+        isUpdating: true,
         selectedArtwork,
-        updatingArtwork: selectedArtwork, 
-        isUpdating: true
-    })
-
-    // update the gallery in state
-    _handleGalleryChange = (updatingGallery: any) => this.setState({ updatingGallery })
-    
-    // update the gallery in state
-    _handleArtworkChange = (updatingArtwork: any) => this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
-
-    // submission will be a mutation defined in the form
-    _submitGalleryChange = () => this.setState({ 
+        // selectedGallery: {},
+        updatingArtwork: selectedArtwork,
         updatingGallery: {},
-        selectedGallery: {}, 
-        isUpdating: false 
-    })
-    
-    // submission will be a mutation defined in the form
-    _submitArtworkChange = () => this.setState({ 
-        updatingArtwork: {}, 
-        selectedArtwork: {},
-        isUpdating: false 
     })
 
-    _resetGallery = () => this.setState({
+    // update the gallery in state
+    public _handleGalleryChange = (updatingGallery: any) => this.setState({ updatingGallery });
+
+    // update the gallery in state
+    public _handleArtworkChange = (updatingArtwork: any) =>
+        this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
+
+    // submission will be a mutation defined in the form
+    public _submitGalleryChange = () => this.setState({
+        isUpdating: false,
+        selectedGallery: {},
+        updatingGallery: {},
+    })
+
+    // submission will be a mutation defined in the form
+    public _submitArtworkChange = () => this.setState({
+        isUpdating: false,
+        selectedArtwork: {},
+        updatingArtwork: {},
+    })
+
+    public _resetGallery = () => this.setState({
         updatingGallery: this.state.selectedGallery,
     })
 
-    _resetArtwork = () => this.setState({
+    public _resetArtwork = () => this.setState({
         updatingArtwork: this.state.selectedArtwork,
     })
 
-    _removeGallery = () => this._submitGalleryChange()
+    public _removeGallery = () => this._submitGalleryChange();
 
-    _removeArtwork = () => this._submitArtworkChange()
+    public _removeArtwork = () => this._submitArtworkChange();
 
-    render() {
-        const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state
-        const { updateDbImage } = this.context
+    public render() {
+        const { isUpdating, updatingGallery, updatingArtwork, isLoggedIn } = this.state;
+        const { updateDbImage } = this.context;
         return (!isLoggedIn && (<AdminLogin adminLogin={this._login}/>)) || (
-            <div className='Admin'
+            <div className="Admin"
                 onClick={() => this.setState({
                     isUpdating: false,
-                    selectedGallery: {},
-                    updatingGallery: {},
                     selectedArtwork: {},
+                    selectedGallery: {},
                     updatingArtwork: {},
+                    updatingGallery: {},
                 })}
             >
-            <div className='logout'>
-                <input type='button' value='logout'
+            <div className="logout">
+                <input type="button" value="logout"
                     onClick={() => this._logout()}
                 />
             </div>
-                <AdminContext.Provider 
-                    value={{ 
-                        updatingGallery: this.state.updatingGallery,
-                        selectGallery: this._selectGallery,
-                        selectedGallery: this.state.selectedGallery,
-                        changeGallery: this._handleGalleryChange,
-                        submitGallery: this._submitGalleryChange,
-                        resetGallery: this._resetGallery,
-                        removeGallery: this._removeGallery,
-                        updatingArtwork: this.state.updatingArtwork,
-                        selectArtwork: this._selectArtwork,
-                        selectedArtwork: this.state.selectedArtwork,
+                <AdminContext.Provider
+                    value={{
                         changeArtwork: this._handleArtworkChange,
-                        submitArtwork: this._submitArtworkChange,
-                        updateDbImage,
-                        resetArtwork: this._resetArtwork,
+                        changeGallery: this._handleGalleryChange,
                         removeArtwork: this._removeArtwork,
+                        removeGallery: this._removeGallery,
+                        resetArtwork: this._resetArtwork,
+                        resetGallery: this._resetGallery,
+                        selectArtwork: this._selectArtwork,
+                        selectGallery: this._selectGallery,
+                        selectedArtwork: this.state.selectedArtwork,
+                        selectedGallery: this.state.selectedGallery,
+                        submitArtwork: this._submitArtworkChange,
+                        submitGallery: this._submitGalleryChange,
+                        updateDbImage,
+                        updatingArtwork: this.state.updatingArtwork,
+                        updatingGallery: this.state.updatingGallery,
                     }}
                 >
                     <AdminGalleries/>
                     <AdminArtworks/>
                     {isUpdating && (
-                        <div className='updateForm'
+                        <div className="updateForm"
                             onClick={() => this.setState({
                                 isUpdating: false,
-                                selectedGallery: {},
-                                updatingGallery: {},
                                 selectedArtwork: {},
+                                selectedGallery: {},
                                 updatingArtwork: {},
+                                updatingGallery: {},
                             })}
                         >
-                            {((updatingGallery.id && 
-                                <UpdateGalleryForm/>) || 
-                            (updatingArtwork.id && 
+                            {((updatingGallery.id &&
+                                <UpdateGalleryForm/>) ||
+                            (updatingArtwork.id &&
                                 <UpdateArtworkForm/>))}
                         </div>
                     )}
                 </AdminContext.Provider>
             </div>
-        )
+        );
     }
 }
 
-Admin.contextType = LayoutContext
+Admin.contextType = LayoutContext;
