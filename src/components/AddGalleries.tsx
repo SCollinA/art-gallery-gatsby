@@ -8,9 +8,9 @@ import { DB_CONTENT } from './layout';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectGallery }) => (
+            {({ selectGallery }: any) => (
                     <Mutation mutation={ADD_GALLERY}
-                        update={(cache, { data: { addGallery } }) => {
+                        update={(cache: any, { data: { addGallery } }: any) => {
                             // immediately select the gallery for updating
                             const { id, name } = addGallery
                             // select once to get artwork
@@ -36,7 +36,7 @@ export default () => {
                             // })
                         }}
                         >
-                        {(addGallery, { data, loading, error }) => {
+                        {(addGallery: any, { data, loading, error }: any) => {
                             return (
                             <div className='AddGalleries'
                                 onClick={addGallery}

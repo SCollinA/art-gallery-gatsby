@@ -13,14 +13,20 @@ import LayoutContext from "../contexts/layoutContext";
 import { IArtworkImage } from "../models/artworkImage.model";
 
 import Footer from "./Footer";
-import Header from "./header";
 import "./layout.css";
+import { isNullOrUndefined } from "util";
 // import Loading from "./Loading";
 
 const artworkImages: IArtworkImage[] = [];
 
-class Layout extends React.Component {
+class Layout extends React.Component<any, any, any> {
 
+  private artworkImages: IArtworkImage[] = [];
+
+  constructor(props: any) {
+    super(props);
+    this.artworkImages = artworkImages;
+  }
   // this function checks if artwork id is in array
   // if not it adds it to array
   private _updateDbImage = ( id: string ) => {
@@ -29,11 +35,13 @@ class Layout extends React.Component {
       artworkImages.push({ id });
     }
   }
+  // tslint:disable-next-line: max-line-length
+  public static propTypes: { children: PropTypes.Validator<string | number | boolean | {} | PropTypes.ReactElementLike | PropTypes.ReactNodeArray>; };
 
   public render() {
     const { children } = this.props;
     return (
-      <div className='Layout'>
+      <div className="Layout">
         <Helmet>
           <script>
             {`
@@ -55,120 +63,129 @@ class Layout extends React.Component {
             `}
           </script>
         </Helmet>
-        <Header/>
-        <div className='Content'>
+        <header/>
+        <div className="Content">
           <Query query={DB_CONTENT}>
-            {({ data, loading, error }) => {
+            {({ data, loading }: any) => {
               // console.log('running db content query', data)
               const { galleries, artworks } = (!loading && data) ?
-                data : 
-                { galleries: [], artworks: [] }
+                data :
+                { galleries: [], artworks: [] };
               return (
                 <StaticQuery query={ARTWORK_FILES}
-                  render={data => {
+                  render={(artworkFileData: any) => {
                     // console.log('running artwork files static query')
-                    const artworkFiles = data.artworkFiles ? data.artworkFiles.edges.map(edge => edge.node) : []
-                    const galleriesWithFiles = galleries.length > 0 ? 
-                      galleries.map(gallery => {
-                        const galleryArtworks = artworks.filter(artwork => artwork.galleryId === gallery.id)
+                    // tslint:disable-next-line: max-line-length
+                    const artworkFiles = artworkFileData.artworkFiles ? artworkFileData.artworkFiles.edges.map((edge: any) => edge.node) : [];
+                    const galleriesWithFiles = galleries.length > 0 ?
+                      galleries.map((gallery: any) => {
+                        const galleryArtworks = artworks.filter((artwork: any) => artwork.galleryId === gallery.id);
                         return {
-                          id: gallery.id,
-                          name: gallery.name,
-                          artworks: galleryArtworks.length > 0 ? 
-                            galleryArtworks.map(({ id, galleryId, title, width, height, image, medium, price, sold, framed }) => {
-                              const artworkImage = artworkImages.find(artworkImage => id === artworkImage.id)
+                          artworks: galleryArtworks.length > 0 ?
+                            // tslint:disable-next-line: max-line-length
+                            galleryArtworks.map(({ id, galleryId, title, width, height, medium, price, sold, framed }: any) => {
+                              // tslint:disable-next-line: max-line-length
+                              const artworkImage = artworkImages.find((galleryArtworkImage: any) => id === galleryArtworkImage.id);
                               // if an artwork file exist add it
                               // will check if file is there to determine proper element for image
                               return {
-                                id,
+                                file: artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`),
+                                framed,
                                 galleryId,
-                                title,
-                                width,
                                 height,
-                                image: artworkImage ? artworkImage.image : '',
+                                id,
+                                image: artworkImage ? artworkImage.image : "",
                                 medium,
                                 price,
                                 sold,
-                                framed,
-                                file: artworkFiles.find(artworkFile => artworkFile.name === `${id}-${title}`),
-                              }
+                                title,
+                                width,
+                              };
                             }) :
-                            [{ id: 'nada', title: 'no artworks'}]
-                        }
-                      }) : [{ 
-                        id: 'none', 
-                        name: 'no galleries', 
-                        artworks: [{ id: 'nada', title: 'no galleries #1'}]
-                      }]
-                    !artworkImages.length &&
-                      galleriesWithFiles.forEach(galleryWithFile => {
-                        galleryWithFile.artworks.forEach(galleryArtwork => {
-                          if (!galleryArtwork.file && galleryArtwork.id !== 'nada') {
+                            [{ id: "nada", title: "no artworks"}],
+                          id: gallery.id,
+                          name: gallery.name,
+                        };
+                      }) : [{
+                        artworks: [{ id: "nada", title: "no galleries #1"}],
+                        id: "none",
+                        name: "no galleries",
+                      }];
+                    if (!artworkImages.length) {
+                      galleriesWithFiles.forEach((galleryWithFile: any) => {
+                        galleryWithFile.artworks.forEach((galleryArtwork: any) => {
+                          if (!galleryArtwork.file && galleryArtwork.id !== "nada") {
                             artworkImages.push({
                               id: galleryArtwork.id,
-                            })
+                            });
                           }
-                        })
-                      })
+                        });
+                      });
+                    }
                     return (
                       <>
                         {artworkImages.map((artworkImage, index) => {
                           // console.log('each artwork image', artworkImage)
                           return (
-                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={'cache-first'}>
-                              {({ data, loading, error }) => {
+                            <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={"cache-first"}>
+                              {({ data: artworkData }: any) => {
                                 // console.log('apollo data', data)
-                                artworkImages.find(dbImage => dbImage.id === artworkImage.id).image = data.getArtwork && data.getArtwork.image
-                                return null
+                                const foundImage = this.artworkImages.find((dbImage) => dbImage.id === artworkImage.id);
+                                if (!isNullOrUndefined(foundImage)) {
+                                  // tslint:disable-next-line: max-line-length
+                                  foundImage.image = artworkData.getArtwork && artworkData.getArtwork.image;
+                                }
+                                return null;
                               }}
                             </Query>
-                          )
+                          );
                         })}
-                        <LayoutContext.Provider 
-                          value={{ 
+                        <LayoutContext.Provider
+                          value={{
                             // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles.map(galleryWithFile => {
+                            galleries: galleriesWithFiles.map((galleryWithFile: any) => {
                               // console.log('artworkImages', artworkImages)
                               return {
                                 ...galleryWithFile,
-                                artworks: galleryWithFile.artworks.map(galleryArtwork => {
-                                  const artworkImage = artworkImages.find(artworkImage => artworkImage.id === galleryArtwork.id)
+                                artworks: galleryWithFile.artworks.map((galleryArtwork: any) => {
+                                  // tslint:disable-next-line: max-line-length
+                                  const artworkImage = artworkImages.find((galleryArtworkImage: any) => galleryArtworkImage.id === galleryArtwork.id);
                                   // console.log('artworkImage', artworkImage)
                                   return {
                                     ...galleryArtwork,
                                     image: artworkImage ?
                                     artworkImage.image :
-                                    galleryArtwork.image
-                                  }
-                                })
-                              }
+                                    galleryArtwork.image,
+                                  };
+                                }),
+                              };
                             }),
-                            updateDbImage: this._updateDbImage
+                            updateDbImage: this._updateDbImage,
                           }}
                         >
                           {/* {loading && <Loading/>} */}
                           {children}
                         </LayoutContext.Provider>
                       </>
-                    )
+                    );
                   }}
                 />
-              )
+              );
             }}
-          </Query>  
+          </Query>
           <Footer/>
         </div>
       </div>
-    )
+    );
   }
 }
 
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,
-}
+};
 
-export default Layout
+export default Layout;
 
 export const DB_CONTENT = gql`
   {
@@ -189,8 +206,8 @@ export const DB_CONTENT = gql`
       framed
     }
   }
-  
-  `
+
+  `;
 
 export const ARTWORK_IMAGE = gql`
   query GetArtworkImage($id: ID) {
@@ -199,9 +216,9 @@ export const ARTWORK_IMAGE = gql`
       image
     }
   }
-`
+`;
 
-// export const GET_ARTWORK_IMAGES = gql`  
+// export const GET_ARTWORK_IMAGES = gql`
 // subscription GetArtworkImages {
 //   artworkImageChanged {
 //     id
@@ -209,10 +226,10 @@ export const ARTWORK_IMAGE = gql`
 //   }
 // }
 // `
-  
+
 const ARTWORK_FILES = graphql`
   {
-    artworkFiles: allFile(filter: { 
+    artworkFiles: allFile(filter: {
         relativeDirectory: { eq: "artworks" },
         extension: { eq: "jpeg" }
     }) {
@@ -224,7 +241,7 @@ const ARTWORK_FILES = graphql`
       }
     }
   }
-`
+`;
 
 export const fluidImage = graphql`
   fragment fluidImage on File {
@@ -234,7 +251,7 @@ export const fluidImage = graphql`
       }
     }
   }
-`
+`;
 
 export const fixedImage = graphql`
   fragment fixedImage on File {
@@ -244,4 +261,4 @@ export const fixedImage = graphql`
       }
     }
   }
-`
+`;

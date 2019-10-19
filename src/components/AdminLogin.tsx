@@ -1,43 +1,43 @@
-import React from 'react'
-import { Mutation } from 'react-apollo'
-import gql from 'graphql-tag'
-import Loading from './Loading';
+import gql from "graphql-tag";
+import React from "react";
+import { Mutation } from "react-apollo";
+import Loading from "./Loading";
 
-export default ({ adminLogin }) => (
+export default ({ adminLogin }: any) => (
     <Mutation mutation={ADMIN_LOGIN}
-        onCompleted={({ login: { token }}) => {
-            localStorage.setItem('auth-token', token)
-            adminLogin(true)
+        onCompleted={({ login: { token }}: any) => {
+            localStorage.setItem("auth-token", token);
+            adminLogin(true);
         }}
-        onError={err => window.alert(err.message)}
+        onError={(err: any) => window.alert(err.message)}
     >
-        {(adminLogin, { data, loading, error }) => (
+        {(adminLogin: any, { data, loading, error }: any) => (
             <>
             {loading && <Loading/>}
-            <form className='AdminLogin'
-                onSubmit={event => {
-                    event.preventDefault()
-                    adminLogin({ 
-                        variables: { 
-                            adminPassword: event.target.adminPassword.value 
-                        } 
-                    })
+            <form className="AdminLogin"
+                onSubmit={(event: any) => {
+                    event.preventDefault();
+                    adminLogin({
+                        variables: {
+                            adminPassword: event.target.adminPassword.value,
+                        },
+                    });
                 }}
             >
-                <label style={{ display: 'none' }}>admin password
-                    <input autoComplete={'username'} type='text' name='adminUsername' placeholder='no username'/>
+                <label style={{ display: "none" }}>admin password
+                    <input autoComplete={"username"} type="text" name="adminUsername" placeholder="no username"/>
                 </label>
                 <label>admin password
-                    <input autoFocus autoComplete={'current-password'} type='password' placeholder="not 'password1'" name='adminPassword'/>
+                    <input autoFocus autoComplete={"current-password"} type="password" placeholder="not 'password1'" name="adminPassword"/>
                 </label>
                 <label>submit
-                    <input type='submit' value='proceed'/>
+                    <input type="submit" value="proceed"/>
                 </label>
             </form>
             </>
         )}
     </Mutation>
-)
+);
 
 const ADMIN_LOGIN = gql`
 mutation AdminLogin($adminPassword: String!) {
@@ -45,4 +45,4 @@ mutation AdminLogin($adminPassword: String!) {
         token
     }
 }
-`
+`;

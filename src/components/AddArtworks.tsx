@@ -8,12 +8,12 @@ import { DB_CONTENT } from './layout';
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectArtwork, selectedGallery }) => (
+            {({ selectArtwork, selectedGallery }: any) => (
                     <Mutation mutation={ADD_ARTWORK}
                         variables={{
                             galleryId: selectedGallery.id || null,
                         }}
-                        update={(cache, { data: { addArtwork } }) => {
+                        update={(cache: any, { data: { addArtwork } }: any) => {
                             // get only needed variables, i.e. no '__typename'
                             const { 
                                 id,
@@ -51,7 +51,7 @@ export default () => {
                             }
                         }]}
                     >
-                        {(addArtwork, { data, loading, error }) => (
+                        {(addArtwork: any, { data, loading, error }: any) => (
                             <div className='AddArtworks'                            
                                 onClick={event => {
                                     event.stopPropagation()

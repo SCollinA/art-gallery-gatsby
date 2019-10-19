@@ -1,21 +1,21 @@
-import Img from 'gatsby-image'
-import PropTypes from "prop-types"
-import React from "react"
-import { Link, StaticQuery, graphql } from "gatsby"
+import { graphql, Link, StaticQuery } from "gatsby";
+import Img from "gatsby-image";
+import PropTypes from "prop-types";
+import React from "react";
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons'
-import { faEnvelope, faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import PageLinks from './PageLinks'
-import SocialLinks from './SocialLinks'
-import HamburgerLinks from './HamburgerLinks';
-library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle)
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope, faTimesCircle } from "@fortawesome/free-regular-svg-icons";
+import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import HamburgerLinks from "./HamburgerLinks";
+import PageLinks from "./PageLinks";
+import SocialLinks from "./SocialLinks";
+library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle);
 
-const Header = () => (
-  <div className='Header'>
-    <div className='headerLinks'>
-      <div className='homeLink'>
+const header = () => (
+  <div className="Header">
+    <div className="headerLinks">
+      <div className="homeLink">
         <Link to="/"
           style={{
             color: `white`,
@@ -34,7 +34,7 @@ const Header = () => (
                 }
               }
             `}
-            render={data => (
+            render={(data) => (
               <Img fluid={data.brandImage.childImageSharp.fluid}/>
             )}/>
         </Link>
@@ -44,14 +44,14 @@ const Header = () => (
     <HamburgerLinks />
     <PageLinks />
   </div>
-)
+);
 
-Header.propTypes = {
+header.propTypes = {
   siteTitle: PropTypes.string,
-}
+};
 
-Header.defaultProps = {
+header.defaultProps = {
   siteTitle: ``,
-}
+};
 
-export default Header
+export default header;

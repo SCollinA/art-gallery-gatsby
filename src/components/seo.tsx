@@ -1,15 +1,15 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Helmet from "react-helmet"
-import { StaticQuery, graphql } from "gatsby"
+import { graphql, StaticQuery } from "gatsby";
+import PropTypes from "prop-types";
+import React from "react";
+import Helmet from "react-helmet";
 
-function SEO({ description, lang, meta, keywords, title }) {
+function SEO({ description, lang, meta, keywords, title }: any) {
   return (
     <StaticQuery
       query={detailsQuery}
-      render={data => {
+      render={(data) => {
         const metaDescription =
-          description || data.site.siteMetadata.description
+          description || data.site.siteMetadata.description;
         return (
           <Helmet
             htmlAttributes={{
@@ -19,69 +19,69 @@ function SEO({ description, lang, meta, keywords, title }) {
             titleTemplate={`%s | ${data.site.siteMetadata.title}`}
             meta={[
               {
+                content: metaDescription,
                 name: `description`,
-                content: metaDescription,
               },
               {
+                content: title,
                 property: `og:title`,
-                content: title,
               },
               {
+                content: metaDescription,
                 property: `og:description`,
-                content: metaDescription,
               },
               {
-                property: `og:type`,
                 content: `website`,
+                property: `og:type`,
               },
               {
-                name: `twitter:card`,
                 content: `summary`,
+                name: `twitter:card`,
               },
               {
-                name: `twitter:creator`,
                 content: data.site.siteMetadata.author,
+                name: `twitter:creator`,
               },
               {
-                name: `twitter:title`,
                 content: title,
+                name: `twitter:title`,
               },
               {
-                name: `twitter:description`,
                 content: metaDescription,
+                name: `twitter:description`,
               },
             ]
               .concat(
                 keywords.length > 0
                   ? {
-                      name: `keywords`,
                       content: keywords.join(`, `),
+                      name: `keywords`,
                     }
-                  : []
+                  : [],
               )
               .concat(meta)}
           />
-        )
+        );
       }}
     />
-  )
+  );
 }
 
 SEO.defaultProps = {
+  keywords: [],
   lang: `en`,
   meta: [],
-  keywords: [],
-}
+};
 
 SEO.propTypes = {
   description: PropTypes.string,
+  keywords: PropTypes.arrayOf(PropTypes.string),
   lang: PropTypes.string,
   meta: PropTypes.array,
-  keywords: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string.isRequired,
-}
+};
 
-export default SEO
+export default SEO;
 
 const detailsQuery = graphql`
   query DefaultSEOQuery {
@@ -93,4 +93,4 @@ const detailsQuery = graphql`
       }
     }
   }
-`
+`;

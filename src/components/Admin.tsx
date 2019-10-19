@@ -7,24 +7,24 @@ import AdminContext from '../contexts/adminContext'
 import AdminLogin from './AdminLogin';
 import LayoutContext from '../contexts/layoutContext';
 
-export default class Admin extends React.Component {
-    constructor(props) {
-        super(props)
+export default class Admin extends React.Component<any, any, any> {
+    constructor(props: any) {
+        super(props);
         this.state = {
-            isUpdating: false,
-            selectedGallery: {},
-            updatingGallery: {},
-            selectedArtwork: {},
-            updatingArtwork: {},
             isLoggedIn: false,
-        }
+            isUpdating: false,
+            selectedArtwork: {},
+            selectedGallery: {},
+            updatingArtwork: {},
+            updatingGallery: {},
+        };
     }
 
     componentDidMount() {
         localStorage.getItem('auth-token') && this.setState({ isLoggedIn: true })
     }
     
-    _login = isLoggedIn => {
+    _login = (isLoggedIn: any) => {
         this.setState({ isLoggedIn })
         if (isLoggedIn) {
             window.onbeforeunload = () => 'are you sure you want to log out?'
@@ -40,7 +40,7 @@ export default class Admin extends React.Component {
 
     // select a gallery to update
     // when selecting, if one already exists, remove it
-    _selectGallery = selectedGallery => this.setState({
+    _selectGallery = (selectedGallery: any) => this.setState({
         updatingArtwork: {},
         selectedArtwork: {},
         selectedGallery,
@@ -50,7 +50,7 @@ export default class Admin extends React.Component {
     
     // select an artwork to update
     // when selecting, if one already exists, remove it
-    _selectArtwork = selectedArtwork => this.setState({
+    _selectArtwork = (selectedArtwork: any) => this.setState({
         updatingGallery: {},
         // selectedGallery: {}, 
         selectedArtwork,
@@ -59,10 +59,10 @@ export default class Admin extends React.Component {
     })
 
     // update the gallery in state
-    _handleGalleryChange = updatingGallery => this.setState({ updatingGallery })
+    _handleGalleryChange = (updatingGallery: any) => this.setState({ updatingGallery })
     
     // update the gallery in state
-    _handleArtworkChange = updatingArtwork => this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
+    _handleArtworkChange = (updatingArtwork: any) => this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
 
     // submission will be a mutation defined in the form
     _submitGalleryChange = () => this.setState({ 

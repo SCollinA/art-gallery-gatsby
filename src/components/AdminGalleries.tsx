@@ -1,30 +1,30 @@
-import React from 'react'
-import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
-import AddGalleries from './AddGalleries';
-import AdminContext from '../contexts/adminContext';
+import gql from "graphql-tag";
+import React from "react";
+import { Query } from "react-apollo";
+import AdminContext from "../contexts/adminContext";
+import AddGalleries from "./AddGalleries";
 
 export default () => {
     return (
         <AdminContext.Consumer>
-            {({ selectGallery, selectedGallery, updatingGallery }) => (
-                <div className='AdminGalleries'>
+            {({ selectGallery, selectedGallery, updatingGallery }: any) => (
+                <div className="AdminGalleries">
                     <h1>collections</h1>
                     <Query query={ALL_GALLERIES}>
-                        {({ data, loading, error }) => (
-                            <div className='currentGalleries'>
-                                {!loading && 
-                                    data.getAllGalleries.map(gallery => (
-                                        <div className={`currentGallery${(selectedGallery && gallery.id === selectedGallery.id) ? ' selected' : ''}`} key={gallery.id}
-                                            onClick={event => {
-                                                event.stopPropagation()
+                        {({ data, loading, error }: any) => (
+                            <div className="currentGalleries">
+                                {!loading &&
+                                    data.getAllGalleries.map((gallery: any) => (
+                                        <div className={`currentGallery${(selectedGallery && gallery.id === selectedGallery.id) ? " selected" : ""}`} key={gallery.id}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
                                                 selectGallery({
                                                     id: gallery.id,
-                                                    name: gallery.name
-                                                })
+                                                    name: gallery.name,
+                                                });
                                             }}
                                         >
-                                            <h3>{updatingGallery.id === gallery.id ? 
+                                            <h3>{updatingGallery.id === gallery.id ?
                                             updatingGallery.name :
                                             gallery.name}</h3>
                                         </div>
@@ -37,8 +37,8 @@ export default () => {
                 </div>
             )}
         </AdminContext.Consumer>
-    )
-}
+    );
+};
 
 export const ALL_GALLERIES = gql`
     {
@@ -47,4 +47,4 @@ export const ALL_GALLERIES = gql`
             name
         }
     }
-`
+`;

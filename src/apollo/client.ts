@@ -4,6 +4,7 @@ import { ApolloLink, GraphQLRequest } from "apollo-link";
 import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
 import _fetch from "isomorphic-fetch";
+import { isNull } from "lodash/fp";
 // Import { split } from 'apollo-link'
 // Import { WebSocketLink } from 'apollo-link-ws'
 // Import { getMainDefinition } from 'apollo-utilities'
@@ -27,7 +28,7 @@ const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) =>
     return {
       headers: {
         ...headers,
-        authorization: token !== null ? `Bearer ${token}` : "",
+        authorization: !isNull(token) ? `Bearer ${token}` : "",
       },
     };
   })

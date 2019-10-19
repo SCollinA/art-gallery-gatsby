@@ -1,15 +1,15 @@
-import React from 'react'
-import Img from 'gatsby-image'
+import Img from "gatsby-image";
+import React from "react";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import LayoutContext from '../contexts/LayoutContext'
 
-export default ({ galleries, selectGallery, selectedGallery }) => {
-    const randomGalleryImages = galleries.map(gallery => {
+export default ({ galleries, selectGallery, selectedGallery }: any) => {
+    const randomGalleryImages = galleries.map((gallery: any) => {
         // const randomIndex = Math.floor(Math.random() * gallery.artworks.length)
-        return gallery.artworks[0]
-    })
+        return gallery.artworks[0];
+    });
     return (
-        <div className='GalleryChoice'>
+        <div className="GalleryChoice">
             {/* <div className='galleryArrow' onClick={() => scrollThumbs(true)}>
                 <FontAwesomeIcon size='4x' icon={['fas', 'angle-left']}/>
             </div> */}
@@ -17,14 +17,14 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
             {/* <LayoutContext.Consumer>
                 {({ artworks }) => ( */}
                 <h3>collections</h3>
-                    <div id='galleryThumbs'>
+                    <div id="galleryThumbs">
                         {/* map galleries to their first artwork image */}
-                        {galleries.map((gallery, index) => {
-                            const randomArtwork = randomGalleryImages[index] || 
-                                { file: false, image: false }
+                        {galleries.map((gallery: any, index: any) => {
+                            const randomArtwork = randomGalleryImages[index] ||
+                                { file: false, image: false };
                             return !gallery.artworks.length || (
-                                <div key={index} 
-                                    className={`galleryThumb${gallery.id === selectedGallery.id ? ' selectedGallery' : ''}`}
+                                <div key={index}
+                                    className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""}`}
                                     onClick={() => selectGallery(gallery)}
                                 >
                                     {(
@@ -35,7 +35,7 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                                         ))}
                                     <p>{gallery.name}</p>
                                 </div>
-                            )
+                            );
                         })}
                     </div>
                 {/* )} */}
@@ -45,8 +45,8 @@ export default ({ galleries, selectGallery, selectedGallery }) => {
                 <FontAwesomeIcon size='4x' icon={['fas', 'angle-right']}/>
             </div> */}
         </div>
-    )
-}
+    );
+};
 
 // function scrollThumbs(isScrollingLeft) {
 //     const galleryThumbs = document.getElementById('galleryThumbs')
