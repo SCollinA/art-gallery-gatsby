@@ -1,4 +1,4 @@
-import { StaticQuery } from "gatsby";
+import { graphql, StaticQuery } from "gatsby";
 import React from "react";
 import {
 	Query,
@@ -6,7 +6,6 @@ import {
 
 import LayoutContext from "../contexts/layoutContext";
 import {
-	ARTWORK_FILES,
 	ARTWORK_IMAGE,
 	DB_CONTENT,
 } from "../graphql/graphql";
@@ -57,6 +56,22 @@ export default class Layout extends React.Component<any, any, any> {
 		);
 	}
 }
+
+const ARTWORK_FILES = graphql`
+  {
+    artworkFiles: allFile(filter: {
+        relativeDirectory: { eq: "artworks" },
+        extension: { eq: "jpeg" }
+    }) {
+      edges {
+        node {
+          name
+          ...fluidImage
+        }
+      }
+    }
+  }
+`;
 
 // this function checks if artwork id is in array
 // if not it adds it to array

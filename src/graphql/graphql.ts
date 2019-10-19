@@ -31,22 +31,6 @@ export const ARTWORK_IMAGE = gql`
   }
 `;
 
-export const ARTWORK_FILES = graphql`
-  {
-    artworkFiles: allFile(filter: {
-        relativeDirectory: { eq: "artworks" },
-        extension: { eq: "jpeg" }
-    }) {
-      edges {
-        node {
-          name
-          ...fluidImage
-        }
-      }
-    }
-  }
-`;
-
 export const fluidImage = graphql`
   fragment fluidImage on File {
     childImageSharp {
