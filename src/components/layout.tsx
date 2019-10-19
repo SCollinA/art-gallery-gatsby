@@ -28,11 +28,11 @@ class Layout extends React.Component<any, any, any> {
     >;
   };
 
-  private artworkImages: IArtworkImage[] = [];
+  // private artworkImages: IArtworkImage[] = [];
 
   constructor(props: any) {
     super(props);
-    this.artworkImages = artworkImages;
+    // this.artworkImages = artworkImages;
   }
 
   public render() {
@@ -125,12 +125,14 @@ class Layout extends React.Component<any, any, any> {
                           // console.log('each artwork image', artworkImage)
                           return (
                             <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={"cache-first"}>
-                              {({ data: { getArtwork: artworkData = {}} }: any) => {
+                              {({ data: artworkData }: any) => {
                                 // console.log('apollo data', data)
-                                const foundImage = this.artworkImages.find((dbImage) => dbImage.id === artworkImage.id);
+                                const foundImage = artworkImages.find((dbImage) => dbImage.id === artworkImage.id);
                                 if (!!foundImage) {
                                   // tslint:disable-next-line: max-line-length
-                                  foundImage.image = artworkData && artworkData.image;
+                                  foundImage.image = artworkData &&
+                                    artworkData.getArtwork &&
+                                    artworkData.getArtwork.image;
                                 }
                                 return null;
                               }}
