@@ -9,7 +9,7 @@ import {
 } from "react-apollo"
 // import { client } from '../apollo/client'
 import gql from 'graphql-tag'
-import LayoutContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/layoutContext'
 import Header from "./header"
 import Footer from './Footer'
 import "./layout.css"

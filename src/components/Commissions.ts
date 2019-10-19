@@ -1,6 +1,6 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import LayoutContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/layoutContext'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { StaticQuery, graphql } from 'gatsby';
 

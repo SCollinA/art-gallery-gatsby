@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import GalleryChoice from './GalleryChoice'
 import GalleryMain from './GalleryMain'
 import ArtworkChoice from './ArtworkChoice'
-import LayoutContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/layoutContext'
 
 export default class Gallery extends Component {
     constructor(props) {

@@ -2,7 +2,7 @@ import React from 'react'
 import Img from 'gatsby-image'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { StaticQuery, graphql } from 'gatsby';
-import LayoutContext from '../contexts/LayoutContext';
+import LayoutContext from '../contexts/layoutContext';
 
 export default () => (
     <LayoutContext.Consumer>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Img from 'gatsby-image'
-import LayoutContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/layoutContext'
 
 export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight }) => {
     return (

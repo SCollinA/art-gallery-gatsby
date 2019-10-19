@@ -1,7 +1,7 @@
 import React from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
-import LayoutContext from '../contexts/LayoutContext'
+import LayoutContext from '../contexts/layoutContext'
 import Loading from './Loading';
 
 export default () => (

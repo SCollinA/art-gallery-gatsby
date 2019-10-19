@@ -1,7 +1,7 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import AdminContext from '../contexts/AdminContext'
+import AdminContext from '../contexts/adminContext'
 import { GALLERY_ARTWORKS, GET_GALLERY } from './AdminArtworks';
 import { ALL_GALLERIES } from './AdminGalleries';
 import { DB_CONTENT } from './layout';

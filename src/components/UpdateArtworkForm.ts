@@ -2,7 +2,7 @@ import React from 'react'
 import Img from 'gatsby-image'
 import { Mutation, Query } from 'react-apollo'
 import gql from 'graphql-tag'
-import AdminContext from '../contexts/AdminContext'
+import AdminContext from '../contexts/adminContext'
 import { 
     DB_CONTENT, 
     ARTWORK_IMAGE 
