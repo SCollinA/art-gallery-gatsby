@@ -27,7 +27,7 @@ const httpLink = setContext((_, { headers }) =>{
         authorization: token ? `Bearer ${token}` : ''
       }
     }
-  }).concat(new createHttpLink({
+  }).concat(createHttpLink({
   // change this to art-gallery.collinargo.com/graphql for production
   uri: 'http://localhost:4000/graphql',
 }))
