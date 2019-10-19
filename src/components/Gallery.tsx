@@ -40,9 +40,9 @@ export default class Gallery extends React.Component<any, any, any> {
     public componentDidUpdate() {
         if (this.state.selectedGallery.id === "none" && this.context.galleries[0].id !== "none") {
             this.setState({
-                selectedGallery: this.context.galleries[0],
                 selectedArtwork: this.context.galleries[0] &&
                     this.context.galleries[0].artworks[0],
+                selectedGallery: this.context.galleries[0],
             });
         }
     }

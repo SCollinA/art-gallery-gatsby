@@ -125,12 +125,12 @@ class Layout extends React.Component<any, any, any> {
                           // console.log('each artwork image', artworkImage)
                           return (
                             <Query key={index} query={ARTWORK_IMAGE} variables={{ id: artworkImage.id }} fetchPolicy={"cache-first"}>
-                              {({ data: artworkData }: any) => {
+                              {({ data: { getArtwork: artworkData = {}} }: any) => {
                                 // console.log('apollo data', data)
                                 const foundImage = this.artworkImages.find((dbImage) => dbImage.id === artworkImage.id);
                                 if (!!foundImage) {
                                   // tslint:disable-next-line: max-line-length
-                                  foundImage.image = artworkData.getArtwork && artworkData.getArtwork.image;
+                                  foundImage.image = artworkData && artworkData.image;
                                 }
                                 return null;
                               }}
