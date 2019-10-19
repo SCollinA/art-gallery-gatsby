@@ -1,6 +1,6 @@
-import Img from 'gatsby-image'
-import React from 'react'
-import LayoutContext from '../contexts/layoutContext'
+import Img from "gatsby-image";
+import React from "react";
+import LayoutContext from "../contexts/layoutContext";
 
 export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight }: any) => {
     return (
@@ -33,8 +33,8 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                                 const dbImage: any = artworkRef.current;
                                                 dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
                                                     `${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
-                                                    "100%"
-                                                dbImage.style.display = "inherit"
+                                                    "100%";
+                                                dbImage.style.display = "inherit";
                                             }}
                                         />
                                     )) || (artwork.file && (
@@ -49,7 +49,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
                                         />
                                     ))}
                                 </div>
-                            );}))}
+                            ); }))}
                         </div>
                         <div className="galleryCaption">
                             {!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}

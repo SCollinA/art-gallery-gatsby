@@ -19,7 +19,7 @@ import "./layout.css";
 
 class Layout extends React.Component<any, any, any> {
 
-  public artworkImages: IArtworkImage[] = [];
+  private artworkImages: IArtworkImage[] = [];
 
   constructor(props: any) {
     super(props);
@@ -110,32 +110,12 @@ class Layout extends React.Component<any, any, any> {
                             </Query>
                           );
                         })}
-                        <LayoutContext.Provider
-                          value={{
-                            // if galleries has a gallery, add it's artworks
-                            galleries: galleriesWithFiles.map((galleryWithFile: any) => {
-                              // console.log('artworkImages', artworkImages)
-                              return {
-                                ...galleryWithFile,
-                                artworks: galleryWithFile.artworks.map((galleryArtwork: any) => {
-                                  // tslint:disable-next-line: max-line-length
-                                  const artworkImage = this.artworkImages.find((galleryArtworkImage: any) => galleryArtworkImage.id === galleryArtwork.id);
-                                  // console.log('artworkImage', artworkImage)
-                                  return {
-                                    ...galleryArtwork,
-                                    image: artworkImage ?
-                                    artworkImage.image :
-                                    galleryArtwork.image,
-                                  };
-                                }),
-                              };
-                            }),
-                            updateDbImage: this.updateDbImage,
-                          }}
-                        >
-                          {/* {loading && <Loading/>} */}
-                          {children}
-                        </LayoutContext.Provider>
+                        <LayoutContextProvider
+                          artworkImages={this.artworkImages}
+                          children={children}
+                          galleriesWithFiles={galleriesWithFiles}
+                          updateDbImage={this.updateDbImage}
+                        />
                       </>
                     );
                   }}
@@ -159,6 +139,35 @@ class Layout extends React.Component<any, any, any> {
 }
 
 export default Layout;
+
+const LayoutContextProvider = ({ artworkImages, children, galleriesWithFiles, updateDbImage }: any) => (
+  <LayoutContext.Provider
+    value={{
+      // if galleries has a gallery, add it's artworks
+      galleries: galleriesWithFiles.map((galleryWithFile: any) => {
+        // console.log('artworkImages', artworkImages)
+        return {
+          ...galleryWithFile,
+          artworks: galleryWithFile.artworks.map((galleryArtwork: any) => {
+            const artworkImage = artworkImages.find(
+              (galleryArtworkImage: any) =>
+                galleryArtworkImage.id === galleryArtwork.id);
+            // console.log('artworkImage', artworkImage)
+            return {
+              ...galleryArtwork,
+              image: artworkImage ?
+                artworkImage.image :
+                galleryArtwork.image,
+            };
+          }),
+        };
+      }),
+      updateDbImage,
+    }}
+  >
+    {children}
+  </LayoutContext.Provider>
+);
 
 const FullStoryHelmet = () => (
   <Helmet>
