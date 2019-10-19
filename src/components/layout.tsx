@@ -1,34 +1,37 @@
-import React from "react"
-import { Helmet } from 'react-helmet'
-import PropTypes from "prop-types"
-import { graphql, StaticQuery } from "gatsby"
-import { 
-  Query, 
+import { graphql, StaticQuery } from "gatsby";
+import gql from "graphql-tag";
+import PropTypes from "prop-types";
+import React from "react";
+import {
+  Query,
   // Subscription ,
   // ApolloConsumer,
-} from "react-apollo"
+} from "react-apollo";
+import { Helmet } from "react-helmet";
 // import { client } from '../apollo/client'
-import gql from 'graphql-tag'
-import LayoutContext from '../contexts/layoutContext'
-import Header from "./header"
-import Footer from './Footer'
-import "./layout.css"
+import LayoutContext from "../contexts/layoutContext";
+import { IArtworkImage } from "../models/artworkImage.model";
+
+import Footer from "./Footer";
+import Header from "./header";
+import "./layout.css";
 // import Loading from "./Loading";
 
-const artworkImages = []
+const artworkImages: IArtworkImage[] = [];
 
 class Layout extends React.Component {
 
   // this function checks if artwork id is in array
   // if not it adds it to array
-  _updateDbImage = ( id ) => {
-    'updating artwork images'
-    !artworkImages.find(artworkImages => artworkImages.id === id) &&
-      artworkImages.push({ id })
+  private _updateDbImage = ( id: string ) => {
+    // console.log("updating artwork images");
+    if (!artworkImages.find((artworkImage) => artworkImage.id === id)) {
+      artworkImages.push({ id });
+    }
   }
 
-  render() {
-    const { children } = this.props
+  public render() {
+    const { children } = this.props;
     return (
       <div className='Layout'>
         <Helmet>

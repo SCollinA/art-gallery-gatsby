@@ -1,7 +1,7 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:all"
+        "tslint:recommended"
     ],
     "rulesDirectory": [],
     "rules": {
@@ -16,7 +16,24 @@
         "no-console": {
             "severity": "warning",
             "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
-        }
+        },
+        "no-default-export": false,
+        "no-default-import": false,
+        "comment-format": {
+            "options": [
+                "check-space"
+            ]
+        },
+        "completed-docs": false,
+        "variable-name": {
+            "options": [
+                "allow-leading-underscore",
+                "ban-keywords",
+                "require-const-for-all-caps",
+                "check-format"
+            ]
+        },
+        "member-ordering": false
     },
     "jsRules": {
         "max-line-length": {
