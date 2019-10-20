@@ -63,53 +63,16 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<Mutation mutation={UPDATE_ARTWORK}
-				update={(cache: any, { data: { updateArtwork } }: any) => {
-					const { artworks, ...rest } = cache.readQuery({ query: DB_CONTENT });
-					cache.writeQuery({
-						data: {
-							artworks: artworks.map((artwork: any) => {
-								switch (artwork.id) {
-									case updateArtwork.id:
-										return {
-											...updateArtwork,
-											...artwork,
-										};
-									default:
-										return artwork;
-								}
-							}),
-							...rest,
-						},
-						query: DB_CONTENT,
-					});
-					const { getArtworks } = cache.readQuery({
+				refetchQueries={[
+					{
 						query: GALLERY_ARTWORKS,
-						variables: {galleryId: selectedGallery.id || null},
-					});
-					cache.writeQuery({
-						data: {
-							getArtworks: getArtworks.map((getArtwork: any) => {
-								console.log(getArtwork, selectedGallery);
-								switch (getArtwork.id) {
-									case updateArtwork.id:
-										return {
-											...updateArtwork,
-											...getArtwork,
-										};
-									default:
-										return getArtwork;
-								}
-							}).filter((getArtwork: any) =>
-								isEmpty(selectedGallery) ?
-									getArtwork.galleryId === null :
-									getArtwork.galleryId === selectedGallery.id),
-						},
+						variables: updatingArtwork,
+					},
+					{
 						query: GALLERY_ARTWORKS,
-						variables: {
-							galleryId: selectedGallery.id || null,
-						},
-					});
-				}}
+						variables: selectedArtwork,
+					},
+				]}
 			>
 				{(updateArtwork: any, { loading }: any) => {
 					return (

@@ -1,3 +1,4 @@
+import { isEqual } from "lodash/fp";
 import React from "react";
 
 import ArtworkImageDB from "./ArtworkImageDB";
@@ -23,6 +24,16 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		window.addEventListener("resize", this.updateWindowDimensions);
 	}
 
+	public componentDidUpdate() {
+		const updatedState = {...this.state};
+		if (!isEqual(this.props.artwork, this.state.artwork)) {
+			updatedState.artwork = this.props.artwork;
+		}
+		if (!isEqual(this.state, updatedState)) {
+			this.setState(updatedState);
+		}
+	}
+
 	public componentWillUnmount() {
 		window.removeEventListener("resize", this.updateWindowDimensions);
 	}
@@ -31,7 +42,7 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		this.setState({ aspectRatio:  window.innerWidth / window.innerHeight })
 
 	public render = () =>
-		this.state.artwork.file && !this.state.artwork.image ?
+		this.state.artwork.file ?
 			<ArtworkImageFile artwork={this.state.artwork}
 				imageRef={this.imageRef}
 				aspectRatio={this.state.aspectRatio}

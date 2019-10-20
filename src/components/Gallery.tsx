@@ -16,7 +16,10 @@ export default class Gallery extends React.Component<any, any, any> {
 		super(props);
 		this.state = {
 			selectedArtwork: {},
-			selectedGallery: {},
+			selectedGallery: {
+				artworks: [],
+				id: null,
+			},
 		};
 	}
 
@@ -34,16 +37,6 @@ export default class Gallery extends React.Component<any, any, any> {
 			});
 		}
 	}
-
-	// public componentDidUpdate() {
-	// 	if (this.state.selectedGallery.id === "none" && this.context.galleries[0].id !== "none") {
-	// 		this.setState({
-	// 			selectedArtwork: this.context.galleries[0] &&
-	// 				this.context.galleries[0].artworks[0],
-	// 			selectedGallery: this.context.galleries[0],
-	// 		});
-	// 	}
-	// }
 
 	public selectGallery = (selectedGallery: any) => this.setState({
 		selectedArtwork: selectedGallery.artworks[0],
@@ -79,7 +72,7 @@ export default class Gallery extends React.Component<any, any, any> {
 					selectedArtwork={this.state.selectedArtwork}
 				/>
 				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
-					selectedGallery={this.state.selectedGallery}
+					artworks={this.state.selectedGallery.artworks}
 					selectArtwork={this.selectArtwork}
 					selectedArtwork={this.state.selectedArtwork}
 				/>
