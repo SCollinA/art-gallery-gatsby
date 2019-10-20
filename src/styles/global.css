@@ -48,14 +48,34 @@ a {
     padding: 0 0 2%;
 }
 
+.section-wrapper {
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 15px 0;
+}
+
+.Header > .section-wrapper:last-child,
+.Layout > .section-wrapper:last-child {
+    padding: 5px 0;
+}
+
+.page-break-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 25px auto !important;
+    flex-basis: 100% !important;
+}
+
 .page-break {
-    border-color: black;
     height: 0;
     width: 50%;
-    flex-basis: 100% !important;
-    margin: 25px 20% !important;
+    border-color: black;
     border-width: 3px;
     border-style: solid;
+    border-radius: 10px;
 }
 
 /* ============================ */
@@ -75,6 +95,14 @@ a {
 
 .SocialLinks {
     padding: 0 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.SocialLinks > * {
+    padding: 5%;
 }
 
 .PageLinks {
@@ -95,7 +123,9 @@ a {
     text-align: center;
 }
 
-.activeLink, .pageLink > a:hover:not(.activeLink) {
+.activeLink,
+.pageLink > a:hover:not(.activeLink),
+.homeLink > a:hover:not(.activeLink) {
     display: block;
     border-left: 5px solid black;
     border-right: 5px solid black;
@@ -116,32 +146,20 @@ a {
     transition: transform .5s;
 }
 
-.section-wrapper {
-    border-top: 5px solid black;
-    border-bottom: 5px solid black;
-    border-radius: 5px;
-    margin: 10px 0;
-    padding: 10px 0;
-}
-
 /* ============================ */
 /*          Content             */
 /* ============================ */
-.Content {
-    /* 15 px is width of ugly scroll bar */
-    /* width: calc(100% + 15px); */
+/* .Content {
+    15 px is width of ugly scroll bar
+    width: calc(100% + 15px);
     width: 100%;
     margin: 0 auto;
     overflow-y: auto;
 }
 
-.Content > * {
-    margin: auto;
-}
-
 .Content > a {
     padding: unset;
-}
+} */
 
 /* ============================ */
 /*          Gallery             */
@@ -227,7 +245,10 @@ a {
     margin: 0;
 }
 
-.galleryThumb:hover, .artworkThumb:hover {
+.galleryThumb:hover,
+.artworkThumb:hover,
+.contactForm > *:hover,
+.SocialLinks > *:hover {
     border-left: 5px solid black;
     border-right: 5px solid black;
     border-radius: 10px;
@@ -243,20 +264,22 @@ a {
 /*          About               */
 /* ============================ */
 
-.welcomeMessage, .commissionContent {
-    font-size: 1em;
-    line-height: 2em;
-}
-
-.About > .section-wrapper {
+.About > .section-wrapper, .Commissions > .section-wrapper {
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.About > .section-wrapper > * {
+.About > .section-wrapper > *, .Commissions > .section-wrapper > * {
     flex-basis: 50%;
+    height: 100%;
+}
+
+.Commissions > .section-wrapper > h4,
+.Commissions > .section-wrapper > h6,
+.Commissions > .section-wrapper > .section-wrapper {
+    flex-basis: 100%;
 }
 
 .aboutImg {
@@ -283,40 +306,31 @@ a {
 /*          Contact             */
 /* ============================ */
 
-/* .Contact {
-    display: flex;
-    flex-wrap: wrap;
-} */
-
 .contactForm {
     display: flex;
-    flex-direction: column;
-    max-width: 500px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 75%;
     margin: auto;
-}
-
-#contactFormHeader > *, #aboutHeader > * {
-    display: inline-block;
-    margin: 2%;
-    vertical-align: middle;
 }
 
 .contactForm > * {
-    display: flex;
-    flex-direction: column;
     padding: 2%;
 }
 
-.contactForm > input:last-child {
-    /* padding: unset; */
-    margin: auto;
-    /* height: fit-content; */
-    align-self: baseline;
+.contactForm input, .contactForm textarea {
+    border-radius: 20px;
 }
 
+.contactForm > .contactMessage {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
 
 #message {
-    height: 250px;
+    height: 125px;
 }
 
 /* ================================ */

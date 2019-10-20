@@ -17,6 +17,7 @@ const header = () => (
 		<div className="headerLinks">
 			<div className="homeLink">
 				<Link to="/"
+					activeClassName="activeLink"
 					style={{
 						color: `white`,
 						textDecoration: `none`,

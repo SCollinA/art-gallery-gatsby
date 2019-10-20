@@ -1,18 +1,21 @@
 import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
+
 import LayoutContext from "../contexts/layoutContext";
+
 import Loading from "./Loading";
+import PageBreak from "./PageBreak";
+import SectionWrapper from "./SectionWrapper";
 
 export default () => (
-	<div className="Contact">
-		<LayoutContext.Consumer>
-			{({ galleries }: any) => (
-				<Mutation mutation={CONTACT_MUTATION}>
-						{(contactArtist: any, { data, loading, error }: any) => {
-							return (
-							<>
-							{loading && <Loading/>}
+	<LayoutContext.Consumer>
+		{({ galleries }: any) => (
+			<Mutation mutation={CONTACT_MUTATION}>
+				{(contactArtist: any, { loading }: any) => (
+					<div className="Contact">
+						{loading && <Loading/>}
+						<SectionWrapper>
 							<form className="contactForm"
 								onSubmit={(event: any) => {
 									event.preventDefault();
@@ -32,7 +35,7 @@ export default () => (
 								<label>e-mail
 									<input type="text" name="email" id="email"/>
 								</label>
-								<label>message
+								<label className="contactMessage">message
 									<textarea name="message" id="message"></textarea>
 								</label>
 								<label>artwork
@@ -49,14 +52,16 @@ export default () => (
 										))}
 									</select>
 								</label>
-								<input type="submit" value="submit"/>
+								<label>
+									<input type="submit" value="submit"/>
+								</label>
 							</form>
-						</>
-						); }}
-					</Mutation>
-			)}
-		</LayoutContext.Consumer>
-	</div>
+						</SectionWrapper>
+					</div>
+				)}
+			</Mutation>
+		)}
+	</LayoutContext.Consumer>
 );
 
 const CONTACT_MUTATION = gql`

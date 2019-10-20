@@ -6,6 +6,7 @@ import LayoutContext from "../contexts/layoutContext";
 import ArtworkChoice from "./ArtworkChoice";
 import GalleryChoice from "./GalleryChoice";
 import GalleryMain from "./GalleryMain";
+import PageBreak from "./PageBreak";
 
 export default class Gallery extends React.Component<any, any, any> {
 
@@ -66,6 +67,7 @@ export default class Gallery extends React.Component<any, any, any> {
 					selectedGallery={this.state.selectedGallery}
 					selectedArtwork={this.state.selectedArtwork}
 				/>
+				<PageBreak/>
 				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
 					artworks={this.state.selectedGallery.artworks}
 					selectArtwork={this.selectArtwork}

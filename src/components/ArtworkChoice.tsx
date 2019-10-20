@@ -4,7 +4,7 @@ import SectionWrapper from "./SectionWrapper";
 
 export default ({ artworkChoiceRef, artworks, selectArtwork, selectedArtwork, selectedGallery }: any) => (
 	<div className="ArtworkChoice" ref={artworkChoiceRef}>
-		<div className="artworks	Title">
+		<div className="artworksTitle">
 			<h3>{selectedGallery.name}</h3>
 			<h3>artworks</h3>
 		</div>

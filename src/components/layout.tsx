@@ -19,29 +19,27 @@ export default ({ children }: any) =>
 	<div className="Layout">
 		<FullStoryHelmet/>
 		<GalleryHeader/>
-		<div className="Content">
-			<Query query={DB_CONTENT}>
-				{({ data: { galleries = [], artworks = [] }, loading }: any) => (
-					<StaticQuery query={ARTWORK_FILES}
-						render={(artworkFileData: any) => {
-							return (
-								<LayoutContext.Provider value={getContext(
-									artworks,
-									artworkFileData,
-									galleries,
-								)}>
-									{loading ?
-										<Loading/> :
-										children
-									}
-								</LayoutContext.Provider>
-							);
-						}}
-					/>
-				)}
-			</Query>
-			<Footer/>
-		</div>
+		<Query query={DB_CONTENT}>
+			{({ data: { galleries = [], artworks = [] }, loading }: any) => (
+				<StaticQuery query={ARTWORK_FILES}
+					render={(artworkFileData: any) => {
+						return (
+							<LayoutContext.Provider value={getContext(
+								artworks,
+								artworkFileData,
+								galleries,
+							)}>
+								{loading ?
+									<Loading/> :
+									children
+								}
+							</LayoutContext.Provider>
+						);
+					}}
+				/>
+			)}
+		</Query>
+		<Footer/>
 	</div>;
 
 const getContext = (
