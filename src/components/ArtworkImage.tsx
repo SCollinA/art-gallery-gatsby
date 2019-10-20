@@ -12,10 +12,10 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		this.state = {
 			artwork: props.artwork,
 			aspectRatio: 0,
-			windowHeight: 0,
-			windowWidth: 0,
 		};
-		console.log(this.state.artwork);
+		if (!!props.imageRef) {
+			this.imageRef = props.imageRef;
+		}
 	}
 
 	public componentDidMount() {
@@ -28,16 +28,16 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 	}
 
 	public updateWindowDimensions = () =>
-		this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight })
+		this.setState({ aspectRatio:  window.innerWidth / window.innerHeight })
 
 	public render = () =>
-		this.state.artwork.file ?
+		this.state.artwork.file && !this.state.artwork.image ?
 			<ArtworkImageFile artwork={this.state.artwork}
 				imageRef={this.imageRef}
-				windowHeight={this.state.windowHeight}
+				aspectRatio={this.state.aspectRatio}
 			/> :
 			<ArtworkImageDB artwork={this.state.artwork}
 				imageRef={this.imageRef}
-				windowHeight={this.state.windowHeight}
+				aspectRatio={this.state.aspectRatio}
 			/>
 }

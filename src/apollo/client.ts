@@ -23,21 +23,21 @@ import { isNull } from "lodash/fp";
 
 // tslint:disable-next-line: no-unsafe-any no-any
 const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) => {
-    const token: string | null = localStorage.getItem("auth-token");
+		const token: string | null = localStorage.getItem("auth-token");
 
-    return {
-      headers: {
-        ...headers,
-        authorization: !isNull(token) ? `Bearer ${token}` : "",
-      },
-    };
-  })
-  .concat(createHttpLink({
-  // ISSUE: https://github.com/apollographql/apollo-link/issues/513
-  // tslint:disable-next-line: no-any
-  fetch: _fetch as any,
-  // Change this to art-gallery.collinargo.com/graphql for production
-  uri: "http://localhost:4000/graphql",
+		return {
+			headers: {
+				...headers,
+				authorization: !isNull(token) ? `Bearer ${token}` : "",
+			},
+		};
+	})
+	.concat(createHttpLink({
+	// ISSUE: https://github.com/apollographql/apollo-link/issues/513
+	// tslint:disable-next-line: no-any
+	fetch: _fetch as any,
+	// Change this to art-gallery.collinargo.com/graphql for production
+	uri: "http://localhost:4000/graphql",
 }));
 
 // // using the ability to split links, you can send data to each link
@@ -53,7 +53,7 @@ const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) =>
 // ) : httpLink
 
 export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  cache: new InMemoryCache(),
-  // Link,
-  link: httpLink,
+	cache: new InMemoryCache(),
+	// Link,
+	link: httpLink,
 });

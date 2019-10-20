@@ -4,7 +4,7 @@ import LayoutContext from "../contexts/layoutContext";
 
 import ArtworkImage from "./ArtworkImage";
 
-export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight }: any) => {
+export default ({ galleryMainRef, selectedGallery, selectedArtwork }: any) => {
 	return (
 	<div className="GalleryMain" ref={galleryMainRef}>
 		<LayoutContext.Consumer>
@@ -15,19 +15,14 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork, windowHeight
 						<h1>{selectedArtwork.title}</h1>
 					</div>
 					<div className="galleryImage">
-						{galleries.map(({ artworks }: any) => artworks.map((artwork: any, index: any) => {
-							const imageRef = React.createRef<any>();
-							return (
+						{galleries.map(({ artworks }: any) =>
+							artworks.map((artwork: any, index: any) =>
 								<div key={index}
 									className={`galleryArtwork${selectedArtwork.id === artwork.id ? " current" : " hidden"}`}
 								>
-									<ArtworkImage artwork={artwork}
-										imageRef={imageRef}
-										windowHeight={windowHeight}
-									/>
-								</div>
-							);
-						}))}
+									<ArtworkImage artwork={artwork}/>
+								</div>,
+						))}
 					</div>
 					<div className="galleryCaption">
 						{!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}

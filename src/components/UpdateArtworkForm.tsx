@@ -10,13 +10,14 @@ import {
 } from "../graphql/graphql";
 
 import { GALLERY_ARTWORKS } from "./AdminArtworks";
+import ArtworkImage from "./ArtworkImage";
 import Loading from "./Loading";
 
 export default class UpdateArtworkForm extends React.Component<any, any, any> {
-	public imageCanvas: React.RefObject<any>;
-	public uploadedImage: React.RefObject<any>;
-	public currentImageFromFile: React.RefObject<any>;
-	public currentImageFromSource: React.RefObject<any>;
+
+	public imageCanvas = React.createRef<any>();
+	public artworkImageRef = React.createRef<any>();
+
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -27,11 +28,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 			windowHeight: 0,
 			windowWidth: 0,
 		};
-		this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-		this.imageCanvas = React.createRef();
-		this.uploadedImage = React.createRef();
-		this.currentImageFromFile = React.createRef();
-		this.currentImageFromSource = React.createRef();
 	}
 
 	public componentDidMount() {
@@ -51,7 +47,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		window.removeEventListener("resize", this.updateWindowDimensions);
 	}
 
-	public updateWindowDimensions() {
+	public updateWindowDimensions = () => {
 		this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
 	}
 	public render() {
@@ -60,7 +56,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 			updatingArtwork,
 			changeArtwork,
 			submitArtwork,
-			updateDbImage,
 			resetArtwork,
 			removeArtwork,
 			cancelUpdate,
@@ -68,52 +63,52 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<Mutation mutation={UPDATE_ARTWORK}
-				update={(cache: any, { data: { updateArtwork } }: any) => {
-					const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-					cache.writeQuery({
-						data: {
-							artworks: [
-								...artworks.filter((artwork: any) =>
-									artwork.id !== updateArtwork.id),
-								updateArtwork,
-							],
-							galleries,
-						},
-						query: DB_CONTENT,
-					});
-					cache.writeQuery({
-						data: {
-							getArtwork: {
-								__typename: "Artwork",
-								id: updateArtwork.id,
-								image: updateArtwork.image,
-							},
-						},
-						query: ARTWORK_IMAGE,
-						variables: {
-							id: updateArtwork.id,
-						},
-					});
-				}}
-				refetchQueries={[
-					{
-					query: ARTWORK_IMAGE,
-					variables: {
-						id: updatingArtwork.id,
-					},
-				},
-				{
-					query: GALLERY_ARTWORKS,
-					variables: {
-						galleryId: updatingArtwork.galleryId,
-					},
-				},
-				{
-					query: GALLERY_ARTWORKS,
-					variables: {
-						galleryId: selectedArtwork.galleryId,
-					},
-				}]}
+				// update={(cache: any, { data: { updateArtwork } }: any) => {
+				// 	const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
+				// 	cache.writeQuery({
+				// 		data: {
+				// 			artworks: [
+				// 				...artworks.filter((artwork: any) =>
+				// 					artwork.id !== updateArtwork.id),
+				// 				updateArtwork,
+				// 			],
+				// 			galleries,
+				// 		},
+				// 		query: DB_CONTENT,
+				// 	});
+				// 	cache.writeQuery({
+				// 		data: {
+				// 			getArtwork: {
+				// 				__typename: "Artwork",
+				// 				id: updateArtwork.id,
+				// 				image: updateArtwork.image,
+				// 			},
+				// 		},
+				// 		query: ARTWORK_IMAGE,
+				// 		variables: {
+				// 			id: updateArtwork.id,
+				// 		},
+				// 	});
+				// }}
+				// refetchQueries={[
+				// 	{
+				// 	query: ARTWORK_IMAGE,
+				// 	variables: {
+				// 		id: updatingArtwork.id,
+				// 	},
+				// },
+				// {
+				// 	query: GALLERY_ARTWORKS,
+				// 	variables: {
+				// 		galleryId: updatingArtwork.galleryId,
+				// 	},
+				// },
+				// {
+				// 	query: GALLERY_ARTWORKS,
+				// 	variables: {
+				// 		galleryId: selectedArtwork.galleryId,
+				// 	},
+				// }]}
 			>
 				{(updateArtwork: any, { loading }: any) => {
 					return (
@@ -124,7 +119,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							event.preventDefault();
 							if (this.state.imageLoaded) {
 								const imageCanvasNode = this.imageCanvas.current;
-								const uploadedImageNode = this.uploadedImage.current;
+								const uploadedImageNode = this.artworkImageRef.current;
 								const canvasContext = imageCanvasNode.getContext("2d");
 								// draw image takes (img, x, y, w, h)
 								// tslint:disable-next-line: max-line-length
@@ -147,7 +142,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												imageLoaded: false,
 											}, () => {
 												submitArtwork();
-												updateDbImage(updatingArtwork.id);
 											});
 										});
 									};
@@ -248,38 +242,32 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 								height={this.state.imageHeight}
 								style={{ display: "none" }}
 							/>
-							{(this.state.imageLoaded && (
-								<div className="uploadedImage">
-									<img id="uploadedImage" ref={this.uploadedImage}
+							<div className="uploadedImage">
+								{this.state.imageLoaded ?
+									<img id="uploadedImage" ref={this.artworkImageRef}
 										style={{ display: "none"}}
 										alt="uploaded profile"
 										onLoad={() => {
 											if (!this.state.imageWidth) {
 												this.setState({
-													imageHeight: this.uploadedImage.current.height,
-													imageWidth: this.uploadedImage.current.width,
+													imageHeight: this.artworkImageRef.current.height,
+													imageWidth: this.artworkImageRef.current.width,
 												}, () => {
-													this.uploadedImage.current.style.display = "block";
+													this.artworkImageRef.current.style.display = "block";
 													const { imageWidth, imageHeight, windowHeight } = this.state;
-													this.uploadedImage.current.style.maxWidth =
+													this.artworkImageRef.current.style.maxWidth =
 														imageWidth / imageHeight >= 1 ? // is it wider than tall?
 													"25%" : `${(windowHeight * .25) * imageWidth / imageHeight}px`;
 												});
 											}
 										}}
 										src={blobUrl(this.state.imageFile)}
+									/> :
+									<ArtworkImage artwork={updatingArtwork}
+										imageRef={this.artworkImageRef}
 									/>
-								</div>
-							)) || (updatingArtwork.file && (
-								<Img ref={this.currentImageFromFile}
-									fluid={updatingArtwork.file.childImageSharp.fluid}
-								/>
-							)) || (updatingArtwork.image && (
-								<img ref={this.currentImageFromSource}
-									src={`data:image/jpeg;base64,${updatingArtwork.image}`}
-									alt={updatingArtwork.title}
-								/>
-							))}
+								}
+							</div>
 							{<div className="rotateImage"
 								onClick={() => {
 									// have to get current image height and width
@@ -289,14 +277,9 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									}, () => {
 									// get canvas and image elements from page
 										const imageCanvasNode = this.imageCanvas.current;
-										const uploadedImageNode = this.uploadedImage.current;
-										const currentImageFromFileNode = this.currentImageFromFile.current;
-										const currentImageFromSourceNode = this.currentImageFromSource.current;
+										const rotatingImage = this.artworkImageRef.current;
 										const canvasContext = imageCanvasNode.getContext("2d");
 										// get whichever element actually exists
-										const rotatingImage = uploadedImageNode ||
-											currentImageFromFileNode ||
-											currentImageFromSourceNode;
 										// rotate the canvas, draw the image, and rotate the canvas back
 										// canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
 										if (rotatingImage) {

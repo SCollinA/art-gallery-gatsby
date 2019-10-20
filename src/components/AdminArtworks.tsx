@@ -25,7 +25,18 @@ export default () => (
 									<div className="currentArtwork" key={artwork.id}
 										onClick={(event) => {
 											event.stopPropagation();
-											selectArtwork(artwork);
+											selectArtwork({
+												framed: artwork.framed,
+												galleryId: artwork.galleryId,
+												height: artwork.height,
+												id: artwork.id,
+												image: artwork.image,
+												medium: artwork.medium,
+												price: artwork.price,
+												sold: artwork.sold,
+												title: artwork.title,
+												width: artwork.width,
+											});
 									}}
 									>
 										{/* artwork title */}

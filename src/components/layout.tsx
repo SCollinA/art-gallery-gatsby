@@ -24,13 +24,12 @@ export default ({ children }: any) =>
 				{({ data: { galleries, artworks }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={(artworkFileData: any) => {
-							const context = getContext(
-								artworks,
-								artworkFileData,
-								galleries,
-							);
 							return (
-								<LayoutContext.Provider value={context}>
+								<LayoutContext.Provider value={getContext(
+									artworks,
+									artworkFileData,
+									galleries,
+								)}>
 									{loading ?
 										<Loading/> :
 										children}

@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import { ARTWORK_IMAGE } from "../graphql/graphql";
 import Loading from "./Loading";
 
-export default ({ artwork, imageRef, windowHeight }: any) => (
+export default ({ artwork, imageRef, aspectRatio }: any) => (
 	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}>
 		{({ data, loading }: any) =>
 			loading ?
@@ -20,7 +20,7 @@ export default ({ artwork, imageRef, windowHeight }: any) => (
 						const dbImage: any = imageRef.current;
 						if (!!imageRef) {
 							dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
-								`${(windowHeight * .75) * (dbImage.width / dbImage.height)}px` :
+								`${(dbImage.width / dbImage.height) * 100 / aspectRatio}%` :
 								"100%";
 						}
 						dbImage.style.display = "inherit";
