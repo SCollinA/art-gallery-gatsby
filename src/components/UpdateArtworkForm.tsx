@@ -1,11 +1,10 @@
-import Img from "gatsby-image";
 import gql from "graphql-tag";
+import { isEmpty } from "lodash/fp";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 
 import AdminContext from "../contexts/adminContext";
 import {
-	ARTWORK_IMAGE,
 	DB_CONTENT,
 } from "../graphql/graphql";
 
@@ -53,6 +52,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 	public render() {
 		const {
 			selectedArtwork,
+			selectedGallery,
 			updatingArtwork,
 			changeArtwork,
 			submitArtwork,
@@ -63,52 +63,53 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<Mutation mutation={UPDATE_ARTWORK}
-				// update={(cache: any, { data: { updateArtwork } }: any) => {
-				// 	const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-				// 	cache.writeQuery({
-				// 		data: {
-				// 			artworks: [
-				// 				...artworks.filter((artwork: any) =>
-				// 					artwork.id !== updateArtwork.id),
-				// 				updateArtwork,
-				// 			],
-				// 			galleries,
-				// 		},
-				// 		query: DB_CONTENT,
-				// 	});
-				// 	cache.writeQuery({
-				// 		data: {
-				// 			getArtwork: {
-				// 				__typename: "Artwork",
-				// 				id: updateArtwork.id,
-				// 				image: updateArtwork.image,
-				// 			},
-				// 		},
-				// 		query: ARTWORK_IMAGE,
-				// 		variables: {
-				// 			id: updateArtwork.id,
-				// 		},
-				// 	});
-				// }}
-				// refetchQueries={[
-				// 	{
-				// 	query: ARTWORK_IMAGE,
-				// 	variables: {
-				// 		id: updatingArtwork.id,
-				// 	},
-				// },
-				// {
-				// 	query: GALLERY_ARTWORKS,
-				// 	variables: {
-				// 		galleryId: updatingArtwork.galleryId,
-				// 	},
-				// },
-				// {
-				// 	query: GALLERY_ARTWORKS,
-				// 	variables: {
-				// 		galleryId: selectedArtwork.galleryId,
-				// 	},
-				// }]}
+				update={(cache: any, { data: { updateArtwork } }: any) => {
+					const { artworks, ...rest } = cache.readQuery({ query: DB_CONTENT });
+					cache.writeQuery({
+						data: {
+							artworks: artworks.map((artwork: any) => {
+								switch (artwork.id) {
+									case updateArtwork.id:
+										return {
+											...updateArtwork,
+											...artwork,
+										};
+									default:
+										return artwork;
+								}
+							}),
+							...rest,
+						},
+						query: DB_CONTENT,
+					});
+					const { getArtworks } = cache.readQuery({
+						query: GALLERY_ARTWORKS,
+						variables: {galleryId: selectedGallery.id || null},
+					});
+					cache.writeQuery({
+						data: {
+							getArtworks: getArtworks.map((getArtwork: any) => {
+								console.log(getArtwork, selectedGallery);
+								switch (getArtwork.id) {
+									case updateArtwork.id:
+										return {
+											...updateArtwork,
+											...getArtwork,
+										};
+									default:
+										return getArtwork;
+								}
+							}).filter((getArtwork: any) =>
+								isEmpty(selectedGallery) ?
+									getArtwork.galleryId === null :
+									getArtwork.galleryId === selectedGallery.id),
+						},
+						query: GALLERY_ARTWORKS,
+						variables: {
+							galleryId: selectedGallery.id || null,
+						},
+					});
+				}}
 			>
 				{(updateArtwork: any, { loading }: any) => {
 					return (

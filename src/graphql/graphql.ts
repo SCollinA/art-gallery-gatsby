@@ -2,7 +2,7 @@ import { graphql } from "gatsby";
 import gql from "graphql-tag";
 
 export const DB_CONTENT = gql`
-    {
+  {
     galleries: getAllGalleries {
         id
         name
@@ -19,7 +19,7 @@ export const DB_CONTENT = gql`
         sold
         framed
     }
-    }
+  }
 `;
 
 export const ARTWORK_IMAGE = gql`
