@@ -44,7 +44,7 @@ a {
 
 .Layout {
     width: 90%;
-    margin: auto;
+    margin: 10px auto;
     padding: 0 0 2%;
 }
 
@@ -142,24 +142,17 @@ a {
 }
 
 .expandedMenu > svg {
-    transform: rotate(90deg);
+    transform: rotate(405deg);
     transition: transform .5s;
+}
+
+.HamburgerLinks > .section-wrapper {
+    width: 100%;
 }
 
 /* ============================ */
 /*          Content             */
 /* ============================ */
-/* .Content {
-    15 px is width of ugly scroll bar
-    width: calc(100% + 15px);
-    width: 100%;
-    margin: 0 auto;
-    overflow-y: auto;
-}
-
-.Content > a {
-    padding: unset;
-} */
 
 /* ============================ */
 /*          Gallery             */
@@ -214,7 +207,6 @@ a {
 
 /* This is the inner container */
 #galleryThumbs {
-    flex: 1;
     display: flex;
     align-items: baseline;
     overflow: auto;
@@ -347,8 +339,6 @@ a {
 .currentGalleries > *, .currentArtworks > * {
     margin: 2%;
     padding: 2%;
-    /* flex: 1; */
-    /* max-width: 250px; */
     width: 21%;
     max-width: 300px;
     border: solid black 2px;
@@ -362,18 +352,10 @@ a {
 .currentArtworks > * {
     min-height: 250px;
 }
-/* .currentGallery, .currentArtwork {
-    max-width: 25%;
-} */
 
 .currentGallery.selected, .currentArtwork.selected {
     background-color: rgba(0, 0, 0, 0.25);
 }
-
-/* .AddGalleries, .AddArtworks {
-    width: 10%;
-    padding: unset;
-} */
 
 .addGallery, .addArtwork {
     width: 100%;
@@ -397,22 +379,14 @@ a {
 }
 
 #UpdateGalleryForm, #UpdateArtworkForm {
-    /* position: fixed; */
-    /* width: 75%; */
-    /* height: 50%; */
-    /* top: 25%; */
-    /* left: 12.5%; */
     margin: 0;
     height: 100%;
     display: flex;
     flex-wrap: wrap;
-    /* flex-direction: column; */
     background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
     padding: 5%;
     overflow-y: auto;
-    /* border: solid black 2px; */
-    /* border-radius: 10px; */
 }
 
 #UpdateGalleryForm > *, #UpdateArtworkForm > * {
@@ -480,21 +454,42 @@ a {
         width: 100%;
         display: flex;
         justify-content: space-around;
+        flex-direction: row;
     }
     /* adjust other links */
     .homeLink {
         margin: auto;
     }
     /* make other links hidden */
-    .headerLinks > .SocialLinks, .Header > .PageLinks {
+    .headerLinks > .SocialLinks,
+    .Header > .PageLinks,
+    .Header > .section-wrapper {
         /* visibility: hidden;
         position: fixed; */
         display: none;
     }
+    
+    .About > .section-wrapper > *,
+    .Commissions > .section-wrapper > * {
+        flex-basis: 100%;
+    }
 
-    .aboutContent > * {
-        width: 100% !important;
-        flex-direction: column;
+    .About > .section-wrapper > .gatsby-image-wrapper + p,
+    .Commissions > .section-wrapper > .gatsby-image-wrapper + p {
+        padding-top: 30px;
+    }
+
+    .galleryArtwork,
+    .randomArtwork {
+        width: unset;
+    }
+
+    #galleryThumbs {
+        display: unset;
+    }
+
+    .artworkThumb {
+        flex-basis: 100%;
     }
 }
 
@@ -507,26 +502,3 @@ a {
         width: 33%
     }
 }
-
-@media (max-width: 500px) {
-    .currentArtwork, .currentGallery, .addArtwork, .addGallery {
-        width: 45%;
-    }
-
-    .artworkThumb {
-        width: 50%;
-    }
-}
-
-/* 
-@media (min-width: 1000px) {
-    .currentGallery, .currentArtwork {
-        width: 1%;
-    }
-} */
-
-/* @media (max-width: 960px) {
-    .aboutContent > p {
-        flex-basis: unset;
-    }
-} */
