@@ -245,10 +245,10 @@ a {
     padding: 2%;
     cursor: pointer;
     width: 21%;
-    display: flex;
+    /* display: flex; */
     margin: 0 auto;
-    flex-direction: column;
-    justify-content: space-around;
+    /* flex-direction: column; */
+    /* justify-content: space-around; */
     /* flex: 1;
     max-width: 200px; */
     min-width: 100px;
