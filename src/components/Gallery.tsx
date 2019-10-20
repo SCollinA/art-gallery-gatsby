@@ -1,4 +1,4 @@
-import { isEmpty } from "lodash/fp";
+import { get, isEmpty } from "lodash/fp";
 import React from "react";
 
 import LayoutContext from "../contexts/layoutContext";
@@ -9,8 +9,8 @@ import GalleryMain from "./GalleryMain";
 
 export default class Gallery extends React.Component<any, any, any> {
 
-	public galleryMain: React.RefObject<any>;
-	public artworkChoice: React.RefObject<any>;
+	public galleryMain = React.createRef<any>();
+	public artworkChoice = React.createRef<any>();
 
 	constructor(props: any) {
 		super(props);
@@ -18,31 +18,34 @@ export default class Gallery extends React.Component<any, any, any> {
 			selectedArtwork: {},
 			selectedGallery: {},
 		};
-		this.galleryMain = React.createRef();
-		this.artworkChoice = React.createRef();
 	}
 
 	public componentDidMount() {
-		if (isEmpty(this.state.selectedArtwork)) {
+		let selectedGallery;
+		let selectedArtwork;
+		if (isEmpty(this.state.selectedGallery) ||
+			isEmpty(this.state.selectedArtwork)
+		) {
+			selectedGallery = get(["galleries", "0"], this.context);
+			selectedArtwork = get(["artworks", "0"], selectedGallery);
 			this.setState({
-				selectedArtwork: this.context.galleries[0] &&
-					this.context.galleries[0].artworks[0],
-				selectedGallery: this.context.galleries[0],
+				selectedArtwork,
+				selectedGallery,
 			});
 		}
 	}
 
-	public componentDidUpdate() {
-		if (this.state.selectedGallery.id === "none" && this.context.galleries[0].id !== "none") {
-			this.setState({
-				selectedArtwork: this.context.galleries[0] &&
-					this.context.galleries[0].artworks[0],
-				selectedGallery: this.context.galleries[0],
-			});
-		}
-	}
+	// public componentDidUpdate() {
+	// 	if (this.state.selectedGallery.id === "none" && this.context.galleries[0].id !== "none") {
+	// 		this.setState({
+	// 			selectedArtwork: this.context.galleries[0] &&
+	// 				this.context.galleries[0].artworks[0],
+	// 			selectedGallery: this.context.galleries[0],
+	// 		});
+	// 	}
+	// }
 
-	public _selectGallery = (selectedGallery: any) => this.setState({
+	public selectGallery = (selectedGallery: any) => this.setState({
 		selectedArtwork: selectedGallery.artworks[0],
 		selectedGallery,
 	}, () => {
@@ -53,7 +56,7 @@ export default class Gallery extends React.Component<any, any, any> {
 		});
 	})
 
-	public _selectArtwork = (selectedArtwork: any) => this.setState({
+	public selectArtwork = (selectedArtwork: any) => this.setState({
 		selectedArtwork,
 	}, () => {
 		const galleryMain = this.galleryMain.current;
@@ -68,7 +71,7 @@ export default class Gallery extends React.Component<any, any, any> {
 			<div className="Gallery">
 				<GalleryChoice
 					galleries={this.context.galleries}
-					selectGallery={this._selectGallery}
+					selectGallery={this.selectGallery}
 					selectedGallery={this.state.selectedGallery}
 				/>
 				<GalleryMain galleryMainRef={this.galleryMain}
@@ -77,7 +80,7 @@ export default class Gallery extends React.Component<any, any, any> {
 				/>
 				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
 					selectedGallery={this.state.selectedGallery}
-					selectArtwork={this._selectArtwork}
+					selectArtwork={this.selectArtwork}
 					selectedArtwork={this.state.selectedArtwork}
 				/>
 			</div>

@@ -73,20 +73,24 @@ const ARTWORK_FILES = graphql`
 `;
 
 const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
-	artworks = (artworks.length && artworks) || [{
+	const placeholderArtwork = [{
 		id: "nada",
 		title: "no artworks",
 	}];
-	galleries = (galleries.length && galleries) || [{
-		artworks,
+	const placeholderGallery = [{
 		id: "none",
 		name: "no galleries",
 	}];
+	if (!galleries.length) {
+		galleries = placeholderGallery;
+	}
 	return galleries.map((gallery: any) => {
 		// match up artworks from db to gallery
 		let galleryArtworks = artworks.filter((artwork: any) =>
-			gallery.id === "none" ||
 			artwork.galleryId === gallery.id);
+		if (!galleryArtworks.length) {
+			galleryArtworks = placeholderArtwork;
+		}
 		// map those to files for display throughout site
 		galleryArtworks = galleryArtworks.map(({
 				id,
