@@ -11,26 +11,18 @@ export default class Gallery extends React.Component<any, any, any> {
 
 	public galleryMain: React.RefObject<any>;
 	public artworkChoice: React.RefObject<any>;
-	public selectedArtworkRef: React.RefObject<any>;
 
 	constructor(props: any) {
 		super(props);
 		this.state = {
-			aspectRatio: 0,
 			selectedArtwork: {},
 			selectedGallery: {},
-			windowHeight: 0,
-			windowWidth: 0,
 		};
-		this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
 		this.galleryMain = React.createRef();
 		this.artworkChoice = React.createRef();
-		this.selectedArtworkRef = React.createRef();
 	}
 
 	public componentDidMount() {
-		this.updateWindowDimensions();
-		window.addEventListener("resize", this.updateWindowDimensions);
 		if (isEmpty(this.state.selectedArtwork)) {
 			this.setState({
 				selectedArtwork: this.context.galleries[0] &&
@@ -48,14 +40,6 @@ export default class Gallery extends React.Component<any, any, any> {
 				selectedGallery: this.context.galleries[0],
 			});
 		}
-	}
-
-	public componentWillUnmount() {
-		window.removeEventListener("resize", this.updateWindowDimensions);
-	}
-
-	public updateWindowDimensions() {
-		this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
 	}
 
 	public _selectGallery = (selectedGallery: any) => this.setState({
@@ -90,7 +74,6 @@ export default class Gallery extends React.Component<any, any, any> {
 				<GalleryMain galleryMainRef={this.galleryMain}
 					selectedGallery={this.state.selectedGallery}
 					selectedArtwork={this.state.selectedArtwork}
-					windowHeight={this.state.windowHeight}
 				/>
 				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
 					selectedGallery={this.state.selectedGallery}

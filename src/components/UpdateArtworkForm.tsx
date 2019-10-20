@@ -63,11 +63,12 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 			updateDbImage,
 			resetArtwork,
 			removeArtwork,
+			cancelUpdate,
 		} = this.context;
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<Mutation mutation={UPDATE_ARTWORK}
-				update={(cache: any, { data: { updateArtwork }, loading, error }: any) => {
+				update={(cache: any, { data: { updateArtwork } }: any) => {
 					const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
 					cache.writeQuery({
 						data: {
@@ -80,12 +81,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 						},
 						query: DB_CONTENT,
 					});
-					// // console.log(cache.readQuery({ query: DB_CONTENT }))
-					// const dbImageData = cache.readQuery({
-					//     query: ARTWORK_IMAGE,
-					//     variables: { id: updateArtwork.id }
-					// })
-					// console.log("updating dbImage in cache", updateArtwork.id);
 					cache.writeQuery({
 						data: {
 							getArtwork: {
@@ -120,7 +115,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 					},
 				}]}
 			>
-				{(updateArtwork: any, { data, loading, error }: any) => {
+				{(updateArtwork: any, { loading }: any) => {
 					return (
 					<>
 					{loading && <Loading/>}
@@ -128,10 +123,8 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 						onSubmit={(event) => {
 							event.preventDefault();
 							if (this.state.imageLoaded) {
-								// const imageCanvas = document.getElementById('imageCanvas')
 								const imageCanvasNode = this.imageCanvas.current;
 								const uploadedImageNode = this.uploadedImage.current;
-								// const uploadedImage = document.getElementById('uploadedImage')
 								const canvasContext = imageCanvasNode.getContext("2d");
 								// draw image takes (img, x, y, w, h)
 								// tslint:disable-next-line: max-line-length
@@ -140,7 +133,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									const fr = new FileReader();
 									fr.onload = () => {
 										const image = btoa(`${fr.result}`);
-										// console.log(typeof image, fr.result.length)
 										// updating artwork values will match form values
 										updateArtwork({ variables: {
 											id: updatingArtwork.id,
@@ -158,7 +150,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												updateDbImage(updatingArtwork.id);
 											});
 										});
-										// .catch(console.log);
 									};
 									fr.readAsBinaryString(imageBlob);
 								}, "image/jpeg");
@@ -416,7 +407,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							<input type="submit" value="submit"/>
 							<input type="reset" value="reset"/>
 							<input type="button" value="cancel"
-								onClick={() => submitArtwork()}
+								onClick={() => cancelUpdate()}
 							/>
 							<Mutation mutation={DELETE_ARTWORK}
 								update={(cache: any) => {

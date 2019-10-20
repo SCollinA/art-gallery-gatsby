@@ -13,45 +13,45 @@ import SocialLinks from "./SocialLinks";
 library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle);
 
 const header = () => (
-  <div className="Header">
-    <div className="headerLinks">
-      <div className="homeLink">
-        <Link to="/"
-          style={{
-            color: `white`,
-            textDecoration: `none`,
-          }}
-        >
-          <StaticQuery
-            query={graphql`
-              query {
-                brandImage: file(relativePath: { eq: "brand.png" }) {
-                  childImageSharp {
-                    fluid(maxWidth: 2000) {
-                      ...GatsbyImageSharpFluid_tracedSVG
-                    }
-                  }
-                }
-              }
-            `}
-            render={(data) => (
-              <Img fluid={data.brandImage.childImageSharp.fluid}/>
-            )}/>
-        </Link>
-      </div>
-      <SocialLinks />
-    </div>
-    <HamburgerLinks />
-    <PageLinks />
-  </div>
+	<div className="Header">
+		<div className="headerLinks">
+			<div className="homeLink">
+				<Link to="/"
+					style={{
+						color: `white`,
+						textDecoration: `none`,
+					}}
+				>
+					<StaticQuery
+						query={graphql`
+							query {
+								brandImage: file(relativePath: { eq: "brand.png" }) {
+									childImageSharp {
+										fluid(maxWidth: 2000) {
+											...GatsbyImageSharpFluid_tracedSVG
+										}
+									}
+								}
+							}
+						`}
+						render={(data) => (
+							<Img fluid={data.brandImage.childImageSharp.fluid}/>
+						)}/>
+				</Link>
+			</div>
+			<SocialLinks />
+		</div>
+		<HamburgerLinks />
+		<PageLinks />
+	</div>
 );
 
 header.propTypes = {
-  siteTitle: PropTypes.string,
+	siteTitle: PropTypes.string,
 };
 
 header.defaultProps = {
-  siteTitle: ``,
+	siteTitle: ``,
 };
 
 export default header;

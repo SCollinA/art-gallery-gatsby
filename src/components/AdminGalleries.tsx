@@ -11,13 +11,13 @@ export default () => {
 				<div className="AdminGalleries">
 					<h1>collections</h1>
 					<Query query={ALL_GALLERIES}>
-						{({ data, loading, error }: any) => (
+						{({ data, loading }: any) => (
 							<div className="currentGalleries">
 								{!loading &&
 									data.getAllGalleries.map((gallery: any) => (
 										<div className={`
-												currentGallery${(
-													selectedGallery && gallery.id === selectedGallery.id) ?
+												currentGallery${
+													(selectedGallery && gallery.id === selectedGallery.id) ?
 													" selected" :
 													""
 												}

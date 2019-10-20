@@ -2,10 +2,11 @@ import Img from "gatsby-image";
 import gql from "graphql-tag";
 import React from "react";
 import { Query } from "react-apollo";
+
 import AdminContext from "../contexts/adminContext";
+
 import AddArtworks from "./AddArtworks";
-import ArtworkImageDB from "./ArtworkImageDB";
-// import Loading from './Loading';
+import ArtworkImage from "./ArtworkImage";
 
 export default () => (
 	<AdminContext.Consumer>
@@ -13,32 +14,18 @@ export default () => (
 			<div className="AdminArtworks">
 				<h1>artworks</h1>
 				<Query query={GALLERY_ARTWORKS}
-					// selectedGallery &&
 					variables={{
 						galleryId: selectedGallery.id || null,
 					}}
 				>
-					{({ data, loading, error }: any) => {
-						return (
+					{({ data }: any) => (
 						<div className="currentArtworks">
-							{/* {loading && <Loading/>} */}
-							{(!loading && data.getArtworks) &&
+							{(!!data && data.getArtworks) &&
 								data.getArtworks.map((artwork: any) => (
 									<div className="currentArtwork" key={artwork.id}
 										onClick={(event) => {
 											event.stopPropagation();
-											selectArtwork({
-												framed: artwork.framed,
-												galleryId: artwork.galleryId,
-												height: artwork.height,
-												id: artwork.id,
-												image: artwork.image,
-												medium: artwork.medium,
-												price: artwork.price,
-												sold: artwork.sold,
-												title: artwork.title,
-												width: artwork.width,
-											});
+											selectArtwork(artwork);
 									}}
 									>
 										{/* artwork title */}
@@ -67,11 +54,7 @@ export default () => (
 											</Query>
 										)}
 										{/* artwork image */}
-										{(artwork.file &&
-											<Img fluid={artwork.file.childImageSharp.fluid}/>
-										) ||
-											<ArtworkImageDB artwork={artwork}/>
-										}
+										<ArtworkImage artwork={artwork}/>
 										<h5>
 											{`$${updatingArtwork.id === artwork.id ?
 												updatingArtwork.price :
@@ -91,7 +74,7 @@ export default () => (
 							}
 							<AddArtworks/>
 						</div>
-					); }}
+					)}
 				</Query>
 			</div>
 		)}

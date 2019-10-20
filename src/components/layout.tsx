@@ -13,24 +13,27 @@ import Footer from "./Footer";
 import FullStoryHelmet from "./FullStoryHelmet";
 import GalleryHeader from "./header";
 import "./layout.css";
+import Loading from "./Loading";
 
-export default ({ children }: any) => (
+export default ({ children }: any) =>
 	<div className="Layout">
 		<FullStoryHelmet/>
 		<GalleryHeader/>
 		<div className="Content">
 			<Query query={DB_CONTENT}>
-				{({ data: { galleries, artworks } }: any) => (
+				{({ data: { galleries, artworks }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={(artworkFileData: any) => {
-							const context =	getContext(
+							const context = getContext(
 								artworks,
 								artworkFileData,
 								galleries,
 							);
 							return (
 								<LayoutContext.Provider value={context}>
-									{children}
+									{loading ?
+										<Loading/> :
+										children}
 								</LayoutContext.Provider>
 							);
 						}}
@@ -39,8 +42,7 @@ export default ({ children }: any) => (
 			</Query>
 			<Footer/>
 		</div>
-	</div>
-);
+	</div>;
 
 const getContext = (
 	artworks: any[],

@@ -6,10 +6,10 @@ import SEO from "../components/seo";
 
 
 const adminPage = () => (
-    <Layout>
-        <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-        <Admin/>
-    </Layout>
+	<Layout>
+		<SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+		<Admin/>
+	</Layout>
 );
 
 export default adminPage;
