@@ -17,6 +17,7 @@ export default () => (
 );
 
 const getRandomArtwork = (galleries: any) => {
+	console.log(galleries);
 	const randomGallery = galleries[Math.floor(Math.random() * galleries.length)];
 	const randomArtwork = randomGallery.artworks[
 		Math.floor(Math.random() * randomGallery.artworks.length)

@@ -21,7 +21,7 @@ export default ({ children }: any) =>
 		<GalleryHeader/>
 		<div className="Content">
 			<Query query={DB_CONTENT}>
-				{({ data: { galleries, artworks }, loading }: any) => (
+				{({ data: { galleries = [], artworks = [] }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={(artworkFileData: any) => {
 							return (
@@ -32,7 +32,8 @@ export default ({ children }: any) =>
 								)}>
 									{loading ?
 										<Loading/> :
-										children}
+										children
+									}
 								</LayoutContext.Provider>
 							);
 						}}
@@ -45,8 +46,8 @@ export default ({ children }: any) =>
 
 const getContext = (
 	artworks: any[],
-	artworkFileData: any,
-	galleries: any,
+	artworkFileData: any[],
+	galleries: any[],
 ) => {
 	const artworkFiles = getArtworkFiles(artworkFileData);
 	const galleriesWithFiles = matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
@@ -71,12 +72,12 @@ const ARTWORK_FILES = graphql`
   }
 `;
 
-const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[] = []) => {
-	artworks = artworks || [{
+const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
+	artworks = (artworks.length && artworks) || [{
 		id: "nada",
 		title: "no artworks",
 	}];
-	galleries = galleries || [{
+	galleries = (galleries.length && galleries) || [{
 		artworks,
 		id: "none",
 		name: "no galleries",
