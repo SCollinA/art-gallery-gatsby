@@ -63,6 +63,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<Mutation mutation={UPDATE_ARTWORK}
+				awaitRefetchQueries={true}
 				refetchQueries={[
 					{
 						query: GALLERY_ARTWORKS,
@@ -74,323 +75,321 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 					},
 				]}
 			>
-				{(updateArtwork: any, { loading }: any) => {
-					return (
-					<>
-					{loading && <Loading/>}
-					<form id="UpdateArtworkForm"
-						onSubmit={(event) => {
-							event.preventDefault();
-							if (this.state.imageLoaded) {
-								const imageCanvasNode = this.imageCanvas.current;
-								const uploadedImageNode = this.artworkImageRef.current;
-								const canvasContext = imageCanvasNode.getContext("2d");
-								// draw image takes (img, x, y, w, h)
-								// tslint:disable-next-line: max-line-length
-								canvasContext.drawImage(uploadedImageNode, 0, 0, this.state.imageWidth, this.state.imageHeight);
-								imageCanvasNode.toBlob((imageBlob: any) => {
-									const fr = new FileReader();
-									fr.onload = () => {
-										const image = btoa(`${fr.result}`);
-										// updating artwork values will match form values
-										updateArtwork({ variables: {
-											id: updatingArtwork.id,
-											input: {
-												...updatingArtwork,
-												image,
-											},
-										}})
-										.then(() => {
-											this.setState({
-												imageFile: null,
-												imageLoaded: false,
-											}, () => {
-												submitArtwork();
+				{(updateArtwork: any, { loading }: any) =>
+					<Loading loading={loading}>
+						<form id="UpdateArtworkForm"
+							onSubmit={(event) => {
+								event.preventDefault();
+								if (this.state.imageLoaded) {
+									const imageCanvasNode = this.imageCanvas.current;
+									const uploadedImageNode = this.artworkImageRef.current;
+									const canvasContext = imageCanvasNode.getContext("2d");
+									// draw image takes (img, x, y, w, h)
+									// tslint:disable-next-line: max-line-length
+									canvasContext.drawImage(uploadedImageNode, 0, 0, this.state.imageWidth, this.state.imageHeight);
+									imageCanvasNode.toBlob((imageBlob: any) => {
+										const fr = new FileReader();
+										fr.onload = () => {
+											const image = btoa(`${fr.result}`);
+											// updating artwork values will match form values
+											updateArtwork({ variables: {
+												id: updatingArtwork.id,
+												input: {
+													...updatingArtwork,
+													image,
+												},
+											}})
+											.then(() => {
+												this.setState({
+													imageFile: null,
+													imageLoaded: false,
+												}, () => {
+													submitArtwork();
+												});
 											});
-										});
-									};
-									fr.readAsBinaryString(imageBlob);
-								}, "image/jpeg");
-							} else {
-								// updating artwork values will match form values
-								updateArtwork({ variables: {
-									id: updatingArtwork.id,
-									input: updatingArtwork,
-								}})
-								.then(() => {
-									this.setState({
-										imageFile: null,
-										imageLoaded: false,
-									}, () => {
-										submitArtwork();
-									});
-								});
-							}
-						}}
-						onReset={() => this.setState({ imageFile: null, imageLoaded: false }, () => resetArtwork())}
-						onClick={(event) => event.stopPropagation()}
-					>
-						<label>gallery
-							<Query query={GALLERY_NAMES}>
-								{({ data: galleryNameData }: any) => (
-									<select name="galleryId"
-										value={updatingArtwork.galleryId || ""}
-										onChange={(event) => changeArtwork({
-											galleryId: event.target.value || null,
-										})}
-									>
-										<option value={""}>
-											-
-										</option>
-										{galleryNameData.getAllGalleries.map((gallery: any) => (
-											<option key={gallery.id}
-												value={gallery.id}
-											>
-												{gallery.name}
-											</option>
-										))}
-									</select>
-								)}
-							</Query>
-						</label>
-						<label>title
-							<input autoFocus type="text" name="title"
-								value={updatingArtwork.title}
-								onChange={(event) => changeArtwork({
-									title: event.target.value,
-								})}
-							/>
-						</label>
-						<div className="changeImage">
-							<label>image
-								<input type="file" name="image" accept="image/*"
-									onClick={(event) => {
-										event.target.value = "";
-									}}
-									onChange={(event: any) => {
-										const imageFile = event.target.files[0];
-										const imageLoaded = imageFile && true;
-										this.setState({
-											imageHeight: 0,
-											imageLoaded: false,
-											imageWidth: 0,
-										}, () => this.setState({
-											imageFile,
-											// imageLoaded: false,
-										}, () => this.setState({
-											imageLoaded,
-										}, () => !imageFile && this.setState({
-											imageHeight: 0,
-											imageWidth: 0,
-										}))));
-									}}
-								/>
-							</label>
-							<label>remove image
-								<input type="button" value="remove image"
-									onClick={(event) => {
-										event.target.form.image.value = "";
+										};
+										fr.readAsBinaryString(imageBlob);
+									}, "image/jpeg");
+								} else {
+									// updating artwork values will match form values
+									updateArtwork({ variables: {
+										id: updatingArtwork.id,
+										input: updatingArtwork,
+									}})
+									.then(() => {
 										this.setState({
 											imageFile: null,
-											imageHeight: 0,
 											imageLoaded: false,
-											imageWidth: 0,
 										}, () => {
-											changeArtwork({ ...updatingArtwork, image: null });
+											submitArtwork();
+										});
+									});
+								}
+							}}
+							onReset={() => this.setState({ imageFile: null, imageLoaded: false }, () => resetArtwork())}
+							onClick={(event) => event.stopPropagation()}
+						>
+							<label>gallery
+								<Query query={GALLERY_NAMES}>
+									{({ data: galleryNameData }: any) => (
+										<select name="galleryId"
+											value={updatingArtwork.galleryId || ""}
+											onChange={(event) => changeArtwork({
+												galleryId: event.target.value || null,
+											})}
+										>
+											<option value={""}>
+												-
+											</option>
+											{galleryNameData.getAllGalleries.map((gallery: any) => (
+												<option key={gallery.id}
+													value={gallery.id}
+												>
+													{gallery.name}
+												</option>
+											))}
+										</select>
+									)}
+								</Query>
+							</label>
+							<label>title
+								<input autoFocus type="text" name="title"
+									value={updatingArtwork.title}
+									onChange={(event) => changeArtwork({
+										title: event.target.value,
+									})}
+								/>
+							</label>
+							<div className="changeImage">
+								<label>image
+									<input type="file" name="image" accept="image/*"
+										onClick={(event) => {
+											event.target.value = "";
+										}}
+										onChange={(event: any) => {
+											const imageFile = event.target.files[0];
+											const imageLoaded = imageFile && true;
+											this.setState({
+												imageHeight: 0,
+												imageLoaded: false,
+												imageWidth: 0,
+											}, () => this.setState({
+												imageFile,
+												// imageLoaded: false,
+											}, () => this.setState({
+												imageLoaded,
+											}, () => !imageFile && this.setState({
+												imageHeight: 0,
+												imageWidth: 0,
+											}))));
+										}}
+									/>
+								</label>
+								<label>remove image
+									<input type="button" value="remove image"
+										onClick={(event) => {
+											event.target.form.image.value = "";
+											this.setState({
+												imageFile: null,
+												imageHeight: 0,
+												imageLoaded: false,
+												imageWidth: 0,
+											}, () => {
+												changeArtwork({ ...updatingArtwork, image: null });
+											});
+										}}
+									/>
+								</label>
+								<canvas id="imageCanvas" ref={this.imageCanvas}
+									width={this.state.imageWidth}
+									height={this.state.imageHeight}
+									style={{ display: "none" }}
+								/>
+								<div className="uploadedImage">
+									{this.state.imageLoaded ?
+										<img id="uploadedImage" ref={this.artworkImageRef}
+											style={{ display: "none"}}
+											alt="uploaded profile"
+											onLoad={() => {
+												if (!this.state.imageWidth) {
+													this.setState({
+														imageHeight: this.artworkImageRef.current.height,
+														imageWidth: this.artworkImageRef.current.width,
+													}, () => {
+														this.artworkImageRef.current.style.display = "block";
+														const { imageWidth, imageHeight, windowHeight } = this.state;
+														this.artworkImageRef.current.style.maxWidth =
+															imageWidth / imageHeight >= 1 ? // is it wider than tall?
+														"25%" : `${(windowHeight * .25) * imageWidth / imageHeight}px`;
+													});
+												}
+											}}
+											src={blobUrl(this.state.imageFile)}
+										/> :
+										<ArtworkImage artwork={updatingArtwork}
+											imageRef={this.artworkImageRef}
+										/>
+									}
+								</div>
+								{<div className="rotateImage"
+									onClick={() => {
+										// have to get current image height and width
+										this.setState({
+											imageHeight: this.state.imageWidth,
+											imageWidth: this.state.imageHeight,
+										}, () => {
+										// get canvas and image elements from page
+											const imageCanvasNode = this.imageCanvas.current;
+											const rotatingImage = this.artworkImageRef.current;
+											const canvasContext = imageCanvasNode.getContext("2d");
+											// get whichever element actually exists
+											// rotate the canvas, draw the image, and rotate the canvas back
+											// canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
+											if (rotatingImage) {
+												canvasContext.save();
+												canvasContext.translate(
+													imageCanvasNode.width / 2,
+													imageCanvasNode.height / 2,
+												);
+												canvasContext.rotate(Math.PI / 2);
+												canvasContext.translate(
+													(-1 * imageCanvasNode.height / 2),
+													(-1 * imageCanvasNode.width / 2),
+												);
+												canvasContext.drawImage(
+													rotatingImage,
+													0,
+													0,
+													this.state.imageHeight,
+													this.state.imageWidth,
+												);
+												canvasContext.restore();
+												// imageCanvasNode.width = this.state.imageHeight
+												// imageCanvasNode.height = this.state.imageWidth
+												// convert canvas contents to blob
+												imageCanvasNode.toBlob((imageBlob: any) => {
+													this.setState({
+														imageFile: imageBlob,
+													});
+												}, "image/jpeg", 1.0);
+											}
 										});
 									}}
-								/>
-							</label>
-							<canvas id="imageCanvas" ref={this.imageCanvas}
-								width={this.state.imageWidth}
-								height={this.state.imageHeight}
-								style={{ display: "none" }}
-							/>
-							<div className="uploadedImage">
-								{this.state.imageLoaded ?
-									<img id="uploadedImage" ref={this.artworkImageRef}
-										style={{ display: "none"}}
-										alt="uploaded profile"
-										onLoad={() => {
-											if (!this.state.imageWidth) {
-												this.setState({
-													imageHeight: this.artworkImageRef.current.height,
-													imageWidth: this.artworkImageRef.current.width,
-												}, () => {
-													this.artworkImageRef.current.style.display = "block";
-													const { imageWidth, imageHeight, windowHeight } = this.state;
-													this.artworkImageRef.current.style.maxWidth =
-														imageWidth / imageHeight >= 1 ? // is it wider than tall?
-													"25%" : `${(windowHeight * .25) * imageWidth / imageHeight}px`;
-												});
-											}
-										}}
-										src={blobUrl(this.state.imageFile)}
-									/> :
-									<ArtworkImage artwork={updatingArtwork}
-										imageRef={this.artworkImageRef}
-									/>
-								}
+								>
+									rotate right
+								</div>}
 							</div>
-							{<div className="rotateImage"
-								onClick={() => {
-									// have to get current image height and width
-									this.setState({
-										imageHeight: this.state.imageWidth,
-										imageWidth: this.state.imageHeight,
-									}, () => {
-									// get canvas and image elements from page
-										const imageCanvasNode = this.imageCanvas.current;
-										const rotatingImage = this.artworkImageRef.current;
-										const canvasContext = imageCanvasNode.getContext("2d");
-										// get whichever element actually exists
-										// rotate the canvas, draw the image, and rotate the canvas back
-										// canvasContext.clearRect(0, 0, imageCanvasNode.width, imageCanvasNode.height)
-										if (rotatingImage) {
-											canvasContext.save();
-											canvasContext.translate(
-												imageCanvasNode.width / 2,
-												imageCanvasNode.height / 2,
-											);
-											canvasContext.rotate(Math.PI / 2);
-											canvasContext.translate(
-												(-1 * imageCanvasNode.height / 2),
-												(-1 * imageCanvasNode.width / 2),
-											);
-											canvasContext.drawImage(
-												rotatingImage,
-												0,
-												0,
-												this.state.imageHeight,
-												this.state.imageWidth,
-											);
-											canvasContext.restore();
-											// imageCanvasNode.width = this.state.imageHeight
-											// imageCanvasNode.height = this.state.imageWidth
-											// convert canvas contents to blob
-											imageCanvasNode.toBlob((imageBlob: any) => {
-												this.setState({
-													imageFile: imageBlob,
-												});
-											}, "image/jpeg", 1.0);
-										}
-									});
-								}}
-							>
-								rotate right
-							</div>}
-						</div>
-						<label>width
-							<input type="number" name="width"
-								value={updatingArtwork.width || ""}
-								onChange={(event) => changeArtwork({
-									width: parseInt(event.target.value, 10),
-								})}
-							/>
-						</label>
-						<label>height
-							<input type="number" name="height"
-								value={updatingArtwork.height || ""}
-								onChange={(event) => changeArtwork({
-									height: parseInt(event.target.value, 10),
-								})}/>
-						</label>
-						<label>medium
-							<input type="text" name="medium"
-								value={updatingArtwork.medium || ""}
-								onChange={(event) => changeArtwork({
-									medium: event.target.value,
-								})}
-							/>
-						</label>
-						<div className="artworkFramedButtons">
-							<label>framed
-								<input type="radio" name="framed"
-									value="framed"
-									checked={updatingArtwork.framed}
+							<label>width
+								<input type="number" name="width"
+									value={updatingArtwork.width || ""}
 									onChange={(event) => changeArtwork({
-										framed: event.target.checked,
+										width: parseInt(event.target.value, 10),
 									})}
 								/>
 							</label>
-							<label>unframed
-								<input type="radio" name="framed"
-									value="unframed"
-									checked={!updatingArtwork.framed}
+							<label>height
+								<input type="number" name="height"
+									value={updatingArtwork.height || ""}
 									onChange={(event) => changeArtwork({
-										framed: !event.target.checked,
+										height: parseInt(event.target.value, 10),
+									})}/>
+							</label>
+							<label>medium
+								<input type="text" name="medium"
+									value={updatingArtwork.medium || ""}
+									onChange={(event) => changeArtwork({
+										medium: event.target.value,
 									})}
 								/>
 							</label>
-						</div>
-						<label>price
-							<input type="number" name="price"
-								value={updatingArtwork.price || ""}
-								onChange={(event) => changeArtwork({
-									price: parseInt(event.target.value, 10),
-								})}/>
-						</label>
-						<div className="artworkSoldButtons">
-							<label>sold
-								<input type="radio" name="sold"
-									value="sold"
-									checked={updatingArtwork.sold}
+							<div className="artworkFramedButtons">
+								<label>framed
+									<input type="radio" name="framed"
+										value="framed"
+										checked={updatingArtwork.framed}
+										onChange={(event) => changeArtwork({
+											framed: event.target.checked,
+										})}
+									/>
+								</label>
+								<label>unframed
+									<input type="radio" name="framed"
+										value="unframed"
+										checked={!updatingArtwork.framed}
+										onChange={(event) => changeArtwork({
+											framed: !event.target.checked,
+										})}
+									/>
+								</label>
+							</div>
+							<label>price
+								<input type="number" name="price"
+									value={updatingArtwork.price || ""}
 									onChange={(event) => changeArtwork({
-										sold: event.target.checked,
-									})}
-								/>
+										price: parseInt(event.target.value, 10),
+									})}/>
 							</label>
-							<label>unsold
-								<input type="radio" name="sold"
-									value="unsold"
-									checked={!updatingArtwork.sold}
-									onChange={(event) => changeArtwork({
-										sold: !event.target.checked,
-									})}
+							<div className="artworkSoldButtons">
+								<label>sold
+									<input type="radio" name="sold"
+										value="sold"
+										checked={updatingArtwork.sold}
+										onChange={(event) => changeArtwork({
+											sold: event.target.checked,
+										})}
+									/>
+								</label>
+								<label>unsold
+									<input type="radio" name="sold"
+										value="unsold"
+										checked={!updatingArtwork.sold}
+										onChange={(event) => changeArtwork({
+											sold: !event.target.checked,
+										})}
+									/>
+								</label>
+							</div>
+							<div className="updateArtworkButtons">
+								<input type="submit" value="submit"/>
+								<input type="reset" value="reset"/>
+								<input type="button" value="cancel"
+									onClick={() => cancelUpdate()}
 								/>
-							</label>
-						</div>
-						<div className="updateArtworkButtons">
-							<input type="submit" value="submit"/>
-							<input type="reset" value="reset"/>
-							<input type="button" value="cancel"
-								onClick={() => cancelUpdate()}
-							/>
-							<Mutation mutation={DELETE_ARTWORK}
-								update={(cache: any) => {
-									const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-									cache.writeQuery({
-										data: {
-											artworks: artworks.filter((artwork: any) =>
-												artwork.id !== updatingArtwork.id),
-											galleries,
+								<Mutation mutation={DELETE_ARTWORK}
+									update={(cache: any) => {
+										const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
+										cache.writeQuery({
+											data: {
+												artworks: artworks.filter((artwork: any) =>
+													artwork.id !== updatingArtwork.id),
+												galleries,
+											},
+											query: DB_CONTENT,
+										});
+									}}
+									refetchQueries={[{
+										query: GALLERY_ARTWORKS,
+										variables: {
+											galleryId: updatingArtwork.galleryId,
 										},
-										query: DB_CONTENT,
-									});
-								}}
-								refetchQueries={[{
-									query: GALLERY_ARTWORKS,
-									variables: {
-										galleryId: updatingArtwork.galleryId,
-									},
-								}, {
-									query: GALLERY_ARTWORKS,
-								}]}
-							>
-							{(deleteArtwork: any) => (
-								<input type="button" value="remove"
-									onClick={() =>
-										window.confirm("are you sure you want to remove this artwork?") &&
-											deleteArtwork(
-												{ variables: { id: updatingArtwork.id } },
-											).then(() => removeArtwork())}
-								/>
-							)}
-							</Mutation>
-						</div>
-					</form>
-				</>
-				); }}
+									}, {
+										query: GALLERY_ARTWORKS,
+									}]}
+								>
+								{(deleteArtwork: any) => (
+									<input type="button" value="remove"
+										onClick={() =>
+											window.confirm("are you sure you want to remove this artwork?") &&
+												deleteArtwork(
+													{ variables: { id: updatingArtwork.id } },
+												).then(() => removeArtwork())}
+									/>
+								)}
+								</Mutation>
+							</div>
+						</form>
+					</Loading>
+				}
 			</Mutation>
 		);
 	}

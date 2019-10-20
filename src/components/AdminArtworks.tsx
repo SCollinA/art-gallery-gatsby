@@ -7,6 +7,7 @@ import AdminContext from "../contexts/adminContext";
 
 import AddArtworks from "./AddArtworks";
 import ArtworkImage from "./ArtworkImage";
+import Loading from "./Loading";
 
 export default () => (
 	<AdminContext.Consumer>
@@ -18,8 +19,9 @@ export default () => (
 						galleryId: selectedGallery.id || null,
 					}}
 				>
-					{({ data }: any) => (
-						<div className="currentArtworks">
+					{({ data, loading }: any) =>
+						<Loading loading={loading}>
+							<div className="currentArtworks">
 							{(!!data && data.getArtworks) &&
 								data.getArtworks.map((artwork: any) => (
 									<div className="currentArtwork" key={artwork.id}
@@ -85,7 +87,7 @@ export default () => (
 							}
 							<AddArtworks/>
 						</div>
-					)}
+						</Loading>}
 				</Query>
 			</div>
 		)}

@@ -97,7 +97,7 @@ export default class Admin extends React.Component<any, any, any> {
 
 	public render() {
 		const { isLoggedIn } = this.state;
-		return (!isLoggedIn && (<AdminLogin adminLogin={this._login}/>)) || (
+		return !isLoggedIn ? <AdminLogin isAdminLoggedIn={this._login}/> : (
 			<div className="Admin"
 				onClick={() => this.setState({
 					isUpdating: false,

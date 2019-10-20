@@ -14,16 +14,21 @@ a {
 /*          Layout             */
 /* ============================ */
 
+.loading-wrapper {
+    position: relative;
+}
+
 .Loading {
-    /* position: fixed; */
-    /* top: 0;
+    position: absolute;
+    top: 0;
     bottom: 0;
     left: 0;
-    right: 0; */
-    height: 100%;
-    width: 100%;
+    right: 0;
+    /* height: 100%;
+    width: 100%; */
     z-index: 10;
     background-color: rgba(0,0,0,0.1);
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -211,7 +216,6 @@ a {
     align-items: baseline;
     overflow: auto;
     margin: auto;
-    border-radius: 5px;
     margin-bottom: -10px;
     padding-bottom: 10px;
 }
@@ -219,22 +223,17 @@ a {
 #artworkThumbs {
     flex: 1;
     display: flex;
+    align-items: baseline;
     flex-wrap: wrap;
     margin: auto;
 }
 
 .galleryThumb, .artworkThumb {
-    flex-basis: 20%;
     padding: 2%;
     cursor: pointer;
     margin: 0 auto;
-    min-width: fit-content;
-    border-radius: 5px;
+    min-width: 25%;
     text-align: center;
-}
-
-.galleryThumb > *, .artworkThumb > * {
-    margin: 0;
 }
 
 .galleryThumb:hover,

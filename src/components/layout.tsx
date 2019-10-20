@@ -29,10 +29,9 @@ export default ({ children }: any) =>
 								artworkFileData,
 								galleries,
 							)}>
-								{loading ?
-									<Loading/> :
-									children
-								}
+								<Loading loading={loading}>
+									{children}
+								</Loading>
 							</LayoutContext.Provider>
 						);
 					}}

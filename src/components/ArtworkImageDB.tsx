@@ -8,8 +8,7 @@ import Loading from "./Loading";
 export default ({ artwork, imageRef, aspectRatio }: any) => (
 	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}>
 		{({ data, loading }: any) =>
-			loading ?
-				<Loading/> :
+			<Loading loading={loading}>
 				<img ref={imageRef}
 				// display initially none to load actual size
 				// in order to find aspect ratio and adjust size
@@ -26,6 +25,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 						dbImage.style.display = "inherit";
 					}}
 				/>
+			</Loading>
 		}
 	</Query>
 );

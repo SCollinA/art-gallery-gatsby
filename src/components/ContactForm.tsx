@@ -14,49 +14,50 @@ export default () => (
 			<Mutation mutation={CONTACT_MUTATION}>
 				{(contactArtist: any, { loading }: any) => (
 					<div className="Contact">
-						{loading && <Loading/>}
-						<SectionWrapper>
-							<form className="contactForm"
-								onSubmit={(event: any) => {
-									event.preventDefault();
-									contactArtist({ variables: {
-										artwork: event.target.artwork.value,
-										contactEmail: event.target.email.value,
-										message: event.target.message.value,
-										name: event.target.name.value,
-									}})
-									.then((result: any) => result && window.alert("Thank you for contacting me!"));
-									event.target.reset();
-								}}
-							>
-								<label>name
-									<input type="text" name="name" id="name"/>
-								</label>
-								<label>e-mail
-									<input type="text" name="email" id="email"/>
-								</label>
-								<label className="contactMessage">message
-									<textarea name="message" id="message"></textarea>
-								</label>
-								<label>artwork
-									<select name="artwork" id="artwork">
-										<option value="-"> - </option>
-										{galleries.map(({ id, name, artworks }: any) => (
-											<optgroup key={id} label={name}>
-												{artworks.map((artwork: any) => (
-													<option key={artwork.id} value={artwork.title}>
-														{artwork.title}
-													</option>),
-												)}
-											</optgroup>
-										))}
-									</select>
-								</label>
-								<label>
-									<input type="submit" value="submit"/>
-								</label>
-							</form>
-						</SectionWrapper>
+						<Loading loading={loading}>
+							<SectionWrapper>
+								<form className="contactForm"
+									onSubmit={(event: any) => {
+										event.preventDefault();
+										contactArtist({ variables: {
+											artwork: event.target.artwork.value,
+											contactEmail: event.target.email.value,
+											message: event.target.message.value,
+											name: event.target.name.value,
+										}})
+										.then((result: any) => result && window.alert("Thank you for contacting me!"));
+										event.target.reset();
+									}}
+								>
+									<label>name
+										<input type="text" name="name" id="name"/>
+									</label>
+									<label>e-mail
+										<input type="text" name="email" id="email"/>
+									</label>
+									<label className="contactMessage">message
+										<textarea name="message" id="message"></textarea>
+									</label>
+									<label>artwork
+										<select name="artwork" id="artwork">
+											<option value="-"> - </option>
+											{galleries.map(({ id, name, artworks }: any) => (
+												<optgroup key={id} label={name}>
+													{artworks.map((artwork: any) => (
+														<option key={artwork.id} value={artwork.title}>
+															{artwork.title}
+														</option>),
+													)}
+												</optgroup>
+											))}
+										</select>
+									</label>
+									<label>
+										<input type="submit" value="submit"/>
+									</label>
+								</form>
+							</SectionWrapper>
+						</Loading>
 					</div>
 				)}
 			</Mutation>
