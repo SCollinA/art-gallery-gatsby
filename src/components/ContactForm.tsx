@@ -8,11 +8,7 @@ export default () => (
 	<div className="Contact">
 		<LayoutContext.Consumer>
 			{({ galleries }: any) => (
-				<>
-					<div className="pageHeader">
-						<h1>contact</h1>
-					</div>
-					<Mutation mutation={CONTACT_MUTATION}>
+				<Mutation mutation={CONTACT_MUTATION}>
 						{(contactArtist: any, { data, loading, error }: any) => {
 							return (
 							<>
@@ -58,7 +54,6 @@ export default () => (
 						</>
 						); }}
 					</Mutation>
-				</>
 			)}
 		</LayoutContext.Consumer>
 	</div>

@@ -5,8 +5,8 @@ import Layout from "../components/layout";
 import SEO from "../components/seo";
 
 export default () => (
-  <Layout>
-    <SEO title="About" keywords={[`gatsby`, `application`, `react`]} />
-    <About/>
-  </Layout>
+	<Layout>
+		<SEO title="About" keywords={[`gatsby`, `application`, `react`]} />
+		<About/>
+	</Layout>
 );

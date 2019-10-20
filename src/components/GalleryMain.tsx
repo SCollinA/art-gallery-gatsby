@@ -3,6 +3,7 @@ import React from "react";
 import LayoutContext from "../contexts/layoutContext";
 
 import ArtworkImage from "./ArtworkImage";
+import SectionWrapper from "./SectionWrapper";
 
 export default ({ galleryMainRef, selectedGallery, selectedArtwork }: any) => {
 	return (
@@ -14,7 +15,8 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }: any) => {
 						<h2>{selectedGallery.name}</h2>
 						<h1>{selectedArtwork.title}</h1>
 					</div>
-					<div className="galleryImage">
+					<SectionWrapper>
+						<div className="galleryImage">
 						{galleries.map(({ artworks }: any) =>
 							artworks.map((artwork: any, index: any) =>
 								<div key={index}
@@ -24,6 +26,7 @@ export default ({ galleryMainRef, selectedGallery, selectedArtwork }: any) => {
 								</div>,
 						))}
 					</div>
+					</SectionWrapper>
 					<div className="galleryCaption">
 						{!(selectedArtwork.width && selectedArtwork.height) || <p>{`W ${selectedArtwork.width} x H ${selectedArtwork.height}`}</p>}
 						<p>{selectedArtwork.medium}</p>

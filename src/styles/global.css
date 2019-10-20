@@ -48,6 +48,16 @@ a {
     padding: 0 0 2%;
 }
 
+.page-break {
+    border-color: black;
+    height: 0;
+    width: 50%;
+    flex-basis: 100% !important;
+    margin: 25px 20% !important;
+    border-width: 3px;
+    border-style: solid;
+}
+
 /* ============================ */
 /*          Header              */
 /* ============================ */
@@ -127,7 +137,6 @@ a {
 
 .Content > * {
     margin: auto;
-    padding: 2% 0;
 }
 
 .Content > a {
@@ -154,11 +163,7 @@ a {
     width: 100%;
 }
 
-.Gallery > * {
-    padding: 5% 0;
-}
-
-.galleryTitle, .galleryCaption {
+.galleryTitle, .galleryCaption, .artworksTitle {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -168,7 +173,7 @@ a {
     padding: 1%;
 }
 
-.galleryTitle > *, .galleryCaption > * {
+.galleryTitle > *, .galleryCaption > *, .artworksTitle > * {
     margin: 0;
 }
 
@@ -197,6 +202,8 @@ a {
     overflow: auto;
     margin: auto;
     border-radius: 5px;
+    margin-bottom: -10px;
+    padding-bottom: 10px;
 }
 
 #artworkThumbs {
@@ -204,8 +211,6 @@ a {
     display: flex;
     flex-wrap: wrap;
     margin: auto;
-    border: solid 5px black;
-    border-radius: 5px;
 }
 
 .galleryThumb, .artworkThumb {
@@ -238,34 +243,20 @@ a {
 /*          About               */
 /* ============================ */
 
-.aboutContent {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.aboutContent > *, .welcomeMessage, .commissionContent {
-    /* padding: 0 5%; */
+.welcomeMessage, .commissionContent {
     font-size: 1em;
     line-height: 2em;
 }
 
-.aboutContent > * {
-    width: 100%;
-    /* max-width: 500px; */
-    margin: auto;
+.About > .section-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.aboutContent > * > * {
-    flex: 1;
-    padding: 2%;
-    margin: 2%;
-}
-
-.aboutContent > p {
-    padding: 2%;
+.About > .section-wrapper > * {
+    flex-basis: 50%;
 }
 
 .aboutImg {
@@ -427,14 +418,10 @@ a {
 /*              Footer              */
 /* ================================ */
 .Footer {
-    padding: unset;
     display: flex;
     justify-content: space-around;
     align-items: center;
     text-align: center;
-    border-top: solid 5px black;
-    border-bottom: solid 5px black;
-    border-radius: 5px;
     white-space: nowrap;
 }
 

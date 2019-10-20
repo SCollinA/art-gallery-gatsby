@@ -62,11 +62,6 @@ export default class Gallery extends React.Component<any, any, any> {
 	public render() {
 		return (
 			<div className="Gallery">
-				<GalleryChoice
-					galleries={this.context.galleries}
-					selectGallery={this.selectGallery}
-					selectedGallery={this.state.selectedGallery}
-				/>
 				<GalleryMain galleryMainRef={this.galleryMain}
 					selectedGallery={this.state.selectedGallery}
 					selectedArtwork={this.state.selectedArtwork}
@@ -75,6 +70,12 @@ export default class Gallery extends React.Component<any, any, any> {
 					artworks={this.state.selectedGallery.artworks}
 					selectArtwork={this.selectArtwork}
 					selectedArtwork={this.state.selectedArtwork}
+					selectedGallery={this.state.selectedGallery}
+				/>
+				<GalleryChoice
+					galleries={this.context.galleries}
+					selectGallery={this.selectGallery}
+					selectedGallery={this.state.selectedGallery}
 				/>
 			</div>
 		);

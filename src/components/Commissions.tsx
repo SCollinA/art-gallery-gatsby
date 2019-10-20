@@ -23,9 +23,6 @@ export default () => (
 		// console.log(randomArtworks);
 		return (
 			<div className="Commissions">
-				<div className="pageHeader">
-					<h1>commissions</h1>
-				</div>
 				<div className="commissionContent">
 					<div>
 						<h4>Pet portrait pricing and details (as of June 2019)</h4>

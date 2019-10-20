@@ -1,5 +1,6 @@
 import React from "react";
 import ArtworkImage from "./ArtworkImage";
+import SectionWrapper from "./SectionWrapper";
 
 export default ({ galleries, selectGallery, selectedGallery }: any) => {
 	const randomGalleryImages = galleries.map((gallery: any) => {
@@ -9,22 +10,24 @@ export default ({ galleries, selectGallery, selectedGallery }: any) => {
 	return (
 		<div className="GalleryChoice">
 			<h3>collections</h3>
-			<div id="galleryThumbs">
-				{/* map galleries to their first artwork image */}
-				{galleries.map((gallery: any, index: any) => {
-					const randomArtwork = randomGalleryImages[index] ||
-						{ file: false, image: false };
-					return !gallery.artworks.length || (
-						<div key={index}
-							className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""}`}
-							onClick={() => selectGallery(gallery)}
-						>
-							<ArtworkImage artwork={randomArtwork}/>
-							<p>{gallery.name}</p>
-						</div>
-					);
-				})}
-			</div>
+			<SectionWrapper>
+				<div id="galleryThumbs">
+					{/* map galleries to their first artwork image */}
+					{galleries.map((gallery: any, index: any) => {
+						const randomArtwork = randomGalleryImages[index] ||
+							{ file: false, image: false };
+						return !gallery.artworks.length || (
+							<div key={index}
+								className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""}`}
+								onClick={() => selectGallery(gallery)}
+							>
+								<ArtworkImage artwork={randomArtwork}/>
+								<p>{gallery.name}</p>
+							</div>
+						);
+					})}
+				</div>
+			</SectionWrapper>
 		</div>
 	);
 };
