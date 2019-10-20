@@ -1,18 +1,23 @@
 import React from "react";
 import LayoutContext from "../contexts/layoutContext";
 import ArtworkImage from "./ArtworkImage";
+import SectionWrapper from "./SectionWrapper";
 
 export default () => (
 	<div className="Home">
 		{/* random artwork */}
-		<div className="randomArtwork">
-			<LayoutContext.Consumer>
-				{({ galleries }: any) =>
-					<ArtworkImage artwork={getRandomArtwork(galleries)}/>
-				}
-			</LayoutContext.Consumer>
-		</div>
-		<WelcomeMessage/>
+		<SectionWrapper>
+			<div className="randomArtwork">
+				<LayoutContext.Consumer>
+					{({ galleries }: any) =>
+							<ArtworkImage artwork={getRandomArtwork(galleries)}/>
+						}
+				</LayoutContext.Consumer>
+			</div>
+		</SectionWrapper>
+		<SectionWrapper>
+			<WelcomeMessage/>
+		</SectionWrapper>
 	</div>
 );
 

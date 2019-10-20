@@ -15,13 +15,13 @@ a {
 /* ============================ */
 
 .Loading {
-    position: fixed;
-    top: 0;
+    /* position: fixed; */
+    /* top: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    /* height: 100%; */
-    /* width: 100%; */
+    right: 0; */
+    height: 100%;
+    width: 100%;
     z-index: 10;
     background-color: rgba(0,0,0,0.1);
     display: flex;
@@ -53,13 +53,12 @@ a {
     align-items: center;
 }
 
-.pageLink:hover {
+/* .pageLink:hover {
     background: lightgrey;
-}
+} */
 
 .homeLink {
     flex: 1;
-    /* margin: auto; */
     min-width: 100px;
     max-width: 250px;
 }
@@ -69,19 +68,18 @@ a {
 }
 
 .PageLinks {
-    width: 90%;
-    margin: auto;
+    /* width: 90%; */
+    /* margin: auto; */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    border-top: solid 5px black;
+    /* border-top: solid 5px black;
     border-bottom: solid 5px black;
-    border-radius: 5px;
+    border-radius: 5px; */
 }
 
 .pageLink {
-    /* flex: 1; */
     margin: auto;
 }
 
@@ -92,12 +90,11 @@ a {
     text-align: center;
 }
 
-.activeLink {
+.activeLink, .pageLink > a:hover:not(.activeLink) {
     display: block;
-    background-color: lightgrey;
-    /* margin: auto;
-    padding: 0 15%;
-    border-radius: 12px; */
+    border-left: 5px solid black;
+    border-right: 5px solid black;
+    border-radius: 10px;
 }
 
 .HamburgerLinks {
@@ -114,6 +111,14 @@ a {
     transition: transform .5s;
 }
 
+.section-wrapper {
+    border-top: 5px solid black;
+    border-bottom: 5px solid black;
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 10px 0;
+}
+
 /* ============================ */
 /*          Content             */
 /* ============================ */
@@ -127,7 +132,6 @@ a {
 }
 
 .Content > * {
-    /* width: 75%; */
     margin: auto;
     padding: 2% 0;
 }
@@ -154,17 +158,11 @@ a {
 /* ============================ */
 .Gallery {
     width: 100%;
-    /* padding: unset; */
 }
 
 .Gallery > * {
     padding: 5% 0;
 }
-
-/* .GalleryMain {
-    max-width: 750px;
-    margin: auto;
-} */
 
 .galleryTitle, .galleryCaption {
     display: flex;
@@ -189,15 +187,6 @@ a {
     width: 75%;
 }
 
-/* .galleryArtwork.current {
-    display: flex;
-    justify-content: space-around;
-}
-
-.galleryArtwork.current > * {
-    flex: 1;
-} */
-
 .galleryArtwork.hidden {
     display: none;
 }
@@ -209,48 +198,26 @@ a {
 /* This is the inner container */
 #galleryThumbs {
     flex: 1;
-    /* padding: 2%; */
     display: flex;
-    /* justify-content: space-around; */
     overflow: auto;
     margin: auto;
-    /* border: solid 5px black; */
     border-radius: 5px;
 }
 
 #artworkThumbs {
     flex: 1;
-    /* padding: 2%; */
     display: flex;
     flex-wrap: wrap;
-    /* justify-content: flex-start; */
-    /* overflow: auto; */
     margin: auto;
     border: solid 5px black;
     border-radius: 5px;
 }
 
-/* .galleryArrow {
-    padding: 2%;
-    text-align: center;
-    border-radius: 10px;
-    display: none;
-} */
-
-/* .galleryArrow:active {
-    background-color: lightgrey;
-} */
-
 .galleryThumb, .artworkThumb {
     padding: 2%;
     cursor: pointer;
     width: 21%;
-    /* display: flex; */
     margin: 0 auto;
-    /* flex-direction: column; */
-    /* justify-content: space-around; */
-    /* flex: 1;
-    max-width: 200px; */
     min-width: 100px;
     border-radius: 5px;
 }
