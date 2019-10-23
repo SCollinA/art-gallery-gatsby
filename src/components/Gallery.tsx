@@ -68,15 +68,15 @@ export default class Gallery extends React.Component<any, any, any> {
 					selectedArtwork={this.state.selectedArtwork}
 				/>
 				<PageBreak/>
+				<GalleryChoice
+					galleries={this.context.galleries}
+					selectGallery={this.selectGallery}
+					selectedGallery={this.state.selectedGallery}
+				/>
 				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
 					artworks={this.state.selectedGallery.artworks}
 					selectArtwork={this.selectArtwork}
 					selectedArtwork={this.state.selectedArtwork}
-					selectedGallery={this.state.selectedGallery}
-				/>
-				<GalleryChoice
-					galleries={this.context.galleries}
-					selectGallery={this.selectGallery}
 					selectedGallery={this.state.selectedGallery}
 				/>
 			</div>
