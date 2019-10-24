@@ -20,9 +20,9 @@ export default ({ children }: any) =>
 		<FullStoryHelmet/>
 		<GalleryHeader/>
 		<Query query={DB_CONTENT}>
-			{({ data: { galleries = [], artworks = [] }, loading }: any) => (
+			{({ data: { galleries, artworks }, loading }: any) => (
 				<StaticQuery query={ARTWORK_FILES}
-					render={(artworkFileData: any) => {
+					render={({ artworkFileData }: any) => {
 						return (
 							<LayoutContext.Provider value={getContext(
 								artworks,
@@ -55,7 +55,7 @@ const getContext = (
 
 const ARTWORK_FILES = graphql`
   {
-    artworkFiles: allFile(filter: {
+    artworkFileData: allFile(filter: {
         relativeDirectory: { eq: "artworks" },
         extension: { eq: "jpeg" }
     }) {
@@ -69,25 +69,11 @@ const ARTWORK_FILES = graphql`
   }
 `;
 
-const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
-	const placeholderArtwork = [{
-		id: "nada",
-		title: "no artworks",
-	}];
-	const placeholderGallery = [{
-		id: "none",
-		name: "no galleries",
-	}];
-	if (!galleries.length) {
-		galleries = placeholderGallery;
-	}
+const matchGalleryArtworkToFile = (galleries: any[] = [], artworks: any[] = [], artworkFiles: any[]) => {
 	return galleries.map((gallery: any) => {
 		// match up artworks from db to gallery
 		let galleryArtworks = artworks.filter((artwork: any) =>
 			artwork.galleryId === gallery.id);
-		if (!galleryArtworks.length) {
-			galleryArtworks = placeholderArtwork;
-		}
 		// map those to files for display throughout site
 		galleryArtworks = galleryArtworks.map(({
 				id,
@@ -111,8 +97,5 @@ const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFil
 	});
 };
 
-const getArtworkFiles = (artworkFileData: any) => {
-	return artworkFileData.artworkFiles ?
-		artworkFileData.artworkFiles.edges.map((edge: any) => edge.node) :
-		[];
-};
+const getArtworkFiles = (artworkFiles: any) =>
+	artworkFiles.edges.map((edge: any) => edge.node);
