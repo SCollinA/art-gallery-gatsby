@@ -1,3 +1,4 @@
+import { get } from "lodash/fp";
 import React from "react";
 
 import AdminContext from "../contexts/adminContext";
@@ -9,6 +10,9 @@ import AdminLogin from "./AdminLogin";
 import UpdateForm from "./UpdateForm";
 
 export default class Admin extends React.Component<any, any, any> {
+
+	public static contextType = LayoutContext;
+
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -16,24 +20,23 @@ export default class Admin extends React.Component<any, any, any> {
 			isUpdating: false,
 			selectedArtwork: {},
 			selectedGallery: {},
+			setIsLoggedIn: (isLoggedIn: boolean) => this.setState({isLoggedIn}),
 			updatingArtwork: {},
 			updatingGallery: {},
 		};
 	}
 
 	public componentDidMount() {
-		this._selectGallery(this.context.galleries[0]);
+		this.initializeAdmin();
 		if (localStorage.getItem("auth-token")) {
 			this.setState({ isLoggedIn: true });
 		}
 	}
 
-	public _login = (isLoggedIn: any) => {
-		this.setState({ isLoggedIn });
-		if (isLoggedIn) {
-			window.onbeforeunload = () => "are you sure you want to log out?";
-			window.onunload = () => localStorage.removeItem("auth-token");
-		}
+	public _login = () => {
+		this.setState({ isLoggedIn: true });
+		window.onbeforeunload = () => "are you sure you want to log out?";
+		window.onunload = () => localStorage.removeItem("auth-token");
 	}
 
 	public _logout = () => {
@@ -95,25 +98,30 @@ export default class Admin extends React.Component<any, any, any> {
 
 	public _removeArtwork = () => this._submitArtworkChange();
 
+	public initializeAdmin = () => {
+		const { galleries } = this.context;
+		if (get("length", galleries)) {
+			this._selectGallery(galleries[0]);
+		}
+	}
+
 	public render() {
 		const { isLoggedIn } = this.state;
-		return !isLoggedIn ? <AdminLogin isAdminLoggedIn={this._login}/> : (
-			<div className="Admin"
-				onClick={() => this.setState({
-					isUpdating: false,
-					selectedArtwork: {},
-					selectedGallery: {},
-					updatingArtwork: {},
-					updatingGallery: {},
-				})}
-			>
-			<div className="logout">
-				<input type="button" value="logout"
-					onClick={() => this._logout()}
-				/>
-			</div>
+		const { children } = this.props;
+		// return !isLoggedIn ? <AdminLogin login={this._login}/> : (
+			// <div className="Admin"
+				// onClick={() => this.setState({
+			// 		isUpdating: false,
+			// 		selectedArtwork: {},
+			// 		selectedGallery: {},
+			// 		updatingArtwork: {},
+			// 		updatingGallery: {},
+			// 	})}
+			// // >
+		return (
 				<AdminContext.Provider
 					value={{
+						...this.state,
 						cancelUpdate: () => this.setState({
 							isUpdating: false,
 							selectedArtwork: {},
@@ -123,6 +131,7 @@ export default class Admin extends React.Component<any, any, any> {
 						}),
 						changeArtwork: this._handleArtworkChange,
 						changeGallery: this._handleGalleryChange,
+						login: this._login,
 						removeArtwork: this._removeArtwork,
 						removeGallery: this._removeGallery,
 						resetArtwork: this._resetArtwork,
@@ -137,13 +146,12 @@ export default class Admin extends React.Component<any, any, any> {
 						updatingGallery: this.state.updatingGallery,
 					}}
 				>
-					<AdminGalleries/>
+					{children}
+					{/* <AdminGalleries/>
 					<AdminArtworks/>
-					<UpdateForm/>
+					<UpdateForm/> */}
 				</AdminContext.Provider>
-			</div>
+		// {/* </div> */}
 		);
 	}
 }
-
-Admin.contextType = LayoutContext;

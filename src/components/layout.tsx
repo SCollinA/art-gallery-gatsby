@@ -9,6 +9,7 @@ import {
 	DB_CONTENT,
 } from "../graphql/graphql";
 
+import Admin from "./Admin";
 import Footer from "./Footer";
 import FullStoryHelmet from "./FullStoryHelmet";
 import GalleryHeader from "./header";
@@ -29,9 +30,11 @@ export default ({ children }: any) =>
 								artworkFileData,
 								galleries,
 							)}>
-								<Loading loading={loading}>
-									{children}
-								</Loading>
+								<Admin>
+									<Loading loading={loading}>
+										{children}
+									</Loading>
+								</Admin>
 							</LayoutContext.Provider>
 						);
 					}}
