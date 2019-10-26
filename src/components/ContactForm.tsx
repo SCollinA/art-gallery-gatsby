@@ -4,8 +4,8 @@ import { Mutation } from "react-apollo";
 
 import LayoutContext from "../contexts/layoutContext";
 
+import ArtworkImageDB from "./ArtworkImageDB";
 import Loading from "./Loading";
-import PageBreak from "./PageBreak";
 import SectionWrapper from "./SectionWrapper";
 
 export default () => (
@@ -45,6 +45,7 @@ export default () => (
 												<optgroup key={id} label={name}>
 													{artworks.map((artwork: any) => (
 														<option key={artwork.id} value={artwork.title}>
+															{<ArtworkImageDB artwork={artwork}/>}
 															{artwork.title}
 														</option>),
 													)}

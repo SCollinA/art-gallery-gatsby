@@ -1,4 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
+import { get } from "lodash/fp";
 import React from "react";
 import {
 	Query,
@@ -16,45 +17,131 @@ import GalleryHeader from "./header";
 import "./layout.css";
 import Loading from "./Loading";
 
-export default ({ children }: any) =>
-	<div className="Layout">
-		<FullStoryHelmet/>
-		<GalleryHeader/>
-		<Query query={DB_CONTENT}>
-			{({ data: { galleries, artworks }, loading }: any) => (
-				<StaticQuery query={ARTWORK_FILES}
-					render={({ artworkFileData }: any) => {
-						return (
-							<LayoutContext.Provider value={getContext(
-								artworks,
-								artworkFileData,
-								galleries,
-							)}>
-								<Admin>
-									<Loading loading={loading}>
-										{children}
-									</Loading>
-								</Admin>
-							</LayoutContext.Provider>
-						);
-					}}
-				/>
-			)}
-		</Query>
-		<Footer/>
-	</div>;
+export default class Layout extends React.Component {
 
-const getContext = (
-	artworks: any[],
-	artworkFileData: any[],
-	galleries: any[],
-) => {
-	const artworkFiles = getArtworkFiles(artworkFileData);
-	const galleriesWithFiles = matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
-	return {
-		galleries: galleriesWithFiles,
+	private galleryMainRef = React.createRef<any>();
+	private artworkChoiceRef = React.createRef<any>();
+
+	private galleriesWithArtworksPlaceholder = [];
+	private selectedGalleryPlaceholder = {
+		artworks: [],
+		name: "select a gallery",
 	};
-};
+	private selectedArtworkPlaceholder = {
+		title: "select an artwork",
+	};
+
+	constructor(props: any) {
+		super(props);
+		this.state = {
+			artworkChoiceRef: this.artworkChoiceRef,
+			galleryMainRef: this.galleryMainRef,
+			selectArtwork: this.selectArtwork,
+			selectGallery: this.selectGallery,
+			selectedArtwork: this.selectedArtworkPlaceholder,
+			selectedGallery: this.selectedGalleryPlaceholder,
+		};
+	}
+
+	public render() {
+		const { children } = this.props;
+		return (
+		<div className="Layout">
+			<FullStoryHelmet/>
+			<GalleryHeader/>
+			<Query query={DB_CONTENT}>
+				{({ data: { galleries, artworks }, loading }: any) => (
+					<StaticQuery query={ARTWORK_FILES}
+						render={({ artworkFileData }: any) => {
+							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries) ||
+								this.galleriesWithArtworksPlaceholder;
+							const context = {
+								...this.state,
+								galleries: galleriesWithArtworks,
+							};
+							return (
+								<LayoutContext.Provider value={context}>
+									<Admin>
+										<Loading loading={loading}>
+											{children}
+										</Loading>
+									</Admin>
+								</LayoutContext.Provider>
+							);
+						}}
+					/>
+				)}
+			</Query>
+			<Footer/>
+		</div>
+		);
+	}
+
+	private selectArtwork = (selectedArtwork: any) =>
+		this.setState({
+			selectedArtwork,
+		}, () => {
+			const galleryMain = this.galleryMainRef.current;
+			galleryMain.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		})
+
+	private selectGallery = (selectedGallery: any) =>
+		this.setState({
+			selectedArtwork: selectedGallery.artworks[0],
+			selectedGallery,
+		}, () => {
+			const artworkChoice = this.artworkChoiceRef.current;
+			artworkChoice.scrollIntoView({
+				behavior: "smooth",
+				block: "start",
+			});
+		})
+
+	private getGalleries = (
+		artworks: any[],
+		artworkFileData: any[],
+		galleries: any[],
+	) => {
+		const artworkFiles = this.getArtworkFiles(artworkFileData);
+		const galleriesWithFiles = this.matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
+		return galleriesWithFiles;
+	}
+
+
+	private matchGalleryArtworkToFile = (galleries: any[] = [], artworks: any[] = [], artworkFiles: any[]) => {
+		return galleries.map((gallery: any) => {
+			// match up artworks from db to gallery
+			let galleryArtworks = artworks.filter((artwork: any) =>
+				artwork.galleryId === gallery.id);
+			// map those to files for display throughout site
+			galleryArtworks = galleryArtworks.map(({
+					id,
+					title,
+					...remainingArtwork
+				}: any) => {
+					// if an artwork file exist add it
+					// will check if file is there to determine proper element for image
+					const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
+					return {
+						file,
+						id,
+						title,
+						...remainingArtwork,
+					};
+				});
+			return {
+				artworks: galleryArtworks,
+				...gallery,
+			};
+		});
+	}
+
+	private getArtworkFiles = (artworkFiles: any) =>
+		artworkFiles.edges.map((edge: any) => edge.node)
+}
 
 const ARTWORK_FILES = graphql`
   {
@@ -71,34 +158,3 @@ const ARTWORK_FILES = graphql`
     }
   }
 `;
-
-const matchGalleryArtworkToFile = (galleries: any[] = [], artworks: any[] = [], artworkFiles: any[]) => {
-	return galleries.map((gallery: any) => {
-		// match up artworks from db to gallery
-		let galleryArtworks = artworks.filter((artwork: any) =>
-			artwork.galleryId === gallery.id);
-		// map those to files for display throughout site
-		galleryArtworks = galleryArtworks.map(({
-				id,
-				title,
-				...remainingArtwork
-			}: any) => {
-				// if an artwork file exist add it
-				// will check if file is there to determine proper element for image
-				const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
-				return {
-					file,
-					id,
-					title,
-					...remainingArtwork,
-				};
-			});
-		return {
-			artworks: galleryArtworks,
-			...gallery,
-		};
-	});
-};
-
-const getArtworkFiles = (artworkFiles: any) =>
-	artworkFiles.edges.map((edge: any) => edge.node);
