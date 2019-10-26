@@ -90,7 +90,6 @@ export default class Layout extends React.Component {
 
 	private selectGallery = (selectedGallery: any) =>
 		this.setState({
-			selectedArtwork: selectedGallery.artworks[0],
 			selectedGallery,
 		}, () => {
 			const artworkChoice = this.artworkChoiceRef.current;

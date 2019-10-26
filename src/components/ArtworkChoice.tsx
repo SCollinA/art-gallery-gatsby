@@ -11,7 +11,7 @@ import SectionWrapper from "./SectionWrapper";
 export default () =>
 	<LayoutContext.Consumer>
 		{({artworkChoiceRef, selectArtwork, selectedArtwork, selectedGallery}: any) => {
-			const artworks = get("artworks", selectedGallery);
+			const artworks = get("artworks", selectedGallery) || [];
 			return (
 				<AdminContext.Consumer>
 					{({ isLoggedIn }: any) => (

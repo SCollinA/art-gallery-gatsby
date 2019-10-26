@@ -56,14 +56,13 @@ export default () => {
 					}]}
 				>
 					{(addArtwork: any, { data, loading, error }: any) => (
-						<div className="AddArtworks"
+						<div className="AddArtworks clickable"
 							onClick={(event) => {
 								event.stopPropagation();
 								addArtwork();
 							}}
 						>
-							<div className="addArtwork clickable"
-							>
+							<div className="addArtwork">
 								<h3> + </h3>
 							</div>
 						</div>
