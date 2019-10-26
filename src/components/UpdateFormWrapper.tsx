@@ -1,22 +1,22 @@
 import React from "react";
 
-import adminContext from "../contexts/adminContext";
+import AdminContext from "../contexts/adminContext";
 
 import UpdateArtworkForm from "./UpdateArtworkForm";
 import UpdateGalleryForm from "./UpdateGalleryForm";
 
 export default () => (
-	<adminContext.Consumer>
+	<AdminContext.Consumer>
 		{({ updatingArtwork, updatingGallery, cancelUpdate }: any) =>
-			(updatingGallery.id || updatingArtwork.id) &&
+			(updatingArtwork || updatingGallery) &&
 				<div className="updateForm"
 					onClick={cancelUpdate}
 				>
-					{((updatingGallery.id &&
-						<UpdateGalleryForm/>) ||
-						(updatingArtwork.id &&
-							<UpdateArtworkForm/>))}
+					{updatingGallery &&
+						<UpdateGalleryForm/>}
+					{updatingArtwork &&
+						<UpdateArtworkForm/>}
 				</div>
 		}
-	</adminContext.Consumer>
+	</AdminContext.Consumer>
 );

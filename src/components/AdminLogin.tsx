@@ -13,6 +13,7 @@ export default () =>
 				onCompleted={({ login: { token }}: any) => {
 					localStorage.setItem("auth-token", token);
 					login();
+					window.location.assign(`${window.location.host}/gallery`);
 				}}
 				onError={(err: any) => window.alert(err.message)}
 			>
