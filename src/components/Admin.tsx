@@ -28,18 +28,19 @@ export default class Admin extends React.Component<any, any, any> {
 
 	public componentDidMount() {
 		this.initializeAdmin();
+		// TODO: verify if this is a sufficient check
 		if (localStorage.getItem("auth-token")) {
 			this.setState({ isLoggedIn: true });
 		}
 	}
 
-	public _login = () => {
+	public login = () => {
 		this.setState({ isLoggedIn: true });
 		window.onbeforeunload = () => "are you sure you want to log out?";
 		window.onunload = () => localStorage.removeItem("auth-token");
 	}
 
-	public _logout = () => {
+	public logout = () => {
 		window.onbeforeunload = null;
 		localStorage.removeItem("auth-token");
 		this.setState({ isLoggedIn: false });
@@ -47,7 +48,7 @@ export default class Admin extends React.Component<any, any, any> {
 
 	// select a gallery to update
 	// when selecting, if one already exists, remove it
-	public _selectGallery = (selectedGallery: any) => this.setState({
+	public selectGallery = (selectedGallery: any) => this.setState({
 		isUpdating: this.state.selectedGallery.id === selectedGallery.id && true,
 		selectedArtwork: {},
 		selectedGallery,
@@ -57,7 +58,7 @@ export default class Admin extends React.Component<any, any, any> {
 
 	// select an artwork to update
 	// when selecting, if one already exists, remove it
-	public _selectArtwork = (selectedArtwork: any) => this.setState({
+	public editArtwork = (selectedArtwork: any) => this.setState({
 		isUpdating: true,
 		selectedArtwork,
 		// selectedGallery: {},
@@ -66,58 +67,47 @@ export default class Admin extends React.Component<any, any, any> {
 	})
 
 	// update the gallery in state
-	public _handleGalleryChange = (updatingGallery: any) => this.setState({ updatingGallery });
+	public handleGalleryChange = (updatingGallery: any) => this.setState({ updatingGallery });
 
 	// update the gallery in state
-	public _handleArtworkChange = (updatingArtwork: any) =>
+	public handleArtworkChange = (updatingArtwork: any) =>
 		this.setState({ updatingArtwork: { ...this.state.updatingArtwork, ...updatingArtwork } })
 
 	// submission will be a mutation defined in the form
-	public _submitGalleryChange = () => this.setState({
+	public submitGalleryChange = () => this.setState({
 		isUpdating: false,
 		selectedGallery: {},
 		updatingGallery: {},
 	})
 
 	// submission will be a mutation defined in the form
-	public _submitArtworkChange = () => this.setState({
+	public submitArtworkChange = () => this.setState({
 		isUpdating: false,
 		selectedArtwork: {},
 		updatingArtwork: {},
 	})
 
-	public _resetGallery = () => this.setState({
+	public resetGallery = () => this.setState({
 		updatingGallery: this.state.selectedGallery,
 	})
 
-	public _resetArtwork = () => this.setState({
+	public resetArtwork = () => this.setState({
 		updatingArtwork: this.state.selectedArtwork,
 	})
 
-	public _removeGallery = () => this._submitGalleryChange();
+	public removeGallery = () => this.submitGalleryChange();
 
-	public _removeArtwork = () => this._submitArtworkChange();
+	public removeArtwork = () => this.submitArtworkChange();
 
 	public initializeAdmin = () => {
 		const { galleries } = this.context;
 		if (get("length", galleries)) {
-			this._selectGallery(galleries[0]);
+			this.selectGallery(galleries[0]);
 		}
 	}
 
 	public render() {
-		const { isLoggedIn } = this.state;
 		const { children } = this.props;
-		// return !isLoggedIn ? <AdminLogin login={this._login}/> : (
-			// <div className="Admin"
-				// onClick={() => this.setState({
-			// 		isUpdating: false,
-			// 		selectedArtwork: {},
-			// 		selectedGallery: {},
-			// 		updatingArtwork: {},
-			// 		updatingGallery: {},
-			// 	})}
-			// // >
 		return (
 				<AdminContext.Provider
 					value={{
@@ -129,19 +119,19 @@ export default class Admin extends React.Component<any, any, any> {
 							updatingArtwork: {},
 							updatingGallery: {},
 						}),
-						changeArtwork: this._handleArtworkChange,
-						changeGallery: this._handleGalleryChange,
-						login: this._login,
-						removeArtwork: this._removeArtwork,
-						removeGallery: this._removeGallery,
-						resetArtwork: this._resetArtwork,
-						resetGallery: this._resetGallery,
-						selectArtwork: this._selectArtwork,
-						selectGallery: this._selectGallery,
+						changeArtwork: this.handleArtworkChange,
+						changeGallery: this.handleGalleryChange,
+						editArtwork: this.editArtwork,
+						login: this.login,
+						removeArtwork: this.removeArtwork,
+						removeGallery: this.removeGallery,
+						resetArtwork: this.resetArtwork,
+						resetGallery: this.resetGallery,
+						selectGallery: this.selectGallery,
 						selectedArtwork: this.state.selectedArtwork,
 						selectedGallery: this.state.selectedGallery,
-						submitArtwork: this._submitArtworkChange,
-						submitGallery: this._submitGalleryChange,
+						submitArtwork: this.submitArtworkChange,
+						submitGallery: this.submitGalleryChange,
 						updatingArtwork: this.state.updatingArtwork,
 						updatingGallery: this.state.updatingGallery,
 					}}
