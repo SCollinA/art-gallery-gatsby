@@ -6,13 +6,13 @@ import AdminContext from "../contexts/adminContext";
 
 import Loading from "./Loading";
 
-export default () => (
+export default () =>
 	<AdminContext.Consumer>
-		{({ isLoggedIn, setIsLoggedIn }: any) => (
+		{({ isLoggedIn, login, logout }: any) => (
 			<Mutation mutation={ADMIN_LOGIN}
 				onCompleted={({ login: { token }}: any) => {
 					localStorage.setItem("auth-token", token);
-					setIsLoggedIn(true);
+					login();
 				}}
 				onError={(err: any) => window.alert(err.message)}
 			>
@@ -21,7 +21,7 @@ export default () => (
 						{isLoggedIn ?
 							<div className="logout">
 								<input type="button" value="logout"
-									onClick={() => setIsLoggedIn(false)}
+									onClick={() => logout()}
 								/>
 							</div> :
 							<form className="AdminLogin"
@@ -49,8 +49,7 @@ export default () => (
 				)}
 			</Mutation>
 		)}
-	</AdminContext.Consumer>
-);
+	</AdminContext.Consumer>;
 
 const ADMIN_LOGIN = gql`
 mutation AdminLogin($adminPassword: String!) {
