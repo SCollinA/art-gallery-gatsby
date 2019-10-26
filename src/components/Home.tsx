@@ -8,12 +8,15 @@ export default () => (
 	<div className="Home">
 		{/* random artwork */}
 		<LayoutContext.Consumer>
-			{({ galleries }: any) =>
-				<div className="randomArtwork">
-					{!!get("length", galleries) &&
-						<ArtworkImage artwork={getRandomArtwork(galleries)}/>}
-				</div>
-			}
+			{({ galleries }: any) => {
+				const randomArtwork = getRandomArtwork(galleries);
+				return (
+					<div className="randomArtwork">
+						{!!randomArtwork &&
+							<ArtworkImage artwork={randomArtwork}/>}
+					</div>
+				);
+			}}
 		</LayoutContext.Consumer>
 		<PageBreak/>
 		<WelcomeMessage/>
@@ -22,9 +25,11 @@ export default () => (
 
 const getRandomArtwork = (galleries: any) => {
 	const randomGallery = galleries[Math.floor(Math.random() * galleries.length)];
-	const randomArtwork = randomGallery.artworks[
-		Math.floor(Math.random() * randomGallery.artworks.length)
-	];
+	const randomArtwork = randomGallery ?
+		randomGallery.artworks[
+			Math.floor(Math.random() * randomGallery.artworks.length)
+		] :
+		undefined;
 	return randomArtwork;
 };
 
