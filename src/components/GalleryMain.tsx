@@ -15,7 +15,9 @@ export default () =>
 						<div className="galleryTitle">
 							<h2>{selectedGallery.name}</h2>
 							{isLoggedIn &&
-								<h2 onClick={() => editArtwork(selectedArtwork)}>
+								<h2 className="clickable"
+									onClick={() => editArtwork(selectedArtwork)}
+								>
 									edit
 								</h2>}
 							<h1>{selectedArtwork.title}</h1>

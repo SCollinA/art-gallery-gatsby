@@ -24,7 +24,7 @@ export default () =>
 								<div id="artworkThumbs">
 									{artworks.map((artwork: any, index: any) => (
 										<div key={index}
-											className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? " selectedArtwork" : ""}`}
+											className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? " selectedArtwork" : ""} clickable`}
 											onClick={() => selectArtwork(artwork)}
 										>
 											<ArtworkImage artwork={artwork}/>

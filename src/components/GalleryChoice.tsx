@@ -27,7 +27,7 @@ export default ({ selectGallery, selectedGallery }: any) => (
 											{ file: false, image: false };
 										return randomArtwork && gallery && (
 											<div key={index}
-												className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""}`}
+												className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""} clickable`}
 												onClick={() => selectGallery(gallery)}
 											>
 												<ArtworkImage artwork={randomArtwork}/>

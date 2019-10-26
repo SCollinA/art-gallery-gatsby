@@ -29,16 +29,16 @@ export default () => (
 										event.target.reset();
 									}}
 								>
-									<label>name
+									<label className="clickable">name
 										<input type="text" name="name" id="name"/>
 									</label>
-									<label>e-mail
+									<label className="clickable">e-mail
 										<input type="text" name="email" id="email"/>
 									</label>
 									<label className="contactMessage">message
 										<textarea name="message" id="message"></textarea>
 									</label>
-									<label>artwork
+									<label className="clickable">artwork
 										<select name="artwork" id="artwork">
 											<option value="-"> - </option>
 											{galleries.map(({ id, name, artworks }: any) => (
@@ -53,7 +53,7 @@ export default () => (
 											))}
 										</select>
 									</label>
-									<label>
+									<label className="clickable">
 										<input type="submit" value="submit"/>
 									</label>
 								</form>
