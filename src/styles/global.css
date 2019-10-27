@@ -368,19 +368,20 @@ a {
     margin: auto;
 }
 
-.updateForm {
-    position: fixed;
+/* .updateFormWrapper {
+    position: relative;
+} */
+
+#UpdateGalleryForm, #UpdateArtworkForm, .AdminLogin {
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
-#UpdateGalleryForm, #UpdateArtworkForm {
     margin: 0;
     height: 100%;
     display: flex;
+    justify-content: space-around;
     flex-wrap: wrap;
     background-color: rgba(255, 255, 255, .9);
     border-radius: 10px;
@@ -427,6 +428,10 @@ a {
 
 .Footer > p:nth-child(2) {
     white-space: normal;
+}
+
+.adminLoginButton {
+    cursor: pointer;
 }
 
 @media (max-width: 500px) {

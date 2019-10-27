@@ -22,7 +22,13 @@ export default () => (
 									const randomArtwork = gallery.artworks[randomIndex];
 									return randomArtwork && gallery && (
 										<div key={index}
-											className={`galleryThumb${gallery.id === selectedGallery.id ? " selectedGallery" : ""} clickable`}
+											className={`galleryThumb${
+												selectedGallery &&
+													gallery.id === selectedGallery.id ?
+														" selectedGallery" :
+														""
+												} clickable`
+											}
 											onClick={() => selectGallery(gallery)}
 										>
 											<ArtworkImage artwork={randomArtwork}/>

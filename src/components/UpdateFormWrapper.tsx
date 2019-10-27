@@ -9,7 +9,7 @@ export default () => (
 	<AdminContext.Consumer>
 		{({ updatingArtwork, updatingGallery, cancelUpdate }: any) =>
 			(updatingArtwork || updatingGallery) &&
-				<div className="updateForm"
+				<div className="updateFormWrapper"
 					onClick={cancelUpdate}
 				>
 					{updatingGallery &&

@@ -17,7 +17,9 @@ export default () =>
 					{({ isLoggedIn }: any) => (
 						<div className="ArtworkChoice" ref={artworkChoiceRef}>
 							<div className="artworksTitle">
-								<h3>{selectedGallery.name}</h3>
+								{selectedGallery ?
+									<h3>{selectedGallery.name}</h3> :
+									<h3>select a gallery</h3>}
 								<h3>artworks</h3>
 							</div>
 							<SectionWrapper>

@@ -35,7 +35,7 @@ export default () => (
 									<label className="clickable">e-mail
 										<input type="text" name="email" id="email"/>
 									</label>
-									<label className="contactMessage">message
+									<label className="contactMessage clickable">message
 										<textarea name="message" id="message"></textarea>
 									</label>
 									<label className="clickable">artwork

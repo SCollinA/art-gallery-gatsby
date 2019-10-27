@@ -22,15 +22,6 @@ export default class Layout extends React.Component {
 	private galleryMainRef = React.createRef<any>();
 	private artworkChoiceRef = React.createRef<any>();
 
-	private galleriesWithArtworksPlaceholder = [];
-	private selectedGalleryPlaceholder = {
-		artworks: [],
-		name: "select a gallery",
-	};
-	private selectedArtworkPlaceholder = {
-		title: "select an artwork",
-	};
-
 	constructor(props: any) {
 		super(props);
 		this.state = {
@@ -38,8 +29,8 @@ export default class Layout extends React.Component {
 			galleryMainRef: this.galleryMainRef,
 			selectArtwork: this.selectArtwork,
 			selectGallery: this.selectGallery,
-			selectedArtwork: this.selectedArtworkPlaceholder,
-			selectedGallery: this.selectedGalleryPlaceholder,
+			selectedArtwork: undefined,
+			selectedGallery: undefined,
 		};
 	}
 
@@ -53,8 +44,7 @@ export default class Layout extends React.Component {
 				{({ data: { galleries, artworks }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={({ artworkFileData }: any) => {
-							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries) ||
-								this.galleriesWithArtworksPlaceholder;
+							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
 							const context = {
 								...this.state,
 								galleries: galleriesWithArtworks,
@@ -64,6 +54,7 @@ export default class Layout extends React.Component {
 									<Admin>
 										<Loading loading={loading}>
 											{children}
+											<Footer/>
 										</Loading>
 									</Admin>
 								</LayoutContext.Provider>
@@ -72,7 +63,6 @@ export default class Layout extends React.Component {
 					/>
 				)}
 			</Query>
-			<Footer/>
 		</div>
 		);
 	}
