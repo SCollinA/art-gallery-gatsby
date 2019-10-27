@@ -17,7 +17,7 @@ import GalleryHeader from "./header";
 import "./layout.css";
 import Loading from "./Loading";
 
-export default class Layout extends React.Component {
+export default class Layout extends React.Component<any, any, any> {
 
 	private galleryMainRef = React.createRef<any>();
 	private artworkChoiceRef = React.createRef<any>();
@@ -114,17 +114,19 @@ export default class Layout extends React.Component {
 					// if an artwork file exist add it
 					// will check if file is there to determine proper element for image
 					const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
-					return {
+					const galleryArtwork = {
 						file,
 						id,
 						title,
 						...remainingArtwork,
 					};
+					return galleryArtwork;
 				});
-			return {
+			const galleryWithArtworks = {
 				artworks: galleryArtworks,
 				...gallery,
 			};
+			return galleryWithArtworks;
 		});
 	}
 
