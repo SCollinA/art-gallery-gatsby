@@ -14,13 +14,13 @@ export default () => (
 			<LayoutContext.Consumer>
 				{({ galleries, selectGallery, selectedGallery }: any) =>
 					<AdminContext.Consumer>
-						{({ isLoggedIn }: any) => (
+						{({ isLoggedIn }: any) =>
 							<div id="galleryThumbs">
-								{/* map galleries to their first artwork image */}
+								{/* map galleries a random artwork image */}
 								{galleries.map((gallery: any, index: any) => {
 									const randomIndex = Math.floor(Math.random() * gallery.artworks.length);
 									const randomArtwork = gallery.artworks[randomIndex];
-									return randomArtwork && gallery && (
+									return (
 										<div key={index}
 											className={`galleryThumb${
 												selectedGallery &&
@@ -31,7 +31,8 @@ export default () => (
 											}
 											onClick={() => selectGallery(gallery)}
 										>
-											<ArtworkImage artwork={randomArtwork}/>
+											{randomArtwork &&
+												<ArtworkImage artwork={randomArtwork}/>}
 											<p>{gallery.name}</p>
 										</div>
 									);
@@ -39,7 +40,7 @@ export default () => (
 								{isLoggedIn &&
 									<AddGalleries/>}
 							</div>
-						)}
+						}
 					</AdminContext.Consumer>
 				}
 			</LayoutContext.Consumer>

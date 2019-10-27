@@ -1,5 +1,4 @@
 import gql from "graphql-tag";
-import { isEmpty } from "lodash/fp";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 
@@ -7,12 +6,15 @@ import AdminContext from "../contexts/adminContext";
 import {
 	DB_CONTENT,
 } from "../graphql/graphql";
+import { scrubMetaData } from "../utils/utils";
 
 import { GALLERY_ARTWORKS } from "./AdminArtworks";
 import ArtworkImage from "./ArtworkImage";
 import Loading from "./Loading";
 
 export default class UpdateArtworkForm extends React.Component<any, any, any> {
+
+	public contextType = AdminContext;
 
 	public imageCanvas = React.createRef<any>();
 	public artworkImageRef = React.createRef<any>();
@@ -54,7 +56,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 			selectedArtwork,
 			selectedGallery,
 			updatingArtwork,
-			changeArtwork,
+			updateArtwork,
 			submitArtwork,
 			resetArtwork,
 			removeArtwork,
@@ -75,7 +77,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 					},
 				]}
 			>
-				{(updateArtwork: any, { loading }: any) =>
+				{(updateArtworkMutation: any, { loading }: any) =>
 					<Loading loading={loading}>
 						<form id="UpdateArtworkForm"
 							onSubmit={(event) => {
@@ -92,10 +94,10 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 										fr.onload = () => {
 											const image = btoa(`${fr.result}`);
 											// updating artwork values will match form values
-											updateArtwork({ variables: {
+											updateArtworkMutation({ variables: {
 												id: updatingArtwork.id,
 												input: {
-													...updatingArtwork,
+													...scrubMetaData(updatingArtwork),
 													image,
 												},
 											}})
@@ -112,7 +114,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									}, "image/jpeg");
 								} else {
 									// updating artwork values will match form values
-									updateArtwork({ variables: {
+									updateArtworkMutation({ variables: {
 										id: updatingArtwork.id,
 										input: updatingArtwork,
 									}})
@@ -134,7 +136,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									{({ data: galleryNameData }: any) => (
 										<select name="galleryId"
 											value={updatingArtwork.galleryId || ""}
-											onChange={(event) => changeArtwork({
+											onChange={(event) => updateArtwork({
 												galleryId: event.target.value || null,
 											})}
 										>
@@ -155,7 +157,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							<label>title
 								<input autoFocus type="text" name="title"
 									value={updatingArtwork.title}
-									onChange={(event) => changeArtwork({
+									onChange={(event) => updateArtwork({
 										title: event.target.value,
 									})}
 								/>
@@ -195,7 +197,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												imageLoaded: false,
 												imageWidth: 0,
 											}, () => {
-												changeArtwork({ ...updatingArtwork, image: null });
+												updateArtwork({ ...updatingArtwork, image: null });
 											});
 										}}
 									/>
@@ -282,7 +284,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							<label>width
 								<input type="number" name="width"
 									value={updatingArtwork.width || ""}
-									onChange={(event) => changeArtwork({
+									onChange={(event) => updateArtwork({
 										width: parseInt(event.target.value, 10),
 									})}
 								/>
@@ -290,14 +292,14 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							<label>height
 								<input type="number" name="height"
 									value={updatingArtwork.height || ""}
-									onChange={(event) => changeArtwork({
+									onChange={(event) => updateArtwork({
 										height: parseInt(event.target.value, 10),
 									})}/>
 							</label>
 							<label>medium
 								<input type="text" name="medium"
 									value={updatingArtwork.medium || ""}
-									onChange={(event) => changeArtwork({
+									onChange={(event) => updateArtwork({
 										medium: event.target.value,
 									})}
 								/>
@@ -307,7 +309,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									<input type="radio" name="framed"
 										value="framed"
 										checked={updatingArtwork.framed}
-										onChange={(event) => changeArtwork({
+										onChange={(event) => updateArtwork({
 											framed: event.target.checked,
 										})}
 									/>
@@ -316,7 +318,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									<input type="radio" name="framed"
 										value="unframed"
 										checked={!updatingArtwork.framed}
-										onChange={(event) => changeArtwork({
+										onChange={(event) => updateArtwork({
 											framed: !event.target.checked,
 										})}
 									/>
@@ -325,7 +327,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 							<label>price
 								<input type="number" name="price"
 									value={updatingArtwork.price || ""}
-									onChange={(event) => changeArtwork({
+									onChange={(event) => updateArtwork({
 										price: parseInt(event.target.value, 10),
 									})}/>
 							</label>
@@ -334,7 +336,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									<input type="radio" name="sold"
 										value="sold"
 										checked={updatingArtwork.sold}
-										onChange={(event) => changeArtwork({
+										onChange={(event) => updateArtwork({
 											sold: event.target.checked,
 										})}
 									/>
@@ -343,7 +345,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 									<input type="radio" name="sold"
 										value="unsold"
 										checked={!updatingArtwork.sold}
-										onChange={(event) => changeArtwork({
+										onChange={(event) => updateArtwork({
 											sold: !event.target.checked,
 										})}
 									/>
@@ -394,8 +396,6 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		);
 	}
 }
-
-UpdateArtworkForm.contextType = AdminContext;
 
 const UPDATE_ARTWORK = gql`
 	mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {

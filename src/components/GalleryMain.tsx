@@ -20,14 +20,12 @@ export default () =>
 									{selectedGallery.name}
 								</h2> :
 								<h2>select a gallery</h2>}
-							{isLoggedIn &&
-								<h2 className="clickable"
+							{selectedArtwork ?
+								<h1 className={`${isLoggedIn && selectedGallery ? "clickable" : ""}`}
 									onClick={() => editArtwork(selectedArtwork)}
 								>
-									edit
-								</h2>}
-							{selectedArtwork ?
-								<h1>{selectedArtwork.title}</h1> :
+									{selectedArtwork.title}
+								</h1> :
 								<h1>select an artwork</h1>}
 						</div>
 						<SectionWrapper>
