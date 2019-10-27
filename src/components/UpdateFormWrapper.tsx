@@ -5,7 +5,7 @@ import AdminContext from "../contexts/adminContext";
 import UpdateArtworkForm from "./UpdateArtworkForm";
 import UpdateGalleryForm from "./UpdateGalleryForm";
 
-export default () => (
+export default () =>
 	<AdminContext.Consumer>
 		{({ updatingArtwork, updatingGallery, cancelUpdate }: any) =>
 			(updatingArtwork || updatingGallery) &&
@@ -18,5 +18,4 @@ export default () => (
 						<UpdateArtworkForm/>}
 				</div>
 		}
-	</AdminContext.Consumer>
-);
+	</AdminContext.Consumer>;

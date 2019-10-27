@@ -18,14 +18,6 @@ export default () =>
 				{({ cancelUpdate, updateGallery, updatingGallery, resetGallery, removeGallery, submitGallery }: any) => (
 					<Mutation mutation={UPDATE_GALLERY}
 						onCompleted={({ updateGallery: updatedGallery }: any) => selectGallery(updatedGallery)}
-						refetchQueries={[{
-							query: GALLERY_ARTWORKS,
-							variables: { galleryId: updatingGallery.id },
-						},
-						{
-							query: GET_GALLERY,
-							variables: { id: updatingGallery.id },
-						}]}
 					>
 						{(updateGalleryMutation: any, { loading }: any) => (
 							<Loading loading={loading}>
