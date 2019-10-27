@@ -107,10 +107,8 @@ export default class Admin extends React.Component<any, any, any> {
 	private cancelUpdate = () =>
 		this.setState({
 			isUpdating: false,
-			selectedArtwork: {},
-			selectedGallery: {},
-			updatingArtwork: {},
-			updatingGallery: {},
+			updatingArtwork: undefined,
+			updatingGallery: undefined,
 		})
 
 	private resetGallery = () =>
