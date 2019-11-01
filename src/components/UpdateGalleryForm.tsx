@@ -5,7 +5,7 @@ import { Mutation } from "react-apollo";
 import AdminContext from "../contexts/adminContext";
 import LayoutContext from "../contexts/layoutContext";
 import { DB_CONTENT } from "../graphql/graphql";
-import { scrubMetaData } from "../utils/utils";
+import { scrubGallery } from "../utils/utils";
 
 import { GALLERY_ARTWORKS, GET_GALLERY } from "./AdminArtworks";
 import { ALL_GALLERIES } from "./AdminGalleries";
@@ -27,8 +27,9 @@ export default () =>
 										submitGallery();
 										updateGalleryMutation({variables: {
 											id: updatingGallery.id,
-											input: scrubMetaData(updatingGallery),
+											input: scrubGallery(updatingGallery),
 										}});
+										submitGallery();
 									}}
 									onReset={() => resetGallery()}
 									onClick={(event) => event.stopPropagation()}

@@ -7,3 +7,14 @@ export const scrubMetaData = (apolloObject: any) => {
 	);
 	return scrubbedObject;
 };
+
+export const scrubGallery = (apolloGallery: any) => {
+	const scrubbedObject = omitBy(
+		(value, key) =>
+			key.startsWith("__") ||
+			key === "file" ||
+			key === "artworks",
+		apolloGallery,
+	);
+	return scrubbedObject;
+};
