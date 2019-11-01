@@ -24,7 +24,6 @@ export default () =>
 								<form id="UpdateGalleryForm"
 									onSubmit={(event) => {
 										event.preventDefault();
-										submitGallery();
 										updateGalleryMutation({variables: {
 											id: updatingGallery.id,
 											input: scrubGallery(updatingGallery),
