@@ -42,7 +42,7 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		this.setState({ aspectRatio:  window.innerWidth / window.innerHeight })
 
 	public render = () =>
-		this.state.artwork.recentlyUpdatedImage || this.state.artwork.image ?
+		this.state.artwork.recentlyupdatedimage || this.state.artwork.image ?
 			<ArtworkImageDB artwork={this.state.artwork}
 				imageRef={this.imageRef}
 				aspectRatio={this.state.aspectRatio}

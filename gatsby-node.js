@@ -6,8 +6,8 @@
 const Artwork = require("../art-gallery-back/Artwork");
 
 exports.onPostBuild = () => {
-    // reset all the recentlyUpdatedImage things
-    console.log("resetting recentlyUpdatedImage");
-    return async () => await Artwork.upate({ recentlyUpdatedImage: false }, { where: {} });
+    // reset all the recentlyupdatedimage things
+    console.log("resetting recentlyupdatedimage");
+    return async () => await Artwork.upate({ recentlyupdatedimage: false }, { where: {} });
 }
 // You can delete this file if you're not using it
