@@ -17,7 +17,10 @@ export default () => (
 						{({ isLoggedIn }: any) =>
 							<div id="galleryThumbs">
 								{/* map galleries a random artwork image */}
-								{galleries.map((gallery: any, index: any) => {
+								{galleries.filter(({ artworks }: any) =>
+									isLoggedIn ||
+									artworks.find(({ image, file }: any) => image || file))
+								.map((gallery: any, index: any) => {
 									const filteredArtworks = gallery.artworks.filter(
 										({ image, file }: any) => (image || file),
 									);
