@@ -18,8 +18,11 @@ export default () => (
 							<div id="galleryThumbs">
 								{/* map galleries a random artwork image */}
 								{galleries.map((gallery: any, index: any) => {
-									const randomIndex = Math.floor(Math.random() * gallery.artworks.length);
-									const randomArtwork = gallery.artworks[randomIndex];
+									const filteredArtworks = gallery.artworks.filter(
+										({ image, file }: any) => (image || file),
+									);
+									const randomIndex = Math.floor(Math.random() * filteredArtworks.length);
+									const randomArtwork = filteredArtworks[randomIndex];
 									return (
 										<div key={index}
 											className={`galleryThumb${
