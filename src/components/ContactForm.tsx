@@ -4,8 +4,8 @@ import { Mutation } from "react-apollo";
 
 import LayoutContext from "../contexts/layoutContext";
 
+import ArtworkImageDB from "./ArtworkImageDB";
 import Loading from "./Loading";
-import PageBreak from "./PageBreak";
 import SectionWrapper from "./SectionWrapper";
 
 export default () => (
@@ -29,22 +29,23 @@ export default () => (
 										event.target.reset();
 									}}
 								>
-									<label>name
+									<label className="clickable">name
 										<input type="text" name="name" id="name"/>
 									</label>
-									<label>e-mail
+									<label className="clickable">e-mail
 										<input type="text" name="email" id="email"/>
 									</label>
-									<label className="contactMessage">message
+									<label className="contactMessage clickable">message
 										<textarea name="message" id="message"></textarea>
 									</label>
-									<label>artwork
+									<label className="clickable">artwork
 										<select name="artwork" id="artwork">
 											<option value="-"> - </option>
 											{galleries.map(({ id, name, artworks }: any) => (
 												<optgroup key={id} label={name}>
 													{artworks.map((artwork: any) => (
 														<option key={artwork.id} value={artwork.title}>
+															{<ArtworkImageDB artwork={artwork}/>}
 															{artwork.title}
 														</option>),
 													)}
@@ -52,7 +53,7 @@ export default () => (
 											))}
 										</select>
 									</label>
-									<label>
+									<label className="clickable">
 										<input type="submit" value="submit"/>
 									</label>
 								</form>

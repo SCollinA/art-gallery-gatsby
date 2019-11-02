@@ -1,87 +1,20 @@
-import { get, isEmpty } from "lodash/fp";
+import { get } from "lodash/fp";
 import React from "react";
 
+import AdminContext from "../contexts/adminContext";
 import LayoutContext from "../contexts/layoutContext";
 
 import ArtworkChoice from "./ArtworkChoice";
 import GalleryChoice from "./GalleryChoice";
 import GalleryMain from "./GalleryMain";
 import PageBreak from "./PageBreak";
+import UpdateFormWrapper from "./UpdateFormWrapper";
 
-export default class Gallery extends React.Component<any, any, any> {
-
-	public galleryMain = React.createRef<any>();
-	public artworkChoice = React.createRef<any>();
-
-	constructor(props: any) {
-		super(props);
-		this.state = {
-			selectedArtwork: {},
-			selectedGallery: {
-				artworks: [],
-				id: null,
-			},
-		};
-	}
-
-	public componentDidMount() {
-		let selectedGallery;
-		let selectedArtwork;
-		if (isEmpty(this.state.selectedGallery) ||
-			isEmpty(this.state.selectedArtwork)
-		) {
-			selectedGallery = get(["galleries", "0"], this.context);
-			selectedArtwork = get(["artworks", "0"], selectedGallery);
-			this.setState({
-				selectedArtwork,
-				selectedGallery,
-			});
-		}
-	}
-
-	public selectGallery = (selectedGallery: any) => this.setState({
-		selectedArtwork: selectedGallery.artworks[0],
-		selectedGallery,
-	}, () => {
-		const artworkChoice = this.artworkChoice.current;
-		artworkChoice.scrollIntoView({
-			behavior: "smooth",
-			block: "start",
-		});
-	})
-
-	public selectArtwork = (selectedArtwork: any) => this.setState({
-		selectedArtwork,
-	}, () => {
-		const galleryMain = this.galleryMain.current;
-		galleryMain.scrollIntoView({
-			behavior: "smooth",
-			block: "start",
-		});
-	})
-
-	public render() {
-		return (
-			<div className="Gallery">
-				<GalleryMain galleryMainRef={this.galleryMain}
-					selectedGallery={this.state.selectedGallery}
-					selectedArtwork={this.state.selectedArtwork}
-				/>
-				<PageBreak/>
-				<GalleryChoice
-					galleries={this.context.galleries}
-					selectGallery={this.selectGallery}
-					selectedGallery={this.state.selectedGallery}
-				/>
-				<ArtworkChoice artworkChoiceRef={this.artworkChoice}
-					artworks={this.state.selectedGallery.artworks}
-					selectArtwork={this.selectArtwork}
-					selectedArtwork={this.state.selectedArtwork}
-					selectedGallery={this.state.selectedGallery}
-				/>
-			</div>
-		);
-	}
-}
-
-Gallery.contextType = LayoutContext;
+export default () =>
+	<div className="Gallery">
+		<GalleryMain/>
+		<PageBreak/>
+		<GalleryChoice/>
+		<ArtworkChoice/>
+		<UpdateFormWrapper></UpdateFormWrapper>
+	</div>;

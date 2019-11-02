@@ -1,8 +1,10 @@
-import { Link } from "gatsby";
 import React from "react";
+
+import AdminLogin from "./AdminLogin";
 import SectionWrapper from "./SectionWrapper";
 
-export default () => (
+
+export default () =>
 	<SectionWrapper>
 		<footer className="Footer">
 			<span>
@@ -14,7 +16,6 @@ export default () => (
 				and may not be reproduced without written permission
 				of the artist.
 			</p>
-			<Link to="/admin">admin</Link>
+			<AdminLogin></AdminLogin>
 		</footer>
-	</SectionWrapper>
-);
+	</SectionWrapper>;

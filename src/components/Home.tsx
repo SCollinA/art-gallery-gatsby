@@ -1,3 +1,4 @@
+import { get } from "lodash/fp";
 import React from "react";
 import LayoutContext from "../contexts/layoutContext";
 import ArtworkImage from "./ArtworkImage";
@@ -6,13 +7,17 @@ import PageBreak from "./PageBreak";
 export default () => (
 	<div className="Home">
 		{/* random artwork */}
-		<div className="randomArtwork">
-			<LayoutContext.Consumer>
-				{({ galleries }: any) =>
-						<ArtworkImage artwork={getRandomArtwork(galleries)}/>
-					}
-			</LayoutContext.Consumer>
-		</div>
+		<LayoutContext.Consumer>
+			{({ galleries }: any) => {
+				const randomArtwork = getRandomArtwork(galleries);
+				return (
+					<div className="randomArtwork">
+						{!!randomArtwork &&
+							<ArtworkImage artwork={randomArtwork}/>}
+					</div>
+				);
+			}}
+		</LayoutContext.Consumer>
 		<PageBreak/>
 		<WelcomeMessage/>
 	</div>
@@ -20,9 +25,11 @@ export default () => (
 
 const getRandomArtwork = (galleries: any) => {
 	const randomGallery = galleries[Math.floor(Math.random() * galleries.length)];
-	const randomArtwork = randomGallery.artworks[
-		Math.floor(Math.random() * randomGallery.artworks.length)
-	];
+	const randomArtwork = randomGallery ?
+		randomGallery.artworks[
+			Math.floor(Math.random() * randomGallery.artworks.length)
+		] :
+		undefined;
 	return randomArtwork;
 };
 

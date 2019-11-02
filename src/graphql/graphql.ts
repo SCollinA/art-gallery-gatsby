@@ -18,6 +18,7 @@ export const DB_CONTENT = gql`
         price
         sold
         framed
+        recentlyUpdatedImage
     }
   }
 `;

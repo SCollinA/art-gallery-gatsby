@@ -5,7 +5,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 	<Img ref={imageRef}
 		style={{
 			margin: "auto",
-			maxWidth: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
+			width: artwork.file.childImageSharp.fluid.aspectRatio <= 1 ?
 				`${artwork.file.childImageSharp.fluid.aspectRatio * 100 / aspectRatio}%` :
 				`100%`,
 		}}
