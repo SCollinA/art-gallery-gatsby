@@ -141,14 +141,14 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												const fr = new FileReader();
 												fr.onload = () => {
 													const image = btoa(`${fr.result}`);
+													if (image) {
+														updatingArtwork.image = image;
+														updatingArtwork.recentlyupdatedimage = true;
+													}
 													// updating artwork values will match form values
 													updateArtworkMutation({ variables: {
 														id: updatingArtwork.id,
-														input: {
-															...scrubMetaData(updatingArtwork),
-															image,
-															recentlyupdatedimage: true,
-														},
+														input: scrubMetaData(updatingArtwork),
 													}})
 													.then(() => {
 														this.setState({
@@ -219,7 +219,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												}}
 												onChange={(event: any) => {
 													const imageFile = event.target.files[0];
-													const imageLoaded = imageFile && true;
+													const imageLoaded = !!imageFile;
 													this.setState({
 														imageHeight: 0,
 														imageLoaded: false,
