@@ -41,7 +41,7 @@ export default class Layout extends React.Component<any, any, any> {
 			<FullStoryHelmet/>
 			<GalleryHeader/>
 			<Query query={DB_CONTENT}>
-				{({ data: { galleries, artworks }, loading }: any) => (
+				{({ data: { galleries = [], artworks = [] }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={({ artworkFileData }: any) => {
 							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
@@ -104,7 +104,7 @@ export default class Layout extends React.Component<any, any, any> {
 	}
 
 
-	private matchGalleryArtworkToFile = (galleries: any[] = [], artworks: any[] = [], artworkFiles: any[]) => {
+	private matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
 		return galleries.map((gallery: any) => {
 			// match up artworks from db to gallery
 			let galleryArtworks = artworks.filter((artwork: any) =>
