@@ -13,11 +13,16 @@ import Loading from "./Loading";
 
 export default () =>
 		<LayoutContext.Consumer>
-			{({ selectGallery }: any) =>
+			{({ selectGallery, selectedGallery }: any) =>
 			<AdminContext.Consumer>
 				{({ cancelUpdate, updateGallery, updatingGallery, resetGallery, removeGallery, submitGallery }: any) => (
 					<Mutation mutation={UPDATE_GALLERY}
-						onCompleted={({ updateGallery: updatedGallery }: any) => selectGallery(updatedGallery)}
+						onCompleted={({ updateGallery: updatedGallery }: any) =>
+							selectGallery({
+								...selectedGallery,
+								...updatedGallery,
+							})
+						}
 					>
 						{(updateGalleryMutation: any, { loading }: any) => (
 							<Loading loading={loading}>
