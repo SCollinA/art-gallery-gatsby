@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
-import { get } from "lodash/fp";
+import { filter } from "lodash/fp";
 import React from "react";
 import {
 	Query,
@@ -47,6 +47,10 @@ export default class Layout extends React.Component<any, any, any> {
 							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
 							const context = {
 								...this.state,
+								artworksWithoutGallery: filter(
+									({ galleryId }: any) => !galleryId,
+									artworks,
+								),
 								galleries: galleriesWithArtworks,
 							};
 							return (

@@ -10,7 +10,7 @@ import SectionWrapper from "./SectionWrapper";
 
 export default () =>
 	<LayoutContext.Consumer>
-		{({ artworkChoiceRef, selectArtwork, selectedArtwork, selectedGallery }: any) => {
+		{({ artworkChoiceRef, artworksWithoutGallery, selectArtwork, selectedArtwork, selectedGallery }: any) => {
 			const artworks = get("artworks", selectedGallery) || [];
 			return (
 				<AdminContext.Consumer>
@@ -24,15 +24,23 @@ export default () =>
 							</div>
 							<SectionWrapper>
 								<div id="artworkThumbs">
-									{artworks.map((artwork: any, index: any) => (
-										<div key={index}
-											className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? " selectedArtwork" : ""} clickable`}
-											onClick={() => selectArtwork(artwork)}
-										>
-											<ArtworkImage artwork={artwork}/>
-											<p>{artwork.title}</p>
-										</div>
-									))}
+									{artworks.filter((artwork: any) =>
+											isLoggedIn || artwork.image || artwork.file)
+										.map((artwork: any, index: any) =>
+											<ArtworkThumb key={index}
+												artwork={artwork}
+												selectArtwork={selectArtwork}
+												selectedArtwork={selectedArtwork}
+											></ArtworkThumb>,
+									)}
+									{isLoggedIn &&
+										artworksWithoutGallery.map((artwork, index) =>
+											<ArtworkThumb key={index}
+												artwork={artwork}
+												selectArtwork={selectArtwork}
+												selectedArtwork={selectedArtwork}
+											></ArtworkThumb>,
+									)}
 									{isLoggedIn &&
 										<AddArtworks/>}
 								</div>
@@ -43,3 +51,12 @@ export default () =>
 			);
 		}}
 	</LayoutContext.Consumer>;
+
+const ArtworkThumb = ({ artwork, selectArtwork, selectedArtwork }: any) =>
+	<div // tslint:disable-next-line: max-line-length
+		className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? " selectedArtwork" : ""} clickable`}
+		onClick={() => selectArtwork(artwork)}
+	>
+		<ArtworkImage artwork={artwork}/>
+		<p>{artwork.title}</p>
+	</div>;

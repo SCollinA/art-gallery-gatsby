@@ -8,7 +8,7 @@ import SectionWrapper from "./SectionWrapper";
 
 export default () =>
 	<LayoutContext.Consumer>
-		{({ galleries, selectedGallery, galleryMainRef, selectedArtwork  }: any) =>
+		{({ artworksWithoutGallery, galleries, selectedGallery, galleryMainRef, selectedArtwork  }: any) =>
 			<AdminContext.Consumer>
 				{({ isLoggedIn, editArtwork, editGallery }: any) =>
 					<div className="GalleryMain" ref={galleryMainRef}>
@@ -31,19 +31,19 @@ export default () =>
 						<SectionWrapper>
 							<div className="galleryImage">
 							{galleries.map(({ artworks }: any) =>
-								artworks.map((artwork: any, index: any) => (
-									<div key={index}
-										className={`galleryArtwork${
-												selectedArtwork &&
-													selectedArtwork.id === artwork.id ?
-														" current" :
-														" hidden"
-											}`
-										}
-									>
-										<ArtworkImage artwork={artwork}/>
-									</div>
-							)))}
+								artworks.map((artwork: any, index: any) =>
+									<GalleryArtwork key={index}
+										artwork={artwork}
+										selectedArtwork={selectedArtwork}
+									></GalleryArtwork>,
+							))}
+							{isLoggedIn &&
+								artworksWithoutGallery.map((artwork: any, index: number) =>
+									<GalleryArtwork key={index}
+										artwork={artwork}
+										selectedArtwork={selectedArtwork}
+									></GalleryArtwork>,
+								)}
 						</div>
 						</SectionWrapper>
 						{selectedArtwork &&
@@ -60,3 +60,16 @@ export default () =>
 			</AdminContext.Consumer>
 		}
 	</LayoutContext.Consumer>;
+
+const GalleryArtwork = ({ artwork, selectedArtwork }: any) =>
+	<div
+		className={`galleryArtwork${
+				selectedArtwork &&
+					selectedArtwork.id === artwork.id ?
+						" current" :
+						" hidden"
+			}`
+		}
+	>
+		<ArtworkImage artwork={artwork}/>
+	</div>;
