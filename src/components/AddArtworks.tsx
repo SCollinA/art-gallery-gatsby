@@ -79,6 +79,7 @@ const ADD_ARTWORK = gql`
 			price
 			sold
 			framed
+			recentlyUpdatedImage
 		}
 	}
 `;

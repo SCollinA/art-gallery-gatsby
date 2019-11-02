@@ -42,13 +42,15 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		this.setState({ aspectRatio:  window.innerWidth / window.innerHeight })
 
 	public render = () =>
-		this.state.artwork.file ?
-			<ArtworkImageFile artwork={this.state.artwork}
-				imageRef={this.imageRef}
-				aspectRatio={this.state.aspectRatio}
-			/> :
-			<ArtworkImageDB artwork={this.state.artwork}
-				imageRef={this.imageRef}
-				aspectRatio={this.state.aspectRatio}
-			/>
+		(this.state.artwork.image || this.state.artwork.file) ?
+			this.state.artwork.recentlyUpdatedImage ?
+				<ArtworkImageDB artwork={this.state.artwork}
+					imageRef={this.imageRef}
+					aspectRatio={this.state.aspectRatio}
+				/> :
+				<ArtworkImageFile artwork={this.state.artwork}
+					imageRef={this.imageRef}
+					aspectRatio={this.state.aspectRatio}
+				/> :
+			null
 }

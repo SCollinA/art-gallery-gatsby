@@ -151,6 +151,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 														input: {
 															...scrubMetaData(updatingArtwork),
 															image,
+															recentlyUpdatedImage: true,
 														},
 													}})
 													.then(() => {
@@ -464,6 +465,7 @@ const UPDATE_ARTWORK = gql`
 			price
 			sold
 			framed
+			recentlyUpdatedImage
 		}
 	}
 `;
