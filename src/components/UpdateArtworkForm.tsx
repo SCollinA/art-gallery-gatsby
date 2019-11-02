@@ -151,7 +151,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 														input: {
 															...scrubMetaData(updatingArtwork),
 															image,
-															recentlyUpdatedImage: true,
+															recentlyupdatedimage: true,
 														},
 													}})
 													.then(() => {
