@@ -41,7 +41,7 @@ export default class Layout extends React.Component<any, any, any> {
 			<FullStoryHelmet/>
 			<GalleryHeader/>
 			<Query query={DB_CONTENT}>
-				{({ data: { galleries, artworks } = { galleries: [], artworks: []}, loading }: any) => (
+				{({ data: { galleries = [], artworks = [] } = { galleries: [], artworks: [] }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
 						render={({ artworkFileData }: any) => {
 							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
