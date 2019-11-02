@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { find, get, map } from "lodash/fp";
+import { filter, find, get, map } from "lodash/fp";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 
@@ -66,9 +66,13 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 		// const { imageWidth, imageHeight, windowHeight } = this.state
 		return (
 			<LayoutContext.Consumer>
-				{({ selectArtwork, selectGallery, selectedGallery }: any) =>
+				{({ selectArtwork, selectedArtwork, selectGallery, selectedGallery }: any) =>
 					<Mutation mutation={UPDATE_ARTWORK}
-						update={(cache: any, { data: { updateArtwork: updatedArtwork }}: any) => {
+						update={(cache: any, { data: { updateArtwork: updatedArtworkData }}: any) => {
+							const updatedArtwork = {
+								...selectedArtwork,
+								...updatedArtworkData,
+							};
 							const { artworks, galleries } = cache.readQuery({ query: DB_CONTENT });
 							const updatedArtworks = map(
 								(artwork) =>
@@ -81,18 +85,28 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 								(gallery) => get("id", gallery) === get("galleryId", updatedArtwork),
 								galleries,
 							);
-							const updatedGallery = {
-								...artworkGallery,
-								artworks: map((artwork) =>
-									get("id", artwork) === get("id", updatedArtwork) ?
-										updatedArtwork :
-										artwork,
-									get("artworks", selectedGallery),
-								),
-							};
-							const updatedGalleries = map(
-								(gallery) =>
-									get("id", gallery) === get("galleryId", updatedArtwork) ?
+							let updatedGallery: any;
+							if (artworkGallery) {
+								updatedGallery = {
+									...artworkGallery,
+									artworks: map((artwork) =>
+										get("id", artwork) === get("id", updatedArtwork) ?
+											updatedArtwork :
+											artwork,
+										get("artworks", selectedGallery),
+									),
+								};
+							} else {
+								updatedGallery = {
+									...selectedGallery,
+									artworks: filter((artwork) =>
+										get("id", artwork) !== get("id", updatedArtwork),
+										get("artworks", selectedGallery),
+									),
+								};
+							}
+							const updatedGalleries = map((gallery) =>
+								get("id", gallery) === get("galleryId", selectedArtwork) ?
 									updatedGallery :
 									gallery,
 								galleries,
@@ -104,8 +118,15 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 								},
 								query: DB_CONTENT,
 							});
-							selectGallery(updatedGallery);
-							selectArtwork(updatedArtwork);
+							selectGallery({
+								...selectedGallery,
+								...updatedGallery,
+							});
+							selectArtwork(
+								artworkGallery ?
+									updatedArtwork :
+									undefined,
+							);
 						}}
 					>
 						{(updateArtworkMutation: any, { loading }: any) =>
