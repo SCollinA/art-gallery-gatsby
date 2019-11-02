@@ -58,6 +58,8 @@ export default class Admin extends React.Component<any, any, any> {
 		this.setState({
 			isLoggedIn: false,
 		}, () => {
+			this.context.selectArtwork();
+			this.context.selectGallery();
 			window.onbeforeunload = null;
 			localStorage.removeItem("auth-token");
 		})
