@@ -1,12 +1,34 @@
-import { get } from "lodash/fp";
+import { get, map } from "lodash/fp";
 import React from "react";
 import { Query } from "react-apollo";
 
-import { ARTWORK_IMAGE } from "../graphql/graphql";
+import { client } from "../apollo/client";
+import { ARTWORK_IMAGE, DB_CONTENT } from "../graphql/graphql";
+
 import Loading from "./Loading";
 
 export default ({ artwork, imageRef, aspectRatio }: any) => (
-	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}>
+	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}
+		onCompleted={({ getArtwork }: any) => {
+			const { artworks, ...rest }: any = client.readQuery({
+				query: DB_CONTENT,
+			});
+			const updatedArtworks = map(
+				(dbArtwork) =>
+					get("id", dbArtwork) === get("id", getArtwork) ?
+						({ ...dbArtwork, ...getArtwork }) :
+						dbArtwork,
+				artworks,
+			);
+			client.writeQuery({
+				data: {
+					...rest,
+					artworks: updatedArtworks,
+				},
+				query: DB_CONTENT,
+			});
+		}}
+	>
 		{({ data, loading }: any) =>
 			<Loading loading={loading}>
 				<img ref={imageRef}
