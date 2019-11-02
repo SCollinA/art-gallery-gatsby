@@ -122,11 +122,7 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 								...selectedGallery,
 								...updatedGallery,
 							});
-							selectArtwork(
-								artworkGallery ?
-									updatedArtwork :
-									undefined,
-							);
+							selectArtwork(updatedArtwork);
 						}}
 					>
 						{(updateArtworkMutation: any, { loading }: any) =>
