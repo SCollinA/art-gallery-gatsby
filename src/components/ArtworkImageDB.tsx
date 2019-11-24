@@ -40,9 +40,12 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 					onLoad={() => {
 						const dbImage: any = imageRef.current;
 						if (!!imageRef) {
-							dbImage.style.maxWidth = dbImage.width / dbImage.height <= 1 ?
-								`${(dbImage.width / dbImage.height) * 100 / aspectRatio}%` :
-								"100%";
+							let imageWidthPercent = dbImage.width / dbImage.height <= 1 ?
+								(dbImage.width / dbImage.height) * 100 / aspectRatio :
+								75;
+							imageWidthPercent = imageWidthPercent > 100 ?
+								100 - imageWidthPercent : imageWidthPercent;
+							dbImage.style.maxWidth = `${imageWidthPercent}%`;
 						}
 						dbImage.style.display = "inherit";
 					}}
