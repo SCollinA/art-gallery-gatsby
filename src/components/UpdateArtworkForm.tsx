@@ -4,12 +4,12 @@ import React from "react";
 import { Mutation, Query } from "react-apollo";
 
 import AdminContext from "../contexts/adminContext";
+import LayoutContext from "../contexts/layoutContext";
 import {
 	DB_CONTENT,
 } from "../graphql/graphql";
 import { scrubMetaData } from "../utils/utils";
 
-import LayoutContext from "../contexts/layoutContext";
 
 import { GALLERY_ARTWORKS } from "./AdminArtworks";
 import ArtworkImage from "./ArtworkImage";
@@ -427,15 +427,15 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 												query: GALLERY_ARTWORKS,
 											}]}
 										>
-										{(deleteArtwork: any) => (
-											<input type="button" value="remove"
-												onClick={() =>
-													window.confirm("are you sure you want to remove this artwork?") &&
-														deleteArtwork(
-															{ variables: { id: updatingArtwork.id } },
-														).then(() => removeArtwork())}
-											/>
-										)}
+											{(deleteArtwork: any) => (
+												<input type="button" value="remove"
+													onClick={() =>
+														window.confirm("are you sure you want to remove this artwork?") &&
+															deleteArtwork(
+																{ variables: { id: updatingArtwork.id } },
+															).then(() => removeArtwork())}
+												/>
+											)}
 										</Mutation>
 									</div>
 								</form>

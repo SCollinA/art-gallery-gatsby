@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
-import { filter } from "lodash/fp";
+import { filter, get } from "lodash/fp";
 import React from "react";
 import {
 	Query,
@@ -72,26 +72,34 @@ export default class Layout extends React.Component<any, any, any> {
 	}
 
 	private selectArtwork = (selectedArtwork: any) =>
-		this.setState({
-			selectedArtwork,
-		}, () => {
-			const galleryMain = this.galleryMainRef.current;
-			galleryMain.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-			});
-		})
+		get("id", selectedArtwork) === get("id", this.state.selectedArtwork) ?
+			this.setState({
+				selectedArtwork: undefined,
+			}) :
+			this.setState({
+				selectedArtwork,
+			}, () => {
+				const galleryMain = this.galleryMainRef.current;
+				galleryMain.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+				});
+			})
 
 	private selectGallery = (selectedGallery: any) =>
-		this.setState({
-			selectedGallery,
-		}, () => {
-			const artworkChoice = this.artworkChoiceRef.current;
-			artworkChoice.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-			});
-		})
+		get("id", selectedGallery) === get("id", this.state.selectedGallery) ?
+			this.setState({
+				selectedGallery: undefined,
+			}) :
+			this.setState({
+				selectedGallery,
+			}, () => {
+				const artworkChoice = this.artworkChoiceRef.current;
+				artworkChoice.scrollIntoView({
+					behavior: "smooth",
+					block: "start",
+				});
+			})
 
 	private getGalleries = (
 		artworks: any[],

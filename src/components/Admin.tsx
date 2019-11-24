@@ -123,7 +123,13 @@ export default class Admin extends React.Component<any, any, any> {
 			updatingArtwork: this.context.selectedArtwork,
 		})
 
-	private removeGallery = () => this.submitGallery();
+	private removeGallery = () => {
+		this.submitGallery();
+		this.context.selectGallery();
+	}
 
-	private removeArtwork = () => this.submitArtwork();
+	private removeArtwork = () => {
+		this.submitArtwork();
+		this.context.selectArtwork();
+	}
 }
