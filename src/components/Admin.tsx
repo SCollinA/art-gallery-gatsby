@@ -1,7 +1,7 @@
 import React from "react";
 
-import AdminContext from "../contexts/adminContext";
-import LayoutContext from "../contexts/layoutContext";
+import AdminContext from "../contexts/AdminContext";
+import LayoutContext from "../contexts/LayoutContext";
 
 export default class Admin extends React.Component<any, any, any> {
 

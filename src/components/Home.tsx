@@ -1,6 +1,6 @@
 import { get } from "lodash/fp";
 import React from "react";
-import LayoutContext from "../contexts/layoutContext";
+import LayoutContext from "../contexts/LayoutContext";
 import ArtworkImage from "./ArtworkImage";
 import PageBreak from "./PageBreak";
 

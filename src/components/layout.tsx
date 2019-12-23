@@ -5,7 +5,7 @@ import {
 	Query,
 } from "react-apollo";
 
-import LayoutContext from "../contexts/layoutContext";
+import LayoutContext from "../contexts/LayoutContext";
 import {
 	DB_CONTENT,
 } from "../graphql/graphql";

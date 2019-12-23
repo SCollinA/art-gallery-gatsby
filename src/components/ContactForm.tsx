@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
 
-import LayoutContext from "../contexts/layoutContext";
+import LayoutContext from "../contexts/LayoutContext";
 
 import ArtworkImageDB from "./ArtworkImageDB";
 import Loading from "./Loading";

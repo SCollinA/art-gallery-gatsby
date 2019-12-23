@@ -1,7 +1,7 @@
 import Img from "gatsby-image";
 import React from "react";
 
-import LayoutContext from "../contexts/layoutContext";
+import LayoutContext from "../contexts/LayoutContext";
 
 import PageBreak from "./PageBreak";
 import SectionWrapper from "./SectionWrapper";

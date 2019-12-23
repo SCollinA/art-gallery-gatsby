@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import React from "react";
 import { Query } from "react-apollo";
-import AdminContext from "../contexts/adminContext";
+import AdminContext from "../contexts/AdminContext";
 import AddGalleries from "./AddGalleries";
 import Loading from "./Loading";
 

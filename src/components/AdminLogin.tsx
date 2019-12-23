@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
 
-import AdminContext from "../contexts/adminContext";
+import AdminContext from "../contexts/AdminContext";
 
 import Loading from "./Loading";
 

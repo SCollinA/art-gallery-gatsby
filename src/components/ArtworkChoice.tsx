@@ -1,8 +1,8 @@
 import { get } from "lodash/fp";
 import React from "react";
 
-import AdminContext from "../contexts/adminContext";
-import LayoutContext from "../contexts/layoutContext";
+import AdminContext from "../contexts/AdminContext";
+import LayoutContext from "../contexts/LayoutContext";
 
 import AddArtworks from "./AddArtworks";
 import ArtworkImage from "./ArtworkImage";
