@@ -120,6 +120,8 @@ a {
 
 .pageLink {
     margin: auto;
+    display: flex;
+    justify-content: center;
 }
 
 .pageLink h2 {
@@ -223,7 +225,7 @@ a {
 #artworkThumbs {
     display: flex;
     align-items: stretch;
-    flex: 1;
+    flex: 1 0 0;
     flex-wrap: wrap;
     margin: auto;
 }
