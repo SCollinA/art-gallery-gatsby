@@ -611,13 +611,3 @@ a {
         flex-basis: 100%;
     }
 }
-
-@media (min-width: 500px) and (max-width: 800px) {
-    .currentGallery, .currentArtwork, .addArtwork, .addGallery {
-        width: 29%;
-    }
-
-    .artworkThumb {
-        width: 33%
-    }
-}
