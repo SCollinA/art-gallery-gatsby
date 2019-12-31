@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
-import { filter, get } from "lodash/fp";
+import { filter } from "lodash/fp";
 import React from "react";
 import {
 	Query,
@@ -11,11 +11,11 @@ import {
 } from "../graphql/graphql";
 
 import Admin from "./Admin";
-import Footer from "./Footer";
-import FullStoryHelmet from "./FullStoryHelmet";
-import GalleryHeader from "./header";
 import "./layout.css";
-import Loading from "./Loading";
+import Footer from "./page-elements/Footer";
+import GalleryHeader from "./page-elements/header";
+import Loading from "./reusable/Loading";
+import FullStoryHelmet from "./utils/FullStoryHelmet";
 
 export default class Layout extends React.Component<any, any, any> {
 
@@ -37,9 +37,8 @@ export default class Layout extends React.Component<any, any, any> {
 	public render() {
 		const { children } = this.props;
 		return (
-		<div className="Layout">
+		<>
 			<FullStoryHelmet/>
-			<GalleryHeader/>
 			<Query query={DB_CONTENT}>
 				{({ data: { galleries = [], artworks = [] } = { galleries: [], artworks: [] }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
@@ -47,7 +46,7 @@ export default class Layout extends React.Component<any, any, any> {
 							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
 							const context = {
 								...this.state,
-								artworksWithoutGallery: filter(
+								artworksWithoutGalleries: filter(
 									({ galleryId }: any) => !galleryId,
 									artworks,
 								),
@@ -57,8 +56,13 @@ export default class Layout extends React.Component<any, any, any> {
 								<LayoutContext.Provider value={context}>
 									<Admin>
 										<Loading loading={loading}>
-											{children}
-											<Footer/>
+											<div className="Layout">
+												<GalleryHeader/>
+												<div className="layoutChildren">
+													{children}
+												</div>
+												<Footer/>
+											</div>
 										</Loading>
 									</Admin>
 								</LayoutContext.Provider>
@@ -67,39 +71,28 @@ export default class Layout extends React.Component<any, any, any> {
 					/>
 				)}
 			</Query>
-		</div>
+		</>
 		);
 	}
 
 	private selectArtwork = (selectedArtwork: any) =>
-		get("id", selectedArtwork) === get("id", this.state.selectedArtwork) ?
-			this.setState({
-				selectedArtwork: undefined,
-			}) :
-			this.setState({
-				selectedArtwork,
-			}, () => {
+		this.setState({
+			selectedArtwork,
+		}, () => {
+			if (!!selectedArtwork) {
 				const galleryMain = this.galleryMainRef.current;
 				galleryMain.scrollIntoView({
 					behavior: "smooth",
 					block: "start",
 				});
-			})
+			}
+		})
 
 	private selectGallery = (selectedGallery: any) =>
-		get("id", selectedGallery) === get("id", this.state.selectedGallery) ?
-			this.setState({
-				selectedGallery: undefined,
-			}) :
-			this.setState({
-				selectedGallery,
-			}, () => {
-				const artworkChoice = this.artworkChoiceRef.current;
-				artworkChoice.scrollIntoView({
-					behavior: "smooth",
-					block: "start",
-				});
-			})
+		this.setState({
+			selectedArtwork: undefined,
+			selectedGallery,
+		})
 
 	private getGalleries = (
 		artworks: any[],

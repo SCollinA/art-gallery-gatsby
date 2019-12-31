@@ -1,6 +1,8 @@
 import { isEqual } from "lodash/fp";
 import React from "react";
 
+import Placeholder from "../reusable/Placeholder";
+
 import ArtworkImageDB from "./ArtworkImageDB";
 import ArtworkImageFile from "./ArtworkImageFile";
 
@@ -52,5 +54,5 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 					imageRef={this.imageRef}
 					aspectRatio={this.state.aspectRatio}
 				/> :
-				null
+				<Placeholder text="No image found"/>
 }

@@ -1,40 +1,27 @@
 import { get } from "lodash/fp";
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 
-import AddArtworks from "./AddArtworks";
-import ArtworkImage from "./ArtworkImage";
-import SectionWrapper from "./SectionWrapper";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import SectionWrapper from "../../reusable/SectionWrapper";
 
-export default () =>
+import AddArtworks from "../create/AddArtworks";
+
+export default ({ artworks }: { artworks?: any[]}) =>
 	<LayoutContext.Consumer>
-		{({ artworkChoiceRef, artworksWithoutGallery, selectArtwork, selectedArtwork, selectedGallery }: any) => {
-			const artworks = get("artworks", selectedGallery) || [];
+		{({ artworkChoiceRef, selectArtwork, selectedArtwork, selectedGallery }: any) => {
+			artworks = artworks || get("artworks", selectedGallery) || [];
 			return (
 				<AdminContext.Consumer>
 					{({ isLoggedIn }: any) => (
 						<div className="ArtworkChoice" ref={artworkChoiceRef}>
-							<div className="artworksTitle">
-								{selectedGallery ?
-									<h3>{selectedGallery.name}</h3> :
-									<h3>select a gallery</h3>}
-								<h3>artworks</h3>
-							</div>
 							<SectionWrapper>
 								<div id="artworkThumbs">
-									{artworks.filter((artwork: any) =>
+									{!!artworks && artworks.filter((artwork: any) =>
 											isLoggedIn || artwork.image || artwork.file)
 										.map((artwork: any, index: any) =>
-											<ArtworkThumb key={index}
-												artwork={artwork}
-												selectArtwork={selectArtwork}
-												selectedArtwork={selectedArtwork}
-											></ArtworkThumb>,
-									)}
-									{isLoggedIn &&
-										artworksWithoutGallery.map((artwork, index) =>
 											<ArtworkThumb key={index}
 												artwork={artwork}
 												selectArtwork={selectArtwork}

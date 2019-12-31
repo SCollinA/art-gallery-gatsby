@@ -2,14 +2,15 @@ import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
-import { DB_CONTENT } from "../graphql/graphql";
-import { scrubGallery } from "../utils/utils";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
+import {
+	ALL_GALLERIES,
+	DB_CONTENT,
+} from "../../../graphql/graphql";
+import { scrubGallery } from "../../../utils/utils";
 
-import { GALLERY_ARTWORKS, GET_GALLERY } from "./AdminArtworks";
-import { ALL_GALLERIES } from "./AdminGalleries";
-import Loading from "./Loading";
+import Loading from "../../reusable/Loading";
 
 export default () =>
 		<LayoutContext.Consumer>

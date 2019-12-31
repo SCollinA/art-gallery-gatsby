@@ -3,11 +3,11 @@ import { get, map } from "lodash/fp";
 import React from "react";
 import { Mutation } from "react-apollo";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
-import { DB_CONTENT } from "../graphql/graphql";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
+import { DB_CONTENT } from "../../../graphql/graphql";
 
-import Loading from "./Loading";
+import Loading from "../../reusable/Loading";
 
 export default () =>
 <AdminContext.Consumer>

@@ -2,10 +2,10 @@ import { get, map } from "lodash/fp";
 import React from "react";
 import { Query } from "react-apollo";
 
-import { client } from "../apollo/client";
-import { ARTWORK_IMAGE, DB_CONTENT } from "../graphql/graphql";
+import { client } from "../../apollo/client";
+import { ARTWORK_IMAGE, DB_CONTENT } from "../../graphql/graphql";
 
-import Loading from "./Loading";
+import Loading from "../reusable/Loading";
 
 export default ({ artwork, imageRef, aspectRatio }: any) => (
 	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}
@@ -40,11 +40,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 					onLoad={() => {
 						const dbImage: any = imageRef.current;
 						if (!!imageRef) {
-							let imageWidthPercent = dbImage.width / dbImage.height <= 1 ?
-								(dbImage.width / dbImage.height) * 100 / aspectRatio :
-								75;
-							imageWidthPercent = imageWidthPercent > 100 ?
-								100 - imageWidthPercent : imageWidthPercent;
+							const imageWidthPercent = (dbImage.width / dbImage.height) * 100 / aspectRatio;
 							dbImage.style.maxWidth = `${imageWidthPercent}%`;
 						}
 						dbImage.style.display = "inherit";

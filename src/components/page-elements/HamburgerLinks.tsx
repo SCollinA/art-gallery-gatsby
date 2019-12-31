@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
+import SectionWrapper from "../reusable/SectionWrapper";
+
 import PageLinks from "./PageLinks";
-import SectionWrapper from "./SectionWrapper";
 import SocialLinks from "./SocialLinks";
 
 export default () => {

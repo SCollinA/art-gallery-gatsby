@@ -3,17 +3,16 @@ import { filter, find, get, map } from "lodash/fp";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 import {
 	DB_CONTENT,
-} from "../graphql/graphql";
-import { scrubMetaData } from "../utils/utils";
+	GALLERY_ARTWORKS,
+} from "../../../graphql/graphql";
+import { scrubMetaData } from "../../../utils/utils";
 
-
-import { GALLERY_ARTWORKS } from "./AdminArtworks";
-import ArtworkImage from "./ArtworkImage";
-import Loading from "./Loading";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import Loading from "../../reusable/Loading";
 
 export default class UpdateArtworkForm extends React.Component<any, any, any> {
 
@@ -408,32 +407,26 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 										/>
 										<Mutation mutation={DELETE_ARTWORK}
 											update={(cache: any) => {
-												const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-												cache.writeQuery({
-													data: {
-														artworks: artworks.filter((artwork: any) =>
-															artwork.id !== updatingArtwork.id),
-														galleries,
+												const { getArtworks: galleryArtworks } = cache.readQuery({
+													query: GALLERY_ARTWORKS,
+													variables: {
+														galleryId: updatingArtwork.galleryId,
 													},
-													query: DB_CONTENT,
+												});
+												selectGallery({
+													...selectedGallery,
+													artworks: galleryArtworks.filter((artwork: any) =>
+																artwork.id !== updatingArtwork.id),
 												});
 											}}
-											refetchQueries={[{
-												query: GALLERY_ARTWORKS,
-												variables: {
-													galleryId: updatingArtwork.galleryId,
-												},
-											}, {
-												query: GALLERY_ARTWORKS,
-											}]}
 										>
 											{(deleteArtwork: any) => (
 												<input type="button" value="remove"
 													onClick={() =>
 														window.confirm("are you sure you want to remove this artwork?") &&
-															deleteArtwork(
-																{ variables: { id: updatingArtwork.id } },
-															).then(() => removeArtwork())}
+															deleteArtwork({
+																variables: { id: updatingArtwork.id },
+															}).then(() => removeArtwork())}
 												/>
 											)}
 										</Mutation>

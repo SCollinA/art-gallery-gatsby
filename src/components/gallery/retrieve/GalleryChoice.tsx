@@ -1,20 +1,21 @@
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 
-import AddGalleries from "./AddGalleries";
-import ArtworkImage from "./ArtworkImage";
-import SectionWrapper from "./SectionWrapper";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import SectionWrapper from "../../reusable/SectionWrapper";
+
+import AddGalleries from "../create/AddGalleries";
+import ArtworkChoice from "./ArtworkChoice";
 
 export default () => (
-	<div className="GalleryChoice">
-		<h3>collections</h3>
-		<SectionWrapper>
-			<LayoutContext.Consumer>
-				{({ galleries, selectGallery, selectedGallery }: any) =>
-					<AdminContext.Consumer>
-						{({ isLoggedIn }: any) =>
+	<LayoutContext.Consumer>
+		{({ artworksWithoutGalleries, galleries, selectGallery, selectedGallery }: any) =>
+			<AdminContext.Consumer>
+				{({ isLoggedIn }: any) =>
+					<div className="GalleryChoice">
+						<SectionWrapper>
 							<div id="galleryThumbs">
 								{/* map galleries a random artwork image */}
 								{galleries.filter(({ artworks }: any) =>
@@ -46,20 +47,16 @@ export default () => (
 								{isLoggedIn &&
 									<AddGalleries/>}
 							</div>
-						}
-					</AdminContext.Consumer>
+						</SectionWrapper>
+						{isLoggedIn &&
+							<div className="orphanedArtworks">
+								<h3>artworks without galleries</h3>
+								<ArtworkChoice artworks={artworksWithoutGalleries}/>
+							</div>}
+					</div>
 				}
-			</LayoutContext.Consumer>
-		</SectionWrapper>
-	</div>
+			</AdminContext.Consumer>
+		}
+	</LayoutContext.Consumer>
 );
 
-// function scrollThumbs(isScrollingLeft) {
-//     const galleryThumbs = document.getElementById('galleryThumbs')
-//     galleryThumbs.scrollTo({
-//         top: 0,
-//         left: galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
-//         behavior: 'smooth',
-//     })
-//         // galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
-// }
