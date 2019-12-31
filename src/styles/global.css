@@ -324,6 +324,11 @@ a {
     border-radius: 10px;
 }
 
+.ArtworkImageDB,
+.ArtworkImageFile {
+    max-width: 100%;
+}
+
 /* ============================ */
 /*          About               */
 /* ============================ */

@@ -5,7 +5,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => {
 	const correctedAspectRatio = artwork.file.childImageSharp.fluid.aspectRatio / aspectRatio;
 	const imageWidthPercent = correctedAspectRatio * 100;
 	return (
-		<Img ref={imageRef}
+		<Img ref={imageRef} className="ArtworkImageFile"
 			style={{
 				margin: "auto",
 				width: `${imageWidthPercent}%`,
