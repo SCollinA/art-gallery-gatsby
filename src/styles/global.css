@@ -222,8 +222,15 @@ a {
 }
 
 .galleryLocationSpecific {
+    flex-basis: 33%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+.galleryLocationSpecific h3,
+.galleryLocationSpecific h2 {
+    margin: 0;
 }
 
 .galleryTitle, .galleryCaption {
@@ -552,6 +559,10 @@ a {
     .About > .section-wrapper > .gatsby-image-wrapper + p,
     .Commissions > .section-wrapper > .gatsby-image-wrapper + p {
         padding-top: 30px;
+    }
+
+    .galleryLocation, .galleryCaption {
+        flex-direction: column;
     }
 
     .galleryArtwork,
