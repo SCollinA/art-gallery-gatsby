@@ -511,6 +511,11 @@ a {
     .artworkThumb {
         flex-basis: 100%;
     }
+
+    .artworkThumb > .gatsby-image-wrapper,
+    .artworkThumb > .loading-wrapper > img {
+        width: 75%;
+    }
 }
 
 @media (min-width: 500px) and (max-width: 800px) {
