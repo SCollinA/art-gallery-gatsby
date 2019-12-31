@@ -407,32 +407,26 @@ export default class UpdateArtworkForm extends React.Component<any, any, any> {
 										/>
 										<Mutation mutation={DELETE_ARTWORK}
 											update={(cache: any) => {
-												const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-												cache.writeQuery({
-													data: {
-														artworks: artworks.filter((artwork: any) =>
-															artwork.id !== updatingArtwork.id),
-														galleries,
+												const { getArtworks: galleryArtworks } = cache.readQuery({
+													query: GALLERY_ARTWORKS,
+													variables: {
+														galleryId: updatingArtwork.galleryId,
 													},
-													query: DB_CONTENT,
+												});
+												selectGallery({
+													...selectedGallery,
+													artworks: galleryArtworks.filter((artwork: any) =>
+																artwork.id !== updatingArtwork.id),
 												});
 											}}
-											refetchQueries={[{
-												query: GALLERY_ARTWORKS,
-												variables: {
-													galleryId: updatingArtwork.galleryId,
-												},
-											}, {
-												query: GALLERY_ARTWORKS,
-											}]}
 										>
 											{(deleteArtwork: any) => (
 												<input type="button" value="remove"
 													onClick={() =>
 														window.confirm("are you sure you want to remove this artwork?") &&
-															deleteArtwork(
-																{ variables: { id: updatingArtwork.id } },
-															).then(() => removeArtwork())}
+															deleteArtwork({
+																variables: { id: updatingArtwork.id },
+															}).then(() => removeArtwork())}
 												/>
 											)}
 										</Mutation>
