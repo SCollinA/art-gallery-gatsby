@@ -58,7 +58,6 @@ export default class Layout extends React.Component<any, any, any> {
 									<Admin>
 										<Loading loading={loading}>
 											{children}
-											<Footer/>
 										</Loading>
 									</Admin>
 								</LayoutContext.Provider>
@@ -67,6 +66,7 @@ export default class Layout extends React.Component<any, any, any> {
 					/>
 				)}
 			</Query>
+			<Footer/>
 		</div>
 		);
 	}
