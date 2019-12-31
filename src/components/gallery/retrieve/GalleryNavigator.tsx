@@ -21,7 +21,7 @@ export default () =>
 									/>}
 								{!!selectedGallery ?
 									<h3>{selectedGallery.name}</h3> :
-									<h3>collections</h3>}
+									(!selectedArtwork && <h3>collections</h3>)}
 								{!!isLoggedIn && !!selectedGallery &&
 									<FontAwesomeIcon className="galleryEditIcon clickable"
 										icon={faEdit} size="2x"
@@ -34,10 +34,10 @@ export default () =>
 										icon={faChevronLeft} size="2x"
 										onClick={() => selectArtwork()}
 									/>}
-								{!!selectedGallery && (!!selectedArtwork ?
+								{!!selectedArtwork ?
 									<h2>{selectedArtwork.title}</h2> :
-									<h2>artworks</h2>)}
-								{!!isLoggedIn && !!selectedGallery && !!selectedArtwork &&
+									(!!selectedGallery && <h2>artworks</h2>)}
+								{!!isLoggedIn && !!selectedArtwork &&
 									<FontAwesomeIcon className="artworkEditIcon clickable"
 										icon={faEdit} size="2x"
 										onClick={() => editArtwork(selectedArtwork)}

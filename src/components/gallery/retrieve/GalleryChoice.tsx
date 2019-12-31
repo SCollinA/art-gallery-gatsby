@@ -7,14 +7,15 @@ import ArtworkImage from "../../artwork-images/ArtworkImage";
 import SectionWrapper from "../../reusable/SectionWrapper";
 
 import AddGalleries from "../create/AddGalleries";
+import ArtworkChoice from "./ArtworkChoice";
 
 export default () => (
-	<div className="GalleryChoice">
-		<SectionWrapper>
-			<LayoutContext.Consumer>
-				{({ galleries, selectGallery, selectedGallery }: any) =>
-					<AdminContext.Consumer>
-						{({ isLoggedIn }: any) =>
+	<LayoutContext.Consumer>
+		{({ artworksWithoutGalleries, galleries, selectGallery, selectedGallery }: any) =>
+			<AdminContext.Consumer>
+				{({ isLoggedIn }: any) =>
+					<div className="GalleryChoice">
+						<SectionWrapper>
 							<div id="galleryThumbs">
 								{/* map galleries a random artwork image */}
 								{galleries.filter(({ artworks }: any) =>
@@ -46,11 +47,16 @@ export default () => (
 								{isLoggedIn &&
 									<AddGalleries/>}
 							</div>
-						}
-					</AdminContext.Consumer>
+						</SectionWrapper>
+						{isLoggedIn &&
+							<div className="orphanedArtworks">
+								<h3>artworks without galleries</h3>
+								<ArtworkChoice artworks={artworksWithoutGalleries}/>
+							</div>}
+					</div>
 				}
-			</LayoutContext.Consumer>
-		</SectionWrapper>
-	</div>
+			</AdminContext.Consumer>
+		}
+	</LayoutContext.Consumer>
 );
 

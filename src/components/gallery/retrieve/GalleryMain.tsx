@@ -8,7 +8,7 @@ import SectionWrapper from "../../reusable/SectionWrapper";
 
 export default () =>
 	<LayoutContext.Consumer>
-		{({ artworksWithoutGallery, galleries, galleryMainRef, selectedArtwork  }: any) =>
+		{({ artworksWithoutGalleries, galleries, galleryMainRef, selectedArtwork  }: any) =>
 			<AdminContext.Consumer>
 				{({ isLoggedIn }: any) =>
 					<div className="GalleryMain" ref={galleryMainRef}>
@@ -22,7 +22,7 @@ export default () =>
 										></GalleryArtwork>,
 								))}
 								{isLoggedIn &&
-									artworksWithoutGallery.map((artwork: any, index: number) =>
+									artworksWithoutGalleries.map((artwork: any, index: number) =>
 										<GalleryArtwork key={index}
 											artwork={artwork}
 											selectedArtwork={selectedArtwork}

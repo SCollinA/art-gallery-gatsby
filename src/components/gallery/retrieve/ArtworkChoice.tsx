@@ -9,27 +9,19 @@ import SectionWrapper from "../../reusable/SectionWrapper";
 
 import AddArtworks from "../create/AddArtworks";
 
-export default () =>
+export default ({ artworks }: { artworks?: any[]}) =>
 	<LayoutContext.Consumer>
-		{({ artworkChoiceRef, artworksWithoutGallery, selectArtwork, selectedArtwork, selectedGallery }: any) => {
-			const artworks = get("artworks", selectedGallery) || [];
+		{({ artworkChoiceRef, selectArtwork, selectedArtwork, selectedGallery }: any) => {
+			artworks = artworks || get("artworks", selectedGallery) || [];
 			return (
 				<AdminContext.Consumer>
 					{({ isLoggedIn }: any) => (
 						<div className="ArtworkChoice" ref={artworkChoiceRef}>
 							<SectionWrapper>
 								<div id="artworkThumbs">
-									{artworks.filter((artwork: any) =>
+									{!!artworks && artworks.filter((artwork: any) =>
 											isLoggedIn || artwork.image || artwork.file)
 										.map((artwork: any, index: any) =>
-											<ArtworkThumb key={index}
-												artwork={artwork}
-												selectArtwork={selectArtwork}
-												selectedArtwork={selectedArtwork}
-											></ArtworkThumb>,
-									)}
-									{isLoggedIn &&
-										artworksWithoutGallery.map((artwork: any, index: any) =>
 											<ArtworkThumb key={index}
 												artwork={artwork}
 												selectArtwork={selectArtwork}
