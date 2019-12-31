@@ -290,11 +290,17 @@ a {
     justify-content: flex-end;
 }
 
+.clickable {
+    box-sizing: content-box;
+    padding: 0 5px;
+}
+
 .clickable:hover {
     cursor: pointer;
     border-left: 5px solid black;
     border-right: 5px solid black;
     border-radius: 10px;
+    padding: unset;
 }
 
 .galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
@@ -517,6 +523,10 @@ a {
     
     .pageLink h2 {
         padding: 2%;
+    }
+
+    .pageLink > a {
+        flex: 1;
     }
 
     .SocialLinks {
