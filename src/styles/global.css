@@ -508,6 +508,11 @@ a {
         display: unset;
     }
 
+    .galleryThumb > .gatsby-image-wrapper,
+    .galleryThumb > .loading-wrapper > img {
+        width: 75%;
+    }
+
     .artworkThumb {
         flex-basis: 100%;
     }
