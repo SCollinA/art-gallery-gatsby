@@ -18,7 +18,7 @@ export default () => (
 				);
 			}}
 		</LayoutContext.Consumer>
-		<PageBreak/>
+		<PageBreak vertical={true}/>
 		<WelcomeMessage/>
 	</div>
 );

@@ -70,14 +70,10 @@ a {
 .page-break-container {
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin: 25px auto !important;
     flex-basis: 100% !important;
 }
 
 .page-break {
-    height: 0;
-    width: 50%;
     border-color: black;
     border-width: 3px;
     border-style: solid;
@@ -157,8 +153,13 @@ a {
 }
 
 /* ============================ */
-/*          Content             */
+/*          Home             */
 /* ============================ */
+.Home {
+    display: flex;
+    justify-content: space-around;
+}
+
 
 /* ============================ */
 /*          Gallery             */
