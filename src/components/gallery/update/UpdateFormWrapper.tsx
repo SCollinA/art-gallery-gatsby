@@ -1,6 +1,6 @@
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
+import AdminContext from "../../../contexts/AdminContext";
 
 import UpdateArtworkForm from "./UpdateArtworkForm";
 import UpdateGalleryForm from "./UpdateGalleryForm";

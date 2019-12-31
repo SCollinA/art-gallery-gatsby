@@ -60,3 +60,37 @@ export const fixedImage = graphql`
 //   }
 // }
 // `
+
+export const ALL_GALLERIES = gql`
+	{
+		getAllGalleries {
+			id
+			name
+		}
+	}
+`;
+
+export const GALLERY_ARTWORKS = gql`
+	query GetArtworksForGallery($galleryId: ID) {
+		getArtworks(input: { galleryId: $galleryId }) {
+			id
+			galleryId
+			title
+			width
+			height
+			medium
+			image
+			price
+			sold
+			framed
+		}
+	}
+`;
+
+export const GET_GALLERY = gql`
+	query GetGallery($id: ID!) {
+		getGallery(id: $id) {
+			name
+		}
+	}
+`;

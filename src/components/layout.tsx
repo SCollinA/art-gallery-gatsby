@@ -1,5 +1,5 @@
 import { graphql, StaticQuery } from "gatsby";
-import { filter, get } from "lodash/fp";
+import { filter } from "lodash/fp";
 import React from "react";
 import {
 	Query,
@@ -11,11 +11,11 @@ import {
 } from "../graphql/graphql";
 
 import Admin from "./Admin";
-import Footer from "./Footer";
-import FullStoryHelmet from "./FullStoryHelmet";
-import GalleryHeader from "./header";
 import "./layout.css";
-import Loading from "./Loading";
+import Footer from "./page-elements/Footer";
+import GalleryHeader from "./page-elements/header";
+import Loading from "./reusable/Loading";
+import FullStoryHelmet from "./utils/FullStoryHelmet";
 
 export default class Layout extends React.Component<any, any, any> {
 

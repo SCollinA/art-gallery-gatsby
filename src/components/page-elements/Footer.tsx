@@ -1,7 +1,8 @@
 import React from "react";
 
+import SectionWrapper from "../reusable/SectionWrapper";
+
 import AdminLogin from "./AdminLogin";
-import SectionWrapper from "./SectionWrapper";
 
 
 export default () =>

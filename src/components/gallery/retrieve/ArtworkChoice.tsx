@@ -1,13 +1,13 @@
 import { get } from "lodash/fp";
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 
-import AddArtworks from "./AddArtworks";
-import ArtworkImage from "./ArtworkImage";
-import GalleryNavigator from "./GalleryNavigator";
-import SectionWrapper from "./SectionWrapper";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import SectionWrapper from "../../reusable/SectionWrapper";
+
+import AddArtworks from "../create/AddArtworks";
 
 export default () =>
 	<LayoutContext.Consumer>

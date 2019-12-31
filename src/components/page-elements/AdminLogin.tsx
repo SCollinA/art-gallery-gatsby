@@ -2,9 +2,9 @@ import gql from "graphql-tag";
 import React from "react";
 import { Mutation } from "react-apollo";
 
-import AdminContext from "../contexts/AdminContext";
+import AdminContext from "../../contexts/AdminContext";
 
-import Loading from "./Loading";
+import Loading from "../reusable/Loading";
 
 export default () => {
 	const [showAdmin, setShowAdmin] = React.useState(false);

@@ -2,10 +2,10 @@ import { get, map } from "lodash/fp";
 import React from "react";
 import { Query } from "react-apollo";
 
-import { client } from "../apollo/client";
-import { ARTWORK_IMAGE, DB_CONTENT } from "../graphql/graphql";
+import { client } from "../../apollo/client";
+import { ARTWORK_IMAGE, DB_CONTENT } from "../../graphql/graphql";
 
-import Loading from "./Loading";
+import Loading from "../reusable/Loading";
 
 export default ({ artwork, imageRef, aspectRatio }: any) => (
 	<Query query={ARTWORK_IMAGE} variables={artwork} fetchPolicy={"cache-first"}

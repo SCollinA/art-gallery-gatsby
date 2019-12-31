@@ -1,8 +1,8 @@
 import { get } from "lodash/fp";
 import React from "react";
 import LayoutContext from "../contexts/LayoutContext";
-import ArtworkImage from "./ArtworkImage";
-import PageBreak from "./PageBreak";
+import ArtworkImage from "./artwork-images/ArtworkImage";
+import PageBreak from "./reusable/PageBreak";
 
 export default () => (
 	<div className="Home">

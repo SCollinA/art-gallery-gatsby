@@ -4,9 +4,9 @@ import { Mutation } from "react-apollo";
 
 import LayoutContext from "../contexts/LayoutContext";
 
-import ArtworkImageDB from "./ArtworkImageDB";
-import Loading from "./Loading";
-import SectionWrapper from "./SectionWrapper";
+import ArtworkImageDB from "./artwork-images/ArtworkImageDB";
+import Loading from "./reusable/Loading";
+import SectionWrapper from "./reusable/SectionWrapper";
 
 export default () => (
 	<LayoutContext.Consumer>

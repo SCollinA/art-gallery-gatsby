@@ -1,10 +1,10 @@
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 
-import ArtworkImage from "./ArtworkImage";
-import SectionWrapper from "./SectionWrapper";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import SectionWrapper from "../../reusable/SectionWrapper";
 
 export default () =>
 	<LayoutContext.Consumer>

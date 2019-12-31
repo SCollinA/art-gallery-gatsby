@@ -3,8 +3,8 @@ import React from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
 
-import PageBreak from "./PageBreak";
-import SectionWrapper from "./SectionWrapper";
+import PageBreak from "./reusable/PageBreak";
+import SectionWrapper from "./reusable/SectionWrapper";
 
 export default () => (
 	<LayoutContext.Consumer>

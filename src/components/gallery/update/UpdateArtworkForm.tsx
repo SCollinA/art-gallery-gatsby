@@ -3,17 +3,16 @@ import { filter, find, get, map } from "lodash/fp";
 import React from "react";
 import { Mutation, Query } from "react-apollo";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
+import AdminContext from "../../../contexts/AdminContext";
+import LayoutContext from "../../../contexts/LayoutContext";
 import {
 	DB_CONTENT,
-} from "../graphql/graphql";
-import { scrubMetaData } from "../utils/utils";
+	GALLERY_ARTWORKS,
+} from "../../../graphql/graphql";
+import { scrubMetaData } from "../../../utils/utils";
 
-
-import { GALLERY_ARTWORKS } from "./AdminArtworks";
-import ArtworkImage from "./ArtworkImage";
-import Loading from "./Loading";
+import ArtworkImage from "../../artwork-images/ArtworkImage";
+import Loading from "../../reusable/Loading";
 
 export default class UpdateArtworkForm extends React.Component<any, any, any> {
 
