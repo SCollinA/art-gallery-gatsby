@@ -9,7 +9,6 @@ import SectionWrapper from "./SectionWrapper";
 
 export default () => (
 	<div className="GalleryChoice">
-		<h3>collections</h3>
 		<SectionWrapper>
 			<LayoutContext.Consumer>
 				{({ galleries, selectGallery, selectedGallery }: any) =>
@@ -54,12 +53,3 @@ export default () => (
 	</div>
 );
 
-// function scrollThumbs(isScrollingLeft) {
-//     const galleryThumbs = document.getElementById('galleryThumbs')
-//     galleryThumbs.scrollTo({
-//         top: 0,
-//         left: galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100),
-//         behavior: 'smooth',
-//     })
-//         // galleryThumbs.scrollLeft + (isScrollingLeft ? -100 : 100), 0)
-// }

@@ -197,7 +197,7 @@ a {
     width: 100%;
 }
 
-.galleryTitle, .galleryCaption, .artworksTitle {
+.galleryCaption, .GalleryNavigator {
     display: flex;
     justify-content: space-between;
     align-items: center;

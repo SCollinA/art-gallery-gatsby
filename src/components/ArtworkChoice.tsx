@@ -6,6 +6,7 @@ import LayoutContext from "../contexts/LayoutContext";
 
 import AddArtworks from "./AddArtworks";
 import ArtworkImage from "./ArtworkImage";
+import GalleryNavigator from "./GalleryNavigator";
 import SectionWrapper from "./SectionWrapper";
 
 export default () =>
@@ -16,12 +17,6 @@ export default () =>
 				<AdminContext.Consumer>
 					{({ isLoggedIn }: any) => (
 						<div className="ArtworkChoice" ref={artworkChoiceRef}>
-							<div className="artworksTitle">
-								{selectedGallery ?
-									<h3>{selectedGallery.name}</h3> :
-									<h3>select a gallery</h3>}
-								<h3>artworks</h3>
-							</div>
 							<SectionWrapper>
 								<div id="artworkThumbs">
 									{artworks.filter((artwork: any) =>
@@ -34,7 +29,7 @@ export default () =>
 											></ArtworkThumb>,
 									)}
 									{isLoggedIn &&
-										artworksWithoutGallery.map((artwork, index) =>
+										artworksWithoutGallery.map((artwork: any, index: any) =>
 											<ArtworkThumb key={index}
 												artwork={artwork}
 												selectArtwork={selectArtwork}

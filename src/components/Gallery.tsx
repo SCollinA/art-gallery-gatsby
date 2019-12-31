@@ -1,20 +1,10 @@
-import { get } from "lodash/fp";
 import React from "react";
 
-import AdminContext from "../contexts/AdminContext";
-import LayoutContext from "../contexts/LayoutContext";
-
-import ArtworkChoice from "./ArtworkChoice";
-import GalleryChoice from "./GalleryChoice";
-import GalleryMain from "./GalleryMain";
-import PageBreak from "./PageBreak";
+import GalleryNavigator from "./GalleryNavigator";
 import UpdateFormWrapper from "./UpdateFormWrapper";
 
 export default () =>
 	<div className="Gallery">
-		<GalleryMain/>
-		<PageBreak/>
-		<GalleryChoice/>
-		<ArtworkChoice/>
+		<GalleryNavigator></GalleryNavigator>
 		<UpdateFormWrapper></UpdateFormWrapper>
 	</div>;

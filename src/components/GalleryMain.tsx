@@ -11,23 +11,7 @@ export default () =>
 		{({ artworksWithoutGallery, galleries, selectedGallery, galleryMainRef, selectedArtwork  }: any) =>
 			<AdminContext.Consumer>
 				{({ isLoggedIn, editArtwork, editGallery }: any) =>
-					<div className="GalleryMain" ref={galleryMainRef}>
-						<div className="galleryTitle">
-							{selectedGallery ?
-								<h2 className={`${isLoggedIn && selectedGallery ? "clickable" : ""}`}
-									onClick={() => isLoggedIn && editGallery(selectedGallery)}
-								>
-									{selectedGallery.name}
-								</h2> :
-								<h2>select a gallery</h2>}
-							{selectedArtwork ?
-								<h1 className={`${isLoggedIn && selectedGallery ? "clickable" : ""}`}
-									onClick={() => editArtwork(selectedArtwork)}
-								>
-									{selectedArtwork.title}
-								</h1> :
-								<h1>select an artwork</h1>}
-						</div>
+					<div className="GalleryMain">
 						<SectionWrapper>
 							<div className="galleryImage">
 							{galleries.map(({ artworks }: any) =>
