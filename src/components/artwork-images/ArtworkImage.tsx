@@ -1,9 +1,10 @@
 import { isEqual } from "lodash/fp";
 import React from "react";
 
+import Placeholder from "../reusable/Placeholder";
+
 import ArtworkImageDB from "./ArtworkImageDB";
 import ArtworkImageFile from "./ArtworkImageFile";
-import Placeholder from "../reusable/Placeholder";
 
 export default class ArtworkImage extends React.Component<any, any, any> {
 

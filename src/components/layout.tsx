@@ -46,7 +46,7 @@ export default class Layout extends React.Component<any, any, any> {
 							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
 							const context = {
 								...this.state,
-								artworksWithoutGallery: filter(
+								artworksWithoutGalleries: filter(
 									({ galleryId }: any) => !galleryId,
 									artworks,
 								),
