@@ -76,31 +76,23 @@ export default class Layout extends React.Component<any, any, any> {
 	}
 
 	private selectArtwork = (selectedArtwork: any) =>
-		get("id", selectedArtwork) === get("id", this.state.selectedArtwork) ||
-		!selectedArtwork ?
-			this.setState({
-				selectedArtwork: undefined,
-			}) :
-			this.setState({
-				selectedArtwork,
-			}, () => {
+		this.setState({
+			selectedArtwork,
+		}, () => {
+			if (!!selectedArtwork) {
 				const galleryMain = this.galleryMainRef.current;
 				galleryMain.scrollIntoView({
 					behavior: "smooth",
 					block: "start",
 				});
-			})
+			}
+		})
 
 	private selectGallery = (selectedGallery: any) =>
-		get("id", selectedGallery) === get("id", this.state.selectedGallery) ?
-			this.setState({
-				selectedArtwork: undefined,
-				selectedGallery: undefined,
-			}) :
-			this.setState({
-				selectedArtwork: undefined,
-				selectedGallery,
-			})
+		this.setState({
+			selectedArtwork: undefined,
+			selectedGallery,
+		})
 
 	private getGalleries = (
 		artworks: any[],
