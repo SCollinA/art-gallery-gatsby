@@ -176,6 +176,7 @@ a {
 /*          Home             */
 /* ============================ */
 .Home {
+    flex: 1;
     display: flex;
     justify-content: space-around;
 }
@@ -184,10 +185,8 @@ a {
     margin: auto;
 }
 
-/* ============================ */
-/*          Gallery             */
-/* ============================ */
 .randomArtwork {
+    margin: auto;
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -231,6 +230,15 @@ a {
 .galleryLocationSpecific h3,
 .galleryLocationSpecific h2 {
     margin: 0;
+}
+
+.galleryNavIcon,
+.galleryEditIcon,
+.artworkNavIcon,
+.artworkEditIcon,
+.addGallery,
+.addArtwork {
+    padding: 0 10px;
 }
 
 .galleryTitle, .galleryCaption {
@@ -292,7 +300,8 @@ a {
 
 .clickable {
     box-sizing: content-box;
-    padding: 0 5px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
 }
 
 .clickable:hover {
@@ -300,7 +309,6 @@ a {
     border-left: 5px solid black;
     border-right: 5px solid black;
     border-radius: 10px;
-    padding: unset;
 }
 
 .galleryThumb.selectedGallery, .artworkThumb.selectedArtwork {
@@ -415,6 +423,11 @@ a {
 
 .currentGallery.selected, .currentArtwork.selected {
     background-color: rgba(0, 0, 0, 0.25);
+}
+
+.AddArtworks,
+.AddGalleries {
+    display: flex;
 }
 
 .addGallery, .addArtwork {
