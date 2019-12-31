@@ -1,20 +1,17 @@
 /* Set everything to be screen sized until you reach the app */
 html, body, #___gatsby, #___gatsby > div, .Layout {
     width: 100%;
-    /* overflow: hidden; */
     height: 100%;
 }
 
+/* Undo hyperlink styles */
 a {
     color: black;
     text-decoration: none;
 }
-/*  Begin app styles below */
-
 /* ============================ */
-/*          Layout             */
+/*      Reusable Components     */
 /* ============================ */
-
 .loading-wrapper {
     height: inherit;
     width: inherit;
