@@ -37,9 +37,8 @@ export default class Layout extends React.Component<any, any, any> {
 	public render() {
 		const { children } = this.props;
 		return (
-		<div className="Layout">
+		<>
 			<FullStoryHelmet/>
-			<GalleryHeader/>
 			<Query query={DB_CONTENT}>
 				{({ data: { galleries = [], artworks = [] } = { galleries: [], artworks: [] }, loading }: any) => (
 					<StaticQuery query={ARTWORK_FILES}
@@ -57,7 +56,13 @@ export default class Layout extends React.Component<any, any, any> {
 								<LayoutContext.Provider value={context}>
 									<Admin>
 										<Loading loading={loading}>
-											{children}
+											<div className="Layout">
+												<GalleryHeader/>
+												<div className="layoutChildren">
+													{children}
+												</div>
+												<Footer/>
+											</div>
 										</Loading>
 									</Admin>
 								</LayoutContext.Provider>
@@ -66,8 +71,7 @@ export default class Layout extends React.Component<any, any, any> {
 					/>
 				)}
 			</Query>
-			<Footer/>
-		</div>
+		</>
 		);
 	}
 
