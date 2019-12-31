@@ -31,7 +31,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 	>
 		{({ data, loading }: any) =>
 			<Loading loading={loading}>
-				<img ref={imageRef}
+				<img ref={imageRef} className="ArtworkImageDB"
 				// display initially none to load actual size
 				// in order to find aspect ratio and adjust size
 					style={{ display: "none", margin: "auto" }}
@@ -40,8 +40,10 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 					onLoad={() => {
 						const dbImage: any = imageRef.current;
 						if (!!imageRef) {
-							const imageWidthPercent = (dbImage.width / dbImage.height) * 100 / aspectRatio;
-							dbImage.style.maxWidth = `${imageWidthPercent}%`;
+							const imageAspectRatio = dbImage.width / dbImage.height;
+							const correctedAspectRatio = imageAspectRatio / aspectRatio;
+							const imageWidthPercent = correctedAspectRatio * 100;
+							dbImage.style.width = `${imageWidthPercent}%`;
 						}
 						dbImage.style.display = "inherit";
 					}}

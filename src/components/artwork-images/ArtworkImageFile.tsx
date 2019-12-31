@@ -2,7 +2,8 @@ import Img from "gatsby-image";
 import React from "react";
 
 export default ({ artwork, imageRef, aspectRatio }: any) => {
-	const imageWidthPercent = artwork.file.childImageSharp.fluid.aspectRatio * 100 / aspectRatio;
+	const correctedAspectRatio = artwork.file.childImageSharp.fluid.aspectRatio / aspectRatio;
+	const imageWidthPercent = correctedAspectRatio * 100;
 	return (
 		<Img ref={imageRef}
 			style={{

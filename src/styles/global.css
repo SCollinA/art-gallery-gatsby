@@ -58,6 +58,8 @@ a {
 
 .Layout {
     width: 90%;
+    min-height: 100%;
+    height: fit-content;
     margin: 10px auto;
     padding: 0 0 2%;
     display: flex;
@@ -570,10 +572,7 @@ a {
     .Home {
         flex-direction: column;
     }
-    .Home .gatsby-image-wrapper,
-    .Home .loading-wrapper > img {
-        width: 75%;
-    }
+
     .Home .page-break--vertical {
         height: 0;
         width: 50%;
