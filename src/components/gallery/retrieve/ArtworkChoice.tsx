@@ -41,6 +41,8 @@ const ArtworkThumb = ({ artwork, selectArtwork, selectedArtwork }: any) =>
 		className={`artworkThumb${(selectedArtwork && artwork.id === selectedArtwork.id) ? " selectedArtwork" : ""} clickable`}
 		onClick={() => selectArtwork(artwork)}
 	>
-		<ArtworkImage artwork={artwork}/>
+		<ArtworkImage artwork={artwork}
+			fitToScreen={true}
+		/>
 		<p>{artwork.title}</p>
 	</div>;

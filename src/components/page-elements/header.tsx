@@ -20,8 +20,9 @@ const header = () => {
 	return (
 		<div className="Header">
 			<div className="headerLinks">
-				<div className="homeLink clickable">
+				<div className="homeLink">
 					<Link to="/"
+						className="clickable"
 						activeClassName="activeLink"
 						style={{
 							color: `white`,

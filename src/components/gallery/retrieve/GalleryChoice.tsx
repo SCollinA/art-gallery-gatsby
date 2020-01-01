@@ -39,7 +39,9 @@ export default () => (
 											onClick={() => selectGallery(gallery)}
 										>
 											{randomArtwork &&
-												<ArtworkImage artwork={randomArtwork}/>}
+												<ArtworkImage artwork={randomArtwork}
+													fitToScreen={true}
+												/>}
 											<p>{gallery.name}</p>
 										</div>
 									);
