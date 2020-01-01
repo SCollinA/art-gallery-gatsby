@@ -1,3 +1,4 @@
+import { get } from "lodash/fp";
 import React from "react";
 
 import LayoutContext from "../../../contexts/LayoutContext";
@@ -13,7 +14,7 @@ export default () =>
 				{!selectedGallery && !selectedArtwork &&
 					<GalleryChoice/>}
 				{!!selectedGallery && !selectedArtwork &&
-					<ArtworkChoice/>}
+					<ArtworkChoice artworks={get("artworks", selectedGallery)}/>}
 				{!!selectedArtwork &&
 					<GalleryMain/>}
 			</div>

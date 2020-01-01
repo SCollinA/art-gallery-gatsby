@@ -9,34 +9,31 @@ import SectionWrapper from "../../reusable/SectionWrapper";
 
 import AddArtworks from "../create/AddArtworks";
 
-export default ({ artworks }: { artworks?: any[]}) =>
+export default ({ artworks = [] }: { artworks?: any[]}) =>
 	<LayoutContext.Consumer>
-		{({ artworkChoiceRef, selectArtwork, selectedArtwork, selectedGallery }: any) => {
-			artworks = artworks || get("artworks", selectedGallery) || [];
-			return (
-				<AdminContext.Consumer>
-					{({ isLoggedIn }: any) => (
-						<div className="ArtworkChoice" ref={artworkChoiceRef}>
-							<SectionWrapper>
-								<div id="artworkThumbs">
-									{!!artworks && artworks.filter((artwork: any) =>
-											isLoggedIn || artwork.image || artwork.file)
-										.map((artwork: any, index: any) =>
-											<ArtworkThumb key={index}
-												artwork={artwork}
-												selectArtwork={selectArtwork}
-												selectedArtwork={selectedArtwork}
-											></ArtworkThumb>,
-									)}
-									{isLoggedIn &&
-										<AddArtworks/>}
-								</div>
-							</SectionWrapper>
-						</div>
-					)}
-				</AdminContext.Consumer>
-			);
-		}}
+		{({ artworkChoiceRef, selectArtwork, selectedArtwork }: any) =>
+			<AdminContext.Consumer>
+				{({ isLoggedIn }: any) => (
+					<div className="ArtworkChoice" ref={artworkChoiceRef}>
+						<SectionWrapper>
+							<div id="artworkThumbs">
+								{!!artworks && artworks.filter((artwork: any) =>
+										isLoggedIn || artwork.image || artwork.file)
+									.map((artwork: any, index: any) =>
+										<ArtworkThumb key={index}
+											artwork={artwork}
+											selectArtwork={selectArtwork}
+											selectedArtwork={selectedArtwork}
+										></ArtworkThumb>,
+								)}
+								{isLoggedIn &&
+									<AddArtworks/>}
+							</div>
+						</SectionWrapper>
+					</div>
+				)}
+			</AdminContext.Consumer>
+		}
 	</LayoutContext.Consumer>;
 
 const ArtworkThumb = ({ artwork, selectArtwork, selectedArtwork }: any) =>
