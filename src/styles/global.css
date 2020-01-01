@@ -267,10 +267,6 @@ a {
     justify-content: center;
 }
 
-.galleryArtwork.hidden {
-    display: none;
-}
-
 .GalleryChoice > h3, .ArtworkChoice > h3 {
     margin: 0;
 }
