@@ -25,7 +25,7 @@ export default () =>
 								{!!isLoggedIn && !!selectedGallery &&
 									<FontAwesomeIcon className="galleryEditIcon clickable"
 										icon={faEdit} size="2x"
-										onClick={() => editGallery(selectedGallery)}
+										onClick={() => editGallery()}
 									/>}
 							</div>
 							<div className="galleryLocationSpecific">
@@ -40,7 +40,7 @@ export default () =>
 								{!!isLoggedIn && !!selectedArtwork &&
 									<FontAwesomeIcon className="artworkEditIcon clickable"
 										icon={faEdit} size="2x"
-										onClick={() => editArtwork(selectedArtwork)}
+										onClick={() => editArtwork()}
 									/>}
 							</div>
 						</div>

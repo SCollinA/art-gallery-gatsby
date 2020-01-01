@@ -1,6 +1,7 @@
-import { graphql, StaticQuery } from "gatsby";
+import { useQuery } from "@apollo/react-hooks";
+import { graphql, useStaticQuery } from "gatsby";
 import { filter } from "lodash/fp";
-import React from "react";
+import React, { useState } from "react";
 import {
 	Query,
 } from "react-apollo";
@@ -17,127 +18,109 @@ import GalleryHeader from "./page-elements/header";
 import Loading from "./reusable/Loading";
 import FullStoryHelmet from "./utils/FullStoryHelmet";
 
-export default class Layout extends React.Component<any, any, any> {
+const galleryMainRef = React.createRef<any>();
+const artworkChoiceRef = React.createRef<any>();
 
-	private galleryMainRef = React.createRef<any>();
-	private artworkChoiceRef = React.createRef<any>();
-
-	constructor(props: any) {
-		super(props);
-		this.state = {
-			artworkChoiceRef: this.artworkChoiceRef,
-			galleryMainRef: this.galleryMainRef,
-			selectArtwork: this.selectArtwork,
-			selectGallery: this.selectGallery,
+export default ({ children }: {children: any}) => {
+		const [state, setState] = useState({
 			selectedArtwork: undefined,
 			selectedGallery: undefined,
+		});
+		const {
+			data: {
+				galleries = [],
+				artworks = [],
+			} = {
+				artworks: [],
+				galleries: [],
+			},
+			loading,
+		}: any = useQuery(DB_CONTENT);
+		const { artworkFileData }: any = useStaticQuery(ARTWORK_FILES);
+		const galleriesWithArtworks = getGalleries(artworks, artworkFileData, galleries);
+		const context = {
+			...state,
+			artworkChoiceRef,
+			artworksWithoutGalleries: filter(
+				({ galleryId }: any) => !galleryId,
+				artworks,
+			),
+			galleries: galleriesWithArtworks,
+			galleryMainRef,
+			selectArtwork: (selectedArtwork: any) => setState({
+				...state,
+				selectedArtwork,
+			}),
+			selectGallery: (selectedGallery: any) => setState({
+				...state,
+				selectedArtwork: undefined,
+				selectedGallery,
+			}),
 		};
-	}
-
-	public render() {
-		const { children } = this.props;
+		console.log("rendering layout");
 		return (
 		<>
 			<FullStoryHelmet/>
-			<Query query={DB_CONTENT}>
-				{({ data: { galleries = [], artworks = [] } = { galleries: [], artworks: [] }, loading }: any) => (
-					<StaticQuery query={ARTWORK_FILES}
-						render={({ artworkFileData }: any) => {
-							const galleriesWithArtworks = this.getGalleries(artworks, artworkFileData, galleries);
-							const context = {
-								...this.state,
-								artworksWithoutGalleries: filter(
-									({ galleryId }: any) => !galleryId,
-									artworks,
-								),
-								galleries: galleriesWithArtworks,
-							};
-							return (
-								<LayoutContext.Provider value={context}>
-									<Admin>
-										<Loading loading={loading}>
-											<div className="Layout">
-												<GalleryHeader/>
-												<div className="layoutChildren">
-													{children}
-												</div>
-												<Footer/>
-											</div>
-										</Loading>
-									</Admin>
-								</LayoutContext.Provider>
-							);
-						}}
-					/>
-				)}
-			</Query>
+			<LayoutContext.Provider value={context}>
+				<Admin>
+					<Loading loading={loading}>
+						<div className="Layout">
+							<GalleryHeader/>
+							<div className="layoutChildren">
+								{children}
+							</div>
+							<Footer/>
+						</div>
+					</Loading>
+				</Admin>
+			</LayoutContext.Provider>
 		</>
 		);
-	}
+	};
 
-	private selectArtwork = (selectedArtwork: any) =>
-		this.setState({
-			selectedArtwork,
-		}, () => {
-			if (!!selectedArtwork) {
-				const galleryMain = this.galleryMainRef.current;
-				galleryMain.scrollIntoView({
-					behavior: "smooth",
-					block: "start",
-				});
-			}
-		})
-
-	private selectGallery = (selectedGallery: any) =>
-		this.setState({
-			selectedArtwork: undefined,
-			selectedGallery,
-		})
-
-	private getGalleries = (
-		artworks: any[],
-		artworkFileData: any[],
-		galleries: any[],
-	) => {
-		const artworkFiles = this.getArtworkFiles(artworkFileData);
-		const galleriesWithFiles = this.matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
-		return galleriesWithFiles;
-	}
+const getGalleries = (
+	artworks: any[],
+	artworkFileData: any[],
+	galleries: any[],
+) => {
+	const artworkFiles = getArtworkFiles(artworkFileData);
+	const galleriesWithFiles = matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
+	return galleriesWithFiles;
+};
 
 
-	private matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
-		return galleries.map((gallery: any) => {
-			// match up artworks from db to gallery
-			let galleryArtworks = artworks.filter((artwork: any) =>
-				artwork.galleryId === gallery.id);
-			// map those to files for display throughout site
-			galleryArtworks = galleryArtworks.map(({
+const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
+	return galleries.map((gallery: any) => {
+		// match up artworks from db to gallery
+		let galleryArtworks = artworks.filter((artwork: any) =>
+			artwork.galleryId === gallery.id);
+		// map those to files for display throughout site
+		galleryArtworks = galleryArtworks.map(({
+				id,
+				title,
+				...remainingArtwork
+			}: any) => {
+				// if an artwork file exist add it
+				// will check if file is there to determine proper element for image
+				const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
+				const galleryArtwork = {
+					file,
 					id,
 					title,
-					...remainingArtwork
-				}: any) => {
-					// if an artwork file exist add it
-					// will check if file is there to determine proper element for image
-					const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
-					const galleryArtwork = {
-						file,
-						id,
-						title,
-						...remainingArtwork,
-					};
-					return galleryArtwork;
-				});
-			const galleryWithArtworks = {
-				artworks: galleryArtworks,
-				...gallery,
-			};
-			return galleryWithArtworks;
-		});
-	}
+					...remainingArtwork,
+				};
+				return galleryArtwork;
+			});
+		const galleryWithArtworks = {
+			artworks: galleryArtworks,
+			...gallery,
+		};
+		return galleryWithArtworks;
+	});
+};
 
-	private getArtworkFiles = (artworkFiles: any) =>
-		artworkFiles.edges.map((edge: any) => edge.node)
-}
+const getArtworkFiles = (artworkFiles: any) =>
+	artworkFiles.edges.map((edge: any) => edge.node);
 
 const ARTWORK_FILES = graphql`
   {

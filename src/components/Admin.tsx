@@ -1,135 +1,130 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import AdminContext from "../contexts/AdminContext";
 import LayoutContext from "../contexts/LayoutContext";
 
-export default class Admin extends React.Component<any, any, any> {
-
-	public static contextType = LayoutContext;
-
-	constructor(props: any) {
-		super(props);
-		this.state = {
-			cancelUpdate: this.cancelUpdate,
-			editArtwork: this.editArtwork,
-			editGallery: this.editGallery,
-			isLoggedIn: false,
-			isUpdating: false,
-			login: this.login,
-			logout: this.logout,
-			removeArtwork: this.removeArtwork,
-			removeGallery: this.removeGallery,
-			resetArtwork: this.resetArtwork,
-			resetGallery: this.resetGallery,
-			submitArtwork: this.submitArtwork,
-			submitGallery: this.submitGallery,
-			updateArtwork: this.updateArtwork,
-			updateGallery: this.updateGallery,
-			updatingArtwork: undefined,
-			updatingGallery: undefined,
-		};
-	}
-
-	public componentDidMount() {
-		// TODO: verify if this is a sufficient check
-		if (localStorage.getItem("auth-token")) {
-			this.login();
-		}
-	}
-
-	public render() {
-		const { children } = this.props;
-		return (
-			<AdminContext.Provider value={this.state}>
-				{children}
-			</AdminContext.Provider>
-		);
-	}
-
-	private login = () =>
-		this.setState({
+export default ({children}: {children: any}) => {
+	const login = () =>
+		setState({
+			...state,
 			isLoggedIn: true,
-		}, () => {
-			window.onbeforeunload = () => "are you sure you want to log out?";
-			window.onunload = () => localStorage.removeItem("auth-token");
-		})
-
-	private logout = () =>
-		this.setState({
+		});
+	const logout = () =>
+		setState({
+			...state,
 			isLoggedIn: false,
-		}, () => {
-			this.context.selectArtwork();
-			this.context.selectGallery();
-			window.onbeforeunload = null;
-			localStorage.removeItem("auth-token");
-		})
-
-	private editGallery = () =>
-		this.setState({
+		});
+	const editGallery = () =>
+		setState({
+			...state,
 			isUpdating: true,
 			updatingArtwork: undefined,
-			updatingGallery: this.context.selectedGallery,
-		})
-
-	private editArtwork = () =>
-		this.setState({
+			updatingGallery: selectedGallery,
+		});
+	const editArtwork = () =>
+		setState({
+			...state,
 			isUpdating: true,
-			updatingArtwork: this.context.selectedArtwork,
+			updatingArtwork: selectedArtwork,
 			updatingGallery: undefined,
-		})
-
-	private updateGallery = (updatingGallery: any) =>
-		this.setState({
-			updatingGallery: {
-				...this.state.updatingGallery,
-				...updatingGallery,
-			},
-		})
-
-	private updateArtwork = (updatingArtwork: any) =>
-		this.setState({
+		});
+	const updateGallery = (updatingGallery: any) =>
+		setState({
+			...state,
+			updatingGallery,
+		});
+	const updateArtwork = (updatingArtwork: any) =>
+		setState({
+			...state,
 			updatingArtwork: {
-				...this.state.updatingArtwork,
+				...(state.updatingArtwork || {}),
 				...updatingArtwork,
 			},
-		})
-
-	private submitGallery = () =>
-		this.setState({
+		});
+	const submitGallery = () =>
+		setState({
+			...state,
 			isUpdating: false,
 			updatingGallery: undefined,
-		})
-
-	private submitArtwork = () =>
-		this.setState({
+		});
+	const submitArtwork = () =>
+		setState({
+			...state,
 			isUpdating: false,
 			updatingArtwork: undefined,
-		})
-
-	private cancelUpdate = () =>
-		this.setState({
+		});
+	const cancelUpdate = () =>
+		setState({
+			...state,
 			isUpdating: false,
 			updatingArtwork: undefined,
 			updatingGallery: undefined,
-		})
-
-	private resetGallery = () =>
-		this.setState({
-			updatingGallery: this.context.selectedGallery,
-		})
-
-	private resetArtwork = () =>
-		this.setState({
-			updatingArtwork: this.context.selectedArtwork,
-		})
-
-	private removeGallery = () => {
-		this.submitGallery();
-		this.context.selectGallery();
-	}
-
-	private removeArtwork = () => {
-		this.submitArtwork();
-		this.context.selectArtwork();
-	}
-}
+		});
+	const resetGallery = () =>
+		setState({
+			...state,
+			updatingGallery: selectedGallery,
+		});
+	const resetArtwork = () =>
+		setState({
+			...state,
+			updatingArtwork: selectedArtwork,
+		});
+	const removeGallery = () => {
+		submitGallery();
+		selectGallery();
+	};
+	const removeArtwork = () => {
+		submitArtwork();
+		selectArtwork();
+	};
+	const {
+		selectArtwork,
+		selectedArtwork,
+		selectedGallery,
+		selectGallery,
+	}: any = useContext(LayoutContext);
+	const [state, setState] = useState({
+		isLoggedIn: false,
+		isUpdating: false,
+		updatingArtwork: undefined,
+		updatingGallery: undefined,
+	});
+	useEffect(() => {
+		if (!state.isLoggedIn && localStorage.getItem("auth-token")) {
+			login();
+		}
+	});
+	useEffect(() => {
+		if (state.isLoggedIn) {
+			window.onbeforeunload = () => "are you sure you want to log out?";
+			window.onunload = () => localStorage.removeItem("auth-token");
+		} else {
+			selectArtwork();
+			selectGallery();
+			window.onbeforeunload = null;
+			localStorage.removeItem("auth-token");
+		}
+	}, [state.isLoggedIn]);
+	const context = {
+		...state,
+		cancelUpdate,
+		editArtwork,
+		editGallery,
+		login,
+		logout,
+		removeArtwork,
+		removeGallery,
+		resetArtwork,
+		resetGallery,
+		submitArtwork,
+		submitGallery,
+		updateArtwork,
+		updateGallery,
+	};
+	return (
+		<AdminContext.Provider value={context}>
+			{children}
+		</AdminContext.Provider>
+	);
+};

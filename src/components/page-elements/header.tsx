@@ -1,4 +1,4 @@
-import { graphql, Link, StaticQuery } from "gatsby";
+import { graphql, Link, useStaticQuery } from "gatsby";
 import Img from "gatsby-image";
 import PropTypes from "prop-types";
 import React, { useState } from "react";
@@ -17,6 +17,17 @@ library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTi
 
 const header = () => {
 	const [loading, setLoading] = useState(false);
+	const data = useStaticQuery(graphql`
+		query {
+			brandImage: file(relativePath: { eq: "brand.png" }) {
+				childImageSharp {
+					fluid(maxWidth: 2000) {
+						...GatsbyImageSharpFluid_tracedSVG
+					}
+				}
+			}
+		}
+	`);
 	return (
 		<div className="Header">
 			<div className="headerLinks">
@@ -33,24 +44,10 @@ const header = () => {
 							fitChild={true}
 							preventClick={false}
 						>
-							<StaticQuery
-								query={graphql`
-									query {
-										brandImage: file(relativePath: { eq: "brand.png" }) {
-											childImageSharp {
-												fluid(maxWidth: 2000) {
-													...GatsbyImageSharpFluid_tracedSVG
-												}
-											}
-										}
-									}
-								`}
-								render={(data) => (
-									<Img fluid={data.brandImage.childImageSharp.fluid}
-										onStartLoad={() => setLoading(true)}
-										onLoad={() => setLoading(false)}
-									/>
-								)}/>
+							<Img fluid={data.brandImage.childImageSharp.fluid}
+								onStartLoad={() => setLoading(true)}
+								onLoad={() => setLoading(false)}
+							/>
 							</Loading>
 					</Link>
 				</div>

@@ -1,27 +1,26 @@
 import { get } from "lodash/fp";
-import React from "react";
+import React, { useContext } from "react";
 import LayoutContext from "../contexts/LayoutContext";
 import ArtworkImage from "./artwork-images/ArtworkImage";
 import PageBreak from "./reusable/PageBreak";
 
-export default () => (
-	<div className="Home">
-		{/* random artwork */}
-		<LayoutContext.Consumer>
-			{({ galleries }: any) => {
-				const randomArtwork = getRandomArtwork(galleries);
-				return (
-					<div className="randomArtwork">
-						{!!randomArtwork &&
-							<ArtworkImage artwork={randomArtwork}/>}
-					</div>
-				);
-			}}
-		</LayoutContext.Consumer>
-		<PageBreak vertical={true}/>
-		<WelcomeMessage/>
-	</div>
-);
+export default () => {
+	const {
+		galleries,
+	}: any = useContext(LayoutContext);
+	const randomArtwork = getRandomArtwork(galleries);
+	console.log("rendering Home");
+	return (
+		<div className="Home">
+			{/* random artwork */}
+			<div className="randomArtwork">
+				<ArtworkImage artwork={randomArtwork}/>
+			</div>
+			<PageBreak vertical={true}/>
+			<WelcomeMessage/>
+		</div>
+	);
+};
 
 const getRandomArtwork = (galleries: any) => {
 	const randomGallery = galleries[Math.floor(Math.random() * galleries.length)];
