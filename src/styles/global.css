@@ -407,35 +407,6 @@ a {
 /* ================================ */
 /*           Admin Page             */
 /* ================================ */
-
-.currentGalleries, .currentArtworks {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
-
-/* current artworks/galleries and add artwork/gallery */
-.currentGalleries > *, .currentArtworks > * {
-    margin: 2%;
-    padding: 2%;
-    width: 21%;
-    max-width: 300px;
-    border: solid black 2px;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.currentArtworks > * {
-    min-height: 250px;
-}
-
-.currentGallery.selected, .currentArtwork.selected {
-    background-color: rgba(0, 0, 0, 0.25);
-}
-
 .AddArtworks,
 .AddGalleries {
     display: flex;
