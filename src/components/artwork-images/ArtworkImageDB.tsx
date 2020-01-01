@@ -30,7 +30,7 @@ export default ({ artwork, imageRef, aspectRatio }: any) => (
 		}}
 	>
 		{({ data, loading }: any) =>
-			<Loading loading={loading}>
+			<Loading loading={loading} fitChild={true} preventClick={false}>
 				<img ref={imageRef} className="ArtworkImageDB"
 				// display initially none to load actual size
 				// in order to find aspect ratio and adjust size

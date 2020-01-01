@@ -1,10 +1,23 @@
 import React from "react";
 
-export default ({ children, loading, height = 650 }: any) =>
-	<div className="loading-wrapper">
+const height = 650;
+
+export default ({
+	children,
+	loading,
+	fitChild = false,
+	preventClick = true,
+}: {
+	children: any,
+	loading: boolean,
+	fitChild?: boolean,
+	preventClick?: boolean,
+}) =>
+	<div className={`loading-wrapper`}>
 		{loading &&
-			<div className="Loading"
-				onClick={(event) => event.stopPropagation()}
+			<div className={`Loading${fitChild ? " fit-child" : ""}`}
+				onClick={(event) =>
+					preventClick && event.stopPropagation()}
 			>
 				<svg
 					viewBox={`0 0 ${height} ${height}`}

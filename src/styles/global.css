@@ -15,6 +15,7 @@ a {
 .loading-wrapper {
     height: inherit;
     width: inherit;
+    position: relative;
 }
 
 .Loading {
@@ -34,6 +35,9 @@ a {
     justify-content: space-around;
     font-size: 3em;
     letter-spacing: 31px;
+}
+.fit-child {
+    position: absolute;
 }
 .Loading > svg {
     animation: loading 10s linear infinite;

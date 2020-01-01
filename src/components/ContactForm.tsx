@@ -17,7 +17,7 @@ export default () => {
 				<Mutation mutation={CONTACT_MUTATION}>
 					{(contactArtist: any, { loading }: any) => (
 						<div className="Contact">
-							<Loading loading={loading}>
+							<Loading loading={loading} fitChild={true}>
 								<SectionWrapper>
 									<form className="contactForm"
 										onSubmit={(event: any) => {
