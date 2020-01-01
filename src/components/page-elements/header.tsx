@@ -15,7 +15,7 @@ library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTi
 const header = () => (
 	<div className="Header">
 		<div className="headerLinks">
-			<div className="homeLink">
+			<div className="homeLink clickable">
 				<Link to="/"
 					activeClassName="activeLink"
 					style={{
