@@ -1,70 +1,93 @@
 import gql from "graphql-tag";
-import React from "react";
+import { find, get, pipe } from "lodash/fp";
+import React, { useState } from "react";
 import { Mutation } from "react-apollo";
 
 import LayoutContext from "../contexts/LayoutContext";
 
-import ArtworkImageDB from "./artwork-images/ArtworkImageDB";
+import ArtworkImage from "./artwork-images/ArtworkImage";
 import Loading from "./reusable/Loading";
 import SectionWrapper from "./reusable/SectionWrapper";
 
-export default () => (
-	<LayoutContext.Consumer>
-		{({ galleries }: any) => (
-			<Mutation mutation={CONTACT_MUTATION}>
-				{(contactArtist: any, { loading }: any) => (
-					<div className="Contact">
-						<Loading loading={loading}>
-							<SectionWrapper>
-								<form className="contactForm"
-									onSubmit={(event: any) => {
-										event.preventDefault();
-										contactArtist({ variables: {
-											artwork: event.target.artwork.value,
-											contactEmail: event.target.email.value,
-											message: event.target.message.value,
-											name: event.target.name.value,
-										}})
-										.then((result: any) => result && window.alert("Thank you for contacting me!"));
-										event.target.reset();
-									}}
-								>
-									<label className="clickable">name
-										<input type="text" name="name" id="name"/>
-									</label>
-									<label className="clickable">e-mail
-										<input type="text" name="email" id="email"/>
-									</label>
-									<label className="contactMessage clickable">message
-										<textarea name="message" id="message"></textarea>
-									</label>
-									<label className="clickable">artwork
-										<select name="artwork" id="artwork">
-											<option value="-"> - </option>
-											{galleries.map(({ id, name, artworks }: any) => (
-												<optgroup key={id} label={name}>
-													{artworks.map((artwork: any) => (
-														<option key={artwork.id} value={artwork.title}>
-															{<ArtworkImageDB artwork={artwork}/>}
-															{artwork.title}
-														</option>),
-													)}
-												</optgroup>
-											))}
-										</select>
-									</label>
-									<label className="clickable">
-										<input type="submit" value="submit"/>
-									</label>
-								</form>
-							</SectionWrapper>
-						</Loading>
-					</div>
-				)}
-			</Mutation>
-		)}
-	</LayoutContext.Consumer>
-);
+export default () => {
+	const [selectedArtwork, setSelectedArtwork] = useState(undefined);
+	return (
+		<LayoutContext.Consumer>
+			{({ galleries }: any) => (
+				<Mutation mutation={CONTACT_MUTATION}>
+					{(contactArtist: any, { loading }: any) => (
+						<div className="Contact">
+							<Loading loading={loading}>
+								<SectionWrapper>
+									<form className="contactForm"
+										onSubmit={(event: any) => {
+											event.preventDefault();
+											const artwork = findSelectedArtworkPipe(
+												event.target.artwork.value,
+												get("title"),
+											)(galleries);
+											contactArtist({ variables: {
+												artwork,
+												contactEmail: event.target.email.value,
+												message: event.target.message.value,
+												name: event.target.name.value,
+											}})
+											.then((result: any) => result && window.alert("Thank you for contacting me!"));
+											event.target.reset();
+										}}
+									>
+										<label className="clickable">name
+											<input type="text" name="name" id="name"/>
+										</label>
+										<label className="clickable">e-mail
+											<input type="text" name="email" id="email"/>
+										</label>
+										<label className="contactMessage clickable">message
+											<textarea name="message" id="message"></textarea>
+										</label>
+										<label className="clickable">artwork
+											<select name="artwork" id="artwork"
+												onChange={({target: {value: id}}: any) => {
+													const selectedArtworkOption = findSelectedArtworkPipe(id)(galleries);
+													setSelectedArtwork(selectedArtworkOption);
+												}}
+											>
+												<option value="-"> - </option>
+												{galleries.map(({ id, name, artworks: artworkOptions }: any) => (
+													<optgroup key={id} label={name}>
+														{artworkOptions.map((artwork: any) => (
+															<option key={artwork.id} value={artwork.id}>
+																{artwork.title}
+															</option>),
+														)}
+													</optgroup>
+												))}
+											</select>
+										</label>
+										<div className="contactArtwork">
+											<ArtworkImage artwork={selectedArtwork}/>
+										</div>
+										<label className="clickable">
+											<input type="submit" value="submit"/>
+										</label>
+									</form>
+								</SectionWrapper>
+							</Loading>
+						</div>
+					)}
+				</Mutation>
+			)}
+		</LayoutContext.Consumer>
+	);
+};
+
+const findSelectedArtworkPipe = (id: string, ...args: any): any =>
+	pipe(
+		find(({artworks}) => find({id}, artworks)),
+		get("artworks"),
+		find({id}),
+		...args,
+	);
 
 const CONTACT_MUTATION = gql`
   mutation ContactArtist($name: String, $contactEmail: String, $message: String, $artwork: String) {
