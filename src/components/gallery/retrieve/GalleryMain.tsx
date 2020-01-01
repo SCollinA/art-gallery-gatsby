@@ -12,7 +12,9 @@ export default () =>
 			<div className="GalleryMain" ref={galleryMainRef}>
 				<SectionWrapper>
 					<div className="galleryImage">
-						<ArtworkImage artwork={selectedArtwork}/>
+						<ArtworkImage artwork={selectedArtwork}
+							fitToScreen={true}
+						/>
 					</div>
 				</SectionWrapper>
 				{!!selectedArtwork &&

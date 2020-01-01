@@ -7,10 +7,12 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+
+import Loading from "../reusable/Loading";
+
 import HamburgerLinks from "./HamburgerLinks";
 import PageLinks from "./PageLinks";
 import SocialLinks from "./SocialLinks";
-import Loading from "../reusable/Loading";
 library.add(faInstagram, faFacebook, faEnvelope, faAngleLeft, faAngleRight, faTimesCircle);
 
 const header = () => {

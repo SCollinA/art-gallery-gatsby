@@ -15,6 +15,7 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 		this.state = {
 			artwork: props.artwork,
 			aspectRatio: 0,
+			fitToScreen: props.fitToScreen,
 		};
 		if (!!props.imageRef) {
 			this.imageRef = props.imageRef;
@@ -49,11 +50,13 @@ export default class ArtworkImage extends React.Component<any, any, any> {
 			<ArtworkImageDB artwork={this.state.artwork}
 				imageRef={this.imageRef}
 				aspectRatio={this.state.aspectRatio}
+				fitToScreen={this.state.fitToScreen}
 			/> :
 			this.state.artwork.file ?
 				<ArtworkImageFile artwork={this.state.artwork}
 					imageRef={this.imageRef}
 					aspectRatio={this.state.aspectRatio}
+					fitToScreen={this.state.fitToScreen}
 				/> :
 				<Placeholder text="No image found"/>)
 }
