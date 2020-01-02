@@ -1,5 +1,5 @@
 import { get } from "lodash/fp";
-import React from "react";
+import React, { useContext } from "react";
 
 import LayoutContext from "../../../contexts/LayoutContext";
 
@@ -7,16 +7,19 @@ import ArtworkChoice from "./ArtworkChoice";
 import GalleryChoice from "./GalleryChoice";
 import GalleryMain from "./GalleryMain";
 
-export default () =>
-	<LayoutContext.Consumer>
-		{({selectedArtwork, selectedGallery}: any) =>
-			<div className="GallerySelection">
-				{!selectedGallery && !selectedArtwork &&
-					<GalleryChoice/>}
-				{!!selectedGallery && !selectedArtwork &&
-					<ArtworkChoice artworks={get("artworks", selectedGallery)}/>}
-				{!!selectedArtwork &&
-					<GalleryMain/>}
-			</div>
-		}
-	</LayoutContext.Consumer>;
+export default () => {
+	const {
+		selectedArtwork,
+		selectedGallery,
+	}: any = useContext(LayoutContext);
+	return (
+		<div className="GallerySelection">
+			{!selectedGallery && !selectedArtwork &&
+				<GalleryChoice/>}
+			{!!selectedGallery && !selectedArtwork &&
+				<ArtworkChoice artworks={get("artworks", selectedGallery)}/>}
+			{!!selectedArtwork &&
+				<GalleryMain/>}
+		</div>
+	);
+};
