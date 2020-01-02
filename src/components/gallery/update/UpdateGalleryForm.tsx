@@ -1,22 +1,16 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import React, { useContext } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
-import LayoutContext from "../../../contexts/LayoutContext";
 import {
-	ALL_GALLERIES,
-	DB_CONTENT,
+	DELETE_GALLERY,
+	UPDATE_GALLERY,
 } from "../../../graphql/graphql";
 import { scrubGallery } from "../../../utils/utils";
 
 import Loading from "../../reusable/Loading";
 
 export default () => {
-	const {
-		selectGallery,
-		selectedGallery,
-	}: any = useContext(LayoutContext);
 	const {
 		cancelUpdate,
 		updateGallery,
@@ -25,30 +19,8 @@ export default () => {
 		removeGallery,
 		submitGallery,
 	}: any = useContext(AdminContext);
-	const [updateGalleryMutation, { loading }] = useMutation(UPDATE_GALLERY, {
-		onCompleted({ updateGallery: updatedGallery }: any) {
-			selectGallery({
-				...selectedGallery,
-				...updatedGallery,
-			});
-		},
-	});
-	const [deleteGallery] = useMutation(DELETE_GALLERY, {
-		update(cache: any) {
-			const { galleries, artworks } = cache.readQuery({ query: DB_CONTENT });
-			cache.writeQuery({
-				data: {
-					artworks,
-					galleries: galleries.filter((gallery: any) =>
-						gallery.id !== updatingGallery.id),
-				},
-				query: DB_CONTENT,
-			});
-		},
-		refetchQueries: [{
-			query: ALL_GALLERIES,
-		}],
-	});
+	const [updateGalleryMutation, { loading }] = useMutation(UPDATE_GALLERY);
+	const [deleteGallery] = useMutation(DELETE_GALLERY);
 	return (
 		<Loading loading={loading}>
 			<form id="UpdateGalleryForm"
@@ -92,18 +64,3 @@ export default () => {
 		</Loading>
 	);
 };
-
-const UPDATE_GALLERY = gql`
-	mutation UpdateGallery($id: ID!, $input: GalleryInput!) {
-		updateGallery(id: $id, input: $input) {
-			id
-			name
-		}
-	}
-`;
-
-const DELETE_GALLERY = gql`
-	mutation DeleteGallery($id: ID!) {
-		deleteGallery(id: $id)
-	}
-`;

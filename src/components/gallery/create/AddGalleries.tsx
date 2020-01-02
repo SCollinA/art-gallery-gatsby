@@ -1,10 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import React, { useContext } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
 import LayoutContext from "../../../contexts/LayoutContext";
-import { DB_CONTENT } from "../../../graphql/graphql";
+import { ADD_GALLERY } from "../../../graphql/graphql";
 
 import Loading from "../../reusable/Loading";
 
@@ -16,15 +15,7 @@ export default () => {
 		selectGallery,
 	}: any = useContext(LayoutContext);
 	const [addGallery, { loading }] = useMutation(ADD_GALLERY, {
-		update(cache: any, { data: { addGallery: addedGallery } }: any) {
-			const { galleries, ...dbContent } = cache.readQuery({ query: DB_CONTENT });
-			cache.writeQuery({
-				data: {
-					...dbContent,
-					galleries: galleries.concat([addedGallery]),
-				},
-				query: DB_CONTENT,
-			});
+		onCompleted({ addGallery: addedGallery }: any) {
 			selectGallery(addedGallery);
 			editGallery();
 		},
@@ -41,12 +32,3 @@ export default () => {
 		</Loading>
 	);
 };
-
-const ADD_GALLERY = gql`
-	mutation {
-		addGallery(input: { name: "new collection" }) {
-			id
-			name
-		}
-	}
-`;

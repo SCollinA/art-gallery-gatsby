@@ -1,35 +1,90 @@
 import { graphql } from "gatsby";
 import gql from "graphql-tag";
 
-export const DB_CONTENT = gql`
-  {
-    galleries: getAllGalleries {
-        id
-        name
-    }
-
-    artworks: getAllArtworks {
-        id
-        galleryId
-        title
-        width
-        height
-        medium
-        price
-        sold
-        framed
-        recentlyupdatedimage
-    }
+export const ArtworkFragment = gql`
+  fragment ArtworkFragment on Artwork {
+    id
+    galleryId
+    title
+    width
+    height
+    image
+    medium
+    price
+    sold
+    framed
+    recentlyupdatedimage
   }
+`;
+
+export const GalleryFragment = gql`
+  fragment GalleryFragment on Gallery {
+    id
+    name
+  }
+`;
+
+export const ADD_ARTWORK = gql`
+	mutation AddArtwork($galleryId: ID){
+		addArtwork(input: { title: "new artwork", galleryId: $galleryId }) {
+			...ArtworkFragment
+		}
+  }
+  ${ArtworkFragment}
+`;
+
+export const ADD_GALLERY = gql`
+	mutation {
+		addGallery(input: { name: "new collection" }) {
+			...GalleryFragment
+		}
+  }
+  ${GalleryFragment}
+`;
+
+export const ALL_GALLERIES = gql`
+	{
+		getAllGalleries {
+			...GalleryFragment
+		}
+  }
+  ${GalleryFragment}
+`;
+
+export const GALLERY_ARTWORKS = gql`
+	query GetArtworksForGallery($galleryId: ID) {
+		getArtworks(input: { galleryId: $galleryId }) {
+			...ArtworkFragment
+		}
+  }
+  ${ArtworkFragment}
+`;
+
+export const GET_GALLERY = gql`
+	query GetGallery($id: ID!) {
+		getGallery(id: $id) {
+			...GalleryFragment
+		}
+  }
+  ${GalleryFragment}
+`;
+
+export const ALL_ARTWORKS = gql`
+  {
+    getAllArtworks {
+			...ArtworkFragment
+		}
+  }
+  ${ArtworkFragment}
 `;
 
 export const ARTWORK_IMAGE = gql`
   query GetArtworkImage($id: ID) {
     getArtwork(id: $id) {
-      id
-      image
-    }
+			...ArtworkFragment
+		}
   }
+  ${ArtworkFragment}
 `;
 
 export const fluidImage = graphql`
@@ -52,6 +107,22 @@ export const fixedImage = graphql`
   }
 `;
 
+export const ARTWORK_FILES = graphql`
+  {
+    artworkFileData: allFile(filter: {
+        relativeDirectory: { eq: "artworks" },
+        extension: { eq: "jpeg" }
+    }) {
+      edges {
+        node {
+          name
+          ...fluidImage
+        }
+      }
+    }
+  }
+`;
+
 // export const GET_ARTWORK_IMAGES = gql`
 // subscription GetArtworkImages {
 //   artworkImageChanged {
@@ -61,36 +132,61 @@ export const fixedImage = graphql`
 // }
 // `
 
-export const ALL_GALLERIES = gql`
+export const UPDATE_GALLERY = gql`
+	mutation UpdateGallery($id: ID!, $input: GalleryInput!) {
+		updateGallery(id: $id, input: $input) {
+			...GalleryFragment
+		}
+  }
+  ${GalleryFragment}
+`;
+
+export const DELETE_GALLERY = gql`
+	mutation DeleteGallery($id: ID!) {
+		deleteGallery(id: $id) {
+			...GalleryFragment
+		}
+  }
+  ${GalleryFragment}
+`;
+
+export const UPDATE_ARTWORK = gql`
+	mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {
+		updateArtwork(id: $id, input: $input) {
+			...ArtworkFragment
+		}
+  }
+  ${ArtworkFragment}
+`;
+
+export const DELETE_ARTWORK = gql`
+	mutation DeleteArtwork($id: ID!) {
+		deleteArtwork(id: $id) {
+			...ArtworkFragment
+		}
+  }
+  ${ArtworkFragment}
+`;
+
+export const GALLERY_NAMES = gql`
 	{
 		getAllGalleries {
-			id
-			name
+			...GalleryFragment
 		}
-	}
+  }
+  ${GalleryFragment}
 `;
 
-export const GALLERY_ARTWORKS = gql`
-	query GetArtworksForGallery($galleryId: ID) {
-		getArtworks(input: { galleryId: $galleryId }) {
-			id
-			galleryId
-			title
-			width
-			height
-			medium
-			image
-			price
-			sold
-			framed
-		}
-	}
+export const CONTACT_MUTATION = gql`
+  mutation ContactArtist($name: String, $contactEmail: String, $message: String, $artwork: String) {
+	  contactArtist(name: $name, contactEmail: $contactEmail, message: $message, artwork: $artwork)
+  }
 `;
 
-export const GET_GALLERY = gql`
-	query GetGallery($id: ID!) {
-		getGallery(id: $id) {
-			name
+export const ADMIN_LOGIN = gql`
+	mutation AdminLogin($adminPassword: String!) {
+		login(password: $adminPassword) {
+			token
 		}
 	}
 `;

@@ -1,21 +1,125 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { filter, find, get, map } from "lodash/fp";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
-import LayoutContext from "../../../contexts/LayoutContext";
 import {
-	DB_CONTENT,
-	GALLERY_ARTWORKS,
+	DELETE_ARTWORK,
+	GALLERY_NAMES,
+	UPDATE_ARTWORK,
 } from "../../../graphql/graphql";
 import { scrubMetaData } from "../../../utils/utils";
 
-import ArtworkImage from "../../artwork-images/ArtworkImage";
 import Loading from "../../reusable/Loading";
+
+enum EArtworkUpdateActionType {
+	Cancel = "CANCEL",
+	LoadImage = "LOAD_IMAGE",
+	RemoveImage = "REMOVE_IMAGE",
+	ResetArtwork = "RESET_ARTWORK",
+	ResizeImage = "RESIZE_IMAGE",
+	ResizeWindow = "RESIZE_WINDOW",
+	RotateImage = "ROTATE_IMAGE",
+	SetImageVisible = "TOGGLE_IMAGE_VISIBLE",
+	SetImageWidthPercent = "SET_IMAGE_WIDTH_PERCENT",
+	SubmitArtwork = "SUBMIT_ARTWORK",
+}
+interface IArtworkUpdateState {
+	artworkReset: boolean;
+	artworkSubmitted: boolean;
+	imageFile: File | Blob | undefined;
+	imageHeight: number;
+	imageRemoved: boolean;
+	imageRotated: boolean;
+	imageVisible: boolean;
+	imageWidth: number;
+	imageWidthPercent: number;
+	windowHeight: number;
+	windowWidth: number;
+}
+interface IArtworkUpdateAction extends Partial<IArtworkUpdateState> {
+	type: EArtworkUpdateActionType;
+}
 
 const imageCanvas = React.createRef<any>();
 const artworkImageRef = React.createRef<any>();
+
+const artworkState = {
+	artworkReset: false,
+	artworkSubmitted: false,
+	imageFile: undefined,
+	imageHeight: 0,
+	imageRemoved: false,
+	imageRotated: false,
+	imageVisible: false,
+	imageWidth: 0,
+	imageWidthPercent: 0,
+	windowHeight: 0,
+	windowWidth: 0,
+};
+const artworkReducer: React.Reducer<Partial<IArtworkUpdateState>, IArtworkUpdateAction> =
+	(state: Partial<IArtworkUpdateState>, action: IArtworkUpdateAction) => {
+		switch (action.type) {
+			case EArtworkUpdateActionType.Cancel:
+				return artworkState;
+			case EArtworkUpdateActionType.LoadImage:
+				return {
+					...state,
+					imageFile: action.imageFile,
+					imageRemoved: false,
+					imageRotated: false,
+					imageVisible: false,
+				};
+			case EArtworkUpdateActionType.RemoveImage:
+				return {
+					...state,
+					imageFile: undefined,
+					imageRemoved: action.imageRemoved,
+					imageRotated: false,
+					imageVisible: false,
+				};
+			case EArtworkUpdateActionType.ResetArtwork:
+				return {
+					...state,
+					artworkReset: action.artworkReset,
+				};
+			case EArtworkUpdateActionType.ResizeImage:
+				return {
+					...state,
+					imageHeight: action.imageHeight,
+					imageWidth: action.imageWidth,
+				};
+			case EArtworkUpdateActionType.ResizeWindow:
+				return {
+					...state,
+					windowHeight: action.windowHeight,
+					windowWidth: action.windowWidth,
+				};
+			case EArtworkUpdateActionType.RotateImage:
+				return {
+					...state,
+					imageHeight: state.imageWidth,
+					imageRotated: action.imageRotated,
+					imageWidth: state.imageHeight,
+				};
+			case EArtworkUpdateActionType.SetImageVisible:
+				return {
+					...state,
+					imageVisible: action.imageVisible,
+				};
+			case EArtworkUpdateActionType.SetImageWidthPercent:
+				return {
+					...state,
+					imageWidthPercent: action.imageWidthPercent,
+				};
+			case EArtworkUpdateActionType.SubmitArtwork:
+				return {
+					...state,
+					artworkSubmitted: action.artworkSubmitted,
+				};
+			default:
+				throw new Error("wtf");
+		}
+	};
 
 export default () => {
 	const {
@@ -26,201 +130,44 @@ export default () => {
 		removeArtwork,
 		cancelUpdate,
 	}: any = useContext(AdminContext);
-	const {
-		selectArtwork,
-		selectedArtwork,
-		selectGallery,
-		selectedGallery,
-	}: any = useContext(LayoutContext);
-	const [state, setState] = useState({
-			imageFile: new Blob(),
-			imageHeight: 0,
-			imageLoaded: false,
-			imageRemoved: false,
-			imageReset: false,
-			imageRotated: true,
-			imageSubmitted: false,
-			imageWidth: 0,
-			windowHeight: 0,
-			windowWidth: 0,
-		});
-	useEffect(() => {
-		if (state.imageRotated) {
-			// get canvas and image elements from page
-			const imageCanvasNode = imageCanvas.current;
-			const rotatingImage = artworkImageRef.current;
-			const canvasContext = imageCanvasNode.getContext("2d");
-			// get whichever element actually exists
-			// rotate the canvas, draw the image, and rotate the canvas back
-			if (rotatingImage) {
-				canvasContext.save();
-				canvasContext.translate(
-					imageCanvasNode.width / 2,
-					imageCanvasNode.height / 2,
-				);
-				canvasContext.rotate(Math.PI / 2);
-				canvasContext.translate(
-					(-1 * imageCanvasNode.height / 2),
-					(-1 * imageCanvasNode.width / 2),
-				);
-				canvasContext.drawImage(
-					rotatingImage,
-					0,
-					0,
-					state.imageHeight,
-					state.imageWidth,
-				);
-				canvasContext.restore();
-				// convert canvas contents to blob
-				imageCanvasNode.toBlob((imageBlob: any) => {
-					setState({
-						...state,
-						imageFile: imageBlob,
-					});
-				}, "image/jpeg", 1.0);
-			}
-		}
-	}, [state.imageRotated, state.imageFile]);
-	useEffect(() => {
-		if (artworkImageRef.current) {
-			artworkImageRef.current.style.display = "block";
-			const { imageWidth, imageHeight, windowHeight } = state;
-			artworkImageRef.current.style.maxWidth =
-				imageWidth / imageHeight >= 1 ? // is it wider than tall?
-			"25%" : `${(windowHeight * .25) * imageWidth / imageHeight}px`;
-		}
-	},
-		[state.imageWidth, state.imageHeight, state.windowWidth, state.windowHeight],
-	);
-	useEffect(
-		() => state.imageRemoved ?
-			updateArtwork({ ...updatingArtwork, image: null }) :
-			undefined,
-		[state.imageRemoved],
-	);
-	useEffect(
-		() => state.imageReset ?
-			resetArtwork() :
-			undefined,
-		[state.imageReset],
-	);
-	useEffect(
-		() => state.imageSubmitted ?
-			submitArtwork() :
-			undefined,
-		[state.imageSubmitted],
-	);
-	const updateWindowDimensions = () => {
-		setState({
-			...state,
-			windowHeight: window.innerHeight,
-			windowWidth: window.innerWidth,
-		});
-	};
-	useEffect(() => {
-		updateWindowDimensions();
-		window.addEventListener("resize", updateWindowDimensions);
-		if (updatingArtwork.image) {
-			fetch(`data:image/jpeg;base64,${updatingArtwork.image}`)
-				.then((res) => res.blob())
-				.then((blob) => setState({
-					...state,
-					imageFile: blob,
-					imageLoaded: true,
-				}));
-		}
-		return () => {
-			window.removeEventListener("resize", updateWindowDimensions);
-		};
-	}, [state.imageLoaded]);
-	const [updateArtworkMutation, { loading }] = useMutation(UPDATE_ARTWORK, {
-		update(cache: any, { data: { updateArtwork: updatedArtworkData }}: any) {
-			const updatedArtwork = {
-				...selectedArtwork,
-				...updatedArtworkData,
-			};
-			const { artworks, galleries } = cache.readQuery({ query: DB_CONTENT });
-			const updatedArtworks = map(
-				(artwork) =>
-					get("id", artwork) === get("id", updatedArtwork) ?
-						updatedArtwork :
-						artwork,
-				artworks,
-			);
-			const artworkGallery = find(
-				(gallery) => get("id", gallery) === get("galleryId", updatedArtwork),
-				galleries,
-			);
-			let updatedGallery: any;
-			if (artworkGallery) {
-				updatedGallery = {
-					...artworkGallery,
-					artworks: map((artwork) =>
-						get("id", artwork) === get("id", updatedArtwork) ?
-							updatedArtwork :
-							artwork,
-						get("artworks", selectedGallery),
-					),
-				};
-			} else {
-				updatedGallery = {
-					...selectedGallery,
-					artworks: filter((artwork) =>
-						get("id", artwork) !== get("id", updatedArtwork),
-						get("artworks", selectedGallery),
-					),
-				};
-			}
-			const updatedGalleries = map((gallery) =>
-				get("id", gallery) === get("galleryId", selectedArtwork) ?
-					updatedGallery :
-					gallery,
-				galleries,
-			);
-			cache.writeQuery({
-				data: {
-					artworks: updatedArtworks,
-					galleries: updatedGalleries,
-				},
-				query: DB_CONTENT,
-			});
-			selectGallery({
-				...selectedGallery,
-				...updatedGallery,
-			});
-			selectArtwork(updatedArtwork);
-		},
-	});
+	const [state, dispatch] = useReducer(artworkReducer, artworkState);
+	useEffect(loadInitialArtworkImage(updatingArtwork, state, dispatch), [state.imageFile]);
+	useEffect(resizeWindow(dispatch), [state.windowHeight, state.windowWidth]);
+	useEffect(() => dispatch({
+		imageVisible: false,
+		type: EArtworkUpdateActionType.SetImageVisible,
+	}), [state.imageFile]);
+	useEffect(resizeArtwork(state, dispatch), [
+		state.imageVisible,
+		state.windowWidth,
+		state.windowHeight,
+		state.imageHeight,
+		state.imageWidth,
+	]);
+	useEffect(() => dispatch({
+		imageVisible: true,
+		type: EArtworkUpdateActionType.SetImageVisible,
+	}), [state.imageWidthPercent]);
+	useEffect(rotateImage(state, dispatch), [state.imageRotated]);
+	useEffect(removeImage(updateArtwork, state, dispatch), [state.imageRemoved]);
+	useEffect(resetArtworkEffect(resetArtwork, state, dispatch), [state.artworkReset]);
+	useEffect(submitArtworkEffect(submitArtwork, state, dispatch), [state.artworkSubmitted]);
 	const { data: galleryNameData}: any = useQuery(GALLERY_NAMES);
-	const [deleteArtwork] = useMutation(DELETE_ARTWORK, {
-		update(cache: any) {
-			const { getArtworks: galleryArtworks } = cache.readQuery({
-				query: GALLERY_ARTWORKS,
-				variables: {
-					galleryId: updatingArtwork.galleryId,
-				},
-			});
-			selectGallery({
-				...selectedGallery,
-				artworks: galleryArtworks.filter((artwork: any) =>
-							artwork.id !== updatingArtwork.id),
-			});
-		},
-	});
-	console.log(updatingArtwork);
+	const [updateArtworkMutation, { loading }] = useMutation(UPDATE_ARTWORK);
+	const [deleteArtwork] = useMutation(DELETE_ARTWORK);
 	return (
 		<Loading loading={loading}>
 			<form id="UpdateArtworkForm"
 				onSubmit={(event) => {
 					event.preventDefault();
-					if (state.imageLoaded) {
+					if (!!state.imageFile) {
 						const imageCanvasNode = imageCanvas.current;
 						const uploadedImageNode = artworkImageRef.current;
 						const canvasContext = imageCanvasNode.getContext("2d");
 						// draw image takes (img, x, y, w, h)
 						// tslint:disable-next-line: max-line-length
 						canvasContext.drawImage(uploadedImageNode, 0, 0, state.imageWidth, state.imageHeight);
-						imageCanvasNode.toBlob((imageBlob: any) => {
+						imageCanvasNode.toBlob((imageBlob: Blob) => {
 							const fr = new FileReader();
 							fr.onload = () => {
 								const image = btoa(`${fr.result}`);
@@ -234,11 +181,9 @@ export default () => {
 									input: scrubMetaData(updatingArtwork),
 								}})
 								.then(() => {
-									setState({
-										...state,
-										imageFile: new Blob(),
-										imageLoaded: false,
-										imageSubmitted: true,
+									dispatch({
+										artworkSubmitted: true,
+										type: EArtworkUpdateActionType.SubmitArtwork,
 									});
 								});
 							};
@@ -251,22 +196,17 @@ export default () => {
 							input: scrubMetaData(updatingArtwork),
 						}})
 						.then(() =>
-							setState({
-								...state,
-								imageFile: new Blob(),
-								imageLoaded: false,
-								imageSubmitted: true,
+							dispatch({
+								artworkSubmitted: true,
+								type: EArtworkUpdateActionType.SubmitArtwork,
 							}),
 						);
 					}
 				}}
-				onReset={() =>
-					setState({
-						...state,
-						imageFile: new Blob(),
-						imageLoaded: false,
-						imageReset: true,
-					})}
+				onReset={() => dispatch({
+					artworkReset: true,
+					type: EArtworkUpdateActionType.ResetArtwork,
+				})}
 				onClick={(event) => event.stopPropagation()}
 			>
 				<label>gallery
@@ -304,28 +244,10 @@ export default () => {
 							}}
 							onChange={(event: any) => {
 								const imageFile = event.target.files[0];
-								const imageLoaded = !!imageFile;
-								setState({
-									...state,
-									imageHeight: 0,
-									imageLoaded: false,
-									imageWidth: 0,
-								});
-								setState({
-									...state,
+								dispatch({
 									imageFile,
+									type: EArtworkUpdateActionType.LoadImage,
 								});
-								setState({
-									...state,
-									imageLoaded,
-								});
-								if (!imageFile) {
-									setState({
-										...state,
-										imageHeight: 0,
-										imageWidth: 0,
-									});
-								}
 							}}
 						/>
 					</label>
@@ -336,13 +258,9 @@ export default () => {
 								if (!!artworkForm) {
 									artworkForm.image.value = "";
 								}
-								setState({
-									...state,
-									imageFile: new Blob(),
-									imageHeight: 0,
-									imageLoaded: false,
+								dispatch({
 									imageRemoved: true,
-									imageWidth: 0,
+									type: EArtworkUpdateActionType.RemoveImage,
 								});
 							}}
 						/>
@@ -353,40 +271,31 @@ export default () => {
 						style={{ display: "none" }}
 					/>
 					<div className="uploadedImage">
-						{state.imageLoaded ?
+						{!!state.imageFile &&
 							<img id="uploadedImage" ref={artworkImageRef}
-								style={{ display: "none"}}
+								style={{
+									display: state.imageVisible ?
+										"block" : "none",
+									width: `${state.imageWidthPercent}%`,
+								}}
 								alt="uploaded profile"
 								onLoad={() => {
-									if (!state.imageWidth) {
-										setState({
-											...state,
+									if (!state.imageVisible) {
+										dispatch({
 											imageHeight: artworkImageRef.current.height,
 											imageWidth: artworkImageRef.current.width,
+											type: EArtworkUpdateActionType.ResizeImage,
 										});
 									}
 								}}
 								src={blobUrl(state.imageFile)}
-							/> :
-							<ArtworkImage artwork={updatingArtwork}
-								imageRef={artworkImageRef}
-							/>
-						}
+							/>}
 					</div>
 					<div className="rotateImage"
-						onClick={() => {
-							// have to get current image height and width
-							setState({
-								...state,
-								imageHeight: state.imageWidth,
-								imageRotated: true,
-								imageWidth: state.imageHeight,
-							});
-							setState({
-								...state,
-								imageRotated: false,
-							});
-						}}
+						onClick={() => dispatch({
+							imageRotated: true,
+							type: EArtworkUpdateActionType.RotateImage,
+						})}
 					>
 						rotate right
 					</div>
@@ -465,7 +374,10 @@ export default () => {
 					<input type="submit" value="submit"/>
 					<input type="reset" value="reset"/>
 					<input type="button" value="cancel"
-						onClick={() => cancelUpdate()}
+						onClick={() => {
+							dispatch({ type: EArtworkUpdateActionType.Cancel });
+							cancelUpdate();
+						}}
 					/>
 					<input type="button" value="remove"
 						onClick={() =>
@@ -480,46 +392,143 @@ export default () => {
 	);
 };
 
-const UPDATE_ARTWORK = gql`
-	mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {
-		updateArtwork(id: $id, input: $input) {
-			id
-			galleryId
-			title
-			width
-			height
-			medium
-			image
-			price
-			sold
-			framed
-			recentlyupdatedimage
-		}
-	}
-`;
+const loadInitialArtworkImage =
+	(updatingArtwork: any, state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			if (!state.imageFile && !state.imageRemoved) {
+				if (!!updatingArtwork.image) {
+					fetch(`data:image/jpeg;base64,${updatingArtwork.image}`)
+						.then((res) => res.blob())
+						.then((stuff) => {
+							return stuff;
+						})
+						.then((imageFile) => dispatch({
+							imageFile,
+							type: EArtworkUpdateActionType.LoadImage,
+						}));
+				}
+			}
+		};
 
-const DELETE_ARTWORK = gql`
-	mutation DeleteArtwork($id: ID!) {
-		deleteArtwork(id: $id)
-	}
-`;
+const resizeWindow = (dispatch: React.Dispatch<IArtworkUpdateAction>) => {
+	const updateWindowDimensions = () => dispatch({
+		type: EArtworkUpdateActionType.ResizeWindow,
+		windowHeight: window.innerHeight,
+		windowWidth: window.innerWidth,
+	});
+	return () => {
+		updateWindowDimensions();
+		window.addEventListener("resize", updateWindowDimensions);
+		return () => {
+			window.removeEventListener("resize", updateWindowDimensions);
+		};
+	};
+};
 
-const GALLERY_NAMES = gql`
-	{
-		getAllGalleries {
-			id
-			name
-		}
-	}
-`;
+const resizeArtwork =
+	(state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			const { imageWidth, imageHeight, windowWidth, windowHeight } = state;
+			if (!state.imageVisible &&
+				!!imageWidth && !!imageHeight &&
+				!!windowWidth && !!windowHeight
+			) {
+				const imageAspectRatio = imageWidth / imageHeight;
+				const screenAspectRatio = windowWidth / windowHeight;
+				const correctedImageAspectRatio = imageAspectRatio / screenAspectRatio;
+				const imageWidthPercent = correctedImageAspectRatio * 100;
+				dispatch({
+					imageWidthPercent,
+					type: EArtworkUpdateActionType.SetImageWidthPercent,
+				});
+			}
+		};
+
+const rotateImage =
+	(state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			if (state.imageRotated) {
+				// get canvas and image elements from page
+				const imageCanvasNode = imageCanvas.current;
+				const rotatingImage = artworkImageRef.current;
+				const canvasContext = imageCanvasNode.getContext("2d");
+				// get whichever element actually exists
+				// rotate the canvas, draw the image, and rotate the canvas back
+				if (rotatingImage) {
+					canvasContext.save();
+					canvasContext.translate(
+						imageCanvasNode.width / 2,
+						imageCanvasNode.height / 2,
+					);
+					canvasContext.rotate(Math.PI / 2);
+					canvasContext.translate(
+						(-1 * imageCanvasNode.height / 2),
+						(-1 * imageCanvasNode.width / 2),
+					);
+					canvasContext.drawImage(
+						rotatingImage,
+						0,
+						0,
+						state.imageHeight,
+						state.imageWidth,
+					);
+					canvasContext.restore();
+					imageCanvasNode.toBlob((imageBlob: any) => {
+						dispatch({
+							imageFile: imageBlob,
+							type: EArtworkUpdateActionType.LoadImage,
+						});
+					}, "image/jpeg", 1.0);
+				}
+			}
+		};
+
+const removeImage =
+	(updateArtwork: any, state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			if (state.imageRemoved) {
+				updateArtwork({
+					file: null,
+					image: null,
+					recentlyupdatedimage: false,
+				});
+				dispatch({
+					imageRemoved: false,
+					type: EArtworkUpdateActionType.RemoveImage,
+				});
+			}
+		};
+
+const resetArtworkEffect =
+	(resetArtwork: any, state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			if (state.artworkReset) {
+				resetArtwork();
+				dispatch({
+					artworkReset: false,
+					type: EArtworkUpdateActionType.ResetArtwork,
+				});
+			}
+		};
+
+const submitArtworkEffect =
+	(submitArtwork: any, state: Partial<IArtworkUpdateState>, dispatch: React.Dispatch<IArtworkUpdateAction>) =>
+		() => {
+			if (state.artworkSubmitted) {
+				submitArtwork();
+				dispatch({
+					artworkSubmitted: false,
+					type: EArtworkUpdateActionType.SubmitArtwork,
+				});
+			}
+		};
 
 // For the image uploading
 const urls = new WeakMap();
-
 const blobUrl = (blob: any) => {
 	if (urls.has(blob)) {
 		return urls.get(blob);
-		} else {
+	} else {
 		const url = URL.createObjectURL(blob);
 		urls.set(blob, url);
 		return url;

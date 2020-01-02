@@ -1,14 +1,13 @@
 import { useQuery } from "@apollo/react-hooks";
-import { graphql, useStaticQuery } from "gatsby";
-import { filter } from "lodash/fp";
-import React, { useState } from "react";
-import {
-	Query,
-} from "react-apollo";
+import { useStaticQuery } from "gatsby";
+import { filter, find, get, isEqual } from "lodash/fp";
+import React, { useEffect, useState } from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
 import {
-	DB_CONTENT,
+	ALL_ARTWORKS,
+	ALL_GALLERIES,
+	ARTWORK_FILES,
 } from "../graphql/graphql";
 
 import Admin from "./Admin";
@@ -18,65 +17,89 @@ import GalleryHeader from "./page-elements/header";
 import Loading from "./reusable/Loading";
 import FullStoryHelmet from "./utils/FullStoryHelmet";
 
+interface ILayoutState {
+	selectedArtwork: any;
+	selectedGallery: any;
+}
+
+const layoutState: ILayoutState = {
+	selectedArtwork: undefined,
+	selectedGallery: undefined,
+};
+
 const galleryMainRef = React.createRef<any>();
 const artworkChoiceRef = React.createRef<any>();
 
 export default ({ children }: {children: any}) => {
-		const [state, setState] = useState({
-			selectedArtwork: undefined,
-			selectedGallery: undefined,
-		});
-		const {
-			data: {
-				galleries = [],
-				artworks = [],
-			} = {
-				artworks: [],
-				galleries: [],
-			},
-			loading,
-		}: any = useQuery(DB_CONTENT);
-		const { artworkFileData }: any = useStaticQuery(ARTWORK_FILES);
-		const galleriesWithArtworks = getGalleries(artworks, artworkFileData, galleries);
-		const context = {
+	const [state, setState] = useState(layoutState);
+	const {
+		data: { getAllGalleries: galleries = [] } = { getAllGalleries: [] },
+		loading: galleriesLoading,
+	}: any = useQuery(ALL_GALLERIES);
+	const {
+		data: { getAllArtworks: artworks = [] } = { getAllArtworks: [] },
+		loading: artworksLoading,
+	}: any = useQuery(ALL_ARTWORKS);
+	const { artworkFileData }: any = useStaticQuery(ARTWORK_FILES);
+	const galleriesWithArtworks = getGalleries(artworks, artworkFileData, galleries);
+	const context = {
+		...state,
+		artworkChoiceRef,
+		artworksWithoutGalleries: filter(
+			({ galleryId }: any) => !galleryId,
+			artworks,
+		),
+		galleries: galleriesWithArtworks,
+		galleryMainRef,
+		selectArtwork: (selectedArtwork: any) => setState({
 			...state,
-			artworkChoiceRef,
-			artworksWithoutGalleries: filter(
-				({ galleryId }: any) => !galleryId,
-				artworks,
-			),
-			galleries: galleriesWithArtworks,
-			galleryMainRef,
-			selectArtwork: (selectedArtwork: any) => setState({
+			selectedArtwork,
+		}),
+		selectGallery: (selectedGallery: any) => setState({
+			...state,
+			selectedArtwork: undefined,
+			selectedGallery,
+		}),
+	};
+	if (!!state.selectedArtwork) {
+		const selectedArtwork = find({id: state.selectedArtwork.id}, artworks);
+		if (!isEqual(state.selectedArtwork, selectedArtwork)) {
+			const selectedGallery = find({id: get("galleryId", selectedArtwork)}, galleriesWithArtworks);
+			setState({
 				...state,
 				selectedArtwork,
-			}),
-			selectGallery: (selectedGallery: any) => setState({
-				...state,
-				selectedArtwork: undefined,
 				selectedGallery,
-			}),
-		};
-		console.log("rendering layout");
-		return (
-		<>
-			<FullStoryHelmet/>
-			<LayoutContext.Provider value={context}>
-				<Admin>
-					<Loading loading={loading}>
-						<div className="Layout">
-							<GalleryHeader/>
-							<div className="layoutChildren">
-								{children}
-							</div>
-							<Footer/>
+			});
+		}
+	} else if (!!state.selectedGallery) {
+		const selectedGallery = find({id: state.selectedGallery.id}, galleriesWithArtworks);
+		if (!isEqual(state.selectedGallery, selectedGallery)) {
+			setState({
+				...state,
+				selectedGallery,
+			});
+		}
+	}
+	const loading = galleriesLoading || artworksLoading;
+	return (
+	<>
+		<FullStoryHelmet/>
+		<LayoutContext.Provider value={context}>
+			<Admin>
+				<Loading loading={loading}>
+					<div className="Layout">
+						<GalleryHeader/>
+						<div className="layoutChildren">
+							{children}
 						</div>
-					</Loading>
-				</Admin>
-			</LayoutContext.Provider>
-		</>
-		);
-	};
+						<Footer/>
+					</div>
+				</Loading>
+			</Admin>
+		</LayoutContext.Provider>
+	</>
+	);
+};
 
 const getGalleries = (
 	artworks: any[],
@@ -121,19 +144,3 @@ const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFil
 
 const getArtworkFiles = (artworkFiles: any) =>
 	artworkFiles.edges.map((edge: any) => edge.node);
-
-const ARTWORK_FILES = graphql`
-  {
-    artworkFileData: allFile(filter: {
-        relativeDirectory: { eq: "artworks" },
-        extension: { eq: "jpeg" }
-    }) {
-      edges {
-        node {
-          name
-          ...fluidImage
-        }
-      }
-    }
-  }
-`;

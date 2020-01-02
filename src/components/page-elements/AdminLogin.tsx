@@ -1,8 +1,8 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import React, { useContext, useState } from "react";
 
 import AdminContext from "../../contexts/AdminContext";
+import { ADMIN_LOGIN } from "../../graphql/graphql";
 
 import Loading from "../reusable/Loading";
 
@@ -63,11 +63,3 @@ export default () => {
 		</Loading>
 	);
 };
-
-const ADMIN_LOGIN = gql`
-	mutation AdminLogin($adminPassword: String!) {
-		login(password: $adminPassword) {
-			token
-		}
-	}
-`;

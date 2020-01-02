@@ -1,9 +1,9 @@
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { find, get, pipe } from "lodash/fp";
 import React, { useContext, useState } from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
+import { CONTACT_MUTATION } from "../graphql/graphql";
 
 import ArtworkImage from "./artwork-images/ArtworkImage";
 import Loading from "./reusable/Loading";
@@ -84,9 +84,3 @@ const findSelectedArtworkPipe = (id: string, ...args: any): any =>
 		find({id}),
 		...args,
 	);
-
-const CONTACT_MUTATION = gql`
-  mutation ContactArtist($name: String, $contactEmail: String, $message: String, $artwork: String) {
-	  contactArtist(name: $name, contactEmail: $contactEmail, message: $message, artwork: $artwork)
-  }
-`;
