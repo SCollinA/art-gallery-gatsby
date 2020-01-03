@@ -4,16 +4,18 @@ import React, { useContext, useState } from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
 import { CONTACT_MUTATION } from "../graphql/graphql";
+import { IArtwork } from "../models/artwork.model";
 
 import ArtworkImage from "./artwork-images/ArtworkImage";
 import Loading from "./reusable/Loading";
+import Placeholder from "./reusable/Placeholder";
 import SectionWrapper from "./reusable/SectionWrapper";
 
 export default () => {
 	const {
 		galleries,
 	}: any = useContext(LayoutContext);
-	const [selectedArtwork, setSelectedArtwork] = useState(undefined);
+	const [selectedArtwork, setSelectedArtwork] = useState<IArtwork>();
 	const [contactArtist, { loading }] = useMutation(CONTACT_MUTATION);
 	return (
 		<div className="Contact">
@@ -65,7 +67,9 @@ export default () => {
 							</select>
 						</label>
 						<div className="contactArtwork">
-							<ArtworkImage artwork={selectedArtwork}/>
+							{!!selectedArtwork ?
+								<ArtworkImage artwork={selectedArtwork}/> :
+								<Placeholder text="Select an artwork"/>}
 						</div>
 						<label className="clickable">
 							<input type="submit" value="submit"/>

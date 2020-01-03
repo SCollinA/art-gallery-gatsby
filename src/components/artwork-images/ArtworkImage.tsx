@@ -39,11 +39,11 @@ const artworkImageReducer =
 
 export default ({
 	artwork,
-	fitToScreen,
+	fitToScreen = false,
 	imageRef = React.createRef<any>(),
 }: {
-	artwork: IArtwork,
-	fitToScreen: boolean,
+	artwork?: IArtwork,
+	fitToScreen?: boolean,
 	imageRef?: any;
 }) => {
 	const artworkImageState: IArtworkImageState = {
