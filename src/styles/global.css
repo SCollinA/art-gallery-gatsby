@@ -307,9 +307,7 @@ a {
 
 .galleryThumb > .loading-wrapper,
 .artworkThumb > .loading-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+    margin: auto;
 }
 
 a.clickable {
