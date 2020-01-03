@@ -347,46 +347,26 @@ a.clickable {
 }
 
 /* ============================ */
-/*          About               */
+/*       About/Commissions      */
 /* ============================ */
-.About > .section-wrapper {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-}
-.About > .section-wrapper {
-    justify-content: space-between;
-}
-.About p:nth-child(3) {
-    flex-basis: 50%;
-}
-.aboutImg {
-    max-width: 250px;
-    margin: auto auto 20px;
-    flex-basis: 50%;
-}
-
-/* ============================ */
-/*          Commissions             */
-/* ============================ */
+.About > .section-wrapper,
 .Commissions > .section-wrapper {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
     align-items: center;
-    flex-wrap: wrap;
+    padding: 2% 20%;
 }
 .Commissions > .section-wrapper > p,
 .commissionNotes {
-    width: 500px;
     max-width: 100%;
     height: 100%;
 }
-.Commissions > .section-wrapper > h4,
-.Commissions > .section-wrapper > h6 {
-    flex-basis: 100%;
+.aboutImg {
+    width: 50%;
+    min-width: 300px;
+    max-width: 400px;
+    margin-bottom: 20px;
 }
-
 /* ============================ */
 /*          Contact             */
 /* ============================ */
@@ -564,8 +544,6 @@ a.clickable {
     .headerLinks > .SocialLinks,
     .Header > .PageLinks,
     .Header > .section-wrapper {
-        /* visibility: hidden;
-        position: fixed; */
         display: none;
     }
 
@@ -579,17 +557,14 @@ a.clickable {
         margin: 25px auto;
     }
 
-    .About p:nth-child(3) {
-        flex-basis: unset;
+    .About > .section-wrapper,
+    .Commissions > .section-wrapper {
+        padding: unset;
     }
 
     .About > .section-wrapper > *,
     .Commissions > .section-wrapper > * {
-        flex-basis: 100%;
-    }
-
-    .Commissions > .section-wrapper > .gatsby-image-wrapper + p {
-        padding-top: 30px;
+        width: 100%;
     }
 
     .galleryLocation, .galleryCaption {
