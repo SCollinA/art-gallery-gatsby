@@ -189,4 +189,3 @@ export const ARTWORK_FILES = graphql`
 		}
 	}
 `;
-  

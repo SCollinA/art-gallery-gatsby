@@ -3,7 +3,7 @@ import ApolloClient from "apollo-client";
 import { ApolloLink, GraphQLRequest } from "apollo-link";
 import { setContext } from "apollo-link-context";
 import { createHttpLink } from "apollo-link-http";
-import _fetch from "isomorphic-fetch";
+import fetch from "isomorphic-fetch";
 import { isNull } from "lodash/fp";
 // Import { split } from 'apollo-link'
 // Import { WebSocketLink } from 'apollo-link-ws'
@@ -35,7 +35,7 @@ const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) =>
 	.concat(createHttpLink({
 	// ISSUE: https://github.com/apollographql/apollo-link/issues/513
 	// tslint:disable-next-line: no-any
-	fetch: _fetch as any,
+	fetch,
 	// Change this to art-gallery.collinargo.com/graphql for production
 	// uri: "http://localhost:4000/graphql",
 	uri: "https://mkcrfineart.com/graphql",
@@ -53,8 +53,10 @@ const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) =>
 //   HttpLink,
 // ) : httpLink
 
-export const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 	cache: new InMemoryCache(),
 	// Link,
 	link: httpLink,
 });
+
+export default client;
