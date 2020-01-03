@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useReducer } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
 import {
+	ALL_ARTWORKS,
 	DELETE_ARTWORK,
 	GALLERY_NAMES,
 	UPDATE_ARTWORK,
@@ -112,8 +113,6 @@ const artworkReducer: React.Reducer<Partial<IArtworkUpdateState>, IArtworkUpdate
 					...state,
 					artworkSubmitted: action.artworkSubmitted,
 				};
-			default:
-				throw new Error("wtf");
 		}
 	};
 
@@ -154,7 +153,11 @@ export default () => {
 	useEffect(submitArtworkEffect(submitArtwork, state, dispatch), [state.artworkSubmitted]);
 	const { data: galleryNameData}: any = useQuery(GALLERY_NAMES);
 	const [updateArtworkMutation, { loading }] = useMutation(UPDATE_ARTWORK);
-	const [deleteArtwork] = useMutation(DELETE_ARTWORK);
+	const [deleteArtwork] = useMutation(DELETE_ARTWORK, {
+		refetchQueries: [{
+			query: ALL_ARTWORKS,
+		}],
+	});
 	return (
 		<Loading loading={loading}>
 			<form id="UpdateArtworkForm"

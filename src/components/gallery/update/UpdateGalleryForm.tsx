@@ -3,6 +3,8 @@ import React, { useContext } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
 import {
+	ALL_ARTWORKS,
+	ALL_GALLERIES,
 	DELETE_GALLERY,
 	UPDATE_GALLERY,
 } from "../../../graphql/graphql";
@@ -20,7 +22,13 @@ export default () => {
 		submitGallery,
 	}: any = useContext(AdminContext);
 	const [updateGalleryMutation, { loading }] = useMutation(UPDATE_GALLERY);
-	const [deleteGallery] = useMutation(DELETE_GALLERY);
+	const [deleteGallery] = useMutation(DELETE_GALLERY, {
+		refetchQueries: [{
+			query: ALL_GALLERIES,
+		}, {
+			query: ALL_ARTWORKS,
+		}],
+	});
 	return (
 		<Loading loading={loading}>
 			<form id="UpdateGalleryForm"

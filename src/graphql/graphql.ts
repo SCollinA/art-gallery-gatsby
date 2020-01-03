@@ -1,20 +1,35 @@
 import { graphql } from "gatsby";
 import gql from "graphql-tag";
 
-export const ArtworkFragment = gql`
-  fragment ArtworkFragment on Artwork {
+export const ArtworkImageFragment = gql`
+  fragment ArtworkImageFragment on Artwork {
+    id
+    image
+  }
+`;
+
+export const ArtworkNoImageFragment = gql`
+  fragment ArtworkNoImageFragment on Artwork {
     id
     galleryId
     title
     width
     height
-    image
     medium
     price
     sold
     framed
     recentlyupdatedimage
   }
+`;
+
+export const ArtworkFragmentFull = gql`
+  fragment ArtworkFragmentFull on Artwork {
+    ...ArtworkImageFragment
+    ...ArtworkNoImageFragment
+  }
+  ${ArtworkImageFragment}
+  ${ArtworkNoImageFragment}
 `;
 
 export const GalleryFragment = gql`
@@ -27,10 +42,10 @@ export const GalleryFragment = gql`
 export const ADD_ARTWORK = gql`
 	mutation AddArtwork($galleryId: ID){
 		addArtwork(input: { title: "new artwork", galleryId: $galleryId }) {
-			...ArtworkFragment
+			...ArtworkNoImageFragment
 		}
   }
-  ${ArtworkFragment}
+  ${ArtworkNoImageFragment}
 `;
 
 export const ADD_GALLERY = gql`
@@ -54,10 +69,10 @@ export const ALL_GALLERIES = gql`
 export const GALLERY_ARTWORKS = gql`
 	query GetArtworksForGallery($galleryId: ID) {
 		getArtworks(input: { galleryId: $galleryId }) {
-			...ArtworkFragment
+			...ArtworkNoImageFragment
 		}
   }
-  ${ArtworkFragment}
+  ${ArtworkNoImageFragment}
 `;
 
 export const GET_GALLERY = gql`
@@ -72,19 +87,19 @@ export const GET_GALLERY = gql`
 export const ALL_ARTWORKS = gql`
   {
     getAllArtworks {
-			...ArtworkFragment
+			...ArtworkNoImageFragment
 		}
   }
-  ${ArtworkFragment}
+  ${ArtworkNoImageFragment}
 `;
 
 export const ARTWORK_IMAGE = gql`
   query GetArtworkImage($id: ID) {
     getArtwork(id: $id) {
-			...ArtworkFragment
+			...ArtworkImageFragment
 		}
   }
-  ${ArtworkFragment}
+  ${ArtworkImageFragment}
 `;
 
 export const fluidImage = graphql`
@@ -127,29 +142,23 @@ export const UPDATE_GALLERY = gql`
 
 export const DELETE_GALLERY = gql`
 	mutation DeleteGallery($id: ID!) {
-		deleteGallery(id: $id) {
-			...GalleryFragment
-		}
+		deleteGallery(id: $id)
   }
-  ${GalleryFragment}
 `;
 
 export const UPDATE_ARTWORK = gql`
 	mutation UpdateArtwork($id: ID!, $input: ArtworkInput) {
 		updateArtwork(id: $id, input: $input) {
-			...ArtworkFragment
+			...ArtworkFragmentFull
 		}
   }
-  ${ArtworkFragment}
+  ${ArtworkFragmentFull}
 `;
 
 export const DELETE_ARTWORK = gql`
 	mutation DeleteArtwork($id: ID!) {
-		deleteArtwork(id: $id) {
-			...ArtworkFragment
-		}
+		deleteArtwork(id: $id)
   }
-  ${ArtworkFragment}
 `;
 
 export const GALLERY_NAMES = gql`
