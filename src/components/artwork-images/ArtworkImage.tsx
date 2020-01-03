@@ -72,18 +72,24 @@ export default ({
 			window.removeEventListener("resize", updateWindowDimensions);
 		};
 	}, [state.aspectRatio]);
-	return !!state.artwork &&
-		(state.artwork.recentlyupdatedimage || !!state.artwork.image ?
-			<ArtworkImageDB artwork={state.artwork}
-				imageRef={imageRef}
-				aspectRatio={state.aspectRatio}
-				fitToScreen={state.fitToScreen}
-			/> :
-			state.artwork.file ?
-				<ArtworkImageFile artwork={state.artwork}
-					imageRef={imageRef}
-					aspectRatio={state.aspectRatio}
-					fitToScreen={state.fitToScreen}
-				/> :
-				<Placeholder text="No image found"/>);
+	if (!state.artwork) {
+		return <Placeholder text="No image found"/>;
+	} else if (
+		state.artwork.recentlyupdatedimage ||
+		!!state.artwork.image
+	) {
+		return <ArtworkImageDB artwork={state.artwork}
+			imageRef={imageRef}
+			aspectRatio={state.aspectRatio}
+			fitToScreen={state.fitToScreen}
+		/>;
+	} else if (!!state.artwork.file) {
+		return <ArtworkImageFile artwork={state.artwork}
+			imageRef={imageRef}
+			aspectRatio={state.aspectRatio}
+			fitToScreen={state.fitToScreen}
+		/>;
+	} else {
+		return <Placeholder text="No image found"/>;
+	}
 };

@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/react-hooks";
 import { graphql, useStaticQuery } from "gatsby";
-import { filter, find, get, isEqual } from "lodash/fp";
+import { filter, find, get, isEqual, map } from "lodash/fp";
 import React, { useReducer } from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
@@ -68,12 +68,13 @@ export default ({ children }: {children: any}) => {
 		loading: artworksLoading,
 	}: any = useQuery(ALL_ARTWORKS);
 	const { artworkFileData }: any = useStaticQuery(ARTWORK_FILES);
-	const galleriesWithArtworks = getGalleries(artworks, artworkFileData, galleries);
+	const artworksWithFiles = addFilesToArtworks(artworks, artworkFileData);
+	const galleriesWithArtworks = getGalleries(galleries, artworksWithFiles);
 	const context: ILayoutContext = {
 		...state,
 		artworksWithoutGalleries: filter(
 			({ galleryId }) => !galleryId,
-			artworks,
+			artworksWithFiles,
 		),
 		galleries: galleriesWithArtworks,
 		selectArtwork: (selectedArtwork: IArtwork) => dispatch({
@@ -86,7 +87,7 @@ export default ({ children }: {children: any}) => {
 		}),
 	};
 	if (!!state.selectedArtwork) {
-		const selectedArtwork = find({id: state.selectedArtwork.id}, artworks);
+		const selectedArtwork = find({id: state.selectedArtwork.id}, artworksWithFiles);
 		const isNewArtwork = !selectedArtwork;
 		if (!isNewArtwork && !isEqual(state.selectedArtwork, selectedArtwork)) {
 			const selectedGallery = find({id: get("galleryId", selectedArtwork)}, galleriesWithArtworks);
@@ -130,44 +131,33 @@ export default ({ children }: {children: any}) => {
 	);
 };
 
-const getGalleries = (
-	artworks: any[],
-	artworkFileData: any[],
-	galleries: any[],
-) => {
+const addFilesToArtworks = (artworks: IArtwork[], artworkFileData: any[]) => {
 	const artworkFiles = getArtworkFiles(artworkFileData);
-	const galleriesWithFiles = matchGalleryArtworkToFile(galleries, artworks, artworkFiles);
-	return galleriesWithFiles;
+	return map((artwork) => {
+		const { id, title } = artwork;
+		return {
+			...artwork,
+			file: find(({ name }) =>
+				name === `${id}-${title}`,
+				artworkFiles,
+			),
+		};
+	}, artworks);
 };
 
-
-const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFiles: any[]) => {
-	return galleries.map((gallery: any) => {
-		// match up artworks from db to gallery
-		let galleryArtworks = artworks.filter((artwork: any) =>
-			artwork.galleryId === gallery.id);
-		// map those to files for display throughout site
-		galleryArtworks = galleryArtworks.map(({
-				id,
-				title,
-				...remainingArtwork
-			}: any) => {
-				// if an artwork file exist add it
-				// will check if file is there to determine proper element for image
-				const file = artworkFiles.find((artworkFile: any) => artworkFile.name === `${id}-${title}`);
-				const galleryArtwork = {
-					file,
-					id,
-					title,
-					...remainingArtwork,
-				};
-				return galleryArtwork;
-			});
-		const galleryWithArtworks = {
-			artworks: galleryArtworks,
+const getGalleries = (
+	galleries: IGallery[],
+	artworksWithFiles: IArtwork[],
+) => {
+	return galleries.map((gallery) => {
+		const artworks = filter((artwork) =>
+			artwork.galleryId === gallery.id,
+			artworksWithFiles,
+		);
+		return {
 			...gallery,
+			artworks,
 		};
-		return galleryWithArtworks;
 	});
 };
 
