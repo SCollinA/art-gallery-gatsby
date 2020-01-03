@@ -33,7 +33,7 @@ export default ({
 			// in order to find aspect ratio and adjust size
 				style={{
 					display: !!imageWidthPercent ?
-						"inherit" : "none",
+						"block" : "none",
 					width: fitToScreen ?
 						`${imageWidthPercent}%` : "unset",
 				}}
