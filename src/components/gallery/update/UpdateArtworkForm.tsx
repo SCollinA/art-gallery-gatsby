@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useReducer } from "react";
 import AdminContext from "../../../contexts/AdminContext";
 import {
 	ALL_ARTWORKS,
+	ARTWORK_IMAGE,
 	DELETE_ARTWORK,
 	GALLERY_NAMES,
 	UPDATE_ARTWORK,
@@ -125,7 +126,7 @@ export default () => {
 		cancelUpdate,
 	}: any = useContext(AdminContext);
 	const [state, dispatch] = useReducer(artworkReducer, artworkState);
-	useEffect(loadInitialArtworkImage(updatingArtwork, state, dispatch), [state.imageFile]);
+	useEffect(loadInitialArtworkImage(updatingArtwork, state, dispatch), [updatingArtwork.image]);
 	useEffect(resizeWindow(dispatch), [state.windowHeight, state.windowWidth]);
 	useEffect(() => dispatch({
 		imageVisible: false,
@@ -159,7 +160,13 @@ export default () => {
 	useEffect(removeImage(updateArtwork, state, dispatch), [state.imageRemoved]);
 	useEffect(resetArtworkEffect(resetArtwork, state, dispatch), [state.artworkReset]);
 	useEffect(submitArtworkEffect(submitArtwork, state, dispatch), [state.artworkSubmitted]);
-	const { data: galleryNameData}: any = useQuery(GALLERY_NAMES);
+	const { data: galleryNameData, loading: galleryNamesLoading }: any = useQuery(GALLERY_NAMES);
+	const { loading: artworkImageLoading }: any = useQuery(ARTWORK_IMAGE, {
+		variables: updatingArtwork,
+		onCompleted({ getArtwork: { image } }) {
+			updateArtwork({ image });
+		},
+	});
 	const [updateArtworkMutation, { loading }] = useMutation(UPDATE_ARTWORK);
 	const [deleteArtwork] = useMutation(DELETE_ARTWORK, {
 		refetchQueries: [{
@@ -167,7 +174,7 @@ export default () => {
 		}],
 	});
 	return (
-		<Loading loading={loading}>
+		<Loading loading={loading || galleryNamesLoading || artworkImageLoading}>
 			<form id="UpdateArtworkForm"
 				onSubmit={(event) => {
 					event.preventDefault();
@@ -283,24 +290,26 @@ export default () => {
 					/>
 					<div className="uploadedImage">
 						{!!state.imageFile &&
-							<img id="uploadedImage" ref={artworkImageRef}
-								style={{
-									display: state.imageVisible ?
-										"block" : "none",
-									width: `${state.imageWidthPercent}%`,
-								}}
-								alt="uploaded profile"
-								onLoad={() => {
-									if (!state.imageVisible) {
-										dispatch({
-											imageHeight: artworkImageRef.current.height,
-											imageWidth: artworkImageRef.current.width,
-											type: EArtworkUpdateActionType.ResizeImage,
-										});
-									}
-								}}
-								src={blobUrl(state.imageFile)}
-							/>}
+							<Loading loading={!state.imageVisible || !!state.imageRotated} fitChild={true}>
+								<img id="uploadedImage" ref={artworkImageRef}
+									style={{
+										display: state.imageVisible ?
+											"block" : "none",
+										width: `${state.imageWidthPercent}%`,
+									}}
+									alt="uploaded profile"
+									onLoad={() => {
+										if (!state.imageVisible) {
+											dispatch({
+												imageHeight: artworkImageRef.current.height,
+												imageWidth: artworkImageRef.current.width,
+												type: EArtworkUpdateActionType.ResizeImage,
+											});
+										}
+									}}
+									src={blobUrl(state.imageFile)}
+								/>
+							</Loading>}
 					</div>
 					<div className="rotateImage"
 						onClick={() => dispatch({

@@ -305,10 +305,10 @@ a {
     justify-content: space-between;
 }
 
-.galleryThumb > .loading-wrapper,
+/* .galleryThumb > .loading-wrapper,
 .artworkThumb > .loading-wrapper {
     margin: auto;
-}
+} */
 
 a.clickable {
     display: block;
@@ -477,14 +477,16 @@ a.clickable {
 .rotateImage {
     cursor: pointer;
 }
-.uploadedImage {
+/* .uploadedImage {
+    margin: auto;
+} */
+.uploadedImage > .loading-wrapper {
     width: 50%;
     margin: auto;
 }
 #uploadedImage {
     margin: auto;
 }
-
 /* ================================ */
 /*              Footer              */
 /* ================================ */

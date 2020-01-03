@@ -96,10 +96,10 @@ export const ALL_ARTWORKS = gql`
 export const ARTWORK_IMAGE = gql`
   query GetArtworkImage($id: ID) {
     getArtwork(id: $id) {
-			...ArtworkImageFragment
+			...ArtworkFragmentFull
 		}
   }
-  ${ArtworkImageFragment}
+  ${ArtworkFragmentFull}
 `;
 
 export const fluidImage = graphql`
