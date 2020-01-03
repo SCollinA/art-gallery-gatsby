@@ -23,7 +23,8 @@ export default ({
 				onStartLoad={() => setLoading(true)}
 				style={{
 					margin: "auto",
-					width: `${fitToScreen ? `${imageWidthPercent}%` : "unset"}`,
+					width: fitToScreen && !!imageWidthPercent ?
+						`${imageWidthPercent}%` : "unset",
 				}}
 				fluid={artwork.file.childImageSharp.fluid}
 			/>
