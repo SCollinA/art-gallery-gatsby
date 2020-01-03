@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
 import LayoutContext from "../../../contexts/LayoutContext";
-import { ADD_ARTWORK } from "../../../graphql/graphql";
+import { ADD_ARTWORK, ALL_ARTWORKS } from "../../../graphql/graphql";
 
 import Loading from "../../reusable/Loading";
 
@@ -16,14 +16,17 @@ export default () => {
 		editArtwork,
 	}: any = useContext(AdminContext);
 	const [addArtwork, { loading }] = useMutation(ADD_ARTWORK, {
+		onCompleted({ addArtwork: addedArtwork }: any) {
+			selectArtwork(addedArtwork);
+			editArtwork();
+		},
+		refetchQueries: [{
+			query: ALL_ARTWORKS,
+		}],
 		variables: {
 			galleryId: selectedGallery ?
 				selectedGallery.id :
 				null,
-		},
-		onCompleted({ addArtwork: addedArtwork }: any) {
-			selectArtwork(addedArtwork);
-			editArtwork();
 		},
 	});
 	return (

@@ -1,5 +1,5 @@
 import { isEqual } from "lodash/fp";
-import React, { Ref, useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 
 import { IArtwork } from "../../models/artwork.model";
 
@@ -9,7 +9,7 @@ import ArtworkImageDB from "./ArtworkImageDB";
 import ArtworkImageFile from "./ArtworkImageFile";
 
 interface IArtworkImageState {
-	artwork: IArtwork;
+	artwork?: IArtwork;
 	aspectRatio: number;
 	fitToScreen: boolean;
 }
@@ -18,8 +18,8 @@ interface IArtworkImageAction extends Partial<IArtworkImageState> {
 }
 enum EArtworkImageActionType {
 	ResizeWindow = "RESIZE_WINDOW",
+	SetArtwork = "SET_ARTWORK",
 }
-const defaultImageRef = React.createRef<any>();
 
 const artworkImageReducer =
 	(state: IArtworkImageState, action: IArtworkImageAction): IArtworkImageState => {
@@ -29,13 +29,18 @@ const artworkImageReducer =
 					...state,
 					aspectRatio: action.aspectRatio || 1,
 				};
+			case EArtworkImageActionType.SetArtwork:
+				return {
+					...state,
+					artwork: action.artwork,
+				};
 		}
 	};
 
 export default ({
 	artwork,
 	fitToScreen,
-	imageRef = defaultImageRef,
+	imageRef = React.createRef<any>(),
 }: {
 	artwork: IArtwork,
 	fitToScreen: boolean,
@@ -47,6 +52,14 @@ export default ({
 		fitToScreen,
 	};
 	const [state, dispatch] = useReducer(artworkImageReducer, artworkImageState);
+	useEffect(() => {
+		if (!isEqual(state.artwork, artwork)) {
+			dispatch({
+				artwork,
+				type: EArtworkImageActionType.SetArtwork,
+			});
+		}
+	});
 	useEffect(() => {
 		const updateWindowDimensions = () =>
 			dispatch({

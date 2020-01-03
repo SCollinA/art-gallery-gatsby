@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 
 import AdminContext from "../../../contexts/AdminContext";
 import LayoutContext from "../../../contexts/LayoutContext";
-import { ADD_GALLERY } from "../../../graphql/graphql";
+import { ADD_GALLERY, ALL_GALLERIES } from "../../../graphql/graphql";
 
 import Loading from "../../reusable/Loading";
 
@@ -19,6 +19,9 @@ export default () => {
 			selectGallery(addedGallery);
 			editGallery();
 		},
+		refetchQueries: [{
+			query: ALL_GALLERIES,
+		}],
 	});
 	return (
 		<Loading loading={loading}>

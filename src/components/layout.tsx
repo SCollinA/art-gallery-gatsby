@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/react-hooks";
-import { useStaticQuery } from "gatsby";
+import { graphql, useStaticQuery } from "gatsby";
 import { filter, find, get, isEqual } from "lodash/fp";
 import React, { useReducer } from "react";
 
@@ -7,7 +7,6 @@ import LayoutContext from "../contexts/LayoutContext";
 import {
 	ALL_ARTWORKS,
 	ALL_GALLERIES,
-	ARTWORK_FILES,
 } from "../graphql/graphql";
 import { IArtwork } from "../models/artwork.model";
 import { IGallery } from "../models/gallery.model";
@@ -88,7 +87,8 @@ export default ({ children }: {children: any}) => {
 	};
 	if (!!state.selectedArtwork) {
 		const selectedArtwork = find({id: state.selectedArtwork.id}, artworks);
-		if (!isEqual(state.selectedArtwork, selectedArtwork)) {
+		const isNewArtwork = !selectedArtwork;
+		if (!isNewArtwork && !isEqual(state.selectedArtwork, selectedArtwork)) {
 			const selectedGallery = find({id: get("galleryId", selectedArtwork)}, galleriesWithArtworks);
 			dispatch({
 				selectedGallery,
@@ -101,7 +101,8 @@ export default ({ children }: {children: any}) => {
 		}
 	} else if (!!state.selectedGallery) {
 		const selectedGallery = find({id: state.selectedGallery.id}, galleriesWithArtworks);
-		if (!isEqual(state.selectedGallery, selectedGallery)) {
+		const isNewGallery = !selectedGallery;
+		if (!isNewGallery && !isEqual(state.selectedGallery, selectedGallery)) {
 			dispatch({
 				selectedGallery,
 				type: ELayoutActionType.SelectGallery,
@@ -172,3 +173,20 @@ const matchGalleryArtworkToFile = (galleries: any[], artworks: any[], artworkFil
 
 const getArtworkFiles = (artworkFiles: any) =>
 	artworkFiles.edges.map((edge: any) => edge.node);
+
+export const ARTWORK_FILES = graphql`
+	{
+		artworkFileData: allFile(filter: {
+			relativeDirectory: { eq: "artworks" },
+			extension: { eq: "jpeg" }
+		}) {
+		edges {
+			node {
+			name
+			...fluidImage
+			}
+		}
+		}
+	}
+`;
+  

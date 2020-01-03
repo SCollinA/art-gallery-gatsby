@@ -107,22 +107,6 @@ export const fixedImage = graphql`
   }
 `;
 
-export const ARTWORK_FILES = graphql`
-  {
-    artworkFileData: allFile(filter: {
-        relativeDirectory: { eq: "artworks" },
-        extension: { eq: "jpeg" }
-    }) {
-      edges {
-        node {
-          name
-          ...fluidImage
-        }
-      }
-    }
-  }
-`;
-
 // export const GET_ARTWORK_IMAGES = gql`
 // subscription GetArtworkImages {
 //   artworkImageChanged {
