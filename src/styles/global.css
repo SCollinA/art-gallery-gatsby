@@ -264,7 +264,9 @@ a {
 .galleryImage {
     margin: auto;
 }
-
+.galleryImage > .loading-wrapper {
+    margin: auto;
+}
 .galleryArtwork {
     margin: auto;
     display: flex;
@@ -477,9 +479,6 @@ a.clickable {
 .rotateImage {
     cursor: pointer;
 }
-/* .uploadedImage {
-    margin: auto;
-} */
 .uploadedImage > .loading-wrapper {
     width: 50%;
     margin: auto;
@@ -601,5 +600,9 @@ a.clickable {
 
     .artworkThumb {
         flex-basis: 100%;
+    }
+
+    .galleryImage {
+        width: unset;
     }
 }

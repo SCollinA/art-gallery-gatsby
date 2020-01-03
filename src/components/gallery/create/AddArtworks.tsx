@@ -18,7 +18,7 @@ export default () => {
 	const [addArtwork, { loading }] = useMutation(ADD_ARTWORK, {
 		onCompleted({ addArtwork: addedArtwork }: any) {
 			selectArtwork(addedArtwork);
-			editArtwork();
+			editArtwork(addedArtwork);
 		},
 		refetchQueries: [{
 			query: ALL_ARTWORKS,

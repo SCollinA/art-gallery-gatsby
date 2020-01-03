@@ -96,13 +96,13 @@ export default ({children}: {children: any}) => {
 	const [state, dispatch] = useReducer(adminReducer, adminState);
 	const login = () => dispatch({ type: EAdminReducerActionType.Login});
 	const logout = () => dispatch({ type: EAdminReducerActionType.Logout});
-	const editGallery = () => dispatch({
+	const editGallery = (updatingGallery = selectedGallery) => dispatch({
 		type: EAdminReducerActionType.EditGallery,
-		updatingGallery: selectedGallery,
+		updatingGallery,
 	});
-	const editArtwork = () => dispatch({
+	const editArtwork = (updatingArtwork = selectedArtwork) => dispatch({
 		type: EAdminReducerActionType.EditArtwork,
-		updatingArtwork: selectedArtwork,
+		updatingArtwork,
 	});
 	const updateGallery = (updatingGallery: IGallery) =>
 		dispatch({

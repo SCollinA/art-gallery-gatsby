@@ -17,7 +17,7 @@ export default () => {
 	const [addGallery, { loading }] = useMutation(ADD_GALLERY, {
 		onCompleted({ addGallery: addedGallery }: any) {
 			selectGallery(addedGallery);
-			editGallery();
+			editGallery(addedGallery);
 		},
 		refetchQueries: [{
 			query: ALL_GALLERIES,
