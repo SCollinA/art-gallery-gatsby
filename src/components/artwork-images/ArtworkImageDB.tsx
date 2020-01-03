@@ -1,8 +1,9 @@
 import { useQuery } from "@apollo/react-hooks";
 import { get, map } from "lodash/fp";
-import React from "react";
+import React, { useState } from "react";
 
 import { ARTWORK_IMAGE } from "../../graphql/graphql";
+import { IArtwork } from "../../models/artwork.model";
 
 import Loading from "../reusable/Loading";
 
@@ -12,7 +13,7 @@ export default ({
 	aspectRatio,
 	fitToScreen,
 }: {
-	artwork: any,
+	artwork: IArtwork,
 	imageRef: any,
 	aspectRatio: number,
 	fitToScreen: boolean,
@@ -24,23 +25,28 @@ export default ({
 		fetchPolicy: "cache-first",
 		variables: artwork,
 	});
+	const [imageWidthPercent, setImageWidthPercent] = useState(0);
 	return (
 		<Loading loading={loading} fitChild={true} preventClick={false}>
 			<img ref={imageRef} className="ArtworkImage ArtworkImageDB"
 			// display initially none to load actual size
 			// in order to find aspect ratio and adjust size
-				style={{ display: "none", margin: "auto" }}
+				style={{
+					display: !!imageWidthPercent ?
+						"inherit" : "none",
+					width: fitToScreen ?
+						`${imageWidthPercent}%` : "unset",
+				}}
 				src={`data:image/jepg;base64,${get(["getArtwork", "image"], data) || ""}`}
 				alt={`${artwork.title}`}
 				onLoad={() => {
-					const dbImage: any = imageRef.current;
-					if (!!imageRef) {
+					const dbImage = imageRef.current;
+					if (!!dbImage) {
 						const imageAspectRatio = dbImage.width / dbImage.height;
 						const correctedAspectRatio = imageAspectRatio / aspectRatio;
-						const imageWidthPercent = correctedAspectRatio * 100;
-						dbImage.style.width = `${fitToScreen ? `${imageWidthPercent}%` : "unset"}`;
+						const newImageWidthPercent = correctedAspectRatio * 100;
+						setImageWidthPercent(newImageWidthPercent);
 					}
-					dbImage.style.display = "inherit";
 				}}
 			/>
 		</Loading>

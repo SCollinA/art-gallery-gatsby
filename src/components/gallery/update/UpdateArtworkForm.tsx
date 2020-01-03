@@ -65,17 +65,13 @@ const artworkReducer: React.Reducer<Partial<IArtworkUpdateState>, IArtworkUpdate
 				return {
 					...state,
 					imageFile: action.imageFile,
-					imageRemoved: false,
-					imageRotated: false,
-					imageVisible: false,
+					imageWidthPercent: 0,
 				};
 			case EArtworkUpdateActionType.RemoveImage:
 				return {
 					...state,
 					imageFile: undefined,
 					imageRemoved: action.imageRemoved,
-					imageRotated: false,
-					imageVisible: false,
 				};
 			case EArtworkUpdateActionType.ResetArtwork:
 				return {
@@ -144,10 +140,14 @@ export default () => {
 		state.imageHeight,
 		state.imageWidth,
 	]);
-	useEffect(() => dispatch({
-		imageVisible: true,
-		type: EArtworkUpdateActionType.SetImageVisible,
-	}), [state.imageWidthPercent]);
+	useEffect(() => {
+		if (!!state.imageWidthPercent) {
+			dispatch({
+				imageVisible: true,
+				type: EArtworkUpdateActionType.SetImageVisible,
+			});
+		}
+	}, [state.imageWidthPercent]);
 	useEffect(rotateImage(state, dispatch), [state.imageRotated]);
 	useEffect(removeImage(updateArtwork, state, dispatch), [state.imageRemoved]);
 	useEffect(resetArtworkEffect(resetArtwork, state, dispatch), [state.artworkReset]);

@@ -1,84 +1,85 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React,
+{
+	useContext,
+	useEffect,
+	useReducer,
+} from "react";
 
 import AdminContext from "../contexts/AdminContext";
 import LayoutContext from "../contexts/LayoutContext";
+import {
+	EAdminReducerActionType,
+	IAdminReducerAction,
+	IAdminReducerState,
+} from "../models/admin.model";
+import { IArtwork } from "../models/artwork.model";
+import { IGallery } from "../models/gallery.model";
 
-const adminReducer = (state: any, action: any) => {
-	switch (action.type) {
-		case "LOGIN":
-			return {
-				...state,
-				isLoggedIn: true,
-			};
-		case "LOGOUT":
-			return {
-				...state,
-				isLoggedIn: false,
-			};
-		case "LOGOUT":
-			return {
-				...state,
-				isLoggedIn: false,
-			};
-		case "LOGOUT":
-			return {
-				...state,
-				isLoggedIn: false,
-			};
-		case "EDIT_GALLERY":
-			return {
-				...state,
-				isUpdating: true,
-				updatingArtwork: undefined,
-				updatingGallery: action.gallery,
-			};
-		case "EDIT_ARTWORK":
-			return {
-				...state,
-				isUpdating: true,
-				updatingArtwork: action.artwork,
-				updatingGallery: undefined,
-			};
-		case "UPDATE_GALLERY":
-			return {
-				...state,
-				updatingGallery: {
-					...state.updatingGallery,
-					...action.updatingGallery,
-				},
-			};
-		case "UPDATE_ARTWORK":
-			return {
-				...state,
-				updatingArtwork: {
-					...state.updatingArtwork,
-					...action.updatingArtwork,
-				},
-			};
-		case "SUBMIT_GALLERY":
-			return {
-				...state,
-				isUpdating: false,
-				updatingGallery: undefined,
-			};
-		case "SUBMIT_ARTWORK":
-			return {
-				...state,
-				isUpdating: false,
-				updatingArtwork: undefined,
-			};
-		case "CANCEL_UPDATE":
-			return {
-				...state,
-				isUpdating: false,
-				updatingArtwork: undefined,
-				updatingGallery: undefined,
-			};
-		default:
-			throw new Error("holy cow");
-	}
-};
-const adminState = {
+const adminReducer: React.Reducer<IAdminReducerState, IAdminReducerAction> =
+	(state: IAdminReducerState, action: IAdminReducerAction): IAdminReducerState => {
+		switch (action.type) {
+			case EAdminReducerActionType.Login:
+				return {
+					...state,
+					isLoggedIn: true,
+				};
+			case EAdminReducerActionType.Logout:
+				return {
+					...state,
+					isLoggedIn: false,
+				};
+			case EAdminReducerActionType.EditGallery:
+				return {
+					...state,
+					isUpdating: true,
+					updatingArtwork: undefined,
+					updatingGallery: action.updatingGallery,
+				};
+			case EAdminReducerActionType.EditArtwork:
+				return {
+					...state,
+					isUpdating: true,
+					updatingArtwork: action.updatingArtwork,
+					updatingGallery: undefined,
+				};
+			case EAdminReducerActionType.UpdateGallery:
+				return {
+					...state,
+					updatingGallery: {
+						...state.updatingGallery,
+						...action.updatingGallery,
+					},
+				};
+			case EAdminReducerActionType.UpdateArtwork:
+				return {
+					...state,
+					updatingArtwork: {
+						...state.updatingArtwork,
+						...action.updatingArtwork,
+					},
+				};
+			case EAdminReducerActionType.SubmitGallery:
+				return {
+					...state,
+					isUpdating: false,
+					updatingGallery: undefined,
+				};
+			case EAdminReducerActionType.SubmitArtwork:
+				return {
+					...state,
+					isUpdating: false,
+					updatingArtwork: undefined,
+				};
+			case EAdminReducerActionType.CancelUpdate:
+				return {
+					...state,
+					isUpdating: false,
+					updatingArtwork: undefined,
+					updatingGallery: undefined,
+				};
+		}
+	};
+const adminState: IAdminReducerState = {
 	isLoggedIn: false,
 	isUpdating: false,
 	updatingArtwork: undefined,
@@ -93,44 +94,40 @@ export default ({children}: {children: any}) => {
 		selectGallery,
 	}: any = useContext(LayoutContext);
 	const [state, dispatch] = useReducer(adminReducer, adminState);
-	const login = () => dispatch({ type: "LOGIN"});
-	const logout = () => dispatch({ type: "LOGOUT"});
+	const login = () => dispatch({ type: EAdminReducerActionType.Login});
+	const logout = () => dispatch({ type: EAdminReducerActionType.Logout});
 	const editGallery = () => dispatch({
-		gallery: selectedGallery,
-		type: "EDIT_GALLERY",
+		type: EAdminReducerActionType.EditGallery,
+		updatingGallery: selectedGallery,
 	});
 	const editArtwork = () => dispatch({
-		artwork: selectedArtwork,
-		type: "EDIT_ARTWORK",
+		type: EAdminReducerActionType.EditArtwork,
+		updatingArtwork: selectedArtwork,
 	});
-	const updateGallery = (updatingGallery: any) =>
+	const updateGallery = (updatingGallery: IGallery) =>
 		dispatch({
-			type: "UPDATE_GALLERY",
+			type: EAdminReducerActionType.UpdateGallery,
 			updatingGallery,
 		});
-	const updateArtwork = (updatingArtwork: any) =>
+	const updateArtwork = (updatingArtwork: IArtwork) =>
 		dispatch({
-			type: "UPDATE_ARTWORK",
+			type: EAdminReducerActionType.UpdateArtwork,
 			updatingArtwork,
 		});
-	const submitGallery = () => {
-		// selectGallery(state.updatingGallery);
-		dispatch({ type: "SUBMIT_GALLERY" });
-	};
-	const submitArtwork = () => {
-		// selectArtwork(state.updatingArtwork);
-		dispatch({ type: "SUBMIT_ARTWORK" });
-	};
+	const submitGallery = () =>
+		dispatch({ type: EAdminReducerActionType.SubmitGallery });
+	const submitArtwork = () =>
+		dispatch({ type: EAdminReducerActionType.SubmitArtwork });
 	const cancelUpdate = () =>
-		dispatch({ type: "CANCEL_UPDATE" });
+		dispatch({ type: EAdminReducerActionType.CancelUpdate });
 	const resetGallery = () =>
 		dispatch({
-			type: "UPDATE_GALLERY",
+			type: EAdminReducerActionType.UpdateGallery,
 			updatingGallery: selectedGallery,
 		});
 	const resetArtwork = () =>
 		dispatch({
-			type: "UPDATE_ARTWORK",
+			type: EAdminReducerActionType.UpdateArtwork,
 			updatingArtwork: selectedArtwork,
 		});
 	const removeGallery = () => {

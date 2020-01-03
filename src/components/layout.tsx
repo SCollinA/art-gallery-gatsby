@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/react-hooks";
 import { useStaticQuery } from "gatsby";
 import { filter, find, get, isEqual } from "lodash/fp";
-import React, { useEffect, useState } from "react";
+import React, { useReducer } from "react";
 
 import LayoutContext from "../contexts/LayoutContext";
 import {
@@ -9,6 +9,8 @@ import {
 	ALL_GALLERIES,
 	ARTWORK_FILES,
 } from "../graphql/graphql";
+import { IArtwork } from "../models/artwork.model";
+import { IGallery } from "../models/gallery.model";
 
 import Admin from "./Admin";
 import "./layout.css";
@@ -18,20 +20,46 @@ import Loading from "./reusable/Loading";
 import FullStoryHelmet from "./utils/FullStoryHelmet";
 
 interface ILayoutState {
-	selectedArtwork: any;
-	selectedGallery: any;
+	selectedArtwork?: IArtwork;
+	selectedGallery?: IGallery;
+}
+interface ILayoutAction extends Partial<ILayoutState> {
+	type: ELayoutActionType;
+}
+interface ILayoutContext extends ILayoutState {
+	artworksWithoutGalleries: IArtwork[];
+	galleries: IGallery[];
+	selectArtwork: (artwork: IArtwork) => void;
+	selectGallery: (gallery: IGallery) => void;
+}
+enum ELayoutActionType {
+	SelectArtwork = "SELECT_ARTWORK",
+	SelectGallery = "SELECT_GALLERY",
 }
 
+const layoutReducer =
+	(state: ILayoutState, action: ILayoutAction): ILayoutState => {
+		switch (action.type) {
+			case ELayoutActionType.SelectArtwork:
+				return {
+					...state,
+					selectedArtwork: action.selectedArtwork,
+				};
+			case ELayoutActionType.SelectGallery:
+				return {
+					...state,
+					selectedArtwork: undefined,
+					selectedGallery: action.selectedGallery,
+				};
+		}
+	};
 const layoutState: ILayoutState = {
 	selectedArtwork: undefined,
 	selectedGallery: undefined,
 };
 
-const galleryMainRef = React.createRef<any>();
-const artworkChoiceRef = React.createRef<any>();
-
 export default ({ children }: {children: any}) => {
-	const [state, setState] = useState(layoutState);
+	const [state, dispatch] = useReducer(layoutReducer, layoutState);
 	const {
 		data: { getAllGalleries: galleries = [] } = { getAllGalleries: [] },
 		loading: galleriesLoading,
@@ -42,41 +70,41 @@ export default ({ children }: {children: any}) => {
 	}: any = useQuery(ALL_ARTWORKS);
 	const { artworkFileData }: any = useStaticQuery(ARTWORK_FILES);
 	const galleriesWithArtworks = getGalleries(artworks, artworkFileData, galleries);
-	const context = {
+	const context: ILayoutContext = {
 		...state,
-		artworkChoiceRef,
 		artworksWithoutGalleries: filter(
-			({ galleryId }: any) => !galleryId,
+			({ galleryId }) => !galleryId,
 			artworks,
 		),
 		galleries: galleriesWithArtworks,
-		galleryMainRef,
-		selectArtwork: (selectedArtwork: any) => setState({
-			...state,
+		selectArtwork: (selectedArtwork: IArtwork) => dispatch({
 			selectedArtwork,
+			type: ELayoutActionType.SelectArtwork,
 		}),
-		selectGallery: (selectedGallery: any) => setState({
-			...state,
-			selectedArtwork: undefined,
+		selectGallery: (selectedGallery: IGallery) => dispatch({
 			selectedGallery,
+			type: ELayoutActionType.SelectGallery,
 		}),
 	};
 	if (!!state.selectedArtwork) {
 		const selectedArtwork = find({id: state.selectedArtwork.id}, artworks);
 		if (!isEqual(state.selectedArtwork, selectedArtwork)) {
 			const selectedGallery = find({id: get("galleryId", selectedArtwork)}, galleriesWithArtworks);
-			setState({
-				...state,
-				selectedArtwork,
+			dispatch({
 				selectedGallery,
+				type: ELayoutActionType.SelectGallery,
+			});
+			dispatch({
+				selectedArtwork,
+				type: ELayoutActionType.SelectArtwork,
 			});
 		}
 	} else if (!!state.selectedGallery) {
 		const selectedGallery = find({id: state.selectedGallery.id}, galleriesWithArtworks);
 		if (!isEqual(state.selectedGallery, selectedGallery)) {
-			setState({
-				...state,
+			dispatch({
 				selectedGallery,
+				type: ELayoutActionType.SelectGallery,
 			});
 		}
 	}

@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 
-import AdminContext from "../../../contexts/AdminContext";
 import LayoutContext from "../../../contexts/LayoutContext";
 
 import ArtworkImage from "../../artwork-images/ArtworkImage";
@@ -8,11 +7,10 @@ import SectionWrapper from "../../reusable/SectionWrapper";
 
 export default () => {
 	const {
-		galleryMainRef,
 		selectedArtwork,
 	}: any = useContext(LayoutContext);
 	return (
-		<div className="GalleryMain" ref={galleryMainRef}>
+		<div className="GalleryMain">
 			<SectionWrapper>
 				<div className="galleryImage">
 					<ArtworkImage artwork={selectedArtwork}

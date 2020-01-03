@@ -312,8 +312,10 @@ a {
     justify-content: center;
 }
 
-.clickable:not(.activeLink) {
+a.clickable {
     display: block;
+}
+.clickable:not(.activeLink) {
     box-sizing: content-box;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
@@ -332,8 +334,8 @@ a {
     border-radius: 10px;
 }
 
-.ArtworkImageDB,
-.ArtworkImageFile {
+.ArtworkImage {
+    margin: auto;
     max-width: 100%;
 }
 
