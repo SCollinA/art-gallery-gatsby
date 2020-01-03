@@ -34,7 +34,7 @@ export default ({
 				style={{
 					display: !!imageWidthPercent ?
 						"block" : "none",
-					width: fitToScreen ?
+					width: fitToScreen && !!imageWidthPercent ?
 						`${imageWidthPercent}%` : "unset",
 				}}
 				src={`data:image/jepg;base64,${get(["getArtwork", "image"], data) || ""}`}
