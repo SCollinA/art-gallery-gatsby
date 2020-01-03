@@ -266,6 +266,7 @@ a {
 
 .galleryImage {
     margin: auto;
+    width: 90%;
 }
 .galleryImage > .loading-wrapper {
     margin: auto;
