@@ -1,0 +1,38 @@
+{
+  "name": "art-gallery",
+  "version": "1.0.0",
+  "description": "practice using the apollo server with sequelize to graphql pgsql",
+  "repository": {
+    "url": "https://github.com/SCollinA/apollo-server"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "reset-db": "dropdb art-gallery; createdb art-gallery;"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.9.14",
+    "bcrypt": "^3.0.7",
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.0",
+    "dotenv": "^6.2.0",
+    "express": "^4.17.1",
+    "googleapis": "^46.0.0",
+    "graphql": "^14.5.8",
+    "helmet": "^3.21.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^5.1.1",
+    "pg": "^7.15.1",
+    "pg-hstore": "^2.3.3",
+    "redis": "^2.8.0",
+    "sequelize": "^5.21.3",
+    "subscriptions-transport-ws": "^0.9.16"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  }
+}

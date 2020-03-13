@@ -1,0 +1,73 @@
+{
+  "name": "art-gallery-gatsby",
+  "private": false,
+  "description": "An art gallery",
+  "version": "0.1.0",
+  "author": "Collin Argo <collin.argo@gmail.com>",
+  "dependencies": {
+    "@apollo/react-hooks": "^3.1.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.26",
+    "@fortawesome/free-brands-svg-icons": "^5.12.0",
+    "@fortawesome/free-regular-svg-icons": "^5.12.0",
+    "@fortawesome/free-solid-svg-icons": "^5.12.0",
+    "@fortawesome/react-fontawesome": "^0.1.8",
+    "@types/jest": "^24.0.24",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^12.12.22",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "apollo-boost": "^0.1.28",
+    "apollo-cache-inmemory": "^1.6.5",
+    "apollo-client": "^2.6.8",
+    "apollo-link": "^1.2.13",
+    "apollo-link-context": "^1.0.19",
+    "apollo-link-error": "^1.1.12",
+    "apollo-link-http": "^1.5.16",
+    "apollo-link-ws": "^1.0.19",
+    "concurrently": "^5.1.0",
+    "gatsby": "^2.18.17",
+    "gatsby-image": "^2.2.37",
+    "gatsby-plugin-manifest": "^2.2.34",
+    "gatsby-plugin-offline": "^2.2.10",
+    "gatsby-plugin-react-helmet": "^3.1.18",
+    "gatsby-plugin-sharp": "^2.3.10",
+    "gatsby-plugin-typescript": "^2.1.23",
+    "gatsby-source-filesystem": "^2.1.43",
+    "gatsby-transformer-sharp": "^2.3.9",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "isomorphic-fetch": "^2.2.1",
+    "lodash": "^4.17.15",
+    "prop-types": "^15.7.2",
+    "react": "^16.12.0",
+    "react-apollo": "^2.5.8",
+    "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
+    "subscriptions-transport-ws": "^0.9.16",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.4"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently --kill-others \"gatsby develop\" \"cd ../back-end && npm run dev\"",
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "@types/isomorphic-fetch": "0.0.35",
+    "@types/react-helmet": "^5.0.14"
+  }
+}

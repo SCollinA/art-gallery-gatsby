@@ -37,8 +37,8 @@ const httpLink: ApolloLink = setContext((_: GraphQLRequest, { headers }: any) =>
 	// tslint:disable-next-line: no-any
 	fetch,
 	// Change this to art-gallery.collinargo.com/graphql for production
-	// uri: "http://localhost:4000/graphql",
-	uri: "https://mkcrfineart.com/graphql",
+	uri: "http://localhost:4000/graphql",
+	// uri: "https://mkcrfineart.com/graphql",
 }));
 
 // // using the ability to split links, you can send data to each link
