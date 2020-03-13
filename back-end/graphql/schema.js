@@ -5,12 +5,12 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const nodemailer = require('nodemailer')
 const { google } = require('googleapis')
-const serviceKey = require('./service_key.json')
+const serviceKey = require('../service_key.json')
 const fs = require('fs')
 
 
-const Artwork = require('./Artwork')
-const Gallery = require('./Gallery')
+const Artwork = require('../sql/Artwork')
+const Gallery = require('../sql/Gallery')
 
 // The GraphQL schema
 const typeDefs = gql`
@@ -122,18 +122,18 @@ const resolvers = {
     // set
     Mutation: {
         addGallery: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             return Gallery.create({ ...args.input })
         },
         updateGallery: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             return Gallery.update({ ...args.input }, { 
                 where: { id: args.id },
             })
             .then(() => Gallery.findByPk(args.id))
         },
         deleteGallery: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             return Gallery.destroy({ where: { id: args.id } })
             .then(() => {
                 Artwork.findAll({ where: { galleryId: args.id }})
@@ -152,11 +152,11 @@ const resolvers = {
             })
         },
         addArtwork: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             return Artwork.create({ ...args.input })
         },
         updateArtwork: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             // check if image is less than 5 MB
             const image = args.input.image && args.input.image.length < 5000000 ? 
                 args.input.image : ''
@@ -237,7 +237,7 @@ const resolvers = {
             .catch(err => console.log('could not update artwork', err))
         },
         deleteArtwork: (obj, args, context, info) => {
-            require('./utils').checkLoggedIn(context)
+            require('../utils').checkLoggedIn(context)
             fs.unlink(`../art-gallery-gatsby/src/images/artworks/${args.id}.jpeg`,
             err => {
                 if (err) { console.log('artwork image file not deleted', err) }

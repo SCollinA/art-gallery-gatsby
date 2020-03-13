@@ -3,7 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-const Artwork = require("../back-end/Artwork");
+const Artwork = require("../back-end/sql/Artwork");
 
 exports.onPostBuild = () => {
     // reset all the recentlyupdatedimage things
