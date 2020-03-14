@@ -139,7 +139,7 @@ const resolvers = {
                 Artwork.findAll({ where: { galleryId: args.id }})
                 .then(galleryArtworks => {
                     galleryArtworks.forEach(galleryArtwork => {
-                        fs.unlink(`../art-gallery-gatsby/src/images/artworks/${args.id}.jpeg`,
+                        fs.unlink(`../front-end/src/images/artworks/${args.id}.jpeg`,
                             err => {
                                 if (err) { console.log('artwork image file not deleted', err) }
                                 else { console.log('artwork image file deleted') }
@@ -163,15 +163,15 @@ const resolvers = {
             Artwork.findByPk(args.id)
             .then(artwork => {
                 try {
-                    fs.renameSync(`../art-gallery-gatsby/src/images/artworks/${args.input.id}-${artwork.title}.jpeg`,
-                        `../art-gallery-gatsby/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
+                    fs.renameSync(`../front-end/src/images/artworks/${args.input.id}-${artwork.title}.jpeg`,
+                        `../front-end/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
                         err => console.log(err)
                     )
                 } catch (err) { 
                     console.log('could not rename image file', err)
                     try {
-                        fs.renameSync(`../art-gallery-gatsby/src/images/artworks/${args.input.id}.jpeg`,
-                            `../art-gallery-gatsby/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
+                        fs.renameSync(`../front-end/src/images/artworks/${args.input.id}.jpeg`,
+                            `../front-end/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
                             err => console.log(err)
                         )
                     } catch (err) { 
@@ -182,7 +182,7 @@ const resolvers = {
             .then(() => {
                 try {
                     if (image) { // user submitted artwork without image
-                        // fs.unlink(`../art-gallery-gatsby/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
+                        // fs.unlink(`../front-end/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
                         // err => {
                         //     if (err) { console.log('artwork image file not deleted', err) }
                         //     else { console.log('artwork image file deleted') }
@@ -191,7 +191,7 @@ const resolvers = {
                         // image && 
                         // write file always in order to overwrite reused artwork IDs
                         fs.writeFile(
-                            `../art-gallery-gatsby/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
+                            `../front-end/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
                             image,
                             {
                                 encoding: 'base64',
@@ -199,12 +199,12 @@ const resolvers = {
                             }, 
                             err => {
                                 if (err) {
-                                    fs.mkdir('../art-gallery-gatsby/src/images/artworks/',
+                                    fs.mkdir('../front-end/src/images/artworks/',
                                         err => {
                                             if (err) { return console.log('could not mkdir for artwork', err) }
                                             else {
                                                 fs.writeFile(
-                                                    `../art-gallery-gatsby/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
+                                                    `../front-end/src/images/artworks/${args.input.id}-${args.input.title}.jpeg`,
                                                     image,
                                                     {
                                                         encoding: 'base64',
@@ -238,7 +238,7 @@ const resolvers = {
         },
         deleteArtwork: (obj, args, context, info) => {
             require('../utils').checkLoggedIn(context)
-            fs.unlink(`../art-gallery-gatsby/src/images/artworks/${args.id}.jpeg`,
+            fs.unlink(`../front-end/src/images/artworks/${args.id}.jpeg`,
             err => {
                 if (err) { console.log('artwork image file not deleted', err) }
                 else { console.log('artwork image file deleted') }
