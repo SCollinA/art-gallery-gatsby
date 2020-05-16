@@ -1,3 +1,4 @@
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
@@ -13,7 +14,7 @@ export default () => {
 			onClick={() =>
 				setIsExpanded(!isExpanded)}
 		>
-			<FontAwesomeIcon icon={["far", "times-circle"]} size="3x" />
+			<FontAwesomeIcon icon={faBars} size="3x"/>
 			{isExpanded &&
 				<SectionWrapper>
 					<PageLinks />

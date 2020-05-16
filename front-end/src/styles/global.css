@@ -173,16 +173,6 @@ a {
     display: none;
 }
 
-.HamburgerLinks > svg {
-    transform: rotate(45deg);
-    transition: transform .5s;
-}
-
-.expandedMenu > svg {
-    transform: rotate(405deg);
-    transition: transform .5s;
-}
-
 .HamburgerLinks > .section-wrapper {
     width: 100%;
 }
